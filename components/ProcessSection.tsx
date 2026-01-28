@@ -14,7 +14,7 @@ const steps = [
     icon: MessageSquare,
     title: "Free Consultation",
     description:
-      "Schedule a call to discuss your goals, timeline, and ideal destinations. I'll assess your eligibility and recommend the best visa options.",
+      "Schedule a call to discuss your goals andtimeline. I'll assess your eligibility and recommend the best visa options.",
     color: "#e3a99c",
   },
   {
@@ -114,18 +114,6 @@ export default function ProcessSection() {
                     {step.description}
                   </p>
 
-                  {/* Arrow decoration */}
-                  {index < steps.length - 1 && (
-                    <div className="hidden lg:block absolute -right-4 top-1/2 -translate-y-1/2 z-10">
-                      <svg
-                        className="w-8 h-8 text-[#e7ddd3]"
-                        fill="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z" />
-                      </svg>
-                    </div>
-                  )}
                 </div>
 
                 {/* Decorative dot on timeline - desktop */}
@@ -141,24 +129,7 @@ export default function ProcessSection() {
         {/* Bottom visual */}
         <div className="mt-20 relative">
           <div className="bg-gradient-to-r from-[#f2d6c9] via-[#e7ddd3] to-[#bbcccd] rounded-3xl p-8 md:p-12 overflow-hidden">
-            {/* Pattern */}
-            <div className="absolute inset-0 opacity-10">
-              <svg
-                className="w-full h-full"
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-              >
-                <pattern
-                  id="process-pattern"
-                  width="8"
-                  height="8"
-                  patternUnits="userSpaceOnUse"
-                >
-                  <circle cx="4" cy="4" r="1.5" fill="currentColor" />
-                </pattern>
-                <rect width="100" height="100" fill="url(#process-pattern)" />
-              </svg>
-            </div>
+
 
             <div className="relative flex flex-col md:flex-row items-center justify-between gap-8">
               <div className="flex-1 text-center md:text-left">

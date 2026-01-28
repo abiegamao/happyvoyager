@@ -1,169 +1,172 @@
 "use client";
 
-import { MapPin, Sparkles } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { ArrowRight, MapPin } from "lucide-react";
 
 export default function HeroSection() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!containerRef.current) return;
+      const { innerWidth, innerHeight } = window;
+      const x = (e.clientX - innerWidth / 2) / 50;
+      const y = (e.clientY - innerHeight / 2) / 50;
+      setMousePos({ x, y });
+    };
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-      {/* Background Elements */}
-      <div className="absolute inset-0 gradient-hero noise-overlay" />
-
-      {/* Decorative Shapes */}
-      <div className="absolute top-20 left-10 w-32 h-32 bg-[#bbcccd]/30 blob-1 animate-float" />
-      <div className="absolute top-40 right-20 w-24 h-24 bg-[#e3a99c]/20 blob-2 animate-float-delayed" />
-      <div className="absolute bottom-40 left-1/4 w-16 h-16 bg-[#f2d6c9]/40 rounded-full animate-pulse-soft" />
-      <div className="absolute bottom-20 right-1/3 w-20 h-20 bg-[#e7ddd3]/50 blob-1 animate-float" />
-
-      {/* Sparkle decorations */}
-      <Sparkles className="absolute top-32 right-1/4 w-6 h-6 text-[#e3a99c]/60 animate-sparkle" />
-      <Sparkles className="absolute bottom-48 left-1/3 w-4 h-4 text-[#bbcccd]/60 animate-sparkle delay-500" />
-
-      {/* Palm tree silhouette decoration */}
+    <section
+      ref={containerRef}
+      className="relative min-h-screen flex items-center overflow-hidden bg-[#f9f5f2] pt-20"
+    >
+      {/* Dynamic Background Map Path */}
       <svg
-        className="absolute bottom-0 left-0 w-48 h-64 text-[#bbcccd]/20 animate-wave"
-        viewBox="0 0 100 150"
-        fill="currentColor"
+        className="absolute inset-0 w-full h-full pointer-events-none opacity-40 mix-blend-multiply"
+        viewBox="0 0 1440 900"
+        fill="none"
+        preserveAspectRatio="xMidYMid slice"
       >
-        <path d="M50 150 L48 80 Q30 60 10 70 Q25 55 45 60 Q30 40 15 45 Q35 35 50 50 Q65 35 85 45 Q70 40 55 60 Q75 55 90 70 Q70 60 52 80 L50 150Z" />
+        <path
+          d="M-100 800 C 200 800, 400 600, 600 700 S 900 300, 1200 400 S 1500 100, 1600 100"
+          stroke="#e3a99c"
+          strokeWidth="3"
+          className="animate-draw-path"
+        />
+        {/* Secondary decorative line */}
+        <path
+          d="M-100 850 C 250 850, 450 650, 650 750 S 950 350, 1250 450 S 1550 150, 1650 150"
+          stroke="#bbcccd"
+          strokeWidth="2"
+          className="animate-draw-path delay-300"
+          style={{ animationDelay: "0.5s" }}
+        />
       </svg>
 
-      <svg
-        className="absolute bottom-0 right-0 w-40 h-56 text-[#e3a99c]/15 animate-wave delay-300"
-        viewBox="0 0 100 150"
-        fill="currentColor"
+      {/* Parallax Floating Elements */}
+      <div
+        className="absolute top-1/4 right-[15%] hidden lg:block"
+        style={{ transform: `translate(${-mousePos.x * 2}px, ${-mousePos.y * 2}px)` }}
       >
-        <path d="M50 150 L48 80 Q30 60 10 70 Q25 55 45 60 Q30 40 15 45 Q35 35 50 50 Q65 35 85 45 Q70 40 55 60 Q75 55 90 70 Q70 60 52 80 L50 150Z" />
-      </svg>
-
-      <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-8 text-center">
-        {/* Badge */}
-        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-[#e7ddd3] mb-8 animate-slide-up">
-          <span className="w-2 h-2 rounded-full bg-[#e3a99c] animate-pulse" />
-          <span className="font-[family-name:var(--font-body)] text-sm text-[#3a3a3a]">
-            Hi, I&apos;m Abie — Your Visa Freedom Guide 👩🏻‍💻
-          </span>
-        </div>
-
-        {/* Main Heading */}
-        <h1 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up delay-100">
-          From Weak Passport to{" "}
-          <span className="relative inline-block">
-            <span className="relative z-10 text-[#e3a99c]">Global Freedom</span>
-            <svg
-              className="absolute -bottom-2 left-0 w-full h-3 text-[#f2d6c9]"
-              viewBox="0 0 200 12"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M0 8 Q50 0, 100 8 T200 8"
-                stroke="currentColor"
-                strokeWidth="4"
-                fill="none"
-                strokeLinecap="round"
-              />
-            </svg>
-          </span>
-        </h1>
-
-        {/* Subheading */}
-        <p className="font-[family-name:var(--font-body)] text-lg md:text-xl text-[#6b6b6b] max-w-2xl mx-auto mb-10 leading-relaxed animate-slide-up delay-200">
-          I turned my challenging passport into a clear, executable roadmap for
-          location independence. Now I help digital nomads like you navigate
-          visa complexities so you can focus on —
-          <span className="text-[#3a3a3a] font-medium">
-            {" "}
-            living your adventure
-          </span>
-          .
-        </p>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16 animate-slide-up delay-300">
-          <a
-            href="#contact"
-            className="btn-primary text-base px-8 py-4 inline-flex items-center gap-3"
-          >
-            <span>Book Free Consultation</span>
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
-              />
-            </svg>
-          </a>
-          <a
-            href="#services"
-            className="btn-secondary text-base px-8 py-4 inline-flex items-center gap-2"
-          >
-            <span>Explore Services</span>
-          </a>
-        </div>
-
-        {/* Stats */}
-        {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 max-w-4xl mx-auto animate-slide-up delay-400">
-          {[
-            { number: "30+", label: "Countries Navigated" },
-            { number: "200+", label: "Happy Nomads" },
-            { number: "95%", label: "Success Rate" },
-            { number: "5+", label: "Years Experience" },
-          ].map((stat, index) => (
-            <div
-              key={index}
-              className="group p-6 rounded-2xl bg-white/60 backdrop-blur-sm border border-white/50 hover:bg-white/80 hover:shadow-lg transition-all duration-300"
-            >
-              <p className="font-[family-name:var(--font-heading)] text-3xl md:text-4xl font-bold text-[#e3a99c] group-hover:scale-110 transition-transform duration-300">
-                {stat.number}
-              </p>
-              <p className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b] mt-1">
-                {stat.label}
-              </p>
-            </div>
-          ))}
-        </div> */}
-
-        {/* Scroll indicator */}
-        {/* <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in delay-600">
-          <span className="font-[family-name:var(--font-body)] text-xs text-[#6b6b6b] tracking-widest uppercase">
-            Scroll to explore
-          </span>
-          <div className="w-6 h-10 rounded-full border-2 border-[#e3a99c]/50 flex justify-center pt-2">
-            <div className="w-1.5 h-3 rounded-full bg-[#e3a99c] animate-bounce" />
-          </div>
-        </div> */}
-      </div>
-
-      {/* Floating Location Pins */}
-      <div className="absolute top-1/3 left-10 md:left-20 hidden lg:block animate-float">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/90 shadow-lg">
+        <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-white/40 animate-float">
           <MapPin className="w-4 h-4 text-[#e3a99c]" />
-          <span className="font-[family-name:var(--font-body)] text-xs text-[#3a3a3a]">
-            Portugal
-          </span>
+          <span className="text-sm font-medium text-[#3a3a3a]">Lisbon, Portugal</span>
         </div>
       </div>
 
-      <div className="absolute top-1/2 right-10 md:right-24 hidden lg:block animate-float-delayed">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/90 shadow-lg">
+      <div
+        className="absolute bottom-1/4 left-[10%] hidden lg:block"
+        style={{ transform: `translate(${mousePos.x * 1.5}px, ${mousePos.y * 1.5}px)` }}
+      >
+        <div className="flex items-center gap-2 px-4 py-2 bg-white/80 backdrop-blur-md rounded-full shadow-lg border border-white/40 animate-float-delayed">
           <MapPin className="w-4 h-4 text-[#bbcccd]" />
-          <span className="font-[family-name:var(--font-body)] text-xs text-[#3a3a3a]">
-            Spain
-          </span>
+          <span className="text-sm font-medium text-[#3a3a3a]">Chiang Mai, Thailand</span>
         </div>
       </div>
 
-      <div className="absolute bottom-1/3 left-16 md:left-32 hidden lg:block animate-float">
-        <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white/90 shadow-lg">
-          <MapPin className="w-4 h-4 text-[#f2d6c9]" />
-          <span className="font-[family-name:var(--font-body)] text-xs text-[#3a3a3a]">
-            Thailand
-          </span>
+      {/* Main Content */}
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="max-w-2xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#e3a99c]/10 border border-[#e3a99c]/20 mb-8 animate-slide-in-left">
+            <span className="w-2 h-2 rounded-full bg-[#e3a99c] animate-pulse" />
+            <span className="text-xs font-semibold tracking-wider text-[#d69586] uppercase">
+              Global Citizenship
+            </span>
+          </div>
+
+          <h1 className="font-[family-name:var(--font-heading)] text-6xl lg:text-8xl font-bold text-[#3a3a3a] leading-[0.95] tracking-tight mb-8 animate-slide-up">
+            Design Your <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#e3a99c] to-[#d69586]">
+              Freedom
+            </span>
+          </h1>
+
+          <p className="font-[family-name:var(--font-body)] text-xl text-[#6b6b6b] leading-relaxed mb-10 max-w-lg animate-slide-up delay-200">
+            Navigate the complexities of global visas and residencies. Turn your passport into a tool for location independence.
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-300">
+            <a
+              href="#contact"
+              className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group"
+            >
+              Start Your Journey
+              <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+            </a>
+            <a
+              href="#services"
+              className="px-8 py-4 rounded-full text-[#3a3a3a] font-medium hover:bg-[#e7ddd3]/30 transition-colors w-full sm:w-auto text-center"
+            >
+              Explore Routes
+            </a>
+          </div>
+
+          {/* Stats minimalist */}
+          {/* <div className="mt-16 pt-8 border-t border-[#e7ddd3] grid grid-cols-2 gap-8 animate-slide-up delay-400">
+            <div>
+              <p className="text-3xl font-bold text-[#3a3a3a]">30+</p>
+              <p className="text-sm text-[#6b6b6b] mt-1">Countries Navigated</p>
+            </div>
+            <div>
+              <p className="text-3xl font-bold text-[#3a3a3a]">98%</p>
+              <p className="text-sm text-[#6b6b6b] mt-1">Approval Rate</p>
+            </div>
+          </div> */}
+        </div>
+
+        {/* Right side - Connected Circles Layout */}
+        <div className="relative h-[600px] hidden lg:block" style={{ transform: `translate(${-mousePos.x}px, ${-mousePos.y}px)` }}>
+
+          {/* Connecting Line SVG */}
+          <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 600 600" fill="none">
+            <path
+              d="M 50 450 C 150 450, 200 550, 300 500 S 400 200, 500 150"
+              stroke="#e3a99c"
+              strokeWidth="2"
+              strokeDasharray="10 10"
+              className="opacity-60"
+            />
+            {/* Animated moving dot on the line */}
+            <circle r="4" fill="#e3a99c">
+              <animateMotion
+                dur="8s"
+                repeatCount="indefinite"
+                path="M 50 450 C 150 450, 200 550, 300 500 S 400 200, 500 150"
+              />
+            </circle>
+          </svg>
+
+          {/* Circle 1: Main (Top Right) - Traveler */}
+          <div className="absolute top-0 right-10 w-72 h-72 rounded-full border-4 border-white shadow-2xl overflow-hidden animate-float">
+            <img
+              src="https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=800&q=80"
+              alt="Traveler"
+              className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+            />
+          </div>
+
+          {/* Circle 2: Secondary (Bottom Left) - Nature */}
+          <div className="absolute bottom-20 left-10 w-56 h-56 rounded-full border-4 border-white shadow-2xl overflow-hidden animate-float-delayed">
+            <img
+              src="https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?auto=format&fit=crop&w=800&q=80"
+              alt="Scenic"
+              className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+            />
+          </div>
+
+          {/* Circle 3: Tertiary (Center/Low) - Detail */}
+          <div className="absolute top-[40%] right-[30%] w-40 h-40 rounded-full border-4 border-white shadow-xl overflow-hidden animate-float" style={{ animationDelay: '1.5s' }}>
+            <img
+              src="https://images.unsplash.com/photo-1488646953014-85cb44e25828?auto=format&fit=crop&w=800&q=80"
+              alt="Detail"
+              className="w-full h-full object-cover hover:scale-110 transition-transform duration-700"
+            />
+          </div>
         </div>
       </div>
     </section>

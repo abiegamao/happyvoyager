@@ -14,24 +14,7 @@ export default function CTASection() {
       <div className="absolute top-1/2 left-1/4 w-4 h-4 rounded-full bg-[#e3a99c]/40" />
       <div className="absolute top-1/3 right-1/4 w-3 h-3 rounded-full bg-[#bbcccd]/50" />
 
-      {/* Pattern overlay */}
-      <div className="absolute inset-0 opacity-10">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <pattern
-            id="cta-pattern"
-            width="5"
-            height="5"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="2.5" cy="2.5" r="1" fill="currentColor" />
-          </pattern>
-          <rect width="100" height="100" fill="url(#cta-pattern)" />
-        </svg>
-      </div>
+
 
       <div className="max-w-5xl mx-auto relative z-10">
         <div className="text-center">

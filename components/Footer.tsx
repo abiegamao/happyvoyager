@@ -51,24 +51,7 @@ const socialLinks = [
 export default function Footer() {
   return (
     <footer className="relative bg-[#3a3a3a] text-white overflow-hidden">
-      {/* Background pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <pattern
-            id="footer-dots"
-            width="3"
-            height="3"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="1.5" cy="1.5" r="0.5" fill="white" />
-          </pattern>
-          <rect width="100" height="100" fill="url(#footer-dots)" />
-        </svg>
-      </div>
+
 
       {/* Decorative top border */}
       <div className="h-1 bg-gradient-to-r from-[#e3a99c] via-[#f2d6c9] to-[#bbcccd]" />

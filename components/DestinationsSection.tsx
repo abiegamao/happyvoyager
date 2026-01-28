@@ -119,16 +119,7 @@ export default function DestinationsSection() {
     >
       {/* Background pattern */}
       <div className="absolute inset-0 opacity-5">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <pattern id="dots" width="4" height="4" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="0.5" fill="currentColor" />
-          </pattern>
-          <rect width="100" height="100" fill="url(#dots)" />
-        </svg>
+
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">

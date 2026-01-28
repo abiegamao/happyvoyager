@@ -74,24 +74,7 @@ export default function TestimonialsSection() {
       id="testimonials"
       className="section-padding relative overflow-hidden bg-[#3a3a3a]"
     >
-      {/* Background elements */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-5">
-        <svg
-          className="w-full h-full"
-          viewBox="0 0 100 100"
-          preserveAspectRatio="none"
-        >
-          <pattern
-            id="testimonial-dots"
-            width="3"
-            height="3"
-            patternUnits="userSpaceOnUse"
-          >
-            <circle cx="1.5" cy="1.5" r="0.5" fill="white" />
-          </pattern>
-          <rect width="100" height="100" fill="url(#testimonial-dots)" />
-        </svg>
-      </div>
+
 
       {/* Decorative shapes */}
       <div className="absolute top-20 left-20 w-32 h-32 bg-[#e3a99c]/10 rounded-full blur-2xl" />
