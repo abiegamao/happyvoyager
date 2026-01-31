@@ -86,7 +86,7 @@ export default function HeroSection() {
           {/* Secondary Image (Vintage Car / Palm) */}
           <div className="absolute bottom-10 left-10 w-64 h-72 rounded-[2rem] shadow-2xl overflow-hidden animate-float-delayed z-10 border-[8px] border-white">
             <img
-              src="https://images.unsplash.com/photo-1566418854224-38496495b597?auto=format&fit=crop&w=800&q=80"
+              src="https://images.unsplash.com/photo-1574876881057-2c6b24d5174b?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               alt="Vintage Palm Springs"
               className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
             />
