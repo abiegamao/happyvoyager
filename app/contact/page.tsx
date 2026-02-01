@@ -2,7 +2,7 @@
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Youtube, Facebook, Globe, AtSign, ArrowRight, Mail, MessageCircle, MapPin } from "lucide-react";
+import { Youtube, Facebook, Globe, AtSign, ArrowRight, Mail, MessageCircle, MapPin, Linkedin } from "lucide-react";
 import Link from "next/link";
 
 export default function ContactPage() {
@@ -27,14 +27,11 @@ export default function ContactPage() {
                     <div className="border-t border-l border-[#e7ddd3] grid md:grid-cols-2 lg:grid-cols-3">
 
                         {/* Cell 1: Journal (Large) */}
-                        <div className="col-span-1 md:col-span-2 lg:col-span-2 border-r border-b border-[#e7ddd3] p-10 md:p-14 group bg-white/40 transition-colors duration-300 relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-6 ">
-                                <Globe className="w-24 h-24 text-[#e3a99c]" />
-                            </div>
+                        <div className="col-span-1 md:col-span-2 lg:col-span-2 border-r border-b border-[#e7ddd3]  md:p-14 group bg-white/40 transition-colors duration-300 relative overflow-hidden">
 
-                            <div className="mb-6">
-                                <div className="bg-[#e3a99c]/20 p-3 rounded-xl inline-block mb-4">
-                                    <Globe className="w-8 h-8 text-[#e3a99c]" />
+                            <div className="">
+                                <div className="rounded-xl">
+                                    <img src="/assets/abie-logo.png" alt="Abie Logo" className="w-30 h-30 object-contain" />
                                 </div>
                                 <h2 className="text-3xl font-bold mb-4">Read my Journal.</h2>
                                 <p className="text-[#6b6b6b] text-lg max-w-md">
@@ -50,10 +47,6 @@ export default function ContactPage() {
                                 >
                                     Visit Website
                                 </Link>
-                                <div className="flex items-center gap-2 text-[#6b6b6b] text-sm">
-                                    <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                                    Online now
-                                </div>
                             </div>
                         </div>
 
@@ -80,17 +73,17 @@ export default function ContactPage() {
                         {/* Cell 3: Facebook */}
                         <div className="col-span-1 border-r border-b border-[#e7ddd3] p-10 group bg-white/40">
                             <div className="mb-4">
-                                <Facebook className="w-10 h-10 text-[#1877F2] mb-4" />
-                                <h3 className="text-xl font-bold mb-2">Connect on Facebook.</h3>
+                                <Linkedin className="w-10 h-10 text-[#1877F2] mb-4" />
+                                <h3 className="text-xl font-bold mb-2">Connect on Linkedin.</h3>
                                 <p className="text-[#6b6b6b] text-sm mb-6">
-                                    Join the community and stay updated.
+                                    Let's connect and stay updated.
                                 </p>
                                 <Link
-                                    href="https://www.facebook.com/jmgamao"
+                                    href="https://www.linkedin.com/in/abiemaxey/"
                                     target="_blank"
                                     className="block w-full text-center py-2 rounded-full border border-[#e7ddd3] text-sm font-semibold hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all"
                                 >
-                                    Follow Abie Maxey
+                                    Connect with Abie Maxey
                                 </Link>
                             </div>
                         </div>
