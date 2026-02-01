@@ -2,6 +2,7 @@ import Header from "@/components/Header";
 import HeroSection from "@/components/HeroSection";
 import ServicesSection from "@/components/ServicesSection";
 import WhyChooseUsSection from "@/components/WhyChooseUsSection";
+import MyStorySection from "@/components/MyStorySection";
 import DestinationsSection from "@/components/DestinationsSection";
 import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
@@ -16,6 +17,7 @@ export default function Home() {
       <Header />
       <HeroSection />
       <ServicesSection />
+      <MyStorySection />
       <WhyChooseUsSection />
       <DestinationsSection />
       <ProcessSection />
