@@ -9,14 +9,14 @@ const allura = Allura({
 });
 
 export const metadata: Metadata = {
-  title: "Abie Maxey | Digital Nomad Visa Consulting",
+  title: "Happy Voyager | Digital Nomad Visa Consulting",
   description:
     "I help digital nomads navigate global visa requirements. From weak passport to global freedom - let me guide you through your visa journey.",
   keywords: [
     "digital nomad visa",
     "remote work visa",
     "visa consulting",
-    "Abie Maxey",
+    "Happy Voyager",
     "nomad lifestyle",
     "weak passport solutions",
   ],
