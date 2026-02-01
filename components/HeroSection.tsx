@@ -54,12 +54,9 @@ export default function HeroSection() {
 
           {/* Heading */}
           <h1 className="font-[family-name:var(--font-heading)] text-5xl lg:text-7xl font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
-            Design Your <br />
-            <span className="text-[#e3a99c] inline-block relative">
-              Global Freedom
-              <svg className="absolute w-full h-3 -bottom-1 left-0 text-[#e3a99c] opacity-40" viewBox="0 0 100 10" preserveAspectRatio="none">
-                <path d="M0 5 Q 50 10 100 5" stroke="currentColor" strokeWidth="2" fill="none" />
-              </svg>
+            Your Clear Path to{" "}
+            <span className="text-[#e3a99c]  relative">
+              Spain&apos;s Digital Nomad Visa
             </span>
           </h1>
 
