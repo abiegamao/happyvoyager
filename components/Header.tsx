@@ -7,10 +7,10 @@ import { Menu, X } from "lucide-react";
 const navLinks = [
   { name: "Services", href: "/#services" },
   { name: "Destinations", href: "/#destinations" },
-  { name: "Process", href: "/#process" },
+  { name: "Preparation", href: "/document-checklist" },
   { name: "Blogs", href: "/blog" },
-  { name: "About", href: "/my-story" },
   { name: "Contact", href: "/contact" },
+  { name: "About", href: "/my-story" },
 ];
 
 export default function Header() {
