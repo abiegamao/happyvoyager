@@ -36,9 +36,11 @@ export default function Header() {
         <nav className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex flex-col group">
-            <h1 className="text-3xl font-bold text-[#3a3a3a] tracking-tight hover:text-[#e3a99c] transition-colors duration-300">
-              Happy Voyager
-            </h1>
+            <img
+              src="/assets/logo.png"
+              alt="Happy Voyager"
+              className="h-12 w-auto object-contain"
+            />
           </Link>
 
           {/* Desktop Navigation */}

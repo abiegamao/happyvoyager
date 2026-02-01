@@ -49,7 +49,11 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <Link href="/" className="inline-block mb-8">
-              <h2 className="text-3xl font-bold tracking-tight text-white mb-2">Happy Voyager</h2>
+              <img
+                src="/assets/logo.png"
+                alt="Happy Voyager"
+                className="h-12 w-auto object-contain mb-2 brightness-0 invert"
+              />
               <p className="text-[#e3a99c] text-sm font-bold tracking-[0.2em] uppercase">Digital Nomad Consultant</p>
             </Link>
             <p className="text-white/60 text-lg leading-relaxed max-w-md mb-8">
