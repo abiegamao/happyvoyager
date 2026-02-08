@@ -1,11 +1,10 @@
-import { getBlogBySlug, BlogDetail } from "@/api/blogs.api";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CommentSection from "@/components/CommentSection";
 import BlogContent from "@/components/BlogContent";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User, Clock, Share2, Eye } from "lucide-react";
+import { ArrowLeft, Calendar, User, Clock, Share2 } from "lucide-react";
 import { notFound } from "next/navigation";
 
 // Next.js 13+ params handling
@@ -13,17 +12,40 @@ interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+interface ScrapedBlog {
+  slug: string;
+  title: string;
+  content: string;
+  excerpt: string;
+  featuredImage: string;
+  date: string;
+  author: string;
+  categories: string[];
+  tags: string[];
+  url: string;
+}
+
 export default async function SingleBlogPage({ params }: PageProps) {
   const { slug } = await params;
 
-  let blog: BlogDetail;
+  let blog: ScrapedBlog;
   try {
-    blog = await getBlogBySlug(slug);
-  } catch {
-    notFound();
-  }
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/scrape-blog/${slug}`,
+      { cache: "no-store" },
+    );
 
-  if (!blog) {
+    if (!response.ok) {
+      notFound();
+    }
+
+    const data = await response.json();
+    if (!data.success || !data.blog) {
+      notFound();
+    }
+
+    blog = data.blog;
+  } catch {
     notFound();
   }
 
@@ -58,9 +80,16 @@ export default async function SingleBlogPage({ params }: PageProps) {
         <article className="container mx-auto px-6 max-w-4xl">
           {/* Header */}
           <header className="mb-12 text-center space-y-6">
-            {blog.category && (
-              <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-secondary)]/50 text-[var(--color-charcoal)] border border-[var(--color-secondary)]">
-                {blog.category}
+            {blog.categories && blog.categories.length > 0 && (
+              <div className="flex items-center justify-center gap-2 flex-wrap">
+                {blog.categories.slice(0, 3).map((category, index) => (
+                  <div
+                    key={index}
+                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-secondary)]/50 text-[var(--color-charcoal)] border border-[var(--color-secondary)]"
+                  >
+                    {category}
+                  </div>
+                ))}
               </div>
             )}
 
@@ -71,21 +100,15 @@ export default async function SingleBlogPage({ params }: PageProps) {
             <div className="flex items-center justify-center space-x-6 text-sm text-[var(--color-muted-foreground)]">
               <div className="flex items-center space-x-2">
                 <User className="w-4 h-4" />
-                <span>Author</span>
+                <span>{blog.author}</span>
               </div>
               <div className="flex items-center space-x-2">
                 <Calendar className="w-4 h-4" />
-                <time dateTime={blog.publishedAt || blog.createdAt}>
-                  {formatDate(blog.publishedAt || blog.createdAt)}
-                </time>
+                <time dateTime={blog.date}>{formatDate(blog.date)}</time>
               </div>
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4" />
                 <span>{readingTime} min read</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Eye className="w-4 h-4" />
-                <span>{blog.viewCount || 0} views</span>
               </div>
             </div>
           </header>
@@ -112,11 +135,11 @@ export default async function SingleBlogPage({ params }: PageProps) {
           {/* Share / Tags Footer */}
           <div className="mt-12 pt-8 border-t border-[var(--color-border)] flex items-center justify-between">
             <div className="text-sm font-medium text-[var(--color-muted-foreground)]">
-              {blog.category && (
+              {blog.tags && blog.tags.length > 0 && (
                 <>
                   Tags:{" "}
                   <span className="text-[var(--color-charcoal)]">
-                    {blog.category}, Travel, Lifestyle
+                    {blog.tags.join(", ")}
                   </span>
                 </>
               )}

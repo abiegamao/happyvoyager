@@ -1,8 +1,15 @@
-import { getPublicBlogs, PublicBlog } from "@/api/blogs.api";
 import BlogCard from "@/components/BlogCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import Link from "next/link";
+
+interface ScrapedBlog {
+  title: string;
+  excerpt: string;
+  link: string;
+  image: string;
+  date: string;
+  author: string;
+}
 
 interface BlogListingPageProps {
   searchParams: Promise<{ page?: string; category?: string }>;
@@ -11,75 +18,52 @@ interface BlogListingPageProps {
 export default async function BlogListingPage({
   searchParams,
 }: BlogListingPageProps) {
-  const params = await searchParams;
-  const currentPage = parseInt(params.page || "1", 10);
-  const category = params.category;
-
-  // Fetch blogs from API with businessId from env
-  const businessId = process.env.NEXT_PUBLIC_BUSINESS_ID;
-
-  let blogs: PublicBlog[] = [];
-  let pagination = {
-    page: 1,
-    totalPages: 1,
-    hasNextPage: false,
-    hasPrevPage: false,
-  };
+  // Fetch blogs from scraping API
+  let featuredBlogs: ScrapedBlog[] = [];
+  let trendingBlogs: ScrapedBlog[] = [];
 
   try {
-    const response = await getPublicBlogs({
-      businessId,
-      category,
-      page: currentPage,
-      limit: 9,
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const response = await fetch(`${baseUrl}/api/scrape-blog`, {
+      cache: "no-store",
     });
-    blogs = response.data;
-    pagination = {
-      page: response.pagination.page,
-      totalPages: response.pagination.totalPages,
-      hasNextPage: response.pagination.hasNextPage,
-      hasPrevPage: response.pagination.hasPrevPage,
-    };
+    const data = await response.json();
+
+    if (data.success) {
+      featuredBlogs = data.featured?.blogs || [];
+      trendingBlogs = data.trending?.blogs || [];
+    }
   } catch (error) {
     console.error("Failed to fetch blogs:", error);
   }
 
-  // Generate page numbers for pagination
-  const getPageNumbers = () => {
-    const pages: (number | string)[] = [];
-    const maxVisiblePages = 5;
+  // Map featured blogs to the format expected by BlogCard
+  const mappedFeaturedBlogs = featuredBlogs.map((blog) => {
+    const slug = blog.link.split("/").filter(Boolean).pop() || "";
+    return {
+      _id: `featured-${slug}`,
+      slug: slug,
+      title: blog.title,
+      excerpt: blog.excerpt,
+      featuredImage: blog.image,
+      createdAt: blog.date,
+      category: blog.author || undefined,
+    };
+  });
 
-    if (pagination.totalPages <= maxVisiblePages) {
-      for (let i = 1; i <= pagination.totalPages; i++) {
-        pages.push(i);
-      }
-    } else {
-      if (currentPage <= 3) {
-        for (let i = 1; i <= 4; i++) pages.push(i);
-        pages.push("...");
-        pages.push(pagination.totalPages);
-      } else if (currentPage >= pagination.totalPages - 2) {
-        pages.push(1);
-        pages.push("...");
-        for (let i = pagination.totalPages - 3; i <= pagination.totalPages; i++)
-          pages.push(i);
-      } else {
-        pages.push(1);
-        pages.push("...");
-        for (let i = currentPage - 1; i <= currentPage + 1; i++) pages.push(i);
-        pages.push("...");
-        pages.push(pagination.totalPages);
-      }
-    }
-    return pages;
-  };
-
-  const buildPageUrl = (page: number) => {
-    const searchParams = new URLSearchParams();
-    searchParams.set("page", page.toString());
-    if (category) searchParams.set("category", category);
-    return `/blog?${searchParams.toString()}`;
-  };
+  // Map trending blogs to the format expected by BlogCard
+  const mappedTrendingBlogs = trendingBlogs.map((blog) => {
+    const slug = blog.link.split("/").filter(Boolean).pop() || "";
+    return {
+      _id: `trending-${slug}`,
+      slug: slug,
+      title: blog.title,
+      excerpt: blog.excerpt,
+      featuredImage: blog.image,
+      createdAt: blog.date,
+      category: blog.author || undefined,
+    };
+  });
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col font-sans">
@@ -104,52 +88,53 @@ export default async function BlogListingPage({
           </div>
         </section>
 
-        {/* Blog Grid */}
-        <section className="container mx-auto px-6 max-w-7xl">
-          {blogs.length === 0 ? (
+        {/* Featured Blogs Section */}
+        <section className="container mx-auto px-6 max-w-7xl mb-20">
+          <div className="mb-12">
+            <h2 className="text-3xl md:text-4xl font-script text-[var(--color-charcoal)] mb-2 relative inline-block">
+              <span className="relative z-10">Featured Stories</span>
+              <span className="absolute bottom-1 left-0 w-full h-2 bg-[var(--color-primary)]/20 -rotate-1 rounded-full -z-10" />
+            </h2>
+            <p className="text-[var(--color-muted-foreground)] mt-2">
+              Handpicked articles and travel guides
+            </p>
+          </div>
+
+          {mappedFeaturedBlogs.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-[var(--color-muted-foreground)] text-lg">
-                No blog posts found. Check back soon!
+                No featured posts available.
               </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-              {blogs.map((blog) => (
+              {mappedFeaturedBlogs.map((blog) => (
                 <BlogCard key={blog._id} blog={blog} />
               ))}
             </div>
           )}
-
-          {/* Pagination */}
-          {pagination.totalPages > 1 && (
-            <div className="mt-16 text-center">
-              <div className="inline-flex space-x-2">
-                {getPageNumbers().map((page, index) =>
-                  page === "..." ? (
-                    <span
-                      key={`ellipsis-${index}`}
-                      className="w-10 h-10 flex items-center justify-center text-[var(--color-muted-foreground)]"
-                    >
-                      ...
-                    </span>
-                  ) : (
-                    <Link
-                      key={page}
-                      href={buildPageUrl(page as number)}
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
-                        page === currentPage
-                          ? "bg-[var(--color-primary)] text-white shadow-lg shadow-[var(--color-primary)]/30"
-                          : "bg-white text-[var(--color-charcoal)] border border-[var(--color-border)] hover:bg-[var(--color-secondary)]"
-                      }`}
-                    >
-                      {page}
-                    </Link>
-                  ),
-                )}
-              </div>
-            </div>
-          )}
         </section>
+
+        {/* Trending Blogs Section */}
+        {mappedTrendingBlogs.length > 0 && (
+          <section className="container mx-auto px-6 max-w-7xl mb-20">
+            <div className="mb-12">
+              <h2 className="text-3xl md:text-4xl font-script text-[var(--color-charcoal)] mb-2 relative inline-block">
+                <span className="relative z-10">Trending Now</span>
+                <span className="absolute bottom-1 left-0 w-full h-2 bg-[var(--color-accent)]/20 -rotate-1 rounded-full -z-10" />
+              </h2>
+              <p className="text-[var(--color-muted-foreground)] mt-2">
+                Popular articles readers love
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
+              {mappedTrendingBlogs.map((blog) => (
+                <BlogCard key={blog._id} blog={blog} />
+              ))}
+            </div>
+          </section>
+        )}
       </main>
 
       <Footer />
