@@ -26,13 +26,43 @@ interface ScrapedBlog {
 
 // Generate static params for all blog posts at build time
 export async function generateStaticParams() {
-  // Skip during build time to avoid localhost connection errors
-  // Pages will be generated on-demand for production
-  return [];
+  // Only fetch at build time on Vercel (when BASE_URL is set)
+  // Skip during local builds to avoid connection errors
+  if (!process.env.NEXT_PUBLIC_BASE_URL) {
+    return [];
+  }
+
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+    const response = await fetch(`${baseUrl}/api/scrape-blog`, {
+      cache: "force-cache",
+    });
+    const data = await response.json();
+
+    if (!data.success) {
+      return [];
+    }
+
+    const allBlogs = [
+      ...(data.featured?.blogs || []),
+      ...(data.trending?.blogs || []),
+    ];
+
+    return allBlogs.map((blog: any) => {
+      const slug = blog.link.split("/").filter(Boolean).pop() || "";
+      return { slug };
+    });
+  } catch (error) {
+    console.error("Error generating static params:", error);
+    return [];
+  }
 }
 
 // Allow dynamic params for new blog posts not available at build time
 export const dynamicParams = true;
+
+// Revalidate every hour (ISR)
+export const revalidate = 3600;
 
 export default async function SingleBlogPage({ params }: PageProps) {
   const { slug } = await params;
@@ -40,33 +70,33 @@ export default async function SingleBlogPage({ params }: PageProps) {
   let blog: ScrapedBlog | null = null;
   let error = false;
 
-  try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL;
+  // Only fetch if BASE_URL is set (Vercel deployment)
+  // Skip during local builds to avoid connection errors
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    // Add timeout to fetch
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      const response = await fetch(`${baseUrl}/api/scrape-blog/${slug}`, {
+        cache: "force-cache",
+        next: { revalidate: 3600 },
+      });
 
-    const response = await fetch(`${baseUrl}/api/scrape-blog/${slug}`, {
-      next: { revalidate: 3600 },
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      error = true;
-    } else {
-      const data = await response.json();
-      if (data.success && data.blog) {
-        blog = data.blog;
-      } else {
+      if (!response.ok) {
         error = true;
+      } else {
+        const data = await response.json();
+        if (data.success && data.blog) {
+          blog = data.blog;
+        } else {
+          error = true;
+        }
       }
+    } catch (err) {
+      console.error("Error fetching blog:", err);
+      error = true;
     }
-  } catch (err) {
-    console.error("Error fetching blog:", err);
+  } else {
+    // During local build, show not found message
     error = true;
   }
 
