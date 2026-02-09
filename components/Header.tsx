@@ -58,8 +58,7 @@ export default function Header() {
             ))}
 
             <Link
-              href="https://calendly.com/abie-gamao/spain-dnv"
-              target="_blank"
+              href="/booking"
               className="px-6 py-2.5 rounded-full bg-[#3a3a3a] text-white text-sm font-semibold hover:bg-[#e3a99c] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
             >
               Let&apos;s Talk
@@ -98,7 +97,7 @@ export default function Header() {
               </Link>
             ))}
             <Link
-              href="/#contact"
+              href="/booking"
               onClick={() => setIsMobileMenuOpen(false)}
               className="mt-2 px-8 py-3 rounded-full bg-[#3a3a3a] text-white font-semibold hover:bg-[#e3a99c] transition-colors w-full text-center"
             >
