@@ -3,17 +3,23 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { firstName, lastName, email, company } = body;
+    const { firstName, lastName, email, company, tags } = body;
+
+    // Construct name if first or last name is present
+    let name = undefined;
+    if (firstName || lastName) {
+      name = `${firstName || ""} ${lastName || ""}`.trim();
+    }
 
     const contactData = {
-      firstName,
-      lastName,
-      name: `${firstName} ${lastName}`.trim(),
+      firstName: firstName || undefined,
+      lastName: lastName || undefined,
+      name,
       email,
       locationId: "mgansJI1GJC6BZLdnkVj",
       companyName: company || undefined,
-      source: "AVSPH Website",
-      tags: ["Landing Page Lead"],
+      source: "Happy Voyager Website",
+      tags: tags || ["Contact Form"],
     };
 
     const ghlResponse = await fetch(`${process.env.GHL_BASE_URL}contacts/`, {

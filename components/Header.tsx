@@ -36,7 +36,7 @@ export default function Header() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <nav className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex flex-col group">
+          <Link href="/#hero" className="flex flex-col group">
             <img
               src="/assets/logo.png"
               alt="Happy Voyager"
