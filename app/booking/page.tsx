@@ -38,12 +38,7 @@ export default function BookingPage() {
                         <iframe
                             key={iframeKey}
                             src="https://links.talentmucho.com/widget/booking/rpY1q6dGq57KRRIrxoCk"
-                            style={{
-                                width: "100%",
-                                border: "none",
-                                overflow: "hidden",
-                                minHeight: "900px",
-                            }}
+                            className="w-full min-h-[1450px] lg:min-h-[900px] border-none overflow-hidden"
                             scrolling="no"
                             id={`rpY1q6dGq57KRRIrxoCk_${iframeKey}`}
                             title="Book an Appointment"
