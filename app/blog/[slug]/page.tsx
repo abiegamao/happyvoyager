@@ -30,8 +30,9 @@ export default async function SingleBlogPage({ params }: PageProps) {
 
   let blog: ScrapedBlog;
   try {
+    const baseUrl = "https://happyvoyager.com";
     const response = await fetch(
-      `https://happyvoyager.vercel.app/api/scrape-blog/${slug}`,
+      `${baseUrl}/api/scrape-blog/${slug}`,
       { cache: "no-store" },
     );
 
