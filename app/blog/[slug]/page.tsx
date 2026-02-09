@@ -30,8 +30,9 @@ export default async function SingleBlogPage({ params }: PageProps) {
 
   let blog: ScrapedBlog;
   try {
+    const baseUrl = "https://happyvoyager.com";
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000"}/api/scrape-blog/${slug}`,
+      `${baseUrl}/api/scrape-blog/${slug}`,
       { cache: "no-store" },
     );
 

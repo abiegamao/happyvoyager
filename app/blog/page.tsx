@@ -23,7 +23,7 @@ export default async function BlogListingPage({
   let trendingBlogs: ScrapedBlog[] = [];
 
   try {
-    const baseUrl = "https://happyvoyager.vercel.app/";
+    const baseUrl = "https://happyvoyager.com";
     const response = await fetch(`${baseUrl}/api/scrape-blog`, {
       cache: "no-store",
     });
