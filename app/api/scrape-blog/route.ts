@@ -1,7 +1,9 @@
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
-import { writeFileSync } from "fs";
-import { join } from "path";
+
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function GET() {
   try {
@@ -167,18 +169,18 @@ export async function GET() {
     // console.log(`Trending blogs: ${trendingBlogs.length}`);
     // console.log("━".repeat(50));
 
-      // if (featuredBlogs.length > 0) {
-      //   console.log("\n🌟 FEATURED BLOGS:");
-      //   featuredBlogs.forEach((blog, index) => {
-      //     console.log(`\n${index + 1}. ${blog.title || "No title"}`);
-      //     console.log(`   Link: ${blog.link}`);
-      //     console.log(`   Date: ${blog.date || "N/A"}`);
-      //     console.log(`   Author: ${blog.author || "N/A"}`);
-      //     console.log(
-      //       `   Excerpt: ${blog.excerpt ? blog.excerpt.substring(0, 100) + "..." : "N/A"}`,
-      //     );
-      //   });
-      // }
+    // if (featuredBlogs.length > 0) {
+    //   console.log("\n🌟 FEATURED BLOGS:");
+    //   featuredBlogs.forEach((blog, index) => {
+    //     console.log(`\n${index + 1}. ${blog.title || "No title"}`);
+    //     console.log(`   Link: ${blog.link}`);
+    //     console.log(`   Date: ${blog.date || "N/A"}`);
+    //     console.log(`   Author: ${blog.author || "N/A"}`);
+    //     console.log(
+    //       `   Excerpt: ${blog.excerpt ? blog.excerpt.substring(0, 100) + "..." : "N/A"}`,
+    //     );
+    //   });
+    // }
 
     // if (trendingBlogs.length > 0) {
     //   console.log("\n🔥 TRENDING BLOGS:");

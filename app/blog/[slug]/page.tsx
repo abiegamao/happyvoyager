@@ -5,7 +5,6 @@ import BlogContent from "@/components/BlogContent";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, User, Clock, Share2 } from "lucide-react";
-import { notFound } from "next/navigation";
 
 // Next.js 13+ params handling
 interface PageProps {
@@ -25,29 +24,104 @@ interface ScrapedBlog {
   url: string;
 }
 
+// Generate static params for all blog posts at build time
+export async function generateStaticParams() {
+  // Skip during build time to avoid localhost connection errors
+  // Pages will be generated on-demand for production
+  return [];
+}
+
+// Allow dynamic params for new blog posts not available at build time
+export const dynamicParams = true;
+
 export default async function SingleBlogPage({ params }: PageProps) {
   const { slug } = await params;
 
-  let blog: ScrapedBlog;
+  let blog: ScrapedBlog | null = null;
+  let error = false;
+
   try {
-    const baseUrl = "https://happyvoyager.com";
-    const response = await fetch(
-      `${baseUrl}/api/scrape-blog/${slug}`,
-      { cache: "no-store" },
-    );
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL;
+
+    // Add timeout to fetch
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
+    const response = await fetch(`${baseUrl}/api/scrape-blog/${slug}`, {
+      next: { revalidate: 3600 },
+      signal: controller.signal,
+    });
+
+    clearTimeout(timeoutId);
 
     if (!response.ok) {
-      notFound();
+      error = true;
+    } else {
+      const data = await response.json();
+      if (data.success && data.blog) {
+        blog = data.blog;
+      } else {
+        error = true;
+      }
     }
+  } catch (err) {
+    console.error("Error fetching blog:", err);
+    error = true;
+  }
 
-    const data = await response.json();
-    if (!data.success || !data.blog) {
-      notFound();
-    }
+  // Show custom error message if blog not found
+  if (error || !blog) {
+    return (
+      <div className="min-h-screen bg-[var(--color-background)] font-sans">
+        <Header />
+        <main className="pt-24 pb-16">
+          <div className="container mx-auto px-6 max-w-4xl">
+            <Link
+              href="/blog"
+              className="inline-flex items-center text-sm font-semibold text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors group mb-8"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
+              Back to All Stories
+            </Link>
 
-    blog = data.blog;
-  } catch {
-    notFound();
+            <div className="text-center py-20">
+              <div className="mb-6">
+                <div className="w-20 h-20 mx-auto bg-[var(--color-secondary)] rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-10 h-10 text-[var(--color-muted-foreground)]"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-[var(--color-charcoal)] mb-4">
+                Blog Post Not Found
+              </h1>
+              <p className="text-lg text-[var(--color-muted-foreground)] mb-8 max-w-md mx-auto">
+                Sorry, we couldn't find the blog post you're looking for. It may
+                have been moved or doesn't exist.
+              </p>
+              <Link
+                href="/blog"
+                className="inline-flex items-center px-6 py-3 bg-[var(--color-primary)] text-white rounded-full font-semibold hover:bg-[var(--color-primary)]/90 transition-colors"
+              >
+                Browse All Articles
+              </Link>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
   }
 
   const formatDate = (dateString: string) => {
@@ -152,13 +226,6 @@ export default async function SingleBlogPage({ params }: PageProps) {
           </div>
         </article>
       </main>
-
-      {/* Comments Section */}
-      <div className="bg-[var(--color-cream)]/50 border-t border-[var(--color-border)]">
-        <div className="container mx-auto px-6">
-          <CommentSection slug={slug} />
-        </div>
-      </div>
 
       <Footer />
     </div>
