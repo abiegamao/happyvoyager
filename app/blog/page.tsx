@@ -22,29 +22,26 @@ export default async function BlogListingPage({
   let featuredBlogs: ScrapedBlog[] = [];
   let trendingBlogs: ScrapedBlog[] = [];
 
-  try {
-    const baseUrl =
-      process.env.NEXT_PUBLIC_BASE_URL;
+  // Only fetch if BASE_URL is set (Vercel deployment)
+  // Skip during local builds to avoid connection errors
+  if (process.env.NEXT_PUBLIC_BASE_URL) {
+    try {
+      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-    // Add timeout to fetch
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+      const response = await fetch(`${baseUrl}/api/scrape-blog`, {
+        cache: "force-cache",
+        next: { revalidate: 3600 }, // Revalidate every hour
+      });
 
-    const response = await fetch(`${baseUrl}/api/scrape-blog`, {
-      next: { revalidate: 3600 }, // Revalidate every hour
-      signal: controller.signal,
-    });
+      const data = await response.json();
 
-    clearTimeout(timeoutId);
-
-    const data = await response.json();
-
-    if (data.success) {
-      featuredBlogs = data.featured?.blogs || [];
-      trendingBlogs = data.trending?.blogs || [];
+      if (data.success) {
+        featuredBlogs = data.featured?.blogs || [];
+        trendingBlogs = data.trending?.blogs || [];
+      }
+    } catch (error) {
+      console.error("Failed to fetch blogs:", error);
     }
-  } catch (error) {
-    console.error("Failed to fetch blogs:", error);
   }
 
   // Map featured blogs to the format expected by BlogCard
