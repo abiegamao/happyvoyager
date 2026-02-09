@@ -2,118 +2,30 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CommentSection from "@/components/CommentSection";
 import BlogContent from "@/components/BlogContent";
+import AuthorAboutSection from "@/components/AuthorAboutSection";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Calendar, User, Clock, Share2 } from "lucide-react";
+import { getBlogBySlug } from "@/lib/blogs";
 
 // Next.js 13+ params handling
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
-interface ScrapedBlog {
-  slug: string;
-  title: string;
-  content: string;
-  excerpt: string;
-  featuredImage: string;
-  date: string;
-  author: string;
-  categories: string[];
-  tags: string[];
-  url: string;
-}
-
-// Generate static params for all blog posts at build time
-export async function generateStaticParams() {
-  // Only fetch at build time on Vercel (when BASE_URL is set)
-  // Skip during local builds to avoid connection errors
-  if (!process.env.NEXT_PUBLIC_BASE_URL) {
-    return [];
-  }
-
-  try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-    const response = await fetch(`${baseUrl}/api/scrape-blog`, {
-      cache: "force-cache",
-    });
-    const data = await response.json();
-
-    if (!data.success) {
-      return [];
-    }
-
-    const allBlogs = [
-      ...(data.featured?.blogs || []),
-      ...(data.trending?.blogs || []),
-    ];
-
-    return allBlogs.map((blog: any) => {
-      const slug = blog.link.split("/").filter(Boolean).pop() || "";
-      return { slug };
-    });
-  } catch (error) {
-    console.error("Error generating static params:", error);
-    return [];
-  }
-}
-
-// Allow dynamic params for new blog posts not available at build time
-export const dynamicParams = true;
-
-// Revalidate every hour (ISR)
-export const revalidate = 3600;
-
 export default async function SingleBlogPage({ params }: PageProps) {
   const { slug } = await params;
 
-  let blog: ScrapedBlog | null = null;
-  let error = false;
-
-  // Only fetch if BASE_URL is set (Vercel deployment)
-  // Skip during local builds to avoid connection errors
-  if (process.env.NEXT_PUBLIC_BASE_URL) {
-    try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-      const response = await fetch(`${baseUrl}/api/scrape-blog/${slug}`, {
-        cache: "force-cache",
-        next: { revalidate: 3600 },
-      });
-
-      if (!response.ok) {
-        error = true;
-      } else {
-        const data = await response.json();
-        if (data.success && data.blog) {
-          blog = data.blog;
-        } else {
-          error = true;
-        }
-      }
-    } catch (err) {
-      console.error("Error fetching blog:", err);
-      error = true;
-    }
-  } else {
-    // During local build, show not found message
-    error = true;
-  }
+  // Get blog from static data
+  const blog = getBlogBySlug(slug);
 
   // Show custom error message if blog not found
-  if (error || !blog) {
+  if (!blog) {
     return (
       <div className="min-h-screen bg-[var(--color-background)] font-sans">
         <Header />
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-6 max-w-4xl">
-            <Link
-              href="/blog"
-              className="inline-flex items-center text-sm font-semibold text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors group mb-8"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
-              Back to All Stories
-            </Link>
 
             <div className="text-center py-20">
               <div className="mb-6">
@@ -170,91 +82,90 @@ export default async function SingleBlogPage({ params }: PageProps) {
     <div className="min-h-screen bg-[var(--color-background)] font-sans">
       <Header />
 
-      <main className="pt-24 pb-16">
-        {/* Back Link */}
-        <div className="container mx-auto px-6 max-w-4xl mb-8">
-          <Link
-            href="/blog"
-            className="inline-flex items-center text-sm font-semibold text-[var(--color-muted-foreground)] hover:text-[var(--color-primary)] transition-colors group"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2 transition-transform group-hover:-translate-x-1" />
-            Back to All Stories
-          </Link>
-        </div>
-
-        <article className="container mx-auto px-6 max-w-4xl">
-          {/* Header */}
-          <header className="mb-12 text-center space-y-6">
-            {blog.categories && blog.categories.length > 0 && (
-              <div className="flex items-center justify-center gap-2 flex-wrap">
-                {blog.categories.slice(0, 3).map((category, index) => (
-                  <div
-                    key={index}
-                    className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-secondary)]/50 text-[var(--color-charcoal)] border border-[var(--color-secondary)]"
-                  >
-                    {category}
+      <main className="pt-50 pb-16">
+        <div className="container mx-auto px-6 max-w-7xl">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
+            {/* Main Content */}
+            <article>
+              {/* Header */}
+              <header className="mb-12 space-y-6">
+                {blog.categories && blog.categories.length > 0 && (
+                  <div className="flex items-center gap-2 flex-wrap">
+                    {blog.categories.slice(0, 3).map((category, index) => (
+                      <div
+                        key={index}
+                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-secondary)]/50 text-[var(--color-charcoal)] border border-[var(--color-secondary)]"
+                      >
+                        {category}
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
+                )}
 
-            <h1 className="text-3xl md:text-5xl lg:text-5xl font-bold text-[var(--color-charcoal)] leading-tight">
-              {blog.title}
-            </h1>
+                <h1 className="text-3xl md:text-5xl lg:text-5xl font-bold text-[var(--color-charcoal)] leading-tight">
+                  {blog.title}
+                </h1>
 
-            <div className="flex items-center justify-center space-x-6 text-sm text-[var(--color-muted-foreground)]">
-              <div className="flex items-center space-x-2">
-                <User className="w-4 h-4" />
-                <span>{blog.author}</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Calendar className="w-4 h-4" />
-                <time dateTime={blog.date}>{formatDate(blog.date)}</time>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Clock className="w-4 h-4" />
-                <span>{readingTime} min read</span>
-              </div>
-            </div>
-          </header>
+                <div className="flex items-center space-x-6 text-sm text-[var(--color-muted-foreground)]">
+                  <div className="flex items-center space-x-2">
+                    <User className="w-4 h-4" />
+                    <span>{blog.author}</span>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Calendar className="w-4 h-4" />
+                    <time dateTime={blog.createdAt}>{formatDate(blog.createdAt)}</time>
+                  </div>
+                  <div className="flex items-center space-x-2">
+                    <Clock className="w-4 h-4" />
+                    <span>{readingTime} min read</span>
+                  </div>
+                </div>
+              </header>
 
-          {/* Featured Image */}
-          {blog.featuredImage && (
-            <div className="relative aspect-video w-full overflow-hidden rounded-3xl shadow-xl mb-12 group">
-              <Image
-                src={blog.featuredImage}
-                alt={blog.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                priority
-              />
-              <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
-            </div>
-          )}
-
-          {/* Content */}
-          <div className="mx-auto">
-            <BlogContent content={blog.content} />
-          </div>
-
-          {/* Share / Tags Footer */}
-          <div className="mt-12 pt-8 border-t border-[var(--color-border)] flex items-center justify-between">
-            <div className="text-sm font-medium text-[var(--color-muted-foreground)]">
-              {blog.tags && blog.tags.length > 0 && (
-                <>
-                  Tags:{" "}
-                  <span className="text-[var(--color-charcoal)]">
-                    {blog.tags.join(", ")}
-                  </span>
-                </>
+              {/* Featured Image */}
+              {blog.featuredImage && (
+                <div className="relative aspect-video w-full overflow-hidden rounded-3xl shadow-xl mb-12 group">
+                  <Image
+                    src={blog.featuredImage}
+                    alt={blog.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    priority
+                  />
+                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
+                </div>
               )}
-            </div>
-            <button className="flex items-center space-x-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-charcoal)] transition-colors">
-              <Share2 className="w-4 h-4" />
-              <span>Share Article</span>
-            </button>
+
+              {/* Content */}
+              <div className="mx-auto">
+                <BlogContent content={blog.content} />
+              </div>
+
+              {/* Share / Tags Footer */}
+              <div className="mt-12 pt-8 border-t border-[var(--color-border)] flex items-center justify-between">
+                <div className="text-sm font-medium text-[var(--color-muted-foreground)]">
+                  {blog.tags && blog.tags.length > 0 && (
+                    <>
+                      Tags:{" "}
+                      <span className="text-[var(--color-charcoal)]">
+                        {blog.tags.join(", ")}
+                      </span>
+                    </>
+                  )}
+                </div>
+                <button className="flex items-center space-x-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-charcoal)] transition-colors">
+                  <Share2 className="w-4 h-4" />
+                  <span>Share Article</span>
+                </button>
+              </div>
+            </article>
+
+            {/* Sidebar */}
+            <aside className="lg:sticky lg:top-24 lg:self-start">
+              <AuthorAboutSection />
+            </aside>
           </div>
-        </article>
+        </div>
       </main>
 
       <Footer />
