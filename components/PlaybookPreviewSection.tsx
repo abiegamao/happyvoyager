@@ -57,9 +57,19 @@ const bonuses = [
   },
 ];
 
+import { useState } from "react";
+import PlaybookAccessModal from "./PlaybookAccessModal";
+
 export default function PlaybookPreviewSection() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   return (
     <section className="section-padding bg-[#f9f5f2] relative overflow-hidden">
+      <PlaybookAccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
@@ -74,7 +84,7 @@ export default function PlaybookPreviewSection() {
             Your Visa Approved
           </h2>
 
-          <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed">
+          <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed mb-8">
             The playbook covers the entire process from eligibility to approval,
             no guesswork, no expensive lawyers.
           </p>
@@ -120,6 +130,19 @@ export default function PlaybookPreviewSection() {
               </div>
             ))}
           </div>
+        </div>
+
+        {/* CTA Button */}
+        <div className="mt-12 text-center">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="btn-primary inline-flex items-center gap-2 group text-lg px-8 py-4 shadow-xl shadow-[#e3a99c]/20 hover:shadow-2xl hover:shadow-[#e3a99c]/30 transform hover:-translate-y-1 cursor-pointer"
+          >
+            <span>Get the Playbook Now</span>
+          </button>
+          <p className="mt-4 text-sm text-[#6b6b6b]">
+            Instant access • Free updates • No spam
+          </p>
         </div>
       </div>
     </section>

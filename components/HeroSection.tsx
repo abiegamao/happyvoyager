@@ -3,9 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, MapPin, Calendar, Search, Star, Globe, ShieldCheck, Plane, CheckCircle2 } from "lucide-react";
 
+import PlaybookAccessModal from "./PlaybookAccessModal";
+
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -25,6 +28,11 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative min-h-[100vh] flex items-center overflow-hidden bg-[#f9f5f2] pt-24 pb-12"
     >
+      <PlaybookAccessModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
+
       {/* Background World Map Image - Constrained & Blended */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
         <div className="w-full max-w-[95%] lg:max-w-7xl opacity-[0.1] mix-blend-multiply filter grayscale contrast-125">
@@ -71,17 +79,15 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-300">
-            <a
-              href="#contact"
-              className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group px-8 py-4 text-base"
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group px-8 py-4 text-base cursor-pointer"
             >
               Get your Playbook
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-            </a>
+            </button>
             <a
-              href="https://calendly.com/abie-gamao/spain-dnv"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/booking"
               className="px-8 py-4 rounded-full text-[#3a3a3a] font-semibold bg-white transition-colors w-full sm:w-auto text-center border-2 border-transparent hover:border-[#e7ddd3]"
             >
               Book Consultation
