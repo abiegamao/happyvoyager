@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   Instagram,
@@ -9,6 +10,8 @@ import {
   Mail,
   MapPin,
   ArrowRight,
+  Loader2,
+  CheckCircle2,
 } from "lucide-react";
 
 const footerLinks = {
@@ -40,6 +43,57 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email) {
+      setError("Please enter your email address");
+      return;
+    }
+
+    // Basic email validation
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    setStatus("loading");
+    setError("");
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          tags: ["newsletter"],
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data.error === "duplicate") {
+          setStatus("success");
+        } else {
+          setError("Something went wrong. Please try again.");
+          setStatus("idle");
+        }
+      } else {
+        setStatus("success");
+      }
+    } catch (error) {
+      console.error(error);
+      setError("Failed to submit. Please check your connection.");
+      setStatus("idle");
+    }
+  };
+
   return (
     <footer className="relative bg-[#3a3a3a] text-white overflow-hidden pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
@@ -79,16 +133,44 @@ export default function Footer() {
             <h3 className="text-2xl font-bold mb-4">Join the Newsletter</h3>
             <p className="text-white/60 mb-8">Get weekly visa updates, nomad tips, and exclusive guides delivered to your inbox.</p>
 
-            <div className="flex gap-2">
-              <input
-                type="email"
-                placeholder="Enter your email address"
-                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#e3a99c] transition-colors"
-              />
-              <button className="px-8 py-4 bg-[#e3a99c] rounded-xl text-[#3a3a3a] font-bold hover:bg-white transition-colors">
-                Join
-              </button>
-            </div>
+            {status === "success" ? (
+              <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center animate-fade-in">
+                <div className="w-12 h-12 rounded-full bg-[#e3a99c]/20 flex items-center justify-center mx-auto mb-3 text-[#e3a99c]">
+                  <CheckCircle2 className="w-6 h-6" />
+                </div>
+                <h4 className="font-bold text-white mb-1">You're Subscribed!</h4>
+                <p className="text-sm text-white/60">Keep an eye on your inbox.</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      if (error) setError("");
+                    }}
+                    placeholder="Enter your email address"
+                    className={`flex-1 bg-white/5 border ${error ? "border-red-500/50" : "border-white/10"} rounded-xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#e3a99c] transition-colors`}
+                  />
+                  <button
+                    type="submit"
+                    disabled={status === "loading"}
+                    className="px-8 py-4 bg-[#e3a99c] rounded-xl text-[#3a3a3a] font-bold hover:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+                  >
+                    {status === "loading" ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      "Join"
+                    )}
+                  </button>
+                </div>
+                {error && (
+                  <p className="text-red-400 text-sm ml-2">{error}</p>
+                )}
+              </form>
+            )}
           </div>
         </div>
 

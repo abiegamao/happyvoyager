@@ -2,24 +2,65 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Youtube, Linkedin, AtSign, Instagram } from "lucide-react";
+import { Youtube, Linkedin, AtSign, Instagram, Loader2, CheckCircle2 } from "lucide-react";
 
 export default function AuthorAboutSection() {
     const [email, setEmail] = useState("");
     const [agreed, setAgreed] = useState(false);
+    const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
+    const [error, setError] = useState("");
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!agreed) {
-            alert("Please agree to the terms to subscribe.");
+            setError("Please agree to the terms to subscribe.");
             return;
         }
-        // Handle newsletter subscription
-        console.log("Subscribing email:", email);
-        // TODO: Implement actual subscription logic
-        alert("Thank you for subscribing!");
-        setEmail("");
-        setAgreed(false);
+
+        if (!email) {
+            setError("Please enter your email address");
+            return;
+        }
+
+        // Basic email validation
+        if (!/^\S+@\S+\.\S+$/.test(email)) {
+            setError("Please enter a valid email address");
+            return;
+        }
+
+        setStatus("loading");
+        setError("");
+
+        try {
+            const response = await fetch("/api/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email,
+                    tags: ["newsletter"],
+                }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                if (data.error === "duplicate") {
+                    // Even if duplicate, we show success
+                    setStatus("success");
+                } else {
+                    setError("Something went wrong. Please try again.");
+                    setStatus("idle");
+                }
+            } else {
+                setStatus("success");
+            }
+        } catch (error) {
+            console.error(error);
+            setError("Failed to submit. Please check your connection.");
+            setStatus("idle");
+        }
     };
 
     return (
@@ -95,40 +136,86 @@ export default function AuthorAboutSection() {
 
             {/* Newsletter Subscription */}
             <div className="bg-[var(--color-secondary)] rounded-2xl p-8 border border-[var(--color-border)]">
-                <h3 className="text-lg font-bold text-[var(--color-charcoal)] text-center mb-4">
-                    Be the first to know everything
-                </h3>
-
-                <form onSubmit={handleSubmit} className="space-y-4">
-                    <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder="Enter your email"
-                        required
-                        className="w-full px-4 py-3 rounded-lg border border-[var(--color-border)] bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all"
-                    />
-
-                    <div className="flex items-start gap-2">
-                        <input
-                            type="checkbox"
-                            id="terms"
-                            checked={agreed}
-                            onChange={(e) => setAgreed(e.target.checked)}
-                            className="mt-1 w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
-                        />
-                        <label htmlFor="terms" className="text-xs text-[var(--color-muted-foreground)] leading-relaxed">
-                            I agree to the <a href="/terms-of-service" className="text-[var(--color-primary)] hover:underline">terms of use</a> regarding data storage.
-                        </label>
+                {status === "success" ? (
+                    <div className="text-center py-8 animate-fade-in">
+                        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mx-auto mb-4 text-green-600">
+                            <CheckCircle2 className="w-8 h-8" />
+                        </div>
+                        <h3 className="text-xl font-bold text-[var(--color-charcoal)] mb-2">
+                            You're Subscribed!
+                        </h3>
+                        <p className="text-sm text-[var(--color-muted-foreground)]">
+                            Thank you for joining. Keep an eye on your inbox!
+                        </p>
                     </div>
+                ) : (
+                    <>
+                        <h3 className="text-lg font-bold text-[var(--color-charcoal)] text-center mb-4">
+                            Be the first to know everything
+                        </h3>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-[var(--color-charcoal)] text-white py-3 rounded-lg font-semibold text-sm hover:bg-[var(--color-charcoal)]/90 transition-colors uppercase tracking-wide"
-                    >
-                        Subscribe
-                    </button>
-                </form>
+                        <form onSubmit={handleSubmit} className="space-y-4">
+                            <div>
+                                <input
+                                    type="email"
+                                    value={email}
+                                    onChange={(e) => {
+                                        setEmail(e.target.value);
+                                        if (error) setError("");
+                                    }}
+                                    placeholder="Enter your email"
+                                    // required // Custom validation used instead
+                                    className={`w-full px-4 py-3 rounded-lg border ${error ? "border-red-500" : "border-[var(--color-border)]"
+                                        } bg-white text-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-primary)] transition-all`}
+                                />
+                                {error && (
+                                    <p className="text-red-500 text-xs mt-1 ml-1">{error}</p>
+                                )}
+                            </div>
+
+                            <div className="flex items-start gap-2">
+                                <input
+                                    type="checkbox"
+                                    id="terms"
+                                    checked={agreed}
+                                    onChange={(e) => {
+                                        setAgreed(e.target.checked);
+                                        if (error) setError("");
+                                    }}
+                                    className="mt-1 w-4 h-4 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]"
+                                />
+                                <label
+                                    htmlFor="terms"
+                                    className="text-xs text-[var(--color-muted-foreground)] leading-relaxed"
+                                >
+                                    I agree to the{" "}
+                                    <a
+                                        href="/terms-of-service"
+                                        className="text-[var(--color-primary)] hover:underline"
+                                    >
+                                        terms of use
+                                    </a>{" "}
+                                    regarding data storage.
+                                </label>
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={status === "loading"}
+                                className="w-full bg-[var(--color-charcoal)] text-white py-3 rounded-lg font-semibold text-sm hover:bg-[var(--color-charcoal)]/90 transition-colors uppercase tracking-wide disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+                            >
+                                {status === "loading" ? (
+                                    <>
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                        <span>Subscribing...</span>
+                                    </>
+                                ) : (
+                                    "Subscribe"
+                                )}
+                            </button>
+                        </form>
+                    </>
+                )}
             </div>
         </aside>
     );
