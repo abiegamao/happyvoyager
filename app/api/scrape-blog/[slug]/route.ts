@@ -1,14 +1,16 @@
 import { NextResponse } from "next/server";
 import * as cheerio from "cheerio";
-import { writeFileSync } from "fs";
-import { join } from "path";
+
+// Force dynamic rendering
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ slug: string }> },
+  context: { params: Promise<{ slug: string }> },
 ) {
   try {
-    const { slug } = await params;
+    const { slug } = await context.params;
     const url = `https://blog.happyvoyager.com/${slug}/`;
 
     // Fetch the HTML from the blog post page
@@ -21,7 +23,7 @@ export async function GET(
 
     if (!response.ok) {
       throw new Error(
-        `Failed to fetch: ${response.status} ${response.statusText}`,
+        `Failed to fetch blog post: ${response.status} ${response.statusText}`,
       );
     }
 

@@ -23,10 +23,20 @@ export default async function BlogListingPage({
   let trendingBlogs: ScrapedBlog[] = [];
 
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl =
+      process.env.NEXT_PUBLIC_BASE_URL;
+
+    // Add timeout to fetch
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
     const response = await fetch(`${baseUrl}/api/scrape-blog`, {
-      cache: "no-store",
+      next: { revalidate: 3600 }, // Revalidate every hour
+      signal: controller.signal,
     });
+
+    clearTimeout(timeoutId);
+
     const data = await response.json();
 
     if (data.success) {
