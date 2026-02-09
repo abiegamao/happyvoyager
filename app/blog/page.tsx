@@ -1,15 +1,7 @@
 import BlogCard from "@/components/BlogCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-
-interface ScrapedBlog {
-  title: string;
-  excerpt: string;
-  link: string;
-  image: string;
-  date: string;
-  author: string;
-}
+import { getAllBlogs } from "@/lib/blogs";
 
 interface BlogListingPageProps {
   searchParams: Promise<{ page?: string; category?: string }>;
@@ -18,59 +10,12 @@ interface BlogListingPageProps {
 export default async function BlogListingPage({
   searchParams,
 }: BlogListingPageProps) {
-  // Fetch blogs from scraping API
-  let featuredBlogs: ScrapedBlog[] = [];
-  let trendingBlogs: ScrapedBlog[] = [];
+  // Get static blogs
+  const blogs = getAllBlogs();
 
-  // Only fetch if BASE_URL is set (Vercel deployment)
-  // Skip during local builds to avoid connection errors
-  if (process.env.NEXT_PUBLIC_BASE_URL) {
-    try {
-      const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-
-      const response = await fetch(`${baseUrl}/api/scrape-blog`, {
-        cache: "force-cache",
-        next: { revalidate: 3600 }, // Revalidate every hour
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        featuredBlogs = data.featured?.blogs || [];
-        trendingBlogs = data.trending?.blogs || [];
-      }
-    } catch (error) {
-      console.error("Failed to fetch blogs:", error);
-    }
-  }
-
-  // Map featured blogs to the format expected by BlogCard
-  const mappedFeaturedBlogs = featuredBlogs.map((blog) => {
-    const slug = blog.link.split("/").filter(Boolean).pop() || "";
-    return {
-      _id: `featured-${slug}`,
-      slug: slug,
-      title: blog.title,
-      excerpt: blog.excerpt,
-      featuredImage: blog.image,
-      createdAt: blog.date,
-      category: blog.author || undefined,
-    };
-  });
-
-  // Map trending blogs to the format expected by BlogCard
-  const mappedTrendingBlogs = trendingBlogs.map((blog) => {
-    const slug = blog.link.split("/").filter(Boolean).pop() || "";
-    return {
-      _id: `trending-${slug}`,
-      slug: slug,
-      title: blog.title,
-      excerpt: blog.excerpt,
-      featuredImage: blog.image,
-      createdAt: blog.date,
-      category: blog.author || undefined,
-    };
-  });
+  // For now, we'll display all blogs in the featured section
+  // You can later implement category filtering based on searchParams
+  const mappedFeaturedBlogs = blogs;
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col font-sans">
@@ -122,26 +67,7 @@ export default async function BlogListingPage({
           )}
         </section>
 
-        {/* Trending Blogs Section */}
-        {mappedTrendingBlogs.length > 0 && (
-          <section className="container mx-auto px-6 max-w-7xl mb-20">
-            <div className="mb-12">
-              <h2 className="text-3xl md:text-4xl font-script text-[var(--color-charcoal)] mb-2 relative inline-block">
-                <span className="relative z-10">Trending Now</span>
-                <span className="absolute bottom-1 left-0 w-full h-2 bg-[var(--color-accent)]/20 -rotate-1 rounded-full -z-10" />
-              </h2>
-              <p className="text-[var(--color-muted-foreground)] mt-2">
-                Popular articles readers love
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-              {mappedTrendingBlogs.map((blog) => (
-                <BlogCard key={blog._id} blog={blog} />
-              ))}
-            </div>
-          </section>
-        )}
+        {/* Trending Blogs Section - Hidden for now as we only have one blog */}
       </main>
 
       <Footer />
