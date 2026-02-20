@@ -1,13 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  Comment,
-  getCommentsBySlug,
-  createComment as createCommentApi,
-  CommentsPagination,
-} from "@/api/blogs.api";
-import LeadForm from "./LeadForm";
+import { supabase } from "@/lib/supabase";
+import LeadForm, { CommentUserInfo } from "./LeadForm";
 import {
   User as UserIcon,
   MessageSquare,
@@ -18,141 +13,156 @@ import {
 } from "lucide-react";
 
 interface CommentSectionProps {
-  slug: string;
+  blogId: string; // Supabase UUID of the blog post
+}
+
+interface SupabaseComment {
+  id: string;
+  blog_id: string;
+  author_name: string;
+  content: string;
+  status: string;
+  created_at: string;
+}
+
+// Cookie helpers
+const COOKIE_KEY = "hv_commenter";
+const COOKIE_DAYS = 365;
+
+function setCookie(value: CommentUserInfo) {
+  const expires = new Date();
+  expires.setDate(expires.getDate() + COOKIE_DAYS);
+  document.cookie = `${COOKIE_KEY}=${encodeURIComponent(JSON.stringify(value))}; expires=${expires.toUTCString()}; path=/; SameSite=Lax`;
+}
+
+function getCookie(): CommentUserInfo | null {
+  if (typeof document === "undefined") return null;
+  const match = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith(`${COOKIE_KEY}=`));
+  if (!match) return null;
+  try {
+    return JSON.parse(decodeURIComponent(match.split("=").slice(1).join("=")));
+  } catch {
+    return null;
+  }
+}
+
+function deleteCookie() {
+  document.cookie = `${COOKIE_KEY}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 }
 
 const COMMENTS_PER_PAGE = 5;
 
-export default function CommentSection({ slug }: CommentSectionProps) {
-  const [comments, setComments] = useState<Comment[]>([]);
+export default function CommentSection({ blogId }: CommentSectionProps) {
+  const [comments, setComments] = useState<SupabaseComment[]>([]);
   const [loading, setLoading] = useState(true);
-  const [loadingMore, setLoadingMore] = useState(false);
-  const [pagination, setPagination] = useState<CommentsPagination | null>(null);
-  const [leadInfo, setLeadInfo] = useState<{
-    name: string;
-    email: string;
-    phone: string;
-  } | null>(null);
+  const [userInfo, setUserInfo] = useState<CommentUserInfo | null>(null);
   const [newComment, setNewComment] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [isExpanded, setIsExpanded] = useState(true);
+  const [loadingMore, setLoadingMore] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
+  const [page, setPage] = useState(0);
 
-  // Fetch comments on mount
+  // Restore user info from cookie on mount
   useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        setLoading(true);
-        const response = await getCommentsBySlug(slug, 1, COMMENTS_PER_PAGE);
-        setComments(response.data);
-        setPagination(response.pagination);
-      } catch (err) {
-        console.error("Failed to fetch comments:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchComments();
-  }, [slug]);
-
-  // Check for stored lead info in localStorage
-  useEffect(() => {
-    const storedLead = localStorage.getItem("leadInfo");
-    if (storedLead) {
-      try {
-        setLeadInfo(JSON.parse(storedLead));
-      } catch {
-        localStorage.removeItem("leadInfo");
-      }
-    }
+    const stored = getCookie();
+    if (stored) setUserInfo(stored);
   }, []);
 
-  const handleLoadMore = async () => {
-    if (!pagination || pagination.page >= pagination.totalPages) return;
+  // Fetch approved comments
+  const fetchComments = async (pageIndex = 0, append = false) => {
+    if (append) setLoadingMore(true);
+    else setLoading(true);
 
-    try {
-      setLoadingMore(true);
-      const nextPage = pagination.page + 1;
-      const response = await getCommentsBySlug(
-        slug,
-        nextPage,
-        COMMENTS_PER_PAGE,
+    const from = pageIndex * COMMENTS_PER_PAGE;
+    const to = from + COMMENTS_PER_PAGE - 1;
+
+    const { data, error: fetchError } = await supabase
+      .from("blog_comments")
+      .select("id, blog_id, author_name, content, status, created_at")
+      .eq("blog_id", blogId)
+      .eq("status", "approved")
+      .order("created_at", { ascending: false })
+      .range(from, to);
+
+    if (!fetchError && data) {
+      setComments((prev) =>
+        append ? [...prev, ...(data as SupabaseComment[])] : (data as SupabaseComment[])
       );
-      setComments((prev) => [...prev, ...response.data]);
-      setPagination(response.pagination);
-    } catch (err) {
-      console.error("Failed to load more comments:", err);
-    } finally {
-      setLoadingMore(false);
+      setHasMore(data.length === COMMENTS_PER_PAGE);
+      setPage(pageIndex);
     }
+
+    if (append) setLoadingMore(false);
+    else setLoading(false);
   };
 
-  const handleLeadSuccess = (data: {
-    name: string;
-    email: string;
-    phone: string;
-  }) => {
-    setLeadInfo(data);
-    localStorage.setItem("leadInfo", JSON.stringify(data));
+  useEffect(() => {
+    if (blogId) fetchComments(0);
+  }, [blogId]);
+
+  const handleLeadSuccess = (data: CommentUserInfo) => {
+    setCookie(data);
+    setUserInfo(data);
+  };
+
+  const handleChangeLead = () => {
+    deleteCookie();
+    setUserInfo(null);
   };
 
   const handleCommentSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newComment.trim() || !leadInfo) return;
+    if (!newComment.trim() || !userInfo) return;
 
     setSubmitting(true);
     setError("");
     setSuccessMessage("");
 
-    try {
-      const response = await createCommentApi(slug, {
-        name: leadInfo.name,
-        email: leadInfo.email,
-        phone: leadInfo.phone,
-        comment: newComment,
+    const fullName = `${userInfo.firstName} ${userInfo.lastName}`.trim();
+
+    const { error: insertError } = await supabase
+      .from("blog_comments")
+      .insert({
+        blog_id: blogId,
+        author_name: fullName,
+        author_email: userInfo.email,
+        content: newComment.trim(),
+        status: "approved", // Auto-approve
       });
 
+    if (insertError) {
+      setError("Failed to submit comment. Please try again.");
+    } else {
       setNewComment("");
-
-      // Note: We don't add to comments list since it needs approval
-    } catch (err: unknown) {
-      console.error("Failed to submit comment:", err);
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to submit comment";
-      setError(
-        (err as { response?: { data?: { error?: string } } })?.response?.data
-          ?.error || errorMessage,
-      );
-    } finally {
-      setSubmitting(false);
+      setSuccessMessage("Thanks for your comment!");
+      // Refresh comments to show the new one immediately
+      fetchComments(0);
     }
-  };
 
-  const handleChangeLead = () => {
-    setLeadInfo(null);
-    localStorage.removeItem("leadInfo");
+    setSubmitting(false);
   };
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
-    const diffInMs = now.getTime() - date.getTime();
-    const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    const diffMs = now.getTime() - date.getTime();
+    const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
 
-    if (diffInDays === 0) {
-      const diffInHours = Math.floor(diffInMs / (1000 * 60 * 60));
-      if (diffInHours === 0) {
-        const diffInMinutes = Math.floor(diffInMs / (1000 * 60));
-        return diffInMinutes <= 1 ? "Just now" : `${diffInMinutes} minutes ago`;
+    if (diffDays === 0) {
+      const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
+      if (diffHours === 0) {
+        const diffMin = Math.floor(diffMs / (1000 * 60));
+        return diffMin <= 1 ? "Just now" : `${diffMin} minutes ago`;
       }
-      return diffInHours === 1 ? "1 hour ago" : `${diffInHours} hours ago`;
-    } else if (diffInDays === 1) {
-      return "Yesterday";
-    } else if (diffInDays < 7) {
-      return `${diffInDays} days ago`;
+      return diffHours === 1 ? "1 hour ago" : `${diffHours} hours ago`;
     }
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
 
     return date.toLocaleDateString("en-US", {
       month: "short",
@@ -161,12 +171,9 @@ export default function CommentSection({ slug }: CommentSectionProps) {
     });
   };
 
-  const totalComments = pagination?.total || comments.length;
-  const hasMoreComments = pagination && pagination.page < pagination.totalPages;
-
   return (
     <div className="max-w-3xl mx-auto mt-16 pb-16">
-      {/* Header with toggle */}
+      {/* Header */}
       <div
         className="flex items-center justify-between mb-6 cursor-pointer group"
         onClick={() => setIsExpanded(!isExpanded)}
@@ -179,11 +186,11 @@ export default function CommentSection({ slug }: CommentSectionProps) {
             Comments
           </h2>
           <span className="inline-flex items-center justify-center min-w-[28px] h-7 px-2 rounded-full text-sm font-semibold bg-[var(--color-primary)]/10 text-[var(--color-primary)]">
-            {totalComments}
+            {comments.length}
           </span>
         </div>
         <button
-          className="p-2 rounded-full hover:bg-[var(--color-secondary)] transition-colors"
+          className="p-2 rounded-full hover:bg-[var(--color-secondary)] transition-colors cursor-pointer"
           aria-label={isExpanded ? "Collapse comments" : "Expand comments"}
         >
           {isExpanded ? (
@@ -196,14 +203,15 @@ export default function CommentSection({ slug }: CommentSectionProps) {
 
       {isExpanded && (
         <div className="space-y-8 animate-fade-in">
-          {/* Comment Form Area */}
+          {/* Comment Form / Lead Capture */}
           <section>
-            {!leadInfo ? (
+            {!userInfo ? (
               <div className="bg-[var(--color-secondary)]/30 p-1 rounded-2xl">
                 <LeadForm onSuccess={handleLeadSuccess} />
               </div>
             ) : (
               <div className="bg-white p-6 rounded-2xl border border-[var(--color-border)] shadow-sm">
+                {/* Commenter identity bar */}
                 <div className="flex items-center space-x-3 mb-4">
                   <div className="w-8 h-8 rounded-full bg-[var(--color-primary)]/20 flex items-center justify-center text-[var(--color-primary)]">
                     <UserIcon className="w-4 h-4" />
@@ -212,7 +220,7 @@ export default function CommentSection({ slug }: CommentSectionProps) {
                     <p className="text-sm font-semibold text-[var(--color-charcoal)]">
                       Commenting as{" "}
                       <span className="text-[var(--color-primary)]">
-                        {leadInfo.name}
+                        {userInfo.firstName} {userInfo.lastName}
                       </span>
                     </p>
                     <button
@@ -230,6 +238,11 @@ export default function CommentSection({ slug }: CommentSectionProps) {
                   </div>
                 )}
 
+                {successMessage && (
+                  <div className="bg-green-50 text-green-700 text-sm p-3 rounded-lg border border-green-100 mb-4">
+                    {successMessage}
+                  </div>
+                )}
 
                 <form onSubmit={handleCommentSubmit} className="space-y-4">
                   <textarea
@@ -281,56 +294,39 @@ export default function CommentSection({ slug }: CommentSectionProps) {
               </div>
             ) : (
               <div className="space-y-1">
-                {/* Comments container with max height and scroll */}
-                <div
-                  className={`divide-y divide-[var(--color-border)] ${
-                    comments.length > 8
-                      ? "max-h-[500px] overflow-y-auto pr-2"
-                      : ""
-                  }`}
-                >
+                <div className="divide-y divide-[var(--color-border)]">
                   {comments.map((comment) => (
-                    <article
-                      key={comment._id}
-                      className="py-4 first:pt-0 flex gap-3"
-                    >
-                      {/* Avatar */}
+                    <article key={comment.id} className="py-4 first:pt-0 flex gap-3">
                       <div className="flex-shrink-0">
                         <div className="w-10 h-10 rounded-full bg-[var(--color-secondary)] flex items-center justify-center">
                           <UserIcon className="w-5 h-5 text-[var(--color-muted-foreground)]" />
                         </div>
                       </div>
-                      {/* Content */}
                       <div className="flex-1 min-w-0">
-                        {/* Name and time */}
                         <div className="flex items-center gap-2 mb-1">
                           <span className="font-semibold text-sm text-[var(--color-charcoal)]">
-                            {comment.lead?.name || "Anonymous"}
+                            {comment.author_name}
                           </span>
                           <span className="text-xs text-[var(--color-muted-foreground)]">
-                            {formatDate(comment.createdAt)}
+                            {formatDate(comment.created_at)}
                           </span>
                         </div>
-                        {/* Comment text */}
                         <p className="text-sm text-[var(--color-foreground)] leading-relaxed">
-                          {comment.comment}
+                          {comment.content}
                         </p>
                       </div>
                     </article>
                   ))}
                 </div>
 
-                {/* Load More Button */}
-                {hasMoreComments && (
+                {hasMore && (
                   <div className="pt-4 text-center">
                     <button
-                      onClick={handleLoadMore}
+                      onClick={() => fetchComments(page + 1, true)}
                       disabled={loadingMore}
                       className="text-sm font-medium text-[var(--color-primary)] hover:underline disabled:opacity-50"
                     >
-                      {loadingMore
-                        ? "Loading..."
-                        : `View more comments (${pagination.total - comments.length} remaining)`}
+                      {loadingMore ? "Loading..." : "Load more comments"}
                     </button>
                   </div>
                 )}

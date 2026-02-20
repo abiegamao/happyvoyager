@@ -1,17 +1,23 @@
 "use client";
 
 import { useState } from "react";
-import { User, Mail, Phone, ArrowRight, Loader2 } from "lucide-react";
+import { User, Mail, ArrowRight, Loader2 } from "lucide-react";
+
+export interface CommentUserInfo {
+    firstName: string;
+    lastName: string;
+    email: string;
+}
 
 interface LeadFormProps {
-    onSuccess: (leadData: { name: string; email: string; phone: string }) => void;
+    onSuccess: (data: CommentUserInfo) => void;
 }
 
 export default function LeadForm({ onSuccess }: LeadFormProps) {
-    const [formData, setFormData] = useState({
-        name: "",
+    const [formData, setFormData] = useState<CommentUserInfo>({
+        firstName: "",
+        lastName: "",
         email: "",
-        phone: "",
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
@@ -23,21 +29,36 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setLoading(true);
         setError("");
 
-        // Basic Validation
-        if (!formData.name || !formData.email || !formData.phone) {
+        if (!formData.firstName || !formData.lastName || !formData.email) {
             setError("Please fill in all fields.");
-            setLoading(false);
             return;
         }
 
-        // Simulate API call
-        setTimeout(() => {
-            setLoading(false);
+        setLoading(true);
+
+        try {
+            // Store contact details in GHL
+            await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    tags: ["Blog Commenter"],
+                }),
+            });
+            // Note: we don't block on GHL errors — commenter UX comes first
+
             onSuccess(formData);
-        }, 1000);
+        } catch {
+            // Non-blocking — still allow commenting even if GHL call fails
+            onSuccess(formData);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -49,7 +70,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
                 Join the Conversation
             </h3>
             <p className="text-[var(--color-muted-foreground)] mb-6 text-sm">
-                Please verify your details to leave a comment. We respect your privacy.
+                Please enter your details to leave a comment. We respect your privacy.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -59,14 +80,27 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
                     </div>
                 )}
 
-                <div className="space-y-1">
+                {/* First Name & Last Name side by side */}
+                <div className="grid grid-cols-2 gap-3">
                     <div className="relative">
                         <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted-foreground)]" />
                         <input
                             type="text"
-                            name="name"
-                            placeholder="Your Name"
-                            value={formData.name}
+                            name="firstName"
+                            placeholder="First Name"
+                            value={formData.firstName}
+                            onChange={handleChange}
+                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-[var(--color-input)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all placeholder:text-[var(--color-muted-foreground)]/60 bg-white/50 backdrop-blur-sm"
+                            required
+                        />
+                    </div>
+                    <div className="relative">
+                        <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted-foreground)]" />
+                        <input
+                            type="text"
+                            name="lastName"
+                            placeholder="Last Name"
+                            value={formData.lastName}
                             onChange={handleChange}
                             className="w-full pl-10 pr-4 py-3 rounded-lg border border-[var(--color-input)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all placeholder:text-[var(--color-muted-foreground)]/60 bg-white/50 backdrop-blur-sm"
                             required
@@ -74,34 +108,18 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
                     </div>
                 </div>
 
-                <div className="space-y-1">
-                    <div className="relative">
-                        <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted-foreground)]" />
-                        <input
-                            type="email"
-                            name="email"
-                            placeholder="Email Address"
-                            value={formData.email}
-                            onChange={handleChange}
-                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-[var(--color-input)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all placeholder:text-[var(--color-muted-foreground)]/60 bg-white/50 backdrop-blur-sm"
-                            required
-                        />
-                    </div>
-                </div>
-
-                <div className="space-y-1">
-                    <div className="relative">
-                        <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted-foreground)]" />
-                        <input
-                            type="tel"
-                            name="phone"
-                            placeholder="Phone Number"
-                            value={formData.phone}
-                            onChange={handleChange}
-                            className="w-full pl-10 pr-4 py-3 rounded-lg border border-[var(--color-input)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all placeholder:text-[var(--color-muted-foreground)]/60 bg-white/50 backdrop-blur-sm"
-                            required
-                        />
-                    </div>
+                {/* Email */}
+                <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--color-muted-foreground)]" />
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address"
+                        value={formData.email}
+                        onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-lg border border-[var(--color-input)] focus:border-[var(--color-primary)] focus:ring-2 focus:ring-[var(--color-primary)]/20 outline-none transition-all placeholder:text-[var(--color-muted-foreground)]/60 bg-white/50 backdrop-blur-sm"
+                        required
+                    />
                 </div>
 
                 <button
@@ -112,7 +130,7 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
                     {loading ? (
                         <>
                             <Loader2 className="w-5 h-5 animate-spin" />
-                            <span>Verifying...</span>
+                            <span>Saving...</span>
                         </>
                     ) : (
                         <>

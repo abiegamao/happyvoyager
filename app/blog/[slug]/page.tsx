@@ -1,32 +1,59 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CommentSection from "@/components/CommentSection";
 import BlogContent from "@/components/BlogContent";
 import AuthorAboutSection from "@/components/AuthorAboutSection";
+import CommentSection from "@/components/CommentSection";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, Calendar, User, Clock, Share2 } from "lucide-react";
-import { getBlogBySlug } from "@/lib/blogs";
+import { Calendar, User, Clock, Share2 } from "lucide-react";
+import { getSupabaseBlogBySlug, SupabaseBlogDetail } from "@/lib/supabase-blogs";
 
 // Next.js 13+ params handling
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
+// Normalize static + Supabase blog into a single shape for rendering
+interface NormalizedBlog {
+  title: string;
+  featuredImage?: string;
+  categories: string[];
+  author: string;
+  createdAt: string;
+  content: string;
+  tags: string[];
+  supabaseId?: string; // Present only for Supabase-backed posts
+}
+
+
+
+function normalizeSupabase(blog: SupabaseBlogDetail): NormalizedBlog {
+  return {
+    title: blog.title,
+    featuredImage: blog.cover_image_url || undefined,
+    categories: blog.category ? [blog.category] : [],
+    author: "Happy Voyager",
+    createdAt: blog.created_at,
+    content: blog.content ?? "",
+    tags: blog.tags ?? [],
+    supabaseId: blog.id,
+  };
+}
+
 export default async function SingleBlogPage({ params }: PageProps) {
   const { slug } = await params;
 
-  // Get blog from static data
-  const blog = getBlogBySlug(slug);
+  // 1. Fetch from Supabase
+  const supabaseBlog = await getSupabaseBlogBySlug(slug);
+  const blog: NormalizedBlog | null = supabaseBlog ? normalizeSupabase(supabaseBlog) : null;
 
-  // Show custom error message if blog not found
+  // Show custom error message if blog not found in either source
   if (!blog) {
     return (
       <div className="min-h-screen bg-[var(--color-background)] font-sans">
         <Header />
         <main className="pt-24 pb-16">
           <div className="container mx-auto px-6 max-w-4xl">
-
             <div className="text-center py-20">
               <div className="mb-6">
                 <div className="w-20 h-20 mx-auto bg-[var(--color-secondary)] rounded-full flex items-center justify-center">
@@ -49,8 +76,8 @@ export default async function SingleBlogPage({ params }: PageProps) {
                 Blog Post Not Found
               </h1>
               <p className="text-lg text-[var(--color-muted-foreground)] mb-8 max-w-md mx-auto">
-                Sorry, we couldn't find the blog post you're looking for. It may
-                have been moved or doesn't exist.
+                Sorry, we couldn&apos;t find the blog post you&apos;re looking for. It may
+                have been moved or doesn&apos;t exist.
               </p>
               <Link
                 href="/blog"
@@ -86,79 +113,83 @@ export default async function SingleBlogPage({ params }: PageProps) {
         <div className="container mx-auto px-6 max-w-7xl">
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] gap-12">
             {/* Main Content */}
-            <article>
-              {/* Header */}
-              <header className="mb-12 space-y-6">
-                {blog.categories && blog.categories.length > 0 && (
-                  <div className="flex items-center gap-2 flex-wrap">
-                    {blog.categories.slice(0, 3).map((category, index) => (
-                      <div
-                        key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-secondary)]/50 text-[var(--color-charcoal)] border border-[var(--color-secondary)]"
-                      >
-                        {category}
-                      </div>
-                    ))}
+            {/* Main Content Column */}
+            <div className="min-w-0 space-y-12">
+              <article>
+                {/* Header */}
+                <header className="mb-12 space-y-6">
+                  {blog.categories.length > 0 && (
+                    <div className="flex items-center gap-2 flex-wrap">
+                      {blog.categories.slice(0, 3).map((category, index) => (
+                        <div
+                          key={index}
+                          className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-[var(--color-secondary)]/50 text-[var(--color-charcoal)] border border-[var(--color-secondary)]"
+                        >
+                          {category}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <h1 className="text-3xl md:text-5xl lg:text-5xl font-bold text-[var(--color-charcoal)] leading-tight">
+                    {blog.title}
+                  </h1>
+
+                  <div className="flex items-center space-x-6 text-sm text-[var(--color-muted-foreground)]">
+                    <div className="flex items-center space-x-2">
+                      <User className="w-4 h-4" />
+                      <span>{blog.author}</span>
+                    </div>
+                    <div className="flex items-center space-x-2">
+                      <Calendar className="w-4 h-4" />
+                      <time dateTime={blog.createdAt}>{formatDate(blog.createdAt)}</time>
+                    </div>
+                  </div>
+                </header>
+
+                {/* Featured Image */}
+                {blog.featuredImage && (
+                  <div className="relative aspect-video w-full overflow-hidden rounded-3xl shadow-xl mb-12 group">
+                    <Image
+                      src={blog.featuredImage}
+                      alt={blog.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      priority
+                    />
+                    <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
                   </div>
                 )}
 
-                <h1 className="text-3xl md:text-5xl lg:text-5xl font-bold text-[var(--color-charcoal)] leading-tight">
-                  {blog.title}
-                </h1>
-
-                <div className="flex items-center space-x-6 text-sm text-[var(--color-muted-foreground)]">
-                  <div className="flex items-center space-x-2">
-                    <User className="w-4 h-4" />
-                    <span>{blog.author}</span>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Calendar className="w-4 h-4" />
-                    <time dateTime={blog.createdAt}>{formatDate(blog.createdAt)}</time>
-                  </div>
-                  <div className="flex items-center space-x-2">
-                    <Clock className="w-4 h-4" />
-                    <span>{readingTime} min read</span>
-                  </div>
+                {/* Content */}
+                <div className="mx-auto">
+                  <BlogContent content={blog.content} />
                 </div>
-              </header>
 
-              {/* Featured Image */}
-              {blog.featuredImage && (
-                <div className="relative aspect-video w-full overflow-hidden rounded-3xl shadow-xl mb-12 group">
-                  <Image
-                    src={blog.featuredImage}
-                    alt={blog.title}
-                    fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-105"
-                    priority
-                  />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-3xl" />
+                {/* Share / Tags Footer */}
+                <div className="mt-12 pt-8 border-t border-[var(--color-border)] flex items-center justify-between">
+                  <div className="text-sm font-medium text-[var(--color-muted-foreground)]">
+                    {blog.tags.length > 0 && (
+                      <>
+                        Tags:{" "}
+                        <span className="text-[var(--color-charcoal)]">
+                          {blog.tags.join(", ")}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                  <button className="flex items-center space-x-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-charcoal)] transition-colors">
+                    <Share2 className="w-4 h-4" />
+                    <span>Share Article</span>
+                  </button>
                 </div>
+              </article>
+
+              {/* Comment Section — only for Supabase-backed posts */}
+              {blog.supabaseId && (
+                <CommentSection blogId={blog.supabaseId} />
               )}
-
-              {/* Content */}
-              <div className="mx-auto">
-                <BlogContent content={blog.content} />
-              </div>
-
-              {/* Share / Tags Footer */}
-              <div className="mt-12 pt-8 border-t border-[var(--color-border)] flex items-center justify-between">
-                <div className="text-sm font-medium text-[var(--color-muted-foreground)]">
-                  {blog.tags && blog.tags.length > 0 && (
-                    <>
-                      Tags:{" "}
-                      <span className="text-[var(--color-charcoal)]">
-                        {blog.tags.join(", ")}
-                      </span>
-                    </>
-                  )}
-                </div>
-                <button className="flex items-center space-x-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-charcoal)] transition-colors">
-                  <Share2 className="w-4 h-4" />
-                  <span>Share Article</span>
-                </button>
-              </div>
-            </article>
+            </div>
 
             {/* Sidebar */}
             <aside className="lg:sticky lg:top-24 lg:self-start">

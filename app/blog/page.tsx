@@ -1,7 +1,10 @@
 import BlogCard from "@/components/BlogCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { getAllBlogs } from "@/lib/blogs";
+
+import { getSupabaseBlogs } from "@/lib/supabase-blogs";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface BlogListingPageProps {
   searchParams: Promise<{ page?: string; category?: string }>;
@@ -10,12 +13,18 @@ interface BlogListingPageProps {
 export default async function BlogListingPage({
   searchParams,
 }: BlogListingPageProps) {
-  // Get static blogs
-  const blogs = getAllBlogs();
+  const { page } = await searchParams;
+  const currentPage = Number(page) || 1;
+  const limit = 6;
 
-  // For now, we'll display all blogs in the featured section
-  // You can later implement category filtering based on searchParams
-  const mappedFeaturedBlogs = blogs;
+  // Fetch published blogs from Supabase
+  const { blogs: supabaseBlogs, total } = await getSupabaseBlogs(
+    currentPage,
+    limit
+  );
+  const totalPages = Math.ceil(total / limit);
+
+  const displayedBlogs = supabaseBlogs;
 
   return (
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col font-sans">
@@ -52,22 +61,65 @@ export default async function BlogListingPage({
             </p>
           </div>
 
-          {mappedFeaturedBlogs.length === 0 ? (
-            <div className="text-center py-16">
+          {displayedBlogs.length === 0 ? (
+            <div className="text-center py-16 bg-[var(--color-secondary)]/10 rounded-3xl border border-[var(--color-border)]">
               <p className="text-[var(--color-muted-foreground)] text-lg">
-                No featured posts available.
+                No posts found. check back soon!
               </p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-              {mappedFeaturedBlogs.map((blog) => (
+              {displayedBlogs.map((blog) => (
                 <BlogCard key={blog._id} blog={blog} />
               ))}
             </div>
           )}
-        </section>
 
-        {/* Trending Blogs Section - Hidden for now as we only have one blog */}
+          {/* Pagination Controls */}
+          {totalPages > 1 && (
+            <div className="mt-16 flex justify-center items-center space-x-6">
+              {currentPage > 1 ? (
+                <Link
+                  href={`/blog?page=${currentPage - 1}`}
+                  className="group flex items-center space-x-2 px-6 py-3 rounded-full bg-white border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:shadow-md transition-all text-[var(--color-charcoal)]"
+                >
+                  <ArrowLeft className="w-4 h-4 text-[var(--color-primary)] transition-transform group-hover:-translate-x-1" />
+                  <span className="font-medium">Previous</span>
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="flex items-center space-x-2 px-6 py-3 rounded-full bg-[var(--color-secondary)]/50 border border-transparent text-[var(--color-muted-foreground)] cursor-not-allowed opacity-50"
+                >
+                  <ArrowLeft className="w-4 h-4" />
+                  <span className="font-medium">Previous</span>
+                </button>
+              )}
+
+              <span className="text-sm font-medium text-[var(--color-muted-foreground)]">
+                Page <span className="text-[var(--color-primary)]">{currentPage}</span> of {totalPages}
+              </span>
+
+              {currentPage < totalPages ? (
+                <Link
+                  href={`/blog?page=${currentPage + 1}`}
+                  className="group flex items-center space-x-2 px-6 py-3 rounded-full bg-white border border-[var(--color-border)] hover:border-[var(--color-primary)] hover:shadow-md transition-all text-[var(--color-charcoal)]"
+                >
+                  <span className="font-medium">Next</span>
+                  <ArrowRight className="w-4 h-4 text-[var(--color-primary)] transition-transform group-hover:translate-x-1" />
+                </Link>
+              ) : (
+                <button
+                  disabled
+                  className="flex items-center space-x-2 px-6 py-3 rounded-full bg-[var(--color-secondary)]/50 border border-transparent text-[var(--color-muted-foreground)] cursor-not-allowed opacity-50"
+                >
+                  <span className="font-medium">Next</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+          )}
+        </section>
       </main>
 
       <Footer />
