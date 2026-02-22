@@ -70,6 +70,7 @@ export async function getSupabaseBlogs(
 export async function getSupabaseBlogBySlug(
     slug: string
 ): Promise<SupabaseBlogDetail | null> {
+    console.log("Fetching blog by slug:", slug);
     // First try matching by slug
     const { data: bySlug, error: slugError } = await supabase
         .from("blog_posts")
@@ -78,7 +79,19 @@ export async function getSupabaseBlogBySlug(
         .eq("status", "published")
         .single();
 
-    if (!slugError && bySlug) return bySlug as SupabaseBlogDetail;
+    if (!slugError && bySlug) {
+        console.log("Found blog by slug, incrementing views for ID:", bySlug.id);
+        // Increment views asynchronously
+        supabase.rpc("increment_blog_views", { blog_id: bySlug.id }).then(
+            ({ error }) => {
+                if (error)
+                    console.error("Failed to increment views:", error.message);
+                else
+                    console.log("View incremented successfully for ID:", bySlug.id);
+            }
+        );
+        return bySlug as SupabaseBlogDetail;
+    }
 
     // Fall back to ID lookup (when slug was null and we used ID as the URL param)
     const { data: byId, error: idError } = await supabase
@@ -88,7 +101,19 @@ export async function getSupabaseBlogBySlug(
         .eq("status", "published")
         .single();
 
-    if (!idError && byId) return byId as SupabaseBlogDetail;
+    if (!idError && byId) {
+        console.log("Found blog by ID fallback, incrementing views for ID:", byId.id);
+        // Increment views asynchronously
+        supabase.rpc("increment_blog_views", { blog_id: byId.id }).then(
+            ({ error }) => {
+                if (error)
+                    console.error("Failed to increment views:", error.message);
+                else
+                    console.log("View incremented successfully (fallback) for ID:", byId.id);
+            }
+        );
+        return byId as SupabaseBlogDetail;
+    }
 
     return null;
 }
