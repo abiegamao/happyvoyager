@@ -100,7 +100,7 @@ export default function WhyChooseUsSection() {
             </p>
 
             {/* Feature list */}
-            <div className="grid gap-8">
+            <div className="grid ">
               {reasons.map((reason, index) => (
                 <div
                   key={index}

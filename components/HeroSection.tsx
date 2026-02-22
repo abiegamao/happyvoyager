@@ -55,7 +55,7 @@ export default function HeroSection() {
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
         {/* Left Column: Content */}
-        <div className="max-w-xl">
+        <div className="max-w-xl order-2 lg:order-1">
           {/* Stat Pills */}
           <div className="flex flex-wrap gap-3 mb-8 animate-slide-in-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#fff4e6] shadow-sm border border-[#ffe4cc]">
@@ -97,7 +97,7 @@ export default function HeroSection() {
 
         {/* Right Column: Visuals - Start from line 125 */}
         <div
-          className="relative h-[600px] flex items-center justify-center hidden lg:flex"
+          className="relative h-[450px] lg:h-[600px] flex items-center justify-center order-1 lg:order-2 scale-75 sm:scale-90 lg:scale-100"
           style={{ transform: `translate(${-mousePos.x}px, ${-mousePos.y}px)` }}
         >
           {/* Main Purple Circle (Brand Color) */}
