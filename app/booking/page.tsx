@@ -1,12 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Calendar, Clock, Video } from "lucide-react";
 
 export default function BookingPage() {
-    const [iframeKey] = useState(() => Date.now());
+    const [mounted, setMounted] = useState(false);
+    const [iframeKey, setIframeKey] = useState(0);
+
+    useEffect(() => {
+        setMounted(true);
+        setIframeKey(Date.now());
+    }, []);
+
+    if (!mounted) {
+        return (
+            <main className="min-h-screen bg-[#f9f5f2] font-sans text-[#3a3a3a]">
+                <Header />
+                <div className="pt-40 px-6 lg:px-8 max-w-5xl mx-auto text-center">
+                    <div className="h-20" /> {/* Placeholder while hydrating */}
+                </div>
+                <Footer />
+            </main>
+        );
+    }
+
     return (
         <main className="min-h-screen bg-[#f9f5f2] font-sans text-[#3a3a3a]">
             <Header />

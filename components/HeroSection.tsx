@@ -1,7 +1,17 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowRight, MapPin, Calendar, Search, Star, Globe, ShieldCheck, Plane, CheckCircle2 } from "lucide-react";
+import {
+  ArrowRight,
+  MapPin,
+  Calendar,
+  Search,
+  Star,
+  Globe,
+  ShieldCheck,
+  Plane,
+  CheckCircle2,
+} from "lucide-react";
 
 import PlaybookAccessModal from "./PlaybookAccessModal";
 
@@ -95,52 +105,38 @@ export default function HeroSection() {
           </div>
         </div>
 
-        {/* Right Column: Visuals - Start from line 125 */}
+        {/* Right Column: Visuals */}
         <div
-          className="relative h-[450px] lg:h-[600px] flex items-center justify-center order-1 lg:order-2 scale-75 sm:scale-90 lg:scale-100"
+          className="relative h-[320px] sm:h-[420px] lg:h-[600px] flex items-center justify-center order-1 lg:order-2"
           style={{ transform: `translate(${-mousePos.x}px, ${-mousePos.y}px)` }}
         >
-          {/* Main Purple Circle (Brand Color) */}
-          <div className="absolute w-[450px] h-[450px] rounded-full bg-[#E5D4FA] opacity-100" />
-          {/* Using a lavender/purple tint similar to the reference but within brand logic? 
-                 Reference has purple. User said "like this". 
-                 I'll use a brand-adjacent color or just the brand accent.
-                 Actually, the reference has a strong circle. I'll use a solid circle.
-                 If brand colors are #e3a99c (dusty rose), #bbcccd (sage).
-                 I'll use a soft variation of Brand Primary #e3a99c or Sage #bbcccd.
-                 Let's go with #e3a99c as the base, maybe slightly lighter.
-             */}
-          <div className="absolute w-[480px] h-[480px] rounded-full bg-[#e3a99c] shadow-2xl animate-pulse-soft" />
+          {/* Background circle */}
+          <div className="absolute w-[260px] h-[260px] sm:w-[360px] sm:h-[360px] lg:w-[480px] lg:h-[480px] rounded-full bg-[#e3a99c] shadow-2xl animate-pulse-soft" />
 
           {/* Orbiting Elements - Dashed Ring */}
           <div
-            className="absolute w-[600px] h-[600px] border-2 border-dashed border-[#bbcccd]/60 rounded-full animate-spin-slow pointer-events-none"
+            className="absolute w-[320px] h-[320px] sm:w-[440px] sm:h-[440px] lg:w-[600px] lg:h-[600px] border-2 border-dashed border-[#bbcccd]/60 rounded-full animate-spin-slow pointer-events-none"
             style={{ animationDuration: "40s" }}
           >
             {/* Planet 1 */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 rounded-full bg-[#3a3a3a] ring-4 ring-white" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3 h-3 lg:w-4 lg:h-4 rounded-full bg-[#3a3a3a] ring-4 ring-white" />
             {/* Planet 2 */}
-            <div className="absolute bottom-1/4 right-[10%] w-3 h-3 rounded-full bg-orange-400 ring-4 ring-white" />
+            <div className="absolute bottom-1/4 right-[10%] w-2 h-2 lg:w-3 lg:h-3 rounded-full bg-orange-400 ring-4 ring-white" />
           </div>
 
           {/* Plane on Orbit */}
           <div
-            className="absolute w-[680px] h-[680px] rounded-full animate-spin-slow pointer-events-none"
+            className="absolute w-[360px] h-[360px] sm:w-[500px] sm:h-[500px] lg:w-[680px] lg:h-[680px] rounded-full animate-spin-slow pointer-events-none"
             style={{ animationDuration: "30s", animationDirection: "reverse" }}
           >
             <div className="absolute top-1/4 left-0 -rotate-90">
-              <Plane className="w-8 h-8 text-[#3a3a3a] fill-current" />
+              <Plane className="w-5 h-5 lg:w-8 lg:h-8 text-[#3a3a3a] fill-current" />
             </div>
           </div>
 
-          {/* Central Person Image "Cutout" Illusion */}
-          {/* Since we don't have a transparent PNG, we use a rounded rectangle that matches the width 
-                but taller, to simulate 'popping out' top/bottom or just a nice framed shot.
-                Actually, to match the "circle" vibe with a person inside, 
-                we can use a circle mask or a rounded-t-full rounded-b-full pill shape. 
-             */}
-          <div className="relative z-10 w-[400px] h-[500px] flex items-center justify-center">
-            <div className="relative w-full h-full rounded-[100px] overflow-hidden border-8 border-white shadow-2xl bg-white">
+          {/* Central Person Image */}
+          <div className="relative z-10 w-[200px] h-[260px] sm:w-[280px] sm:h-[360px] lg:w-[400px] lg:h-[500px] flex items-center justify-center">
+            <div className="relative w-full h-full rounded-[60px] lg:rounded-[100px] overflow-hidden border-4 lg:border-8 border-white shadow-2xl bg-white">
               <img
                 src="/assets/hero_image1.jpeg"
                 alt="Happy Traveler"
@@ -148,27 +144,27 @@ export default function HeroSection() {
               />
             </div>
 
-            {/* Overlay Badge like the "Camera" or "Suitcase" in reference? 
-                     Implementation: A floating card. 
-                 */}
-            <div className="absolute -bottom-6 right-0 bg-white p-4 rounded-2xl shadow-xl border border-gray-100 animate-float-delayed">
-              <div className="flex items-center gap-3">
-                <div className="bg-green-100 p-2 rounded-full">
-                  <CheckCircle2 className="w-6 h-6 text-green-600" />
+            {/* Status badge */}
+            <div className="absolute -bottom-4 right-0 bg-white p-2.5 lg:p-4 rounded-2xl shadow-xl border border-gray-100 animate-float-delayed">
+              <div className="flex items-center gap-2 lg:gap-3">
+                <div className="bg-green-100 p-1.5 lg:p-2 rounded-full">
+                  <CheckCircle2 className="w-4 h-4 lg:w-6 lg:h-6 text-green-600" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-bold uppercase">
+                  <p className="text-[10px] lg:text-xs text-gray-400 font-bold uppercase">
                     Status
                   </p>
-                  <p className="text-sm font-bold text-[#3a3a3a]">Approved</p>
+                  <p className="text-xs lg:text-sm font-bold text-[#3a3a3a]">
+                    Approved
+                  </p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Small floating dots around */}
-          <div className="absolute top-20 left-20 w-4 h-4 bg-orange-300 rounded-full animate-bounce delay-100" />
-          <div className="absolute bottom-40 right-10 w-3 h-3 bg-[#bbcccd] rounded-full animate-bounce delay-700" />
+          {/* Small floating dots */}
+          <div className="absolute top-10 left-10 lg:top-20 lg:left-20 w-3 h-3 lg:w-4 lg:h-4 bg-orange-300 rounded-full animate-bounce delay-100" />
+          <div className="absolute bottom-20 right-4 lg:bottom-40 lg:right-10 w-2 h-2 lg:w-3 lg:h-3 bg-[#bbcccd] rounded-full animate-bounce delay-700" />
         </div>
       </div>
     </section>
