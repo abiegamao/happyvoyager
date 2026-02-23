@@ -7,9 +7,6 @@ import {
   AtSign,
   Linkedin,
   Youtube,
-  Mail,
-  MapPin,
-  ArrowRight,
   Loader2,
   CheckCircle2,
 } from "lucide-react";
@@ -101,21 +98,21 @@ export default function Footer() {
         {/* Top Split */}
         <div className="grid lg:grid-cols-2 gap-16 lg:gap-32 mb-20">
           {/* Brand */}
-          <div>
-            <Link href="/" className="inline-block mb-8">
+          <div className="text-center lg:text-left">
+            <Link href="/" className="inline-block mb-8 group">
               <img
                 src="/assets/logo.png"
                 alt="Happy Voyager"
-                className="h-12 w-auto object-contain mb-2 brightness-0 invert"
+                className="h-10 md:h-12 w-auto object-contain mb-3 brightness-0 invert transition-transform group-hover:scale-105"
               />
-              <p className="text-[#e3a99c] text-sm font-bold tracking-[0.2em] uppercase">Digital Nomad Consultant</p>
+              <p className="text-[#e3a99c] text-[10px] md:text-xs font-black tracking-[0.3em] uppercase">Digital Nomad Consultant</p>
             </Link>
-            <p className="text-white/60 text-lg leading-relaxed max-w-md mb-8">
+            <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-md mb-8 mx-auto lg:mx-0">
               I help digital nomads turn their weak passports into global freedom through
               clear, executable visa roadmaps. Let's design your new life.
             </p>
 
-            <div className="flex gap-4">
+            <div className="flex gap-4 justify-center lg:justify-start">
               {socialLinks.map((social, index) => (
                 <a
                   key={index}
@@ -129,9 +126,9 @@ export default function Footer() {
           </div>
 
           {/* Newsletter */}
-          <div className="lg:pt-4">
-            <h3 className="text-2xl font-bold mb-4">Join the Newsletter</h3>
-            <p className="text-white/60 mb-8">Get weekly visa updates, nomad tips, and exclusive guides delivered to your inbox.</p>
+          <div className="lg:pt-4 text-center lg:text-left">
+            <h3 className="text-xl md:text-2xl font-bold mb-4">Join the Newsletter</h3>
+            <p className="text-white/60 text-sm md:text-base mb-8 mx-auto lg:mx-0 max-w-md">Get weekly visa updates, nomad tips, and exclusive guides delivered to your inbox.</p>
 
             {status === "success" ? (
               <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center animate-fade-in">
@@ -142,8 +139,8 @@ export default function Footer() {
                 <p className="text-sm text-white/60">Keep an eye on your inbox.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-2">
-                <div className="flex gap-2">
+              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <input
                     type="email"
                     value={email}
@@ -152,17 +149,17 @@ export default function Footer() {
                       if (error) setError("");
                     }}
                     placeholder="Enter your email address"
-                    className={`flex-1 bg-white/5 border ${error ? "border-red-500/50" : "border-white/10"} rounded-xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#e3a99c] transition-colors`}
+                    className={`flex-1 bg-white/5 border ${error ? "border-red-500/50" : "border-white/10"} rounded-2xl px-6 py-4 text-white placeholder:text-white/30 focus:outline-none focus:border-[#e3a99c] transition-all text-sm`}
                   />
                   <button
                     type="submit"
                     disabled={status === "loading"}
-                    className="px-8 py-4 bg-[#e3a99c] rounded-xl text-[#3a3a3a] font-bold hover:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[100px]"
+                    className="px-8 py-4 bg-[#e3a99c] rounded-2xl text-[#3a3a3a] font-bold hover:bg-white transition-all disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center min-w-[120px] shadow-lg shadow-[#e3a99c]/10"
                   >
                     {status === "loading" ? (
                       <Loader2 className="w-5 h-5 animate-spin" />
                     ) : (
-                      "Join"
+                      "Join Now"
                     )}
                   </button>
                 </div>
@@ -214,12 +211,10 @@ export default function Footer() {
             <ul className="space-y-4">
               <li>
                 <a href="mailto:abie@happyvoyager.com" className="flex items-center gap-2 text-white/60 hover:text-[#e3a99c] transition-colors">
-                  <Mail className="w-4 h-4" />
                   <span>hello@abiemaxey.com</span>
                 </a>
               </li>
               <li className="flex items-center gap-2 text-white/60">
-                <MapPin className="w-4 h-4" />
                 <span>Remote-first, Worldwide</span>
               </li>
             </ul>
@@ -227,9 +222,9 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 pt-8 border-t border-white/5 text-sm text-white/40">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8 pt-8 border-t border-white/5 text-xs md:text-sm text-white/40 text-center md:text-left">
           <p>© {new Date().getFullYear()} Abie Maxey. All rights reserved.</p>
-          <div className="flex gap-8">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8">
             <a href="/privacy-policy" className="hover:text-white transition-colors">Privacy Policy</a>
             <a href="/terms-of-service" className="hover:text-white transition-colors">Terms of Service</a>
           </div>

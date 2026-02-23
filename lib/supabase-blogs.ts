@@ -33,24 +33,35 @@ export function mapToPublicBlog(post: SupabaseBlogDetail): PublicBlog {
 }
 
 /**
- * Fetch published blog posts from Supabase (paginated).
+ * Fetch published blog posts from Supabase (paginated, with search/filter).
  */
 export async function getSupabaseBlogs(
     page: number = 1,
-    limit: number = 6
+    limit: number = 6,
+    search?: string,
+    category?: string
 ): Promise<{ blogs: PublicBlog[]; total: number }> {
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
-    const { data, error, count } = await supabase
+    let query = supabase
         .from("blog_posts")
         .select(
             "id, title, slug, excerpt, cover_image_url, category, created_at, status",
             { count: "exact" }
         )
         .eq("status", "published")
-        .order("created_at", { ascending: false })
-        .range(from, to);
+        .order("created_at", { ascending: false });
+
+    if (category && category !== "all") {
+        query = query.eq("category", category);
+    }
+
+    if (search) {
+        query = query.or(`title.ilike.%${search}%,excerpt.ilike.%${search}%`);
+    }
+
+    const { data, error, count } = await query.range(from, to);
 
     if (error) {
         console.error("Failed to fetch blogs from Supabase:", error.message);
@@ -61,6 +72,28 @@ export async function getSupabaseBlogs(
         blogs: (data as SupabaseBlogDetail[]).map(mapToPublicBlog),
         total: count ?? 0,
     };
+}
+
+/**
+ * Fetch unique categories for published blog posts.
+ */
+export async function getSupabaseCategories(): Promise<string[]> {
+    const { data, error } = await supabase
+        .from("blog_posts")
+        .select("category")
+        .eq("status", "published");
+
+    if (error) {
+        console.error("Failed to fetch categories:", error.message);
+        return [];
+    }
+
+    const categories = new Set<string>();
+    data.forEach((item) => {
+        if (item.category) categories.add(item.category);
+    });
+
+    return Array.from(categories).sort();
 }
 
 /**
