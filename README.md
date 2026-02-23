@@ -1,6 +1,6 @@
 # Happy Voyager
 
-Happy Voyager is a modern travel and lifestyle website designed to inspire, inform, and empower travelers. The platform features engaging blogs, destination guides, travel tips, and resources to help users plan memorable journeys. Built with a focus on performance, accessibility, and beautiful UI, Happy Voyager leverages the latest web technologies for a seamless user experience.
+Happy Voyager gives you a path to the EU life via the Spanish Digital Nomad Visa. A complete DIY system to move to Spain without a lawyer. 🇪🇸✈️
 
 ## Features
 
