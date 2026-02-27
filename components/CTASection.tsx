@@ -88,20 +88,20 @@ export default function CTASection() {
           <div className="text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-8">
               <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
-                Start Your Journey
+                Let&apos;s Talk
               </span>
             </div>
 
             <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight">
-              Ready to Embrace <br />
+              Ready to Engineer <br />
               <span className="font-script text-[#f2d6c9] text-6xl md:text-7xl lg:text-8xl relative inline-block transform -rotate-2 mt-4 opacity-90">
-                Location Freedom?
+                Your Freedom?
               </span>
             </h2>
 
             <p className="font-[family-name:var(--font-body)] text-xl text-white/60 mb-10 leading-relaxed max-w-xl mx-auto lg:mx-0">
-              Take the first step towards your digital nomad lifestyle. Book a
-              free 30-minute consultation and let's map out your future.
+              Drop me a message. Whether you&apos;re just exploring or ready to
+              apply, I&apos;ll point you in the right direction.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-6 justify-center lg:justify-start">
@@ -117,8 +117,8 @@ export default function CTASection() {
                 ))}
               </div>
               <div className="text-left">
-                <p className="text-white font-bold text-lg">500+ Nomads</p>
-                <p className="text-white/40 text-sm">Joined this month</p>
+                <p className="text-white font-bold text-lg">Growing Community</p>
+                <p className="text-white/40 text-sm">Nomads helped</p>
               </div>
             </div>
           </div>
@@ -187,11 +187,10 @@ export default function CTASection() {
 
                 {submitStatus.type && (
                   <div
-                    className={`px-6 py-4 rounded-2xl text-center font-medium ${
-                      submitStatus.type === "success"
+                    className={`px-6 py-4 rounded-2xl text-center font-medium ${submitStatus.type === "success"
                         ? "bg-green-500/20 text-green-300 border border-green-500/30"
                         : "bg-red-500/20 text-red-300 border border-red-500/30"
-                    }`}
+                      }`}
                   >
                     {submitStatus.message}
                   </div>

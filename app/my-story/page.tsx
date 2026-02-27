@@ -13,13 +13,13 @@ export default function MyStoryPage() {
             <div className="pt-40 pb-12 px-6 lg:px-8 max-w-4xl mx-auto text-center">
                 <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f2d6c9]/30 border border-[#f2d6c9] mb-8 animate-fade-in">
                     <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
-                        The Background
+                        Origin Story
                     </span>
                 </div>
                 <h1 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight animate-slide-up">
-                    My Journey to <br />
+                    How I Engineered My <br />
                     <span className="text-[#e3a99c] font-script relative inline-block transform -rotate-2 mt-2">
-                        Global Freedom
+                        Way Into Europe
                     </span>
                 </h1>
             </div>
@@ -29,7 +29,7 @@ export default function MyStoryPage() {
                 <div className="prose prose-lg prose-headings:font-bold prose-headings:text-[#3a3a3a] prose-p:text-[#6b6b6b] prose-p:leading-relaxed prose-strong:text-[#e3a99c]">
 
                     <p className="lead text-xl md:text-2xl font-medium text-[#3a3a3a]/80 mb-12 border-l-4 border-[#e3a99c] pl-6 italic">
-                        "I realized that freedom wasn't about having a better passport. It was about having a better strategy."
+                        &quot;Freedom wasn&apos;t about having a better passport. It was about building a better system.&quot;
                     </p>
 
                     <h3 className="text-3xl mb-6">The Beginning</h3>
@@ -57,10 +57,10 @@ export default function MyStoryPage() {
                             />
                         </div>
                         <div className="w-full md:w-1/2">
-                            <h4 className="text-xl font-bold mb-3">Living the Dream</h4>
+                            <h4 className="text-xl font-bold mb-3">The Current Setup</h4>
                             <p className="text-sm text-[#6b6b6b]">
-                                Now, I split my time between vibrant European cities and quiet coastal towns,
-                                running my business from my laptop with a view.
+                                Now I&apos;m based in Spain, with Schengen access across 27 countries.
+                                I run my business from my laptop — anywhere with wifi and good coffee.
                             </p>
                         </div>
                     </div>
@@ -77,9 +77,9 @@ export default function MyStoryPage() {
 
                 {/* CTA Block */}
                 <div className="mt-16 pt-12 border-t border-[#e7ddd3] text-center">
-                    <h3 className="text-3xl font-bold mb-4">Ready to write your own story?</h3>
+                    <h3 className="text-3xl font-bold mb-4">Ready to build your own system?</h3>
                     <p className="text-[#6b6b6b] mb-8 max-w-lg mx-auto">
-                        Let's discuss how we can get you the visa that changes everything.
+                        Let&apos;s figure out if Spain&apos;s Digital Nomad Visa — or another route — is the right play for you.
                     </p>
 
                     <Link

@@ -16,28 +16,28 @@ const reasons = [
     icon: Award,
     title: "Lived Experience",
     description:
-      "I've personally navigated the weak passport struggle and built systems that work. This isn't theory, it's my life.",
+      "I held a passport that felt like a cage. I've lived the process — the rejections, the bureaucracy, the wins. This isn't advice from a textbook.",
     color: "#e3a99c",
   },
   {
     icon: Heart,
     title: "Personalized Approach",
     description:
-      "Every nomad is unique. I create custom strategies tailored to your specific situation and goals.",
+      "Your situation is unique — your passport, income structure, and goals all matter. There's no one-size-fits-all. I tailor the strategy to you.",
     color: "#bbcccd",
   },
   {
     icon: Zap,
     title: "Clear Roadmaps",
     description:
-      "No confusing bureaucracy. I provide executable playbooks that turn complex visa processes into simple steps.",
+      "I break complex processes into clear, numbered steps. Think of it as documentation for your life's next deployment.",
     color: "#f2d6c9",
   },
   {
     icon: MessageCircle,
     title: "Ongoing Support",
     description:
-      "I don't disappear after approval. Get continued support throughout your nomad journey.",
+      "Visa approved ≠ mission complete. I stick around for the post-arrival chaos — NIE, empadronamiento, bank accounts, all of it.",
     color: "#e3a99c",
   },
 ];
@@ -77,26 +77,25 @@ export default function WhyChooseUsSection() {
           <div>
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#bbcccd]/20 border border-[#bbcccd] mb-6">
               <span className="text-xs font-bold tracking-widest text-[#7a8f90] uppercase">
-                Why Work With Me
+                Why This Works
               </span>
             </div>
 
             <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-8 leading-tight">
-              I Make the <br />
+              I Turned My Weak Passport <br />
               <span className="relative inline-block z-10">
-                Impossible
+                Into a
                 <span className="absolute bottom-2 left-0 w-full h-4 bg-[#e3a99c]/30 -z-10 transform -rotate-2" />
               </span>{" "}
               <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-3 ml-2">
-                Possible
+                Cheat Code
               </span>
             </h2>
 
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-10 leading-relaxed max-w-lg">
-              As someone who turned a weak passport into global freedom, I
-              understand the frustration of navigating visa bureaucracy.
-              I&apos;ve documented my systems and playbooks to help you do the
-              same.
+              I didn&apos;t have privilege or connections. I had research,
+              systems-thinking, and stubbornness. I documented everything so
+              you can skip the years of trial and error.
             </p>
 
             {/* Feature list */}

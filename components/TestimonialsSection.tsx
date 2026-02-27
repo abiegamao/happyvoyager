@@ -64,20 +64,20 @@ export default function TestimonialsSection() {
           <div className="text-left">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-6">
               <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
-                Success Stories
+                Field Reports
               </span>
             </div>
 
             <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold mb-8 leading-tight">
-              From Our Happy <br />
+              What Nomads <br />
               <span className="font-script text-[#f2d6c9] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-                Voyagers
+                Are Saying
               </span>
             </h2>
 
             <p className="text-lg text-white/70 max-w-md leading-relaxed mb-8">
-              Join hundreds of nomads who&apos;ve successfully transitioned
-              to location-independent living. Real stories, real freedom.
+              Real people who used my playbooks and systems to get their visas
+              approved. No fluff, just results.
             </p>
 
             <div className="flex gap-8">

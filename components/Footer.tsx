@@ -108,8 +108,8 @@ export default function Footer() {
               <p className="text-[#e3a99c] text-[10px] md:text-xs font-black tracking-[0.3em] uppercase">Digital Nomad Consultant</p>
             </Link>
             <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-md mb-8 mx-auto lg:mx-0">
-              I help digital nomads turn their weak passports into global freedom through
-              clear, executable visa roadmaps. Let's design your new life.
+              I turned my weak passport into a boarding pass to Europe. Now I help other nomads
+              do the same — with systems, not luck.
             </p>
 
             <div className="flex gap-4 justify-center lg:justify-start">
@@ -127,8 +127,8 @@ export default function Footer() {
 
           {/* Newsletter */}
           <div className="lg:pt-4 text-center lg:text-left">
-            <h3 className="text-xl md:text-2xl font-bold mb-4">Join the Newsletter</h3>
-            <p className="text-white/60 text-sm md:text-base mb-8 mx-auto lg:mx-0 max-w-md">Get weekly visa updates, nomad tips, and exclusive guides delivered to your inbox.</p>
+            <h3 className="text-xl md:text-2xl font-bold mb-4">Join the Field Notes</h3>
+            <p className="text-white/60 text-sm md:text-base mb-8 mx-auto lg:mx-0 max-w-md">Weekly dispatches on visas, nomad systems, and lessons from the road. No spam, just signal.</p>
 
             {status === "success" ? (
               <div className="bg-white/5 border border-white/10 rounded-xl p-6 text-center animate-fade-in">

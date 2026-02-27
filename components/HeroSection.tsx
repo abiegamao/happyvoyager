@@ -70,22 +70,22 @@ export default function HeroSection() {
           <div className="flex flex-wrap gap-3 mb-8 animate-slide-in-left">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#fff4e6] shadow-sm border border-[#ffe4cc]">
               <span className="text-xs font-bold text-[#3a3a3a] tracking-wide">
-                Nomad Visa Consultant
+                The Nomad OS 👩🏻‍💻
               </span>
             </div>
           </div>
 
           {/* Heading */}
           <h1 className="font-[family-name:var(--font-heading)] text-5xl lg:text-7xl font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
-            Your Clear Path to{" "}
+            The DIY System for{" "}
             <span className="text-[#e3a99c]  relative">
               Spain&apos;s Digital Nomad Visa
             </span>
           </h1>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed mb-10 max-w-lg animate-slide-up delay-100">
-            Get approved without a lawyer, without spiraling through forums. A
-            step-by-step playbook from someone who did it themselves.
+            I got approved without a lawyer. Then I turned my entire process
+            into a playbook so you don&apos;t have to reverse-engineer Spain&apos;s bureaucracy alone.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-300">
@@ -93,14 +93,14 @@ export default function HeroSection() {
               onClick={() => setIsModalOpen(true)}
               className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group px-8 py-4 text-base cursor-pointer"
             >
-              Get your Playbook
+              Get the Playbook
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </button>
             <a
               href="/booking"
               className="px-8 py-4 rounded-full text-[#3a3a3a] font-semibold bg-white transition-colors w-full sm:w-auto text-center border-2 border-transparent hover:border-[#e7ddd3]"
             >
-              Book Consultation
+              Book a Free Call
             </a>
           </div>
         </div>

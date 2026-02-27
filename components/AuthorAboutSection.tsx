@@ -85,12 +85,12 @@ export default function AuthorAboutSection() {
 
                 {/* Name */}
                 <h4 className="text-xl font-bold text-[var(--color-charcoal)] text-center mb-2">
-                    The Happy Voyager
+                    Abie Maxey
                 </h4>
 
                 {/* Subtext */}
                 <p className="text-sm text-[var(--color-muted-foreground)] text-center mb-6">
-                    Welcome to my little space here in the internet.
+                    Nomad. Systems-thinker. Building playbooks for global freedom.
                 </p>
 
                 {/* Social Links */}
@@ -151,7 +151,7 @@ export default function AuthorAboutSection() {
                 ) : (
                     <>
                         <h3 className="text-lg font-bold text-[var(--color-charcoal)] text-center mb-4">
-                            Be the first to know everything
+                            Get the Field Notes
                         </h3>
 
                         <form onSubmit={handleSubmit} className="space-y-4">

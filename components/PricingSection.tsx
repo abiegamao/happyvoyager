@@ -80,13 +80,13 @@ export default function PricingSection() {
           <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-6 leading-tight">
             Transparent Pricing, <br />
             <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-              Exceptional Value
+              No Hidden Fees
             </span>
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            No hidden fees. Choose the plan that fits your nomad journey.
-            All plans include our satisfaction guarantee.
+            Pick the plan that matches where you are in your journey.
+            Every plan comes with my personal involvement.
           </p>
         </div>
 
@@ -96,8 +96,8 @@ export default function PricingSection() {
             <div
               key={index}
               className={`relative rounded-[2.5rem] p-8 lg:p-10 transition-all duration-500 ${plan.popular
-                  ? "bg-white shadow-2xl scale-105 border border-[#e3a99c] z-10"
-                  : "bg-white/60 backdrop-blur-sm border border-[#e7ddd3] hover:shadow-xl hover:-translate-y-2 hover:bg-white"
+                ? "bg-white shadow-2xl scale-105 border border-[#e3a99c] z-10"
+                : "bg-white/60 backdrop-blur-sm border border-[#e7ddd3] hover:shadow-xl hover:-translate-y-2 hover:bg-white"
                 }`}
             >
               {/* Popular badge */}
@@ -158,8 +158,8 @@ export default function PricingSection() {
               <a
                 href="#contact"
                 className={`block w-full py-4 rounded-xl text-center font-[family-name:var(--font-body)] font-bold transition-all duration-300 ${plan.popular
-                    ? "bg-[#3a3a3a] text-white hover:bg-[#e3a99c] shadow-lg hover:shadow-[#e3a99c]/30"
-                    : "bg-white border-2 border-[#e7ddd3] text-[#3a3a3a] hover:border-[#3a3a3a] hover:bg-[#3a3a3a] hover:text-white"
+                  ? "bg-[#3a3a3a] text-white hover:bg-[#e3a99c] shadow-lg hover:shadow-[#e3a99c]/30"
+                  : "bg-white border-2 border-[#e7ddd3] text-[#3a3a3a] hover:border-[#3a3a3a] hover:bg-[#3a3a3a] hover:text-white"
                   }`}
               >
                 {plan.cta}

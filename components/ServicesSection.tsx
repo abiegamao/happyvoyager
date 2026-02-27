@@ -15,42 +15,42 @@ const services = [
     icon: FileCheck,
     title: "Visa Application Support",
     description:
-      "Complete guidance through the visa application process, from document preparation to submission.",
+      "I walk you through the full visa pipeline — documents, translations, apostilles, and submission. No step left undocumented.",
     color: "#e3a99c", // Dusty Rose
   },
   {
     icon: Globe,
     title: "Country Selection Advisory",
     description:
-      "Find your perfect destination based on visa requirements, cost of living, and lifestyle preferences.",
+      "Not every country fits every nomad. I help you pick based on visa difficulty, tax implications, cost of living, and your actual lifestyle.",
     color: "#bbcccd", // Sage
   },
   {
     icon: Briefcase,
     title: "Business Registration",
     description:
-      "Help setting up legal entities, freelance structures, and tax-compliant business arrangements.",
+      "Autonomo vs. SL? I'll help you choose the right structure and get registered without overpaying an accountant.",
     color: "#e3a99c", // Dusty Rose
   },
   {
     icon: Users,
     title: "Family Visa Solutions",
     description:
-      "Bring your loved ones along. I handle dependent visas and family reunion applications.",
+      "Bringing your partner or family? I'll handle the dependent visa paperwork so you don't double the stress.",
     color: "#f2d6c9", // Soft Peach
   },
   {
     icon: Clock,
     title: "Visa Extensions & Renewals",
     description:
-      "Never worry about expiration. I track deadlines and handle all renewal paperwork.",
+      "I keep track of your deadlines so your visa doesn't expire while you're living your best life.",
     color: "#f2d6c9", // Soft Peach
   },
   {
     icon: Shield,
     title: "Compliance & Tax Advisory",
     description:
-      "Stay compliant with local regulations. Expert advice on tax obligations and legal requirements.",
+      "Taxes abroad are confusing. I'll help you understand what you owe, where you owe it, and how to stay compliant.",
     color: "#bbcccd", // Sage
   },
 ];
@@ -74,15 +74,15 @@ export default function ServicesSection() {
           </div>
 
           <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-            Services Tailored for <br />
+            Services Built From <br />
             <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-              Digital Nomads
+              Lived Experience
             </span>
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg md:text-xl text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            From your first application to long-term residency, I&apos;m your
-            dedicated partner in building a location-independent life.
+            I don&apos;t offer generic consulting. Each service is something
+            I&apos;ve personally navigated or helped other nomads through.
           </p>
         </div>
 
@@ -137,7 +137,7 @@ export default function ServicesSection() {
             <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#bbcccd] rounded-full blur-[80px] opacity-20 group-hover:opacity-30 transition-opacity duration-500" />
 
             <h3 className="text-2xl md:text-3xl font-[family-name:var(--font-heading)] font-bold mb-6 relative z-10">
-              Not sure which path is right for you?
+              Not sure where to start?
             </h3>
 
             <a

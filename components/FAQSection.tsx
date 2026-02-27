@@ -60,13 +60,12 @@ export default function FAQSection() {
           <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-6 leading-tight">
             Questions? <br />
             <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-              We Have Answers
+              I&apos;ve Got Answers
             </span>
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            Everything you need to know about our visa consulting services
-            and the digital nomad lifestyle.
+            The questions I get asked the most — answered straight, no jargon.
           </p>
         </div>
 
@@ -76,8 +75,8 @@ export default function FAQSection() {
             <div
               key={index}
               className={`rounded-[2rem] transition-all duration-300 ${openIndex === index
-                  ? "bg-[#f9f5f2] border border-[#e3a99c]/30 shadow-sm"
-                  : "bg-white border border-[#e7ddd3] hover:border-[#bbcccd]"
+                ? "bg-[#f9f5f2] border border-[#e3a99c]/30 shadow-sm"
+                : "bg-white border border-[#e7ddd3] hover:border-[#bbcccd]"
                 }`}
             >
               <button
@@ -90,8 +89,8 @@ export default function FAQSection() {
                 </span>
                 <div
                   className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all duration-300 ${openIndex === index
-                      ? "bg-[#e3a99c] text-white rotate-0 shadow-md"
-                      : "bg-[#f2f2f2] text-[#6b6b6b]"
+                    ? "bg-[#e3a99c] text-white rotate-0 shadow-md"
+                    : "bg-[#f2f2f2] text-[#6b6b6b]"
                     }`}
                 >
                   {openIndex === index ? (

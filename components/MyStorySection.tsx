@@ -19,7 +19,7 @@ export default function MyStorySection() {
               {/* Badge Overlay */}
               <div className="absolute top-8 left-8 bg-[#e3a99c] text-white px-6 py-4 rounded-2xl shadow-lg">
                 <div className="text-3xl font-bold">2+</div>
-                <div className="text-sm font-medium">Years Traveling</div>
+                <div className="text-sm font-medium">Years Nomading</div>
               </div>
             </div>
             {/* Decorative blob */}
@@ -30,35 +30,35 @@ export default function MyStorySection() {
           <div className="order-1 lg:order-2">
             <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f2d6c9]/30 border border-[#f2d6c9] mb-6">
               <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
-                My Story
+                The Origin Story
               </span>
             </div>
 
             <h2 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-              Hi, I'm Your Guide to Spain's Digital Nomad Visa
+              I Figured Out Spain&apos;s Digital Nomad Visa — Without a Lawyer
             </h2>
 
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-4 leading-relaxed">
-              After 2+ years of traveling as a digital nomad, I knew I wanted a
-              European base. Spain called to me with its incredible culture,
-              food, and quality of life.
+              After 2+ years as a nomad, I was done with tourist visas and
+              border math. I wanted a real base in Europe. Spain was the play —
+              the culture, the weather, the Schengen access.
             </p>
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-4 leading-relaxed">
               But when I started researching the Digital Nomad Visa, I hit a
-              wall. Forum threads were outdated, government websites had broken
-              links, and everyone seemed to suggest hiring an expensive lawyer.
+              wall. Reddit threads were stale, government links were broken,
+              and the only advice was &quot;just hire a lawyer.&quot; Lawyers wanted
+              €2,000+ for paperwork I could learn to do myself.
             </p>
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-4 leading-relaxed">
               <span className="font-semibold text-[#3a3a3a]">
-                I decided to figure it out myself.
+                So I reverse-engineered the process.
               </span>{" "}
-              After countless hours of research, form-filling, and navigating
-              the UGE system, I got my visa approved—without a lawyer.
+              I decoded the UGE portal, figured out exactly which documents
+              need apostilles, and got approved — €0 in lawyer fees.
             </p>
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-8 leading-relaxed">
-              Now I'm sharing everything I learned so you don't have to go
-              through the same confusion. This playbook is the resource I wish I
-              had.
+              Now I&apos;m open-sourcing my system. This playbook is the
+              documentation I wish existed when I started.
             </p>
 
             {/* Statistics */}
@@ -87,7 +87,7 @@ export default function MyStorySection() {
               href="/my-story"
               className="inline-flex items-center gap-2 text-[#3a3a3a] font-semibold group hover:text-[#e3a99c] transition-colors text-lg"
             >
-              Read My Full Story
+              Read the Full Origin Story
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>

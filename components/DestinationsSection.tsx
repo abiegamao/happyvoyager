@@ -15,7 +15,7 @@ const destinations = [
     country: "Spain",
     city: "Spain",
     image: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80",
-    description: "Experience the vibrant culture and mediterranean lifestyle. Home to one of the most popular Digital Nomad Visas in Europe.",
+    description: "My home base. Spain's Digital Nomad Visa is one of Europe's best — and I've been through the entire process myself.",
     highlights: ["Nomad Visa Available", "Schengen Access", "Tax Benefits"],
     flag: "🇪🇸",
   },
@@ -23,7 +23,7 @@ const destinations = [
     country: "Croatia",
     city: "Croatia",
     image: "https://images.unsplash.com/photo-1575540291670-8d3b26f7d327?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "Stunning coastlines and historic cities. Croatia offers a specific temporary residence permit for digital nomads.",
+    description: "Gorgeous coastlines, fast wifi, and a dedicated digital nomad permit. Croatia is seriously underrated.",
     highlights: ["Nomad Permit", "English Widely Spoken", "Affordable Living"],
     flag: "🇭🇷",
   },
@@ -31,7 +31,7 @@ const destinations = [
     country: "The Balkans",
     city: "Serbia, Albania, Bosnia",
     image: "https://images.unsplash.com/photo-1502824420498-012d4c4f0c42?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "Discover the hidden gems of Europe. Rich history, diverse cultures, and welcoming communities awaits in the Balkans.",
+    description: "Low cost of living, incredible food, and emerging nomad scenes. The Balkans are Europe's best-kept secret.",
     highlights: ["Visa-Free Options", "Low Cost of Living", "Emerging Hubs"],
     flag: "🌍",
   },
@@ -66,19 +66,19 @@ export default function DestinationsSection() {
         <div className="text-center mb-16 md:mb-24">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f2d6c9]/20 border border-[#f2d6c9] mb-6">
             <span className="text-xs font-bold tracking-widest text-[#d69586] uppercase">
-              Global Opportunities
+              Where to Base
             </span>
           </div>
 
           <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-            Where Will Your <br />
+            Where Will You <br />
             <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-              Adventure Begin?
+              Deploy Next?
             </span>
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            Specialized guidance for top digital nomad destinations and visa consultations.
+            I specialize in these destinations because I&apos;ve lived, visited, or researched them obsessively.
           </p>
         </div>
 
@@ -179,14 +179,14 @@ export default function DestinationsSection() {
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/10 mb-6">
                 <Globe2 className="w-4 h-4 text-[#e3a99c]" />
                 <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
-                  Expert Consultations
+                  Beyond My Bases
                 </span>
               </div>
               <h3 className="text-3xl md:text-4xl font-bold mb-6">
-                Looking for other destinations?
+                Need a country I haven&apos;t listed?
               </h3>
               <p className="text-white/60 text-lg mb-8 max-w-md">
-                I also provide comprehensive visa consultation services for major global destinations.
+                I also consult on visas for the US, Canada, and Schengen Area. If your destination isn&apos;t here, let&apos;s talk.
               </p>
               <a
                 href="#contact"

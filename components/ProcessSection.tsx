@@ -14,7 +14,7 @@ const steps = [
     icon: MessageSquare,
     title: "Free Consultation",
     description:
-      "Schedule a call to discuss your goals. I'll assess your eligibility and recommend the best visa options.",
+      "We hop on a call, I assess your situation — passport, income, goals — and tell you exactly what's possible.",
     color: "#e3a99c",
   },
   {
@@ -22,7 +22,7 @@ const steps = [
     icon: FileText,
     title: "Document Prep",
     description:
-      "I provide a personalized checklist and guide you through gathering documents. Everything gets reviewed for accuracy.",
+      "You get a personalized document checklist. I review every single file before submission — no room for errors.",
     color: "#bbcccd",
   },
   {
@@ -30,7 +30,7 @@ const steps = [
     icon: Send,
     title: "Application",
     description:
-      "I handle the submission process, communicate with embassies, and keep you updated on progress.",
+      "I guide you through submission on the UGE portal. You'll know exactly what buttons to click and what to upload.",
     color: "#f2d6c9",
   },
   {
@@ -38,7 +38,7 @@ const steps = [
     icon: CheckCircle,
     title: "Approval",
     description:
-      "Celebrate your approval! I continue to support you with arrival procedures and local registration.",
+      "Visa approved! But we're not done — I help you with NIE, empadronamiento, and getting settled in your new city.",
     color: "#e3a99c",
   },
 ];
@@ -60,21 +60,21 @@ export default function ProcessSection() {
         <div className="text-center mb-20 md:mb-32">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#bbcccd]/20 border border-[#bbcccd] mb-6">
             <span className="text-xs font-bold tracking-widest text-[#7a8f90] uppercase">
-              How It Works
+              The Process
             </span>
           </div>
 
           <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-            Your Journey to <br />
+            From Zero to <br />
             <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-              Freedom
+              Visa
             </span>
             <span className="text-[#3a3a3a]"> in 4 Steps</span>
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            I&apos;ve simplified the complex visa process into a clear,
-            stress-free roadmap. Here&apos;s what to expect.
+            I&apos;ve turned a confusing bureaucratic maze into a four-step
+            execution plan. Here&apos;s the system.
           </p>
         </div>
 
@@ -136,7 +136,7 @@ export default function ProcessSection() {
             <ArrowRight className="w-5 h-5" />
           </a>
           <p className="mt-4 text-sm text-[#6b6b6b]">
-            No commitment required. Let&apos;s just chat about your options.
+            No commitment. Let&apos;s just figure out if this path makes sense for you.
           </p>
         </div>
       </div>
