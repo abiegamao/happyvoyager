@@ -44,6 +44,8 @@ export async function getSupabaseBlogs(
     const from = (page - 1) * limit;
     const to = from + limit - 1;
 
+    if (!supabase) return { blogs: [], total: 0 };
+
     let query = supabase
         .from("blog_posts")
         .select(
@@ -78,6 +80,8 @@ export async function getSupabaseBlogs(
  * Fetch unique categories for published blog posts.
  */
 export async function getSupabaseCategories(): Promise<string[]> {
+    if (!supabase) return [];
+
     const { data, error } = await supabase
         .from("blog_posts")
         .select("category")
@@ -103,6 +107,8 @@ export async function getSupabaseCategories(): Promise<string[]> {
 export async function getSupabaseBlogBySlug(
     slug: string
 ): Promise<SupabaseBlogDetail | null> {
+    if (!supabase) return null;
+
     console.log("Fetching blog by slug:", slug);
     // First try matching by slug
     const { data: bySlug, error: slugError } = await supabase
