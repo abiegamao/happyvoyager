@@ -4,13 +4,13 @@ import { Check, Star, Zap, ArrowRight } from "lucide-react";
 
 const pricingPlans = [
   {
-    name: "Digital Playbook",
-    description: "Everything you need to apply on your own",
+    name: "The Solo Voyager",
+    description: "The complete self-guided blueprint for independent applicants",
     price: "79",
     currency: "€",
     period: "one-time",
     features: [
-      "Complete step-by-step system",
+      "Complete step-by-step system with videos",
       "All 4 sections covered in detail",
       "FREE document templates",
       "Working UGE links & screenshots",
@@ -19,18 +19,18 @@ const pricingPlans = [
       "Self-paced, instant access",
       "Lifetime updates included",
     ],
-    cta: "Get Access Now",
+    cta: "Get the Playbook Pro",
     popular: false,
     color: "#bbcccd",
   },
   {
-    name: "1:1 Consultation",
-    description: "Personalized guidance for your unique situation",
+    name: "The Guided Navigator",
+    description: "Expert strategy and review to ensure your application is bulletproof",
     price: "199",
     currency: "€",
     period: "one-time",
     features: [
-      "Everything in the Playbook",
+      "Everything in The Solo Voyager",
       "1-hour video consultation",
       "Review your specific situation",
       "Document preparation guidance",
@@ -38,9 +38,27 @@ const pricingPlans = [
       "Priority email support",
       "Follow-up Q&A session",
     ],
-    cta: "Book a Session",
+    cta: "Book a Strategy Session",
     popular: true,
     color: "#e3a99c",
+  },
+  {
+    name: "The VIP Concierge",
+    description: "Sit back and relax while we handle the entire process from start to finish (+€149/additional dependent)",
+    price: "450",
+    currency: "€",
+    period: "one-time",
+    features: [
+      "Everything in the Playbook",
+      "1on1 Strategy Calls & Chat Support",
+      "Appointments Assistance (NIE DigiCert UGE, TIE)",
+      "Apostille & Translation Coordination",
+      "Submission to UGE & Unlimited Appeals",
+      "After Approval Assitance & Guide",
+    ],
+    cta: "Apply for VIP Service",
+    popular: false,
+    color: "#8fa38d",
   },
 ];
 
@@ -74,7 +92,7 @@ export default function PricingSection() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-8 items-start max-w-7xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <div
               key={index}
@@ -151,7 +169,7 @@ export default function PricingSection() {
           ))}
         </div>
 
-        {/* Enterprise note */}
+        {/* Enterprise note
         <div className="mt-20 text-center">
           <div className="inline-flex items-center gap-2 text-[#6b6b6b]">
             <span>Need a custom solution?</span>
@@ -159,7 +177,7 @@ export default function PricingSection() {
               Contact for enterprise pricing
             </a>
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );
