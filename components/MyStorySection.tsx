@@ -18,8 +18,8 @@ export default function MyStorySection() {
               />
               {/* Badge Overlay */}
               <div className="absolute top-8 left-8 bg-[#e3a99c] text-white px-6 py-4 rounded-2xl shadow-lg">
-                <div className="text-3xl font-bold">2+</div>
-                <div className="text-sm font-medium">Years Nomading</div>
+                <div className="text-3xl font-bold">2 yrs+</div>
+                <div className="text-sm font-medium">Nomading</div>
               </div>
             </div>
             {/* Decorative blob */}
@@ -35,12 +35,12 @@ export default function MyStorySection() {
             </div>
 
             <h2 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-              I Figured Out Spain&apos;s Digital Nomad Visa — Without a Lawyer
+              I Figured Out Spain&apos;s Digital Nomad Visa, Without a Lawyer
             </h2>
 
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-4 leading-relaxed">
               After 2+ years as a nomad, I was done with tourist visas and
-              border math. I wanted a real base in Europe. Spain was the play —
+              border math. I wanted a real base in Europe. Spain was the play,
               the culture, the weather, the Schengen access.
             </p>
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-4 leading-relaxed">
@@ -54,7 +54,7 @@ export default function MyStorySection() {
                 So I reverse-engineered the process.
               </span>{" "}
               I decoded the UGE portal, figured out exactly which documents
-              need apostilles, and got approved — €0 in lawyer fees.
+              need apostilles, and got approved, €0 in lawyer fees.
             </p>
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-8 leading-relaxed">
               Now I&apos;m open-sourcing my system. This playbook is the

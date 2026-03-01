@@ -59,7 +59,7 @@ export default function MyStoryPage() {
                         <div className="w-full md:w-1/2">
                             <h4 className="text-xl font-bold mb-3">The Current Setup</h4>
                             <p className="text-sm text-[#6b6b6b]">
-                                Now I&apos;m based in Spain, with Schengen access across 27 countries.
+                                Now I&apos;m based in Spain, with Schengen access across 27+ countries.
                                 I run my business from my laptop — anywhere with wifi and good coffee.
                             </p>
                         </div>
