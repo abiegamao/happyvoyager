@@ -17,13 +17,13 @@ export default function Home() {
     <main className="min-h-screen bg-[#f9f5f2] overflow-hidden">
       <Header />
       <HeroSection />
-      <ServicesSection />
+      {/* <ServicesSection /> */}
       <MyStorySection />
       <PlaybookPreviewSection />
       <WhyChooseUsSection />
       <DestinationsSection />
       <ProcessSection />
-      <TestimonialsSection />
+      {/* <TestimonialsSection /> */}
       <PricingSection />
       <FAQSection />
       <CTASection />

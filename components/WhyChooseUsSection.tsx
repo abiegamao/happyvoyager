@@ -16,14 +16,14 @@ const reasons = [
     icon: Award,
     title: "Lived Experience",
     description:
-      "I held a passport that felt like a cage. I've lived the process — the rejections, the bureaucracy, the wins. This isn't advice from a textbook.",
+      "I held a passport that felt like a cage. I've lived the process: the rejections, the bureaucracy, the wins. This isn't advice from a textbook.",
     color: "#e3a99c",
   },
   {
     icon: Heart,
     title: "Personalized Approach",
     description:
-      "Your situation is unique — your passport, income structure, and goals all matter. There's no one-size-fits-all. I tailor the strategy to you.",
+      "Your situation is unique, your passport, income structure, and goals all matter. There's no one-size-fits-all. I tailor the strategy to you.",
     color: "#bbcccd",
   },
   {
