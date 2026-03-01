@@ -65,9 +65,9 @@ export default function MyStorySection() {
             <div className="grid grid-cols-3 gap-6 mb-8 pb-8 border-b border-[#f2d6c9]">
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-[#e3a99c] mb-1">
-                  100+
+                  30+
                 </div>
-                <div className="text-sm text-[#6b6b6b]">Nomads Helped</div>
+                <div className="text-sm text-[#6b6b6b]">Countries Visited</div>
               </div>
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-[#e3a99c] mb-1">

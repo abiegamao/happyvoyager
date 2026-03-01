@@ -100,7 +100,7 @@ export default function HeroSection() {
               href="/booking"
               className="px-8 py-4 rounded-full text-[#3a3a3a] font-semibold bg-white transition-colors w-full sm:w-auto text-center border-2 border-transparent hover:border-[#e7ddd3]"
             >
-              Book a Free Call
+              Book a Call
             </a>
           </div>
         </div>

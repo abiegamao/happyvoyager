@@ -5,34 +5,44 @@ import { Plus, Minus, HelpCircle } from "lucide-react";
 
 const faqs = [
   {
-    question: "What is a digital nomad visa?",
+    question: "What is the Spain Digital Nomad Visa?",
     answer:
-      "A digital nomad visa is a special residence permit that allows remote workers, freelancers, and entrepreneurs to legally live and work in a foreign country while working for clients or employers outside that country.",
+      "The Spain Digital Nomad Visa (officially called the Visa para teletrabajo de carácter internacional) is a residence visa that allows remote workers and freelancers to live and work legally in Spain. It's designed for people who work remotely for companies or clients outside of Spain. The visa is initially granted for up to 3 years and can be renewed.",
   },
   {
     question: "How long does the process take?",
     answer:
-      "Processing times vary by country, ranging from 2 weeks to 4 months. Portugal's D7 visa typically takes 2-3 months, while Spain's digital nomad visa takes around 20 business days.",
+      "The online application through the UGE (Unidad de Grandes Empresas) portal typically takes 20-45 business days for a decision. However, you should factor in time for gathering documents, getting apostilles and translations, which can add 2-4 weeks. The entire process from start to approval usually takes 2-3 months.",
   },
   {
     question: "What are the income requirements?",
     answer:
-      "Income requirements vary significantly. Portugal requires ~€3,040/month, Spain ~€2,646/month. Some countries also accept proof of savings instead of regular income.",
+      "You need to prove a minimum monthly income of approximately €2,849 (200% of Spain's minimum wage). This can come from employment, freelance work, or business ownership. The key requirement is that your income must come from clients or employers outside of Spain. You'll need to show consistent income over several months.",
   },
   {
     question: "Can I bring my family?",
     answer:
-      "Yes! Most digital nomad visa programs allow you to include dependents such as spouses and children. Requirements vary, and additional income proof is usually needed.",
+      "Yes! Spain allows you to include family members in your application or they can apply for family reunification after you receive your visa. This includes your spouse/partner and dependent children. Each family member will need their own set of documents, and income requirements increase slightly for each additional person.",
   },
   {
-    question: "What if my application is rejected?",
+    question: "Do I need to speak Spanish?",
     answer:
-      "While my 95% success rate speaks for itself, if your application is rejected, I'll analyze the reasons and guide you through the appeal process at no additional cost.",
+      "No, there's no Spanish language requirement for the Digital Nomad Visa. However, knowing basic Spanish will significantly improve your daily life in Spain and can help with bureaucratic processes. The online application and most official communications are available in Spanish, but you can use a sworn translator for documents.",
+  },
+  {
+    question: "Do I need a lawyer to apply?",
+    answer:
+      "No! That's exactly why I created this playbook. While lawyers can be helpful, they're not required. The process is straightforward if you have clear guidance. Many people (myself included) successfully apply without legal assistance. The playbook provides everything you need to navigate the process confidently.",
+  },
+  {
+    question: "How long does it take to get my visa?",
+    answer:
+      "The online application through the UGE (Unidad de Grandes Empresas) portal typically takes 20-45 business days for a decision. However, you should factor in time for gathering documents, getting apostilles and translations, which can add 2-4 weeks. The entire process from start to approval usually takes 2-3 months.",
   },
   {
     question: "Do I need to pay local taxes?",
     answer:
-      "Tax obligations vary. Some countries like Portugal offer favorable tax regimes (NHR), while others exempt nomads from local tax. I include basic tax advisory in my plans.",
+      "Yes, you will be subject to Spanish taxes. However, Spain offers a special tax regime for digital nomads called the Beckham Law (Régimen Especial para Trabajadores Desplazados). Under this regime, you can opt to pay a flat tax rate of 24% on your Spanish-sourced income for the first 6 years, instead of the progressive rates which can go up to 47%. Your foreign-sourced income is generally exempt. It's important to note that this is a simplified explanation, and you should consult with a tax advisor for personalized guidance.",
   },
 ];
 
@@ -65,7 +75,7 @@ export default function FAQSection() {
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            The questions I get asked the most — answered straight, no jargon.
+            Everything you need to know about the Spain Digital Nomad Visa process.
           </p>
         </div>
 

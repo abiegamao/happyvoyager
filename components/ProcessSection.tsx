@@ -14,7 +14,7 @@ const steps = [
     icon: MessageSquare,
     title: "Free Consultation",
     description:
-      "We hop on a call, I assess your situation — passport, income, goals — and tell you exactly what's possible.",
+      "We hop on a call, I assess your situation, passport, income, goals, and tell you exactly what's possible.",
     color: "#e3a99c",
   },
   {
@@ -22,7 +22,7 @@ const steps = [
     icon: FileText,
     title: "Document Prep",
     description:
-      "You get a personalized document checklist. I review every single file before submission — no room for errors.",
+      "You get a personalized document checklist. I review every single file before submission, no room for errors.",
     color: "#bbcccd",
   },
   {
@@ -38,7 +38,7 @@ const steps = [
     icon: CheckCircle,
     title: "Approval",
     description:
-      "Visa approved! But we're not done — I help you with NIE, empadronamiento, and getting settled in your new city.",
+      "Visa approved! But we're not done, I help you with TIE, next steps, and getting settled in your new city.",
     color: "#e3a99c",
   },
 ];
