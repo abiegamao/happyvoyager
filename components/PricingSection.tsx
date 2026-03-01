@@ -4,60 +4,43 @@ import { Check, Star, Zap, ArrowRight } from "lucide-react";
 
 const pricingPlans = [
   {
-    name: "Explorer",
-    description:
-      "Perfect for first-time nomads with straightforward visa needs.",
-    price: "499",
-    currency: "$",
+    name: "Digital Playbook",
+    description: "Everything you need to apply on your own",
+    price: "79",
+    currency: "€",
     period: "one-time",
     features: [
-      "Single destination consultation",
-      "Document checklist & review",
-      "Application submission guidance",
-      "Email support",
-      "Basic compliance guide",
+      "Complete step-by-step system",
+      "All 4 sections covered in detail",
+      "FREE document templates",
+      "Working UGE links & screenshots",
+      "Apostille & translation guide",
+      "Avoid common rejection mistakes",
+      "Self-paced, instant access",
+      "Lifetime updates included",
     ],
-    cta: "Get Started",
+    cta: "Get Access Now",
     popular: false,
     color: "#bbcccd",
   },
   {
-    name: "Voyager",
-    description: "My most popular plan for serious digital nomads.",
-    price: "999",
-    currency: "$",
+    name: "1:1 Consultation",
+    description: "Personalized guidance for your unique situation",
+    price: "199",
+    currency: "€",
     period: "one-time",
     features: [
-      "Multi-destination strategy",
-      "Complete document preparation",
-      "Full application management",
-      "Embassy liaison services",
+      "Everything in the Playbook",
+      "1-hour video consultation",
+      "Review your specific situation",
+      "Document preparation guidance",
+      "Application strategy session",
       "Priority email support",
-      "Tax planning consultation",
-      "Arrival support package",
+      "Follow-up Q&A session",
     ],
-    cta: "Choose Voyager",
+    cta: "Book a Session",
     popular: true,
     color: "#e3a99c",
-  },
-  {
-    name: "Nomad Elite",
-    description: "Premium service for complex situations & families.",
-    price: "1,999",
-    currency: "$",
-    period: "one-time",
-    features: [
-      "Everything in Voyager, plus:",
-      "Family/dependent visas",
-      "Business setup assistance",
-      "1-on-1 dedicated support",
-      "Priority WhatsApp access",
-      "Full tax optimization",
-      "VIP embassy appointments",
-    ],
-    cta: "Go Elite",
-    popular: false,
-    color: "#f2d6c9",
   },
 ];
 
@@ -91,7 +74,7 @@ export default function PricingSection() {
         </div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-3 gap-8 lg:gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-start max-w-5xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <div
               key={index}

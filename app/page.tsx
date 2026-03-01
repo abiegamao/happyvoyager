@@ -18,7 +18,7 @@ export default function Home() {
       <Header />
       <HeroSection />
       <WhyChooseUsSection />
-      {/* <ServicesSection /> */}
+      <ServicesSection />
       <MyStorySection />
       <PlaybookPreviewSection />
       <ProcessSection />
