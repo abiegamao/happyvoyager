@@ -22,11 +22,11 @@ export default function Home() {
       <ProcessSection />
       <PlaybookPreviewSection />
       <PricingSection />
+      <CTASection />
       {/* <ServicesSection /> */}
       {/* <TestimonialsSection /> */}
       {/* <DestinationsSection /> */}
       <FAQSection />
-      <CTASection />
       <Footer />
     </main>
   );

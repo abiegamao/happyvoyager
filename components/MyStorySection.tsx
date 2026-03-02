@@ -19,7 +19,7 @@ export default function MyStorySection() {
               {/* Badge Overlay */}
               <div className="absolute top-8 left-8 bg-[#e3a99c] text-white px-6 py-4 rounded-2xl shadow-lg">
                 <div className="text-3xl font-bold">2 yrs+</div>
-                <div className="text-sm font-medium">Nomading</div>
+                <div className="text-sm font-medium">Nomadding</div>
               </div>
             </div>
             {/* Decorative blob */}
@@ -35,11 +35,11 @@ export default function MyStorySection() {
             </div>
 
             <h2 className="font-[family-name:var(--font-heading)] text-4xl md:text-5xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-              I Figured Out Spain&apos;s Digital Nomad Visa, Without a Lawyer
+              I got my 3-year EU Residency, Without a Lawyer
             </h2>
 
             <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] mb-4 leading-relaxed">
-              After 2+ years as a nomad, I was done with tourist visas and
+              After 2 years travelling the world, I was done with tourist visas and
               border math. I wanted a real base in Europe. Spain was the play,
               the culture, the weather, the Schengen access.
             </p>
@@ -65,13 +65,13 @@ export default function MyStorySection() {
             <div className="grid grid-cols-3 gap-6 mb-8 pb-8 border-b border-[#f2d6c9]">
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-[#e3a99c] mb-1">
-                  30+
+                  27+
                 </div>
-                <div className="text-sm text-[#6b6b6b]">Countries Visited</div>
+                <div className="text-sm text-[#6b6b6b]">Countries Unlocked <br />w/ a weak passport</div>
               </div>
               <div>
                 <div className="text-3xl md:text-4xl font-bold text-[#e3a99c] mb-1">
-                  95%
+                  99%
                 </div>
                 <div className="text-sm text-[#6b6b6b]">Success Rate</div>
               </div>

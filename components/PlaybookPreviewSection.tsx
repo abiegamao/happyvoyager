@@ -85,7 +85,7 @@ export default function PlaybookPreviewSection() {
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed mb-8">
-            From eligibility check to visa approval — this is my complete,
+            From eligibility check to visa approval, this is my complete,
             step-by-step system. No lawyers. No guesswork. Just the playbook I used myself.
           </p>
         </div>

@@ -46,7 +46,7 @@ const documents: DocumentItem[] = [
     {
         id: "income",
         title: "Proof of Income",
-        subtitle: "Bank statements, contracts, or tax returns showing €2,520+/month",
+        subtitle: "Bank statements, contracts, or tax returns showing €2,849+/month",
         needsApostille: false,
         needsTranslate: true,
     },
