@@ -134,7 +134,7 @@ export default function PlaybookAccessModal({
                                 Unlock the Playbook
                             </h3>
                             <p className="text-[#6b6b6b] mb-8 font-[family-name:var(--font-body)]">
-                                Enter your email to get instant access to the complete Spain Digital Nomad Visa guide.
+                                Enter your email to get instant access to the Spain Digital Nomad Playbook (Lite Version)
                             </p>
 
                             <form onSubmit={handleSubmit} className="space-y-4">
