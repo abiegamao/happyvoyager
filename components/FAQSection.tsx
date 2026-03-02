@@ -37,7 +37,7 @@ const faqs = [
   {
     question: "How long does it take to get my visa?",
     answer:
-      "The online application through the UGE (Unidad de Grandes Empresas) portal typically takes 20-45 business days for a decision. However, you should factor in time for gathering documents, getting apostilles and translations, which can add 2-4 weeks. The entire process from start to approval usually takes 2-3 months.",
+      "The online application through the UGE (Unidad de Grandes Empresas) portal typically takes around 20 business days for a decision. However, you should factor in time for gathering documents, getting apostilles and translations, which can add 2-4 weeks. The entire process from start to approval usually takes 2-3 months.",
   },
   {
     question: "Do I need to pay local taxes?",
@@ -131,7 +131,7 @@ export default function FAQSection() {
             Still have questions?
           </h3>
           <div className="flex justify-center gap-4">
-            <a href="mailto:abie@happyvoyager.com" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors">
+            <a href="mailto:hello@abiemaxey.com" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors">
               <HelpCircle className="w-5 h-5" />
               <span>Contact Support</span>
             </a>

@@ -13,20 +13,14 @@ import {
 
 const footerLinks = {
   services: [
-    { name: "Visa Consulting", href: "#services" },
-    { name: "Country Selection", href: "#destinations" },
-    { name: "Business Setup", href: "#services" },
-    { name: "Tax Advisory", href: "#services" },
+    { name: "Services", href: "#pricing" },
+    { name: "Book a Call", href: "https://calendly.com/abie-gamao/spain-dnv" },
   ],
   destinations: [
-    { name: "Portugal", href: "#destinations" },
-    { name: "Spain", href: "#destinations" },
-    { name: "Croatia", href: "#destinations" },
-    { name: "Balkans", href: "#destinations" },
+    { name: "Spain", href: "/document-checklist" },
   ],
   company: [
     { name: "About Abie", href: "/my-story" },
-    { name: "Success Stories", href: "#" },
     { name: "Blog", href: "/blog" },
     { name: "Contact", href: "/contact" },
   ],
