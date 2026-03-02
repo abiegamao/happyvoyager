@@ -32,7 +32,7 @@ const faqs = [
   {
     question: "Do I need a lawyer to apply?",
     answer:
-      "No! That's exactly why I created this playbook. While lawyers can be helpful, they're not required. The process is straightforward if you have clear guidance. Many people (myself included) successfully apply without legal assistance. The playbook provides everything you need to navigate the process confidently.",
+      "No! That's exactly why I created this playbook. While lawyers can be helpful, they're not required. The process is straightforward if you have clear guidance. Many people (myself included) successfully apply without legal assistance. The PlayBook Pro provides everything you need to navigate the process confidently. But if you want extra guidance and support, I also offer 1-on-1 consultations and done-for-you visa application services.",
   },
   {
     question: "How long does it take to get my visa?",
