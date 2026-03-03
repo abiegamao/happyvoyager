@@ -7,7 +7,7 @@ const facts = [
     bg: "#f2d6c9",
     label: "Minimum income",
     value: "€2,894/mo",
-    note: "~PHP 173K/mo from foreign clients",
+    note: "~PHP 196K/mo (~$3,350 USD) from foreign clients",
   },
   {
     icon: BadgeCheck,

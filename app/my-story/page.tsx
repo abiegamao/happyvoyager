@@ -157,7 +157,7 @@ export default function MyStoryPage() {
             It was about{" "}
             <span className="text-[#e3a99c]">building a better system.</span>&rdquo;
           </blockquote>
-          <p className="font-[family-name:var(--font-body)] text-[#6b6b6b]">— Abie Maxey</p>
+          <p className="font-[family-name:var(--font-body)] text-[#6b6b6b]">~ Abie Maxey</p>
         </div>
       </section>
 

@@ -133,7 +133,7 @@ const requirements = [
   {
     icon: DollarSign,
     title: "Minimum Income: €2,894/month",
-    desc: "200% of Spain's minimum wage. Roughly PHP 173,000/month. You need to prove this consistently for 3–6 months.",
+    desc: "200% of Spain's minimum wage. Roughly PHP 196,000/month. You need to prove this consistently for 3–6 months.",
     color: "#e3a99c",
   },
   {
@@ -222,7 +222,7 @@ const faqs = [
   },
   {
     q: "What's the minimum income requirement?",
-    a: "€2,894/month gross ~ roughly PHP 173,000/month at current rates. This is 200% of Spain's minimum wage (SMI). You need to show consistent income for at least 3 months, ideally 6. Freelancers can combine multiple client incomes to meet this threshold.",
+    a: "€2,894/month gross ~ roughly PHP 196,000/month at current rates. This is 200% of Spain's minimum wage (SMI). You need to show consistent income for at least 3 months, ideally 6. Freelancers can combine multiple client incomes to meet this threshold.",
   },
   {
     q: "I'm a virtual assistant / freelancer. Do I qualify?",
@@ -518,7 +518,7 @@ export default function DigitalNomadVisaPage() {
           <div className="mt-8 p-6 rounded-2xl bg-[#e3a99c]/8 border border-[#e3a99c]/20 flex flex-col md:flex-row items-start md:items-center gap-4">
             <AlertCircle className="w-5 h-5 text-[#e3a99c] flex-shrink-0 mt-0.5" />
             <p className="font-[family-name:var(--font-body)] text-sm text-[#3a3a3a] leading-relaxed">
-              <strong>Income threshold in context:</strong> €2,894/month = ~PHP 173,000/month = ~$3,200 USD/month. Many Filipino remote workers in tech, design, and marketing already earn above this. If you&apos;re close, we&apos;ll help you document it properly.
+              <strong>Income threshold in context:</strong> €2,894/month = ~PHP 196,000/month = ~$3,350 USD/month. Many Filipino remote workers in tech, design, and marketing already earn above this. If you&apos;re close, we&apos;ll help you document it properly.
             </p>
           </div>
         </div>
