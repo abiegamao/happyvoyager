@@ -24,6 +24,7 @@ const footerLinks = {
     { name: "Appointments (NIE/TIE)", href: "/appointments" },
     { name: "Document Translations", href: "/translations" },
     { name: "Schengen Visa Assistance", href: "/schengen-visa" },
+    { name: "Spain Digital Nomad Visa", href: "/digital-nomad-visa" },
     { name: "Checklist", href: "/document-checklist" },
   ],
 };

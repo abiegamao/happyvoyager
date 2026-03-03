@@ -47,7 +47,7 @@ const pricingPlans = [
   },
   {
     name: "The VIP Concierge",
-    description: "Full done-for-you service from start to finish. Lawyers charge €2,000–€3,500 for this. (+€149/additional dependent)",
+    description: "Full done-for-you service from start to finish. Lawyers charge €2,000–€3,500 for this.",
     price: "599",
     originalPrice: "900",
     currency: "€",
@@ -60,6 +60,7 @@ const pricingPlans = [
       "Submission to UGE & Appeals",
       "Post-Approval Guide and Settling in Spain Survival Kit",
       "Bonus: 4-Week Spanish Lessons",
+      "+ €149 / additional dependent",
     ],
     cta: "Apply for VIP Service",
     roiNote: "Most applicants spend 40–60 hrs figuring this out alone.",
@@ -82,20 +83,20 @@ export default function PricingSection() {
         <div className="text-center mb-16 md:mb-24">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#e7ddd3] mb-6">
             <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
-              Pricing Plans
+              🇪🇸 Spain DNV Packages
             </span>
           </div>
 
           <h2 className="font-[family-name:var(--font-heading)] text-5xl md:text-6xl font-bold text-[#3a3a3a] mb-6 leading-tight">
-            Transparent Pricing, <br />
+            Pick how you want{" "}<br />
             <span className="font-script text-[#e3a99c] text-6xl md:text-7xl relative inline-block transform -rotate-2 mt-2">
-              No Hidden Fees
+              to get to Spain
             </span>
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] max-w-2xl mx-auto leading-relaxed">
-            Pick the plan that matches where you are in your journey.
-            Every plan comes with my personal involvement.
+            DIY with the right system, get expert guidance, or have us handle everything.
+            All paths lead to the same result ~ a life in Spain.
           </p>
 
           <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#e3a99c]/10 border border-[#e3a99c]/30">
@@ -167,16 +168,25 @@ export default function PricingSection() {
 
               {/* Features */}
               <div className="space-y-4 mb-10">
-                {plan.features.map((feature, i) => (
-                  <div key={i} className="flex items-start gap-3">
-                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#f9f5f2] flex items-center justify-center mt-0.5">
-                      <Check className="w-3.5 h-3.5" style={{ color: plan.color }} />
+                {plan.features.map((feature, i) => {
+                  const isAddon = feature.startsWith("+ €");
+                  return isAddon ? (
+                    <div key={i} className="mt-2 pt-3 border-t border-dashed border-[#e7ddd3]">
+                      <span className="font-[family-name:var(--font-body)] text-xs text-[#aaaaaa] italic">
+                        {feature}
+                      </span>
                     </div>
-                    <span className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b] leading-relaxed">
-                      {feature}
-                    </span>
-                  </div>
-                ))}
+                  ) : (
+                    <div key={i} className="flex items-start gap-3">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-[#f9f5f2] flex items-center justify-center mt-0.5">
+                        <Check className="w-3.5 h-3.5" style={{ color: plan.color }} />
+                      </div>
+                      <span className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b] leading-relaxed">
+                        {feature}
+                      </span>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* ROI note for VIP */}

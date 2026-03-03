@@ -9,6 +9,9 @@ import ProcessSection from "@/components/ProcessSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
+import OtherServicesSection from "@/components/OtherServicesSection";
+import DNVTeaser from "@/components/DNVTeaser";
+import FreePlaybookButton from "@/components/FreePlaybookButton";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 
@@ -19,6 +22,7 @@ export default function Home() {
       <HeroSection />
       <MyStorySection />
       <WhyChooseUsSection />
+      <DNVTeaser />
       <ProcessSection />
       <PlaybookPreviewSection />
       <PricingSection />
@@ -43,11 +47,29 @@ export default function Home() {
         </div>
       </div>
 
+      <OtherServicesSection />
+
       <CTASection />
       {/* <ServicesSection /> */}
       {/* <TestimonialsSection /> */}
       {/* <DestinationsSection /> */}
       <FAQSection />
+
+      {/* Free Playbook fallback */}
+      <div id="free-playbook" className="bg-[#f9f5f2] border-t border-[#e7ddd3] py-14 px-6">
+        <div className="max-w-xl mx-auto text-center">
+          <p className="text-xs font-bold tracking-widest text-[#7a8f90] uppercase mb-3">Not ready to commit?</p>
+          <h3 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-bold text-[#3a3a3a] mb-3">
+            Get the FREE Playbook{" "}
+            <span className="font-script text-[#e3a99c] text-3xl md:text-4xl relative inline-block transform -rotate-1">(Lite Version)</span>
+          </h3>
+          <p className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b] mb-7">
+            Instant access · Lifetime updates · Zero spam
+          </p>
+          <FreePlaybookButton />
+        </div>
+      </div>
+
       <Footer />
     </main>
   );

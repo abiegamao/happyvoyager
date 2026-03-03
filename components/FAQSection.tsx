@@ -37,7 +37,7 @@ const faqs = [
   {
     question: "What about taxes? Do I pay in Spain?",
     answer:
-      "Yes, once you're a tax resident you'll be subject to Spanish taxes. However, Spain offers the Beckham Law (Régimen Especial para Trabajadores Desplazados), a flat 24% tax rate on Spanish-sourced income for your first 6 years, instead of progressive rates up to 47%. Foreign-sourced income is generally exempt. Consult a tax advisor for your specific situation.",
+      "Yes, once you're a tax resident you'll be subject to Spanish taxes. The Beckham Law (Régimen Especial para Trabajadores Desplazados) offers a flat 24% tax rate for 6 years ~ but this applies to employed workers only, not autónomos (self-employed). If you're freelancing for foreign clients, your income is generally not considered Spanish-sourced and may be exempt. Tax rules vary by situation ~ always consult a Spanish gestor or tax advisor.",
   },
 ];
 

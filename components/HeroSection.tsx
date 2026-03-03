@@ -13,12 +13,9 @@ import {
   CheckCircle2,
 } from "lucide-react";
 
-import PlaybookAccessModal from "./PlaybookAccessModal";
-
 export default function HeroSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -38,10 +35,6 @@ export default function HeroSection() {
       ref={containerRef}
       className="relative min-h-[100vh] flex items-center overflow-hidden bg-[#f9f5f2] pt-24 pb-12"
     >
-      <PlaybookAccessModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
 
       {/* Background World Map Image - Constrained & Blended */}
       <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center">
@@ -89,13 +82,13 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-300">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group px-8 py-4 text-base cursor-pointer"
+            <a
+              href="#pricing"
+              className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group px-8 py-4 text-base"
             >
-              Get the Playbook
+              See the Packages
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-            </button>
+            </a>
             <a
               href="https://calendly.com/abie-gamao/spain-dnv"
               className="px-8 py-4 rounded-full text-[#3a3a3a] font-semibold bg-white transition-colors w-full sm:w-auto text-center border-2 border-transparent hover:border-[#e7ddd3]"
@@ -103,6 +96,14 @@ export default function HeroSection() {
               Book a Call
             </a>
           </div>
+
+          {/* Soft free option — not a button, just a text link */}
+          <p className="font-[family-name:var(--font-body)] text-xs text-[#aaaaaa] mt-4 animate-slide-up delay-500">
+            Not ready to invest?{" "}
+            <a href="#free-playbook" className="underline underline-offset-2 hover:text-[#6b6b6b] transition-colors">
+              Start with the free version →
+            </a>
+          </p>
 
           {/* Personal proof trust strip */}
           <div className="flex flex-wrap gap-x-5 gap-y-2 mt-8 animate-slide-up delay-500">
