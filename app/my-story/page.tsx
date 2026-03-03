@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { ArrowRight, Globe, MapPin, Plane, Calendar, CheckCircle2, Heart, Zap } from "lucide-react";
+import { ArrowRight, Globe, MapPin, Plane, Calendar, CheckCircle2, Heart, Zap, Instagram, AtSign, Linkedin, Youtube, Facebook, Mail, Briefcase } from "lucide-react";
 import Link from "next/link";
 
 const stats = [
@@ -22,7 +22,7 @@ const timeline = [
   {
     period: "The Shift",
     title: "Going remote changed everything",
-    body: "I started working remotely as a systems engineer. For the first time, my income wasn't tied to a location. I started travelling, Southeast Asia, the Middle East, Latin America. I learned how visas worked, what embassies looked for, and how to package myself on paper.",
+    body: "I started working remotely as a systems engineer. For the first time, my income wasn't tied to a location. I started travelling, Southeast Asia, the UAE, the UK, North America, and eventually Europe. I learned how visas worked, what embassies looked for, and how to package myself on paper.",
     icon: Globe,
     color: "#8fa38d",
     align: "right",
@@ -278,6 +278,81 @@ export default function MyStoryPage() {
                 <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed">{para}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── SOCIAL + LINKS ── */}
+      <section className="bg-white border-y border-[#e7ddd3] py-16 px-6">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-10">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f2d6c9]/40 border border-[#f2d6c9] mb-4">
+              <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">Follow Along</span>
+            </div>
+            <h2 className="font-[family-name:var(--font-heading)] text-3xl font-bold text-[#3a3a3a]">
+              Find me online
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Socials grid */}
+            <div>
+              <p className="text-xs font-bold tracking-widest text-[#aaaaaa] uppercase mb-4">Social media</p>
+              <div className="grid grid-cols-2 gap-3">
+                {[
+                  { icon: <Instagram className="w-5 h-5" />, label: "Instagram", handle: "@abiemaxey", href: "https://www.instagram.com/abiemaxey/", bg: "bg-pink-50", iconColor: "text-pink-500", hover: "hover:border-pink-400 hover:text-pink-500" },
+                  { icon: <AtSign className="w-5 h-5" />, label: "Threads", handle: "@abiemaxey", href: "https://www.threads.net/@abiemaxey", bg: "bg-gray-50", iconColor: "text-black", hover: "hover:border-black hover:text-black" },
+                  { icon: <Facebook className="w-5 h-5" />, label: "Facebook", handle: "@abiemaxey", href: "https://www.facebook.com/abiemaxey", bg: "bg-blue-50", iconColor: "text-blue-600", hover: "hover:border-blue-500 hover:text-blue-600" },
+                  { icon: <Youtube className="w-5 h-5" />, label: "YouTube", handle: "@abiemaxey", href: "https://www.youtube.com/@abiemaxey", bg: "bg-red-50", iconColor: "text-red-600", hover: "hover:border-red-500 hover:text-red-600" },
+                  { icon: <Linkedin className="w-5 h-5" />, label: "LinkedIn", handle: "Abie Maxey", href: "https://www.linkedin.com/in/abiemaxey/", bg: "bg-sky-50", iconColor: "text-[#0A66C2]", hover: "hover:border-[#0A66C2] hover:text-[#0A66C2]" },
+                  { icon: <Mail className="w-5 h-5" />, label: "Email", handle: "hello@abiemaxey.com", href: "mailto:hello@abiemaxey.com", bg: "bg-[#f9f5f2]", iconColor: "text-[#3a3a3a]", hover: "hover:border-[#3a3a3a] hover:text-[#3a3a3a]" },
+                ].map((s) => (
+                  <Link
+                    key={s.label}
+                    href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`flex items-center gap-3 p-3 rounded-2xl border border-[#e7ddd3] transition-all duration-200 ${s.hover}`}
+                  >
+                    <div className={`w-8 h-8 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0 ${s.iconColor}`}>
+                      {s.icon}
+                    </div>
+                    <div className="min-w-0">
+                      <p className="text-xs font-bold text-[#3a3a3a] leading-none mb-0.5">{s.label}</p>
+                      <p className="text-[11px] text-[#aaaaaa] truncate">{s.handle}</p>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            {/* Websites */}
+            <div>
+              <p className="text-xs font-bold tracking-widest text-[#aaaaaa] uppercase mb-4">More from Abie</p>
+              <div className="flex flex-col gap-3">
+                {[
+                  { icon: <Globe className="w-4 h-4 text-[#e3a99c]" />, bg: "bg-[#f2d6c9]/40", label: "abiemaxey.com", sub: "Personal website", href: "https://abiemaxey.com" },
+                  { icon: <Briefcase className="w-4 h-4 text-[#7a8f90]" />, bg: "bg-[#bbcccd]/30", label: "Media Kit & Services", sub: "Content creation · Work with me", href: "https://abie-portfolio.vercel.app/" },
+                ].map((w) => (
+                  <Link
+                    key={w.label}
+                    href={w.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-3 p-4 rounded-2xl border border-[#e7ddd3] hover:border-[#e3a99c] hover:text-[#e3a99c] transition-all duration-200 group"
+                  >
+                    <div className={`w-9 h-9 rounded-xl ${w.bg} flex items-center justify-center flex-shrink-0`}>
+                      {w.icon}
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm font-bold text-[#3a3a3a] leading-none mb-0.5 group-hover:text-[#e3a99c] transition-colors">{w.label}</p>
+                      <p className="text-xs text-[#aaaaaa]">{w.sub}</p>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-[#aaaaaa] group-hover:text-[#e3a99c] group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                  </Link>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
