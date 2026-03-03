@@ -82,9 +82,9 @@ const questions: Question[] = [
     subtitle: "UGE requires €2,894/mo (~€34,728/yr) for a solo applicant as of 2026.",
     options: [
       { id: "under_2000", emoji: "📉", label: "Under €2,000/mo", description: "Below the current minimum threshold" },
-      { id: "borderline", emoji: "📊", label: "€2,000 – €2,894/mo", description: "Close to threshold — assessed case-by-case" },
+      { id: "borderline", emoji: "📊", label: "€2,000 – €2,894/mo", description: "Close to threshold, assessed case-by-case" },
       { id: "meets", emoji: "✅", label: "€2,894 – €5,000/mo", description: "Meets or exceeds the minimum requirement" },
-      { id: "above", emoji: "🚀", label: "Over €5,000/mo", description: "Well above the minimum — strong position" },
+      { id: "above", emoji: "🚀", label: "Over €5,000/mo", description: "Well above the minimum, strong position" },
     ],
   },
   {
@@ -94,9 +94,9 @@ const questions: Question[] = [
     title: "Where are you right now?",
     subtitle: "Your current location determines whether you apply via UGE in Spain or a consulate abroad.",
     options: [
-      { id: "in_spain", emoji: "🇪🇸", label: "Already in Spain", description: "Apply directly via UGE — no consulate needed" },
+      { id: "in_spain", emoji: "🇪🇸", label: "Already in Spain", description: "Apply directly via UGE, no consulate needed" },
       { id: "outside_spain", emoji: "✈️", label: "Outside Spain & Schengen", description: "Apply at the Spanish consulate in your country" },
-      { id: "schengen_tourist", emoji: "🛂", label: "In Schengen on tourist entry", description: "Timing is critical — let's map this out" },
+      { id: "schengen_tourist", emoji: "🛂", label: "In Schengen on tourist entry", description: "Timing is critical, let's map this out" },
       { id: "schengen_visa", emoji: "📋", label: "In another EU country with a visa", description: "Apply via consulate in your residence country" },
     ],
   },
@@ -107,7 +107,7 @@ const questions: Question[] = [
     title: "How long have you been working remotely?",
     subtitle: "UGE wants to see a consistent and documented remote work history.",
     options: [
-      { id: "under_3mo", emoji: "🌱", label: "Less than 3 months", description: "Limited track record — needs careful framing" },
+      { id: "under_3mo", emoji: "🌱", label: "Less than 3 months", description: "Limited track record, needs careful framing" },
       { id: "3_to_12mo", emoji: "📆", label: "3 months – 1 year", description: "Solid foundation to build your application on" },
       { id: "over_1yr", emoji: "⭐", label: "Over 1 year", description: "Strong, well-documented remote work history" },
     ],
@@ -159,9 +159,9 @@ function calculateResult(answers: Answers): Result {
       color: "#8fa38d",
       bg: "#d4e0d3",
       border: "#8fa38d",
-      applicationPath: "EU Registration Certificate — apply at your local Oficina de Extranjería in Spain.",
+      applicationPath: "EU Registration Certificate, apply at your local Oficina de Extranjería in Spain.",
       workTrack: "No work authorization needed. You can work freely across the EU.",
-      timingNote: "Processing is typically faster than the DNV — usually within a few weeks.",
+      timingNote: "Processing is typically faster than the DNV, usually within a few weeks.",
       nextSteps: ["Arrive in Spain with your EU passport", "Register at your local Oficina de Extranjería", "Get your EU Citizen Registration Certificate (green card)", "Register for a NIE number"],
       primaryCTA: "call",
     };
@@ -171,13 +171,13 @@ function calculateResult(answers: Answers): Result {
   if (workSetup === "planning") {
     return {
       status: "planning",
-      verdict: "Not quite ready yet — but let's plan ahead",
-      summary: "You don't have an active remote income setup yet, but the DNV is absolutely achievable with the right groundwork. Book a strategy call to map out exactly what you need to qualify — income targets, contracts, documentation strategy.",
+      verdict: "Not quite ready yet, but let's plan ahead",
+      summary: "You don't have an active remote income setup yet, but the DNV is absolutely achievable with the right groundwork. Book a strategy call to map out exactly what you need to qualify, income targets, contracts, documentation strategy.",
       color: "#bbcccd",
       bg: "#e0eaeb",
       border: "#bbcccd",
       applicationPath: "To be determined once you have an active remote income setup.",
-      workTrack: "Start by establishing a remote income source — either via employment or freelance clients outside Spain.",
+      workTrack: "Start by establishing a remote income source, either via employment or freelance clients outside Spain.",
       timingNote: "Most people can be DNV-ready within 3–6 months of active planning.",
       nextSteps: ["Set an income target of €2,894/mo from foreign sources", "Establish a clear remote work setup (employed or freelance)", "Build 3+ months of documented income history", "Book a call to map your personal qualification timeline"],
       primaryCTA: "call",
@@ -215,32 +215,32 @@ function calculateResult(answers: Answers): Result {
   let applicationPath = "";
   let timingNote = "";
   if (location === "in_spain") {
-    applicationPath = "UGE (Unidad de Grandes Empresas) — apply online or in-person directly in Spain. No consulate needed.";
+    applicationPath = "UGE (Unidad de Grandes Empresas), apply online or in-person directly in Spain. No consulate needed.";
     timingNote = "UGE processing typically takes 20 business days. Fastest route available.";
   } else if (location === "outside_spain") {
-    applicationPath = "Spanish consulate in your home country — you'll submit and collect your visa there before entering Spain.";
+    applicationPath = "Spanish consulate in your home country, you'll submit and collect your visa there before entering Spain.";
     timingNote = "Allow 4–12 weeks depending on your consulate. Book your appointment early.";
   } else if (location === "schengen_tourist") {
-    applicationPath = "Enter Spain and apply via UGE — but your Schengen entry timing is critical. This needs a tailored strategy.";
+    applicationPath = "Enter Spain and apply via UGE, but your Schengen entry timing is critical. This needs a tailored strategy.";
     timingNote = "A strategy call is strongly recommended to avoid overstay risks.";
   } else {
-    applicationPath = "Apply at the Spanish consulate in your current country of residence — not necessarily your home country.";
+    applicationPath = "Apply at the Spanish consulate in your current country of residence, not necessarily your home country.";
     timingNote = "Verify consulate jurisdiction for your specific location before booking an appointment.";
   }
 
   // Work track
   let workTrack = "";
   if (workSetup === "employee") {
-    workTrack = "Employment track — you'll need a remote work contract, employer authorization letter, and proof of at least 3 months with the company (existing DNV holders are exempt from this).";
+    workTrack = "Employment track, you'll need a remote work contract, employer authorization letter, and proof of at least 3 months with the company (existing DNV holders are exempt from this).";
   } else if (workSetup === "freelancer") {
-    workTrack = "Autónomo (self-employed) track — RETA registration in Spain, plus 3+ months of invoices proving consistent foreign client income.";
+    workTrack = "Autónomo (self-employed) track, RETA registration in Spain, plus 3+ months of invoices proving consistent foreign client income.";
   } else if (workSetup === "business_owner") {
     workTrack = "Business owner applications require careful review. UGE will assess permanent establishment risk and tax implications. A strategy call is essential.";
   }
 
   // Next steps
   const nextSteps: string[] = [];
-  if (income === "borderline") nextSteps.push("Strengthen your income documentation — bank statements, contracts, invoices");
+  if (income === "borderline") nextSteps.push("Strengthen your income documentation, bank statements, contracts, invoices");
   if (duration === "under_3mo") nextSteps.push("Build 3+ months of documented remote work history before applying");
   if (insurance !== "yes") nextSteps.push("Get international/Spanish health insurance before submitting");
   if (workSetup === "freelancer") nextSteps.push("Prepare 3+ months of invoices from overseas clients");
@@ -250,8 +250,8 @@ function calculateResult(answers: Answers): Result {
   nextSteps.push("Start building your document checklist now");
 
   const verdicts = {
-    strong: "You're a strong candidate — let's get you moving",
-    likely: "You likely qualify — a few things to tighten up",
+    strong: "You're a strong candidate, let's get you moving",
+    likely: "You likely qualify, a few things to tighten up",
     review: income === "under_2000"
       ? "Your income is below the current threshold"
       : "Your profile needs review before applying",
@@ -345,7 +345,7 @@ export default function AssessmentPage() {
         body: JSON.stringify({ firstName: firstName.trim(), email: email.trim(), answers }),
       });
     } catch (_) {
-      // Non-blocking — still show results even if API fails
+      // Non-blocking, still show results even if API fails
     }
     setCaptureLoading(false);
     setCaptureSubmitted(true);
@@ -372,10 +372,10 @@ export default function AssessmentPage() {
     ? result.status === "strong"
       ? CheckCircle2
       : result.status === "likely"
-      ? AlertTriangle
-      : result.status === "eu" || result.status === "planning"
-      ? Sparkles
-      : XCircle
+        ? AlertTriangle
+        : result.status === "eu" || result.status === "planning"
+          ? Sparkles
+          : XCircle
     : null;
 
   return (
@@ -409,8 +409,8 @@ export default function AssessmentPage() {
                 <div className="space-y-4">
                   {[
                     { icon: CheckCircle2, color: "#8fa38d", text: "Eligibility verdict based on your income, work setup, and background" },
-                    { icon: MapPin, color: "#7a8f90", text: "Best application path — UGE in Spain vs. consulate abroad" },
-                    { icon: Briefcase, color: "#e3a99c", text: "Your employment track — employed vs. autónomo, and what documents you'll need" },
+                    { icon: MapPin, color: "#7a8f90", text: "Best application path, UGE in Spain vs. consulate abroad" },
+                    { icon: Briefcase, color: "#e3a99c", text: "Your employment track, employed vs. autónomo, and what documents you'll need" },
                     { icon: CalendarCheck, color: "#bbcccd", text: "Personalised next steps to start or strengthen your application" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start gap-3">
@@ -490,11 +490,10 @@ export default function AssessmentPage() {
                       <button
                         key={option.id}
                         onClick={() => handleSelect(option.id)}
-                        className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all duration-200 group ${
-                          isChosen
+                        className={`w-full flex items-center gap-4 p-4 rounded-2xl border-2 text-left transition-all duration-200 group ${isChosen
                             ? "border-[#e3a99c] bg-[#f2d6c9]/20"
                             : "border-[#e7ddd3] bg-white hover:border-[#e3a99c]/50 hover:bg-[#f9f5f2]"
-                        }`}
+                          }`}
                       >
                         <span className="text-2xl flex-shrink-0 w-10 text-center">{option.emoji}</span>
                         <div className="flex-1 min-w-0">
@@ -503,9 +502,8 @@ export default function AssessmentPage() {
                           </p>
                           <p className="text-xs text-[#6b6b6b] mt-0.5">{option.description}</p>
                         </div>
-                        <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${
-                          isChosen ? "border-[#e3a99c] bg-[#e3a99c]" : "border-[#e7ddd3]"
-                        }`}>
+                        <div className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${isChosen ? "border-[#e3a99c] bg-[#e3a99c]" : "border-[#e7ddd3]"
+                          }`}>
                           {isChosen && <div className="w-2 h-2 rounded-full bg-white" />}
                         </div>
                       </button>
@@ -528,11 +526,10 @@ export default function AssessmentPage() {
                 <button
                   onClick={handleNext}
                   disabled={!selected}
-                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold text-sm transition-all duration-200 ${
-                    selected
+                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-3.5 rounded-full font-bold text-sm transition-all duration-200 ${selected
                       ? "bg-[#3a3a3a] text-white hover:bg-[#e3a99c] hover:text-[#3a3a3a]"
                       : "bg-[#e7ddd3] text-[#aaaaaa] cursor-not-allowed"
-                  }`}
+                    }`}
                 >
                   {step === totalSteps ? "Almost there →" : "Next Question"}
                   <ArrowRight className="w-4 h-4" />
@@ -544,7 +541,7 @@ export default function AssessmentPage() {
           {/* ── CAPTURE ── */}
           {isCapture && (
             <div>
-              {/* Progress — show as complete */}
+              {/* Progress, show as complete */}
               <div className="mb-8">
                 <div className="flex items-center justify-between mb-3">
                   <div className="flex items-center gap-2">
@@ -573,7 +570,7 @@ export default function AssessmentPage() {
                   Where should I send your result?
                 </h2>
                 <p className="text-sm text-[#6b6b6b] mb-6 leading-relaxed">
-                  Enter your name and email to see your personalised eligibility verdict and application path. No spam — just your result.
+                  Enter your name and email to see your personalised eligibility verdict and application path. No spam, just your result.
                 </p>
 
                 <form onSubmit={handleCapture} className="space-y-4">
@@ -754,7 +751,7 @@ export default function AssessmentPage() {
                 </h3>
                 <p className="text-sm text-white/60 mb-6 leading-relaxed">
                   {result.primaryCTA === "playbook"
-                    ? "The Spain DNV Playbook has everything you need — document templates, a step-by-step process, and the exact system used to get approved."
+                    ? "The Spain DNV Playbook has everything you need, document templates, a step-by-step process, and the exact system used to get approved."
                     : "We'll go through your profile in detail, identify what's missing, and map your exact path to a successful application."}
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3">

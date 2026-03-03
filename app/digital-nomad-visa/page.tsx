@@ -462,7 +462,7 @@ export default function DigitalNomadVisaPage() {
                   Digital Nomad Visa
                 </p>
                 {[
-                  "1-year visa, renewable up to 5 years",
+                  "up to 3-year visa, renewable",
                   "Legal right to work remotely in Spain",
                   "Path to permanent residency & EU citizenship",
                   "Tax advantages for employed workers (Beckham Law)",
@@ -677,7 +677,7 @@ export default function DigitalNomadVisaPage() {
                     icon: Heart,
                     color: "#8fa38d",
                     title: "Honest about eligibility ~ before you pay",
-                    desc: "If you don&apos;t qualify, we tell you upfront on the strategy call. We&apos;d rather help you build toward it than take your money on a weak application.",
+                    desc: "If you don't qualify, we tell you upfront on the strategy call. We'd rather help you build toward it than take your money on a weak application.",
                   },
                   {
                     icon: MessageSquare,

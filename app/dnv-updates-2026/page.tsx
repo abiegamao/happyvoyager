@@ -55,7 +55,7 @@ const highlights = [
     color: "#7a8f90",
     bg: "#e0eaeb",
     label: "Income (solo)",
-    value: "€33K/yr",
+    value: "€34K/yr",
     note: "€40K total for families ~ assessed case by case",
   },
   {
