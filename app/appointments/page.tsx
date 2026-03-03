@@ -249,7 +249,7 @@ export default function AppointmentsPage() {
       </section>
 
       {/* ── Service Cards ───────────────────────────────────────────────── */}
-      <section className="section-padding bg-white relative">
+      <section id="services" className="section-padding bg-white relative">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-[#e7ddd3] to-transparent" />
 
         <div className="max-w-7xl mx-auto">
@@ -264,14 +264,7 @@ export default function AppointmentsPage() {
               Which appointment do you need?
             </h2>
             <p className="font-[family-name:var(--font-body)] text-[#6b6b6b] max-w-xl mx-auto">
-              Each service is €75 flat. Not sure which one applies to you?{" "}
-              <a
-                href="https://calendly.com/abie-gamao/free-discovery-call"
-                className="text-[#e3a99c] font-semibold underline underline-offset-2 hover:text-[#3a3a3a] transition-colors"
-              >
-                Book a free call
-              </a>{" "}
-              and we'll figure it out together.
+              Each service is €75 flat. Read the "You need this if…" section on each card to find your match.
             </p>
           </div>
 
@@ -443,24 +436,15 @@ export default function AppointmentsPage() {
         </div>
       </section>
 
-      {/* ── Not Sure? Banner ─────────────────────────────────────────────── */}
-      <section className="py-12 px-6 bg-[#3a3a3a]">
-        <div className="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="text-center sm:text-left">
-            <p className="font-[family-name:var(--font-heading)] text-2xl font-bold text-white mb-1">
-              Not sure which one you need?
-            </p>
-            <p className="text-[#e7ddd3] text-sm">
-              Book a free 15-min call ~we'll tell you exactly which service applies and why.
-            </p>
-          </div>
-          <a
-            href="https://calendly.com/abie-gamao/free-discovery-call"
-            className="flex-shrink-0 flex items-center gap-2 px-8 py-4 rounded-full bg-[#e3a99c] text-white font-bold hover:bg-white hover:text-[#3a3a3a] transition-all duration-300 shadow-lg whitespace-nowrap"
-          >
-            Free 15-min Call
-            <ArrowRight className="w-4 h-4" />
-          </a>
+
+      {/* ── Post-Payment Reassurance ─────────────────────────────────────── */}
+      <section className="py-8 px-6 bg-[#3a3a3a]">
+        <div className="max-w-4xl mx-auto flex items-center justify-center gap-3 text-center">
+          <div className="w-2 h-2 rounded-full bg-[#e3a99c] flex-shrink-0" />
+          <p className="text-white/80 text-sm">
+            Once paid, our team will contact you with more details about your chosen province and next steps.
+          </p>
+          <div className="w-2 h-2 rounded-full bg-[#e3a99c] flex-shrink-0" />
         </div>
       </section>
 
@@ -680,7 +664,7 @@ export default function AppointmentsPage() {
               Questions we always get
             </h2>
             <p className="font-[family-name:var(--font-body)] text-[#6b6b6b]">
-              Still have questions? Book a free call ~we answer everything.
+              Still have questions? Reach out via the contact page.
             </p>
           </div>
 
@@ -739,28 +723,27 @@ export default function AppointmentsPage() {
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-[#e7ddd3] text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Book a free 15-minute call. We'll identify exactly what you need and
-            take it from there ~forms, appointments, prep, all of it.
+            Pick your service, pay €75, and we handle everything — forms, appointment slots, prep, all of it.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
-              href="https://calendly.com/abie-gamao/free-discovery-call"
+              href="#services"
               className="flex items-center gap-3 px-10 py-5 rounded-full bg-[#e3a99c] text-white font-bold text-lg hover:bg-white hover:text-[#3a3a3a] transition-all duration-300 shadow-xl shadow-[#e3a99c]/20 transform hover:-translate-y-1"
             >
-              Book a Free Call
+              Book an Appointment
               <ArrowRight className="w-5 h-5" />
             </a>
             <Link
-              href="/#pricing"
+              href="/contact"
               className="flex items-center gap-2 px-8 py-5 rounded-full border border-white/30 text-white font-semibold hover:bg-white/10 transition-all duration-300"
             >
-              See All Services
+              Have a Question?
             </Link>
           </div>
 
           <p className="mt-6 text-sm text-[#e7ddd3]/60">
-            No commitment. Just clarity.
+            €75 flat. No hidden fees. No surprises.
           </p>
         </div>
       </section>

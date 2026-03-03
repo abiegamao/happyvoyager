@@ -63,10 +63,10 @@ const pricingPlans = [
     ],
     cta: "Apply for VIP Service",
     roiNote: "Most applicants spend 40–60 hrs figuring this out alone.",
-    foundingNote: "Founding client spots available ~ ask about our launch rate",
+    foundingNote: "Founding client spots available",
     popular: false,
     color: "#8fa38d",
-    paymentLink: "https://buy.stripe.com/9B67sE8UG9d06Rj2dbew805",
+    paymentLink: "https://buy.stripe.com/9B65kwb2O2OCb7zeZXew807",
   },
 ];
 
