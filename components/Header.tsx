@@ -14,7 +14,7 @@ import {
 
 const navLinks = [
   { name: "Services", link: "/#pricing" },
-  { name: "Free Assessment", link: "/document-checklist" },
+  { name: "Free Checklist", link: "/document-checklist" },
   { name: "Blogs", link: "/blog" },
   { name: "Contact", link: "/contact" },
   { name: "About", link: "/my-story" },
