@@ -252,8 +252,8 @@ export default function DNVUpdates2026Page() {
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-white rounded-2xl border border-[#e7ddd3] p-5">
                   <p className="text-xs font-bold tracking-widest text-[#aaaaaa] uppercase mb-2">Solo applicant</p>
-                  <p className="font-[family-name:var(--font-heading)] text-3xl font-bold text-[#3a3a3a]">€33,000</p>
-                  <p className="text-sm text-[#6b6b6b] mt-1">per year (~€2,750/mo)</p>
+                  <p className="font-[family-name:var(--font-heading)] text-3xl font-bold text-[#3a3a3a]">€34,728</p>
+                  <p className="text-sm text-[#6b6b6b] mt-1">per year (~€2,894/mo)</p>
                 </div>
                 <div className="bg-white rounded-2xl border border-[#e7ddd3] p-5">
                   <p className="text-xs font-bold tracking-widest text-[#aaaaaa] uppercase mb-2">Family (2+ members)</p>
