@@ -101,7 +101,7 @@ export default function PricingSection() {
           <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#e3a99c]/10 border border-[#e3a99c]/30">
             <span className="w-2 h-2 rounded-full bg-[#e3a99c] animate-pulse" />
             <span className="font-[family-name:var(--font-body)] text-sm text-[#e3a99c] font-semibold">
-              Launch pricing — limited time offer
+              Launch pricing ~ limited time offer
             </span>
           </div>
         </div>

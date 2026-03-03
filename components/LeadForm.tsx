@@ -50,11 +50,11 @@ export default function LeadForm({ onSuccess }: LeadFormProps) {
                     tags: ["Blog Commenter"],
                 }),
             });
-            // Note: we don't block on GHL errors — commenter UX comes first
+            // Note: we don't block on GHL errors ~ commenter UX comes first
 
             onSuccess(formData);
         } catch {
-            // Non-blocking — still allow commenting even if GHL call fails
+            // Non-blocking ~ still allow commenting even if GHL call fails
             onSuccess(formData);
         } finally {
             setLoading(false);

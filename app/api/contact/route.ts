@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
               <table style="width: 100%; font-size: 15px; color: #3a3a3a;">
                 <tr>
                   <td style="padding: 6px 0; color: #6b6b6b; width: 100px;">Name</td>
-                  <td style="padding: 6px 0; font-weight: 600;">${name || "—"}</td>
+                  <td style="padding: 6px 0; font-weight: 600;">${name || "~"}</td>
                 </tr>
                 <tr>
                   <td style="padding: 6px 0; color: #6b6b6b;">Email</td>

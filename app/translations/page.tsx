@@ -127,11 +127,11 @@ const faqs = [
   },
   {
     q: "How long does it take?",
-    a: "Standard turnaround is 3–5 business days from payment confirmation. If you have an upcoming appointment or urgent deadline, let us know — rush processing is usually available for a small surcharge.",
+    a: "Standard turnaround is 3–5 business days from payment confirmation. If you have an upcoming appointment or urgent deadline, let us know ~ rush processing is usually available for a small surcharge.",
   },
   {
     q: "What format do I receive the translation in?",
-    a: "You receive a certified digital PDF by default, which is accepted for online visa portal submissions and most official purposes. If you need a stamped physical copy (for in-person submissions), we can arrange that too — just mention it when you send your documents.",
+    a: "You receive a certified digital PDF by default, which is accepted for online visa portal submissions and most official purposes. If you need a stamped physical copy (for in-person submissions), we can arrange that too ~ just mention it when you send your documents.",
   },
   {
     q: "Do I need the original document or a scan?",
@@ -139,7 +139,7 @@ const faqs = [
   },
   {
     q: "Can I bundle translations with my visa application package?",
-    a: "Yes — if you're a Guided Navigator or VIP Concierge client, translation coordination is already built in. Reach out to discuss bundling and we'll sort out a combined workflow.",
+    a: "Yes ~ if you're a Guided Navigator or VIP Concierge client, translation coordination is already built in. Reach out to discuss bundling and we'll sort out a combined workflow.",
   },
 ];
 
@@ -403,7 +403,7 @@ export default function TranslationsPage() {
                 </span>
               </h2>
               <p className="font-[family-name:var(--font-body)] text-[#6b6b6b] leading-relaxed mb-10 max-w-lg">
-                Most translation agencies charge €30–€50 per page and bury you in confusing portals. We charge €20, respond fast, and treat every document like your visa depends on it — because it does.
+                Most translation agencies charge €30–€50 per page and bury you in confusing portals. We charge €20, respond fast, and treat every document like your visa depends on it ~ because it does.
               </p>
 
               <div className="grid gap-6">
@@ -429,7 +429,7 @@ export default function TranslationsPage() {
                   {
                     icon: Star,
                     color: "#e3a99c",
-                    title: "€20/page — no agency markup",
+                    title: "€20/page ~ no agency markup",
                     desc: "We cut out the middleman. You get the same certified quality at almost half the market rate.",
                   },
                 ].map((item, i) => {
@@ -459,12 +459,12 @@ export default function TranslationsPage() {
               </div>
             </div>
 
-            {/* Right — stat cards */}
+            {/* Right ~ stat cards */}
             <div className="relative flex flex-col gap-6">
               {[
                 {
                   value: "€20",
-                  label: "Per page — vs €30–€50 at agencies",
+                  label: "Per page ~ vs €30–€50 at agencies",
                   color: "#e3a99c",
                   bg: "#f2d6c9",
                 },
@@ -482,7 +482,7 @@ export default function TranslationsPage() {
                 },
                 {
                   value: "Any doc",
-                  label: "Visa, NIE, TIE, notarial acts — all covered",
+                  label: "Visa, NIE, TIE, notarial acts ~ all covered",
                   color: "#e3a99c",
                   bg: "#f2d6c9",
                 },

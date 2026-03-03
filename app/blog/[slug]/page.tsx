@@ -185,7 +185,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
                 </div>
               </article>
 
-              {/* Comment Section — only for Supabase-backed posts */}
+              {/* Comment Section ~ only for Supabase-backed posts */}
               {blog.supabaseId && (
                 <CommentSection blogId={blog.supabaseId} />
               )}

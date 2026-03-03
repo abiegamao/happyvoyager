@@ -24,6 +24,7 @@ const servicesDropdown = [
   { name: "Pricing & Packages", link: "/#pricing" },
   { name: "Book Appointment (NIE/TIE)", link: "/appointments" },
   { name: "Document Translations", link: "/translations" },
+  { name: "Schengen Visa Assistance", link: "/schengen-visa" },
 ];
 
 export default function Header() {
@@ -53,7 +54,7 @@ export default function Header() {
           />
         </Link>
 
-        {/* Nav items — Services dropdown + rest */}
+        {/* Nav items ~ Services dropdown + rest */}
         <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium lg:flex lg:space-x-2">
           {/* Services dropdown */}
           <div

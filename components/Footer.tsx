@@ -23,6 +23,7 @@ const footerLinks = {
     { name: "Book a Strategy Call", href: "https://calendly.com/abie-gamao/spain-dnv" },
     { name: "Appointments (NIE/TIE)", href: "/appointments" },
     { name: "Document Translations", href: "/translations" },
+    { name: "Schengen Visa Assistance", href: "/schengen-visa" },
     { name: "Checklist", href: "/document-checklist" },
   ],
 };

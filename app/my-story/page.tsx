@@ -43,7 +43,7 @@ export default function MyStoryPage() {
                     <h3 className="text-3xl mb-6">The Turning Point</h3>
                     <p className="mb-8">
                         I spent years researching immigration laws, visa loopholes, and residency programs.
-                        I discovered that the world wasn't closed—it was just gated, and I needed the right keys.
+                        I discovered that the world wasn't closed~it was just gated, and I needed the right keys.
                         I successfully navigated the complexities of obtaining a <strong>Digital Nomad Visa</strong> in Spain,
                         opening the door to the entire Schengen Area and beyond.
                     </p>

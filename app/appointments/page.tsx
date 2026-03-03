@@ -723,7 +723,7 @@ export default function AppointmentsPage() {
           </h2>
 
           <p className="font-[family-name:var(--font-body)] text-[#e7ddd3] text-lg max-w-xl mx-auto mb-10 leading-relaxed">
-            Pick your service, pay €75, and we handle everything — forms, appointment slots, prep, all of it.
+            Pick your service, pay €75, and we handle everything ~ forms, appointment slots, prep, all of it.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
