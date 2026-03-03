@@ -138,7 +138,7 @@ export default function PlaybookPreviewSection() {
             onClick={() => setIsModalOpen(true)}
             className="btn-primary inline-flex items-center gap-2 group text-lg px-8 py-4 shadow-xl shadow-[#e3a99c]/20 hover:shadow-2xl hover:shadow-[#e3a99c]/30 transform hover:-translate-y-1 cursor-pointer"
           >
-            <span>Get Instant Access to the Playbook Lite</span>
+            <span>Get the FREE Playbook (Lite Version)</span>
           </button>
           <p className="mt-4 text-sm text-[#6b6b6b]">
             Instant access · Lifetime updates · Zero spam

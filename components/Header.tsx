@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/resizable-navbar";
 
 const navLinks = [
-  { name: "Services", link: "/#services" },
-  { name: "Free Checklist", link: "/document-checklist" },
+  { name: "Services", link: "/#pricing" },
+  { name: "Free DIY Guide", link: "/document-checklist" }
   { name: "Blogs", link: "/blog" },
   { name: "Contact", link: "/contact" },
   { name: "About", link: "/my-story" },

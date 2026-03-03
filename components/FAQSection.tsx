@@ -131,9 +131,10 @@ export default function FAQSection() {
             Still have questions?
           </h3>
           <div className="flex justify-center gap-4">
-            <a href="mailto:hello@abiemaxey.com" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors">
+
+            <a href="https://calendly.com/abie-gamao/spain-dnv" className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors">
               <HelpCircle className="w-5 h-5" />
-              <span>Contact Support</span>
+              <span>Book a Call</span>
             </a>
           </div>
         </div>

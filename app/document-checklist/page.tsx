@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { CheckCircle2, FileText, Info, Stamp, Languages, Circle, Plane } from "lucide-react";
+import { CheckCircle2, FileText, Info, Stamp, Languages, Circle, Plane, ArrowRight } from "lucide-react";
 
 interface DocumentItem {
     id: string;
@@ -187,18 +187,27 @@ export default function DocumentChecklistPage() {
 
                 {/* CTA Block */}
                 <div className="mt-16 pt-12 border-t border-[#e7ddd3] text-center">
-                    <h3 className="text-3xl font-bold mb-4">Ready to write your own story?</h3>
+                    <h3 className="text-3xl font-bold mb-4">Want the complete guide?</h3>
                     <p className="text-[#6b6b6b] mb-8 max-w-lg mx-auto">
-                        Let's discuss how we can get you the visa that changes everything.
+                        You can get our Playbook Pro or avail our guided services.
                     </p>
 
-                    <Link
-                        href="/#contact"
-                        className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#3a3a3a] text-white font-bold text-lg hover:bg-[#e3a99c] hover:shadow-xl hover:shadow-[#e3a99c]/30 transition-all duration-300 group"
-                    >
-                        <span>Book a Consultation</span>
-                        <Plane className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
-                    </Link>
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+                        <Link
+                            href="/#pricing"
+                            className="btn-primary inline-flex items-center justify-center gap-2 group px-8 py-4 text-lg w-full sm:w-auto"
+                        >
+                            <span>Avail our Services</span>
+                            <ArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                        <Link
+                            href="https://calendly.com/abie-gamao/spain-dnv"
+                            className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#3a3a3a] text-white font-bold text-lg hover:bg-[#e3a99c] hover:shadow-xl hover:shadow-[#e3a99c]/30 transition-all duration-300 group w-full sm:w-auto justify-center"
+                        >
+                            <span>Book a call</span>
+                            <Plane className="w-5 h-5 group-hover:-rotate-45 transition-transform duration-300" />
+                        </Link>
+                    </div>
                 </div>
 
             </div>
