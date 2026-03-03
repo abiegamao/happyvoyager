@@ -37,7 +37,7 @@ const reasons = [
     icon: MessageCircle,
     title: "Ongoing Support",
     description:
-      "Visa approved ≠ mission complete. I stick around for the post-arrival chaos — NIE, empadronamiento, bank accounts, all of it.",
+      "Visa approved ≠ mission complete. I stick around for the post-arrival chaos ~ NIE, empadronamiento, bank accounts, all of it.",
     color: "#e3a99c",
   },
 ];

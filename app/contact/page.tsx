@@ -1,153 +1,250 @@
+"use client";
 
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Youtube, Facebook, Globe, AtSign, ArrowRight, Mail, MessageCircle, MapPin, Linkedin } from "lucide-react";
+import { Instagram, Youtube, Facebook, AtSign, ArrowRight, Mail, Linkedin, User, Loader2, CheckCircle2, MapPin } from "lucide-react";
 import Link from "next/link";
+
+function ContactForm() {
+    const [formData, setFormData] = useState({ firstName: "", lastName: "", email: "", message: "" });
+    const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const [error, setError] = useState("");
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({ ...prev, [name]: value }));
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError("");
+        if (!formData.firstName || !formData.email || !formData.message) {
+            setError("Please fill in all required fields.");
+            return;
+        }
+        setLoading(true);
+        try {
+            await fetch("/api/contact", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    email: formData.email,
+                    message: formData.message,
+                    tags: ["Contact Form Inquiry"],
+                }),
+            });
+            setSubmitted(true);
+        } catch {
+            setError("Something went wrong. Please try emailing directly.");
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    if (submitted) {
+        return (
+            <div className="flex flex-col items-center justify-center gap-4 py-16 text-center">
+                <div className="w-16 h-16 rounded-full bg-[#8fa38d]/15 flex items-center justify-center">
+                    <CheckCircle2 className="w-8 h-8 text-[#8fa38d]" />
+                </div>
+                <h3 className="text-2xl font-bold text-[#3a3a3a]">Message received!</h3>
+                <p className="text-[#6b6b6b]">I'll get back to you within 1–2 business days.</p>
+            </div>
+        );
+    }
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-4">
+            {error && (
+                <div className="bg-red-50 text-red-500 text-sm p-3 rounded-xl border border-red-100">{error}</div>
+            )}
+            <div className="grid grid-cols-2 gap-3">
+                <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaaaaa]" />
+                    <input
+                        type="text" name="firstName" placeholder="First Name *"
+                        value={formData.firstName} onChange={handleChange} required
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e7ddd3] focus:border-[#e3a99c] focus:ring-2 focus:ring-[#e3a99c]/20 outline-none transition-all bg-white text-sm"
+                    />
+                </div>
+                <div className="relative">
+                    <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaaaaa]" />
+                    <input
+                        type="text" name="lastName" placeholder="Last Name"
+                        value={formData.lastName} onChange={handleChange}
+                        className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e7ddd3] focus:border-[#e3a99c] focus:ring-2 focus:ring-[#e3a99c]/20 outline-none transition-all bg-white text-sm"
+                    />
+                </div>
+            </div>
+            <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#aaaaaa]" />
+                <input
+                    type="email" name="email" placeholder="Email Address *"
+                    value={formData.email} onChange={handleChange} required
+                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-[#e7ddd3] focus:border-[#e3a99c] focus:ring-2 focus:ring-[#e3a99c]/20 outline-none transition-all bg-white text-sm"
+                />
+            </div>
+            <textarea
+                name="message" placeholder="Tell me about your situation *" rows={5}
+                value={formData.message} onChange={handleChange} required
+                className="w-full px-4 py-3 rounded-xl border border-[#e7ddd3] focus:border-[#e3a99c] focus:ring-2 focus:ring-[#e3a99c]/20 outline-none transition-all bg-white text-sm resize-none"
+            />
+            <button
+                type="submit" disabled={loading}
+                className="w-full py-3.5 rounded-xl bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-all duration-300 flex items-center justify-center gap-2 text-sm"
+            >
+                {loading
+                    ? <><Loader2 className="w-4 h-4 animate-spin" /><span>Sending...</span></>
+                    : <><span>Send Message</span><ArrowRight className="w-4 h-4" /></>}
+            </button>
+        </form>
+    );
+}
+
+const socials = [
+    {
+        icon: <Instagram className="w-5 h-5" />,
+        label: "Instagram",
+        handle: "@abiemaxey",
+        href: "https://www.instagram.com/abiemaxey/",
+        color: "hover:border-pink-400 hover:text-pink-500",
+        bg: "bg-pink-50",
+        iconColor: "text-pink-500",
+    },
+    {
+        icon: <AtSign className="w-5 h-5" />,
+        label: "Threads",
+        handle: "@abiemaxey",
+        href: "https://www.threads.net/@abiemaxey",
+        color: "hover:border-black hover:text-black",
+        bg: "bg-gray-50",
+        iconColor: "text-black",
+    },
+    {
+        icon: <Facebook className="w-5 h-5" />,
+        label: "Facebook",
+        handle: "@abiemaxey",
+        href: "https://www.facebook.com/abiemaxey",
+        color: "hover:border-blue-500 hover:text-blue-600",
+        bg: "bg-blue-50",
+        iconColor: "text-blue-600",
+    },
+    {
+        icon: <Youtube className="w-5 h-5" />,
+        label: "YouTube",
+        handle: "@abiemaxey",
+        href: "https://www.youtube.com/@abiemaxey",
+        color: "hover:border-red-500 hover:text-red-600",
+        bg: "bg-red-50",
+        iconColor: "text-red-600",
+    },
+    {
+        icon: <Linkedin className="w-5 h-5" />,
+        label: "LinkedIn",
+        handle: "Abie Maxey",
+        href: "https://www.linkedin.com/in/abiemaxey/",
+        color: "hover:border-[#0A66C2] hover:text-[#0A66C2]",
+        bg: "bg-sky-50",
+        iconColor: "text-[#0A66C2]",
+    },
+    {
+        icon: <Mail className="w-5 h-5" />,
+        label: "Email",
+        handle: "hello@abiemaxey.com",
+        href: "mailto:hello@abiemaxey.com",
+        color: "hover:border-[#3a3a3a] hover:text-[#3a3a3a]",
+        bg: "bg-[#f9f5f2]",
+        iconColor: "text-[#3a3a3a]",
+    },
+];
 
 export default function ContactPage() {
     return (
-        <main className="min-h-screen bg-[#f9f5f2] text-[#3a3a3a] overflow-hidden flex flex-col font-sans">
+        <main className="min-h-screen bg-[#f9f5f2] text-[#3a3a3a] flex flex-col">
             <Header />
 
-            <section className="flex-grow pt-32 pb-20 px-4 md:px-6 lg:px-8 relative">
-                <div className="max-w-7xl mx-auto relative z-10 w-full">
+            <section className="flex-grow pt-28 pb-16 px-4 md:px-6 lg:px-8">
+                <div className="max-w-6xl mx-auto">
 
-                    {/* Header Bubble */}
-                    <div className="flex justify-center mb-16">
-                        <div className="relative">
-                            <div className="bg-[#3a3a3a] text-[#f9f5f2] px-10 py-4 rounded-[2rem] text-4xl md:text-5xl font-bold tracking-tight shadow-xl animate-fade-in relative z-10">
-                                Contact me.
-                            </div>
-                            <div className="absolute -bottom-3 left-1/2 transform -translate-x-1/2 w-6 h-6 bg-[#3a3a3a] rotate-45 z-0"></div>
-                        </div>
+                    {/* Page heading */}
+                    <div className="mb-10">
+                        <p className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase mb-2">Get in touch</p>
+                        <h1 className="text-4xl md:text-5xl font-bold text-[#3a3a3a]">Contact me.</h1>
                     </div>
 
-                    {/* Grid Container */}
-                    <div className="border-t border-l border-[#e7ddd3] grid md:grid-cols-2 lg:grid-cols-3">
+                    {/* Two-column layout */}
+                    <div className="grid lg:grid-cols-5 gap-8 items-start">
 
-                        {/* Cell 1: Journal (Large) */}
-                        <div className="col-span-1 md:col-span-2 lg:col-span-2 border-r border-b border-[#e7ddd3]  md:p-14 group bg-white/40 transition-colors duration-300 relative overflow-hidden">
+                        {/* LEFT: Form */}
+                        <div className="lg:col-span-3 bg-white rounded-3xl p-8 shadow-sm border border-[#e7ddd3]">
+                            <h2 className="text-2xl font-bold mb-1">Let&apos;s Talk.</h2>
+                            <p className="text-[#6b6b6b] text-sm mb-6">
+                                Have a question about the visa process or want to explore working together?
+                            </p>
+                            <ContactForm />
+                        </div>
 
-                            <div className="">
-                                <div className="rounded-xl">
-                                    <img src="/assets/abie-logo.png" alt="Abie Logo" className="w-30 h-30 object-contain" />
+                        {/* RIGHT: Info + Socials */}
+                        <div className="lg:col-span-2 flex flex-col gap-5">
+
+                            {/* Profile card */}
+                            <div className="bg-white rounded-3xl p-6 shadow-sm border border-[#e7ddd3]">
+                                <div className="flex items-center gap-4 mb-4">
+                                    <img
+                                        src="/assets/story_abie.jpg"
+                                        alt="Abie Maxey"
+                                        className="w-14 h-14 rounded-2xl object-cover border-2 border-[#e7ddd3]"
+                                    />
+                                    <div>
+                                        <p className="font-bold text-[#3a3a3a]">Abie Maxey</p>
+                                        <p className="text-sm text-[#6b6b6b]">Freedom Engineer</p>
+                                    </div>
                                 </div>
-                                <h2 className="text-3xl font-bold mb-4">Read my Journal.</h2>
-                                <p className="text-[#6b6b6b] text-lg max-w-md">
-                                    Explore my latest thoughts, professional journey, and guides on the digital nomad lifestyle.
-                                </p>
-                            </div>
-
-                            <div className="flex gap-4 mt-8">
-                                <Link
-                                    href="https://abiemaxey.com/"
-                                    target="_blank"
-                                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white border border-[#e7ddd3] font-semibold hover:border-[#e3a99c] hover:text-[#e3a99c] transition-all"
-                                >
-                                    Visit Website
-                                </Link>
-                            </div>
-                        </div>
-
-                        {/* Cell 2: YouTube */}
-                        <div className="col-span-1 border-r border-b border-[#e7ddd3] p-10 md:p-14 group bg-white/40">
-                            <div className="mb-6">
-                                <div className="bg-red-100 p-3 rounded-xl inline-block mb-4">
-                                    <Youtube className="w-8 h-8 text-red-600" />
+                                <div className="flex items-center gap-2 text-sm text-[#6b6b6b] mb-1">
+                                    <MapPin className="w-4 h-4 text-[#e3a99c] flex-shrink-0" />
+                                    <span>Based in Spain</span>
                                 </div>
-                                <h2 className="text-2xl font-bold mb-3">Watch on YouTube.</h2>
-                                <p className="text-[#6b6b6b]">
-                                    Vlogs, guides, and travel content for your next adventure.
-                                </p>
+                                <div className="flex items-center gap-2 text-sm text-[#6b6b6b]">
+                                    <Mail className="w-4 h-4 text-[#e3a99c] flex-shrink-0" />
+                                    <a href="mailto:hello@abiemaxey.com" className="hover:text-[#e3a99c] transition-colors">
+                                        hello@abiemaxey.com
+                                    </a>
+                                </div>
+                                <div className="mt-4 pt-4 border-t border-[#e7ddd3]">
+                                    <p className="text-xs text-[#aaaaaa]">Typical reply within 1–2 business days.</p>
+                                </div>
                             </div>
-                            <Link
-                                href="https://www.youtube.com/@abiemaxey"
-                                target="_blank"
-                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white border border-[#e7ddd3] text-sm font-semibold hover:border-red-500 hover:text-red-500 transition-all mt-4"
-                            >
-                                Visit Channel
-                            </Link>
+
+                            {/* Socials grid */}
+                            <div className="bg-white rounded-3xl p-6 shadow-sm border border-[#e7ddd3]">
+                                <p className="text-xs font-bold tracking-widest text-[#aaaaaa] uppercase mb-4">Find me on</p>
+                                <div className="grid grid-cols-2 gap-3">
+                                    {socials.map((s) => (
+                                        <Link
+                                            key={s.label}
+                                            href={s.href}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`flex items-center gap-3 p-3 rounded-2xl border border-[#e7ddd3] transition-all duration-200 group ${s.color}`}
+                                        >
+                                            <div className={`w-8 h-8 rounded-xl ${s.bg} flex items-center justify-center flex-shrink-0 ${s.iconColor}`}>
+                                                {s.icon}
+                                            </div>
+                                            <div className="min-w-0">
+                                                <p className="text-xs font-bold text-[#3a3a3a] leading-none mb-0.5">{s.label}</p>
+                                                <p className="text-[11px] text-[#aaaaaa] truncate">{s.handle}</p>
+                                            </div>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </div>
+
                         </div>
-
-                        {/* Cell 3: Facebook */}
-                        <div className="col-span-1 border-r border-b border-[#e7ddd3] p-10 group bg-white/40">
-                            <div className="mb-4">
-                                <Linkedin className="w-10 h-10 text-[#1877F2] mb-4" />
-                                <h3 className="text-xl font-bold mb-2">Connect on Linkedin.</h3>
-                                <p className="text-[#6b6b6b] text-sm mb-6">
-                                    Let's connect and stay updated.
-                                </p>
-                                <Link
-                                    href="https://www.linkedin.com/in/abiemaxey/"
-                                    target="_blank"
-                                    className="block w-full text-center py-2 rounded-full border border-[#e7ddd3] text-sm font-semibold hover:bg-[#1877F2] hover:text-white hover:border-[#1877F2] transition-all"
-                                >
-                                    Connect with Abie Maxey
-                                </Link>
-                            </div>
-                        </div>
-
-                        {/* Cell 4: Threads */}
-                        <div className="col-span-1 border-r border-b border-[#e7ddd3] p-10 group bg-white/40">
-                            <div className="mb-4">
-                                <AtSign className="w-10 h-10 text-black mb-4" />
-                                <h3 className="text-xl font-bold mb-2">Follow on Threads.</h3>
-                                <p className="text-[#6b6b6b] text-sm mb-6">
-                                    Quick updates and daily thoughts.
-                                </p>
-                                <Link
-                                    href="https://www.threads.net/@abiemaxey"
-                                    target="_blank"
-                                    className="block w-full text-center py-2 rounded-full border border-[#e7ddd3] text-sm font-semibold hover:bg-black hover:text-white hover:border-black transition-all"
-                                >
-                                    @abiemaxey
-                                </Link>
-                            </div>
-                        </div>
-
-                        {/* Cell 5: Email / Community */}
-                        <div className="col-span-1 border-r border-b border-[#e7ddd3] p-10 group bg-white/40">
-                            <div className="mb-4">
-                                <Mail className="w-10 h-10 text-[#3a3a3a] mb-4" />
-                                <h3 className="text-xl font-bold mb-2">Send an Email.</h3>
-                                <p className="text-[#6b6b6b] text-sm mb-6">
-                                    Business inquiries and consulting.
-                                </p>
-                                <a
-                                    href="mailto:hello@abiemaxey.com"
-                                    className="block w-full text-center py-2 rounded-full border border-[#e7ddd3] text-sm font-semibold hover:bg-[#3a3a3a] hover:text-white hover:border-[#3a3a3a] transition-all"
-                                >
-                                    hello@abiemaxey.com
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Cell 6: CTA Bottom (Full Width) */}
-                        <div className="col-span-1 md:col-span-2 lg:col-span-3 border-r border-b border-[#e7ddd3] p-12 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8 group bg-white/40">
-                            <div>
-                                <h2 className="text-3xl md:text-4xl font-bold mb-2">Ready to start your <span className="text-[#e3a99c]">freedom?</span></h2>
-                                <p className="text-[#6b6b6b] text-lg">Start building your digital nomad lifestyle today.</p>
-                            </div>
-
-                            <div className="flex flex-col sm:flex-row gap-4">
-                                <Link
-                                    href="/#contact"
-                                    className="px-8 py-3 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-all duration-300 shadow-lg"
-                                >
-                                    Start Consulting
-                                </Link>
-                                <Link
-                                    href="https://abiemaxey.com/" 
-                                    target="_blank"
-                                    className="px-8 py-3 rounded-full border border-[#3a3a3a] text-[#3a3a3a] font-bold hover:bg-[#3a3a3a] hover:text-white transition-all duration-300"
-                                >
-                                    Read More
-                                </Link>
-                            </div>
-                        </div>
-
                     </div>
-
                 </div>
             </section>
 

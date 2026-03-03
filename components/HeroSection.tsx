@@ -77,15 +77,15 @@ export default function HeroSection() {
 
           {/* Heading */}
           <h1 className="font-[family-name:var(--font-heading)] text-5xl lg:text-7xl font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
-            The DIY System for{" "}
-            <span className="text-[#e3a99c]  relative">
-              Spain&apos;s Digital Nomad Visa
+            Get Spain&apos;s Digital Nomad Visa{" "}
+            <span className="text-[#e3a99c] relative">
+              Without Paying a Lawyer
             </span>
           </h1>
 
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed mb-10 max-w-lg animate-slide-up delay-100">
-            I got approved without a lawyer. Then I turned my entire process
-            into a playbook so you don&apos;t have to reverse-engineer Spain&apos;s bureaucracy alone.
+            Lawyers charge €2,000–€3,500 for this. I got approved for €0 and
+            documented every step. Now you can follow the same system.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-300">
@@ -102,6 +102,23 @@ export default function HeroSection() {
             >
               Book a Call
             </a>
+          </div>
+
+          {/* Personal proof trust strip */}
+          <div className="flex flex-wrap gap-x-5 gap-y-2 mt-8 animate-slide-up delay-500">
+            {[
+              "✓ Visa approved 2026",
+              "✓ €0 in lawyer fees",
+              "✓ 3-year EU residency",
+              "✓ Active nomad in Spain",
+            ].map((item) => (
+              <span
+                key={item}
+                className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b]"
+              >
+                {item}
+              </span>
+            ))}
           </div>
         </div>
 

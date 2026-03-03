@@ -15,7 +15,7 @@ const services = [
     icon: FileCheck,
     title: "Visa Application Support",
     description:
-      "I walk you through the full visa pipeline — documents, translations, apostilles, and submission. No step left undocumented.",
+      "I walk you through the full visa pipeline ~ documents, translations, apostilles, and submission. No step left undocumented.",
     color: "#e3a99c", // Dusty Rose
   },
   {

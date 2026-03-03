@@ -15,7 +15,7 @@ const destinations = [
     country: "Spain",
     city: "Spain",
     image: "https://images.unsplash.com/photo-1543783207-ec64e4d95325?auto=format&fit=crop&w=800&q=80",
-    description: "My home base. Spain's Digital Nomad Visa is one of Europe's best — and I've been through the entire process myself.",
+    description: "My home base. Spain's Digital Nomad Visa is one of Europe's best ~ and I've been through the entire process myself.",
     highlights: ["Nomad Visa Available", "Schengen Access", "Tax Benefits"],
     flag: "🇪🇸",
   },

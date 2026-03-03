@@ -8,7 +8,7 @@ export default function CTASection() {
     firstName: "",
     lastName: "",
     email: "",
-    company: "",
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -16,7 +16,7 @@ export default function CTASection() {
     message: string;
   }>({ type: null, message: "" });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
@@ -34,7 +34,7 @@ export default function CTASection() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, tags: ["Let's Talk Form"] }),
       });
 
       const data = await response.json();
@@ -56,7 +56,7 @@ export default function CTASection() {
           type: "success",
           message: "Thank you! We'll be in touch soon.",
         });
-        setFormData({ firstName: "", lastName: "", email: "", company: "" });
+        setFormData({ firstName: "", lastName: "", email: "", message: "" });
       }
     } catch (error) {
       setSubmitStatus({
@@ -173,15 +173,16 @@ export default function CTASection() {
                 </div>
                 <div>
                   <label className="block text-white/40 text-sm font-bold uppercase tracking-wider mb-2 ml-4">
-                    Company
+                    Message
                   </label>
-                  <input
-                    type="text"
-                    name="company"
-                    value={formData.company}
+                  <textarea
+                    name="message"
+                    value={formData.message}
                     onChange={handleChange}
-                    placeholder="Your company (optional)"
-                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/20 focus:outline-none focus:bg-white/10 focus:border-[#e3a99c] transition-all"
+                    placeholder="Tell me about your situation..."
+                    rows={4}
+                    required
+                    className="w-full px-6 py-4 rounded-2xl bg-white/5 border border-white/10 text-white placeholder:text-white/20 focus:outline-none focus:bg-white/10 focus:border-[#e3a99c] transition-all resize-none"
                   />
                 </div>
 

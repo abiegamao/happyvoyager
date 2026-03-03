@@ -1,12 +1,13 @@
 "use client";
 
-import { Check, Star, Zap, ArrowRight } from "lucide-react";
+import { Check, Star, Zap, ArrowRight, ShieldCheck } from "lucide-react";
 
 const pricingPlans = [
   {
     name: "The Solo Voyager",
     description: "The complete self-guided blueprint for independent applicants",
     price: "79",
+    originalPrice: "149",
     currency: "€",
     period: "one-time",
     features: [
@@ -21,11 +22,13 @@ const pricingPlans = [
     cta: "Get the Playbook Pro",
     popular: false,
     color: "#bbcccd",
+    paymentLink: "https://buy.stripe.com/cNi9AMc6Sexk5Nf6trew803",
   },
   {
     name: "The Guided Navigator",
     description: "Expert strategy and review to ensure your application is bulletproof",
     price: "199",
+    originalPrice: "350",
     currency: "€",
     period: "one-time",
     features: [
@@ -40,11 +43,13 @@ const pricingPlans = [
     cta: "Book a Strategy Session",
     popular: true,
     color: "#e3a99c",
+    paymentLink: "https://buy.stripe.com/3cI00cb2O2OC3F76trew804",
   },
   {
     name: "The VIP Concierge",
-    description: "Sit back and relax while we handle the heavy lifting from start to finish (+€149/additional dependent)",
-    price: "550",
+    description: "Full done-for-you service from start to finish. Lawyers charge €2,000–€3,500 for this. (+€149/additional dependent)",
+    price: "599",
+    originalPrice: "900",
     currency: "€",
     period: "one-time",
     features: [
@@ -57,8 +62,11 @@ const pricingPlans = [
       "Bonus: 4-Week Spanish Lessons",
     ],
     cta: "Apply for VIP Service",
+    roiNote: "Most applicants spend 40–60 hrs figuring this out alone.",
+    foundingNote: "Founding client spots available ~ ask about our launch rate",
     popular: false,
     color: "#8fa38d",
+    paymentLink: "https://buy.stripe.com/9B67sE8UG9d06Rj2dbew805",
   },
 ];
 
@@ -89,6 +97,13 @@ export default function PricingSection() {
             Pick the plan that matches where you are in your journey.
             Every plan comes with my personal involvement.
           </p>
+
+          <div className="mt-6 inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#e3a99c]/10 border border-[#e3a99c]/30">
+            <span className="w-2 h-2 rounded-full bg-[#e3a99c] animate-pulse" />
+            <span className="font-[family-name:var(--font-body)] text-sm text-[#e3a99c] font-semibold">
+              Launch pricing — limited time offer
+            </span>
+          </div>
         </div>
 
         {/* Pricing Cards */}
@@ -128,6 +143,15 @@ export default function PricingSection() {
 
               {/* Price */}
               <div className="text-center mb-8 pb-8 border-b border-[#e7ddd3]">
+                {/* Original price + discount badge */}
+                <div className="flex items-center justify-center gap-2 mb-1">
+                  <span className="font-[family-name:var(--font-body)] text-base text-[#aaaaaa] line-through">
+                    {plan.currency}{plan.originalPrice}
+                  </span>
+                  <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-[#e3a99c]/15 text-[#e3a99c]">
+                    SAVE {plan.currency}{Number(plan.originalPrice) - Number(plan.price)}
+                  </span>
+                </div>
                 <div className="flex items-baseline justify-center gap-1">
                   <span className="font-[family-name:var(--font-body)] text-2xl text-[#6b6b6b] font-medium">
                     {plan.currency}
@@ -155,9 +179,28 @@ export default function PricingSection() {
                 ))}
               </div>
 
+              {/* ROI note for VIP */}
+              {"roiNote" in plan && (
+                <p className="font-[family-name:var(--font-body)] text-xs text-[#6b6b6b] text-center italic mb-4 px-2">
+                  {(plan as typeof plan & { roiNote: string }).roiNote}
+                </p>
+              )}
+
+              {/* Founding client note */}
+              {"foundingNote" in plan && (
+                <div className="flex items-center justify-center gap-2 mb-4 px-3 py-2 rounded-xl bg-[#8fa38d]/10 border border-[#8fa38d]/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#8fa38d] animate-pulse flex-shrink-0" />
+                  <span className="font-[family-name:var(--font-body)] text-xs text-[#6b6b6b]">
+                    {(plan as typeof plan & { foundingNote: string }).foundingNote}
+                  </span>
+                </div>
+              )}
+
               {/* CTA Button */}
               <a
-                href="https://calendly.com/abie-gamao/spain-dnv"
+                href={plan.paymentLink}
+                target="_blank"
+                rel="noopener noreferrer"
                 className={`block w-full py-4 rounded-xl text-center font-[family-name:var(--font-body)] font-bold transition-all duration-300 ${plan.popular
                   ? "bg-[#3a3a3a] text-white hover:bg-[#e3a99c] shadow-lg hover:shadow-[#e3a99c]/30"
                   : "bg-white border-2 border-[#e7ddd3] text-[#3a3a3a] hover:border-[#3a3a3a] hover:bg-[#3a3a3a] hover:text-white"
@@ -165,6 +208,8 @@ export default function PricingSection() {
               >
                 {plan.cta}
               </a>
+
+
             </div>
           ))}
         </div>

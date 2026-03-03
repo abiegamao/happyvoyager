@@ -12,17 +12,17 @@ import {
 } from "lucide-react";
 
 const footerLinks = {
-  services: [
-    { name: "Services", href: "#pricing" },
-    { name: "Book a Call", href: "https://calendly.com/abie-gamao/spain-dnv" },
-  ],
-  destinations: [
-    { name: "Spain", href: "/document-checklist" },
-  ],
-  company: [
-    { name: "About Abie", href: "/my-story" },
+  navigate: [
+    { name: "Home", href: "/" },
+    { name: "About", href: "/my-story" },
     { name: "Blog", href: "/blog" },
     { name: "Contact", href: "/contact" },
+  ],
+  workWithMe: [
+    { name: "Get the Playbook", href: "/#pricing" },
+    { name: "Book a Strategy Call", href: "https://calendly.com/abie-gamao/spain-dnv" },
+    { name: "Appointments (NIE/TIE)", href: "/appointments" },
+    { name: "Checklist", href: "/document-checklist" },
   ],
 };
 
@@ -99,11 +99,11 @@ export default function Footer() {
                 alt="Happy Voyager"
                 className="h-10 md:h-12 w-auto object-contain mb-3 brightness-0 invert transition-transform group-hover:scale-105"
               />
-              <p className="text-[#e3a99c] text-[10px] md:text-xs font-black tracking-[0.3em] uppercase">Digital Nomad Consultant</p>
+              <p className="text-[#e3a99c] text-[10px] md:text-xs font-black tracking-[0.3em] uppercase">Freedom Engineer</p>
             </Link>
             <p className="text-white/60 text-base md:text-lg leading-relaxed max-w-md mb-8 mx-auto lg:mx-0">
               I turned my weak passport into a boarding pass to Europe. Now I help other nomads
-              do the same — with systems, not luck.
+              do the same ~ with systems, not luck.
             </p>
 
             <div className="flex gap-4 justify-center lg:justify-start">
@@ -169,11 +169,11 @@ export default function Footer() {
         <div className="h-px bg-white/10 mb-16" />
 
         {/* Links Grid */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-12 mb-20">
           <div>
-            <h4 className="font-bold text-white mb-6">Services</h4>
+            <h4 className="font-bold text-white mb-6">Navigate</h4>
             <ul className="space-y-4">
-              {footerLinks.services.map((link, i) => (
+              {footerLinks.navigate.map((link, i) => (
                 <li key={i}>
                   <a href={link.href} className="text-white/60 hover:text-[#e3a99c] transition-colors">{link.name}</a>
                 </li>
@@ -181,19 +181,9 @@ export default function Footer() {
             </ul>
           </div>
           <div>
-            <h4 className="font-bold text-white mb-6">Destinations</h4>
+            <h4 className="font-bold text-white mb-6">Work With Me</h4>
             <ul className="space-y-4">
-              {footerLinks.destinations.map((link, i) => (
-                <li key={i}>
-                  <a href={link.href} className="text-white/60 hover:text-[#e3a99c] transition-colors">{link.name}</a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-white mb-6">Company</h4>
-            <ul className="space-y-4">
-              {footerLinks.company.map((link, i) => (
+              {footerLinks.workWithMe.map((link, i) => (
                 <li key={i}>
                   <a href={link.href} className="text-white/60 hover:text-[#e3a99c] transition-colors">{link.name}</a>
                 </li>
@@ -204,13 +194,12 @@ export default function Footer() {
             <h4 className="font-bold text-white mb-6">Contact</h4>
             <ul className="space-y-4">
               <li>
-                <a href="mailto:abie@happyvoyager.com" className="flex items-center gap-2 text-white/60 hover:text-[#e3a99c] transition-colors">
-                  <span>hello@abiemaxey.com</span>
+                <a href="mailto:hello@abiemaxey.com" className="text-white/60 hover:text-[#e3a99c] transition-colors">
+                  hello@abiemaxey.com
                 </a>
               </li>
-              <li className="flex items-center gap-2 text-white/60">
-                <span>Remote-first, Worldwide</span>
-              </li>
+              <li className="text-white/60">Based in Spain 🇪🇸</li>
+              <li className="text-white/60">Remote-first, Worldwide</li>
             </ul>
           </div>
         </div>

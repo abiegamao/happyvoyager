@@ -12,7 +12,7 @@ const steps = [
   {
     number: "01",
     icon: MessageSquare,
-    title: "Free Consultation",
+    title: "Strategy Call",
     description:
       "We hop on a call, I assess your situation, passport, income, goals, and tell you exactly what's possible.",
     color: "#e3a99c",
@@ -132,11 +132,11 @@ export default function ProcessSection() {
             href="https://calendly.com/abie-gamao/spain-dnv"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#3a3a3a] text-white font-bold text-lg hover:bg-[#e3a99c] transition-all duration-300 shadow-xl hover:shadow-[#e3a99c]/40 transform hover:-translate-y-1"
           >
-            <span>Book Your Consultation</span>
+            <span>Book a Strategy Call · €47</span>
             <ArrowRight className="w-5 h-5" />
           </a>
           <p className="mt-4 text-sm text-[#6b6b6b]">
-            No commitment. Let&apos;s just figure out if this path makes sense for you.
+            One call. Clear answers. Know exactly where you stand.
           </p>
         </div>
       </div>
