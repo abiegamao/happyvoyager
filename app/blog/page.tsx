@@ -83,9 +83,11 @@ export default async function BlogListingPage({
             </div>
           </div>
 
-          {/* Pinned: DNV Updates 2026 */}
+          {/* Pinned Articles */}
           {(!search && (!category || category === "all")) && (
-            <div className="mb-10">
+            <div className="mb-10 space-y-5">
+
+              {/* Pinned: DNV Updates 2026 */}
               <Link
                 href="/dnv-updates-2026"
                 className="group flex flex-col md:flex-row gap-6 bg-[#3a3a3a] rounded-[2rem] p-6 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
@@ -113,6 +115,35 @@ export default async function BlogListingPage({
                   </span>
                 </div>
               </Link>
+
+              {/* Pinned: How to Apply Step by Step */}
+              <Link
+                href="/how-to-apply-spain-digital-nomad-visa"
+                className="group flex flex-col md:flex-row gap-6 bg-white border border-[#e7ddd3] rounded-[2rem] p-6 md:p-8 hover:shadow-xl hover:border-[#e3a99c]/40 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="flex-shrink-0 md:w-56 h-40 md:h-auto rounded-2xl overflow-hidden bg-[#f2d6c9]/40 flex items-center justify-center">
+                  <span className="text-5xl">📋</span>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f2d6c9]/60 border border-[#f2d6c9] text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
+                      Step-by-Step Guide · Pinned
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-[#f9f5f2] border border-[#e7ddd3] text-xs font-bold text-[#aaaaaa] uppercase tracking-widest">Spain DNV</span>
+                  </div>
+                  <h3 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-bold text-[#3a3a3a] mb-3 leading-tight group-hover:text-[#e3a99c] transition-colors">
+                    How I Applied for the Spain DNV, Step by Step
+                  </h3>
+                  <p className="text-[#6b6b6b] text-sm leading-relaxed mb-4 max-w-xl">
+                    I applied with 10 Schengen days left. No lawyer. No agency. Here&apos;s the exact system I used: documents, fees, the UGE process, Social Security, TIE card, and every mistake to avoid along the way.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-[#e3a99c] group-hover:gap-3 transition-all">
+                    Read the full guide
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
+
             </div>
           )}
 
