@@ -55,9 +55,9 @@ const questionLabels: Record<string, string> = {
 function getVerdict(answers: Record<string, string>): string {
   const { 1: work, 2: nationality, 3: income } = answers as Record<number, string>;
 
-  if (nationality === "eu_citizen") return "🇪🇺 EU Citizen — doesn't need DNV";
-  if (work === "planning") return "🔭 Still planning — not yet ready";
-  if (income === "under_2000") return "🔴 Income below threshold — needs to build up";
+  if (nationality === "eu_citizen") return "🇪🇺 EU Citizen ~ doesn't need DNV";
+  if (work === "planning") return "🔭 Still planning ~ not yet ready";
+  if (income === "under_2000") return "🔴 Income below threshold ~ needs to build up";
 
   let score = 0;
   if (income === "above") score += 3;
@@ -70,9 +70,9 @@ function getVerdict(answers: Record<string, string>): string {
   if (work === "employee" || work === "freelancer") score += 1;
   if (answers[6] === "yes") score += 1;
 
-  if (score >= 5) return "🟢 Strong Candidate — well-positioned to apply";
-  if (score >= 3) return "🟡 Likely Qualifies — a few things to tighten up";
-  return "🔴 Needs Review — gaps to address before applying";
+  if (score >= 5) return "🟢 Strong Candidate ~ well-positioned to apply";
+  if (score >= 3) return "🟡 Likely Qualifies ~ a few things to tighten up";
+  return "🔴 Needs Review ~ gaps to address before applying";
 }
 
 // ─── POST Handler ─────────────────────────────────────────────────────────────
@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         await resend.emails.send({
           from: "Happy Voyager <onboarding@resend.dev>",
           to: "hello@abiemaxey.com",
-          subject: `🎯 New DNV Assessment — ${name} (${verdict.split("—")[0].trim()})`,
+          subject: `🎯 New DNV Assessment ~ ${name} (${verdict.split("~")[0].trim()})`,
           html: `
             <div style="font-family: sans-serif; max-width: 620px; margin: 0 auto; padding: 24px; background: #f9f5f2; border-radius: 12px;">
               <h2 style="color: #3a3a3a; margin-bottom: 4px;">New DNV Assessment Completed</h2>
@@ -158,7 +158,7 @@ export async function POST(request: NextRequest) {
         lastName: nameParts.slice(1).join(" ") || lastName || undefined,
         email,
         locationId: "mgansJI1GJC6BZLdnkVj",
-        source: "Happy Voyager — DNV Assessment",
+        source: "Happy Voyager ~ DNV Assessment",
         tags: ["DNV Assessment", "Happy Voyager"],
       };
 

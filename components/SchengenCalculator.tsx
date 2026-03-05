@@ -473,7 +473,7 @@ export default function SchengenCalculator() {
             </div>
 
             <p className="text-xs text-[#3a3a3a]/30 mb-6">
-              {fmtDate(toISO(windowStart))} — {fmtDate(todayISO)}
+              {fmtDate(toISO(windowStart))} ~ {fmtDate(todayISO)}
             </p>
 
             {/* Day grid: rows of 30 with month labels */}

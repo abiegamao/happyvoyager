@@ -33,6 +33,7 @@ import {
   AlertCircle,
   BookOpen,
   Building2,
+  X,
 } from "lucide-react";
 
 // ─── What's Included ──────────────────────────────────────────────────────────
@@ -432,50 +433,162 @@ export default function DigitalNomadVisaPage() {
             })}
           </div>
 
-          {/* DNV vs Tourist Visa comparison strip */}
-          <div className="mt-14 p-8 rounded-3xl bg-white border border-[#e7ddd3]">
-            <p className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase text-center mb-8">DNV vs Tourist Visa</p>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-4">
-                <p className="font-[family-name:var(--font-heading)] font-bold text-[#3a3a3a] mb-4 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#f2d6c9] flex items-center justify-center text-xs">✗</span>
-                  Tourist Visa (90 days)
-                </p>
+          {/* Visa Comparison Table */}
+          <div className="mt-14 rounded-3xl bg-white border border-[#e7ddd3] overflow-hidden">
+            <div className="px-8 pt-8 pb-4 text-center">
+              <p className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase mb-1">How the DNV Stacks Up</p>
+              <p className="text-sm text-[#aaaaaa]">Compare Spain's most common long-stay visa options</p>
+            </div>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm border-collapse">
+                <thead>
+                  <tr className="border-b border-[#e7ddd3]">
+                    <th className="p-4 text-left text-[#aaaaaa] font-medium text-xs uppercase tracking-wide w-[140px]"></th>
+                    {[
+                      { icon: "✈️", label: "Tourist", sub: "90-day stay" },
+                      { icon: "🏡", label: "NLV", sub: "Non-Lucrative" },
+                      { icon: "🎓", label: "Student", sub: "School Visa" },
+                    ].map((col) => (
+                      <th key={col.label} className="p-4 text-center">
+                        <div className="text-base mb-1">{col.icon}</div>
+                        <div className="text-xs font-bold text-[#6b6b6b]">{col.label}</div>
+                        <div className="text-[10px] text-[#aaaaaa] mt-0.5">{col.sub}</div>
+                      </th>
+                    ))}
+                    <th className="p-4 text-center bg-[#f2d6c9]/20 border-l border-[#f2d6c9]/40">
+                      <div className="text-base mb-1">🇪🇸</div>
+                      <div className="text-xs font-bold text-[#e3a99c]">DNV ✦</div>
+                      <div className="text-[10px] text-[#e3a99c]/70 mt-0.5">Digital Nomad</div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    {
+                      label: "Duration",
+                      tourist: "90 days max",
+                      nlv: "1 yr, renewable",
+                      student: "Course length",
+                      dnv: "Up to 3 yrs",
+                    },
+                    {
+                      label: "Work Rights",
+                      tourist: null,
+                      nlv: null,
+                      student: "partial",
+                      dnv: true,
+                      dnvNote: "Remote work legal",
+                    },
+                    {
+                      label: "Residency Path",
+                      tourist: null,
+                      nlv: "5 yrs",
+                      student: null,
+                      dnv: true,
+                      dnvNote: "From year 1",
+                    },
+                    {
+                      label: "EU Citizenship",
+                      tourist: null,
+                      nlv: "2–10 yrs†",
+                      student: null,
+                      dnv: true,
+                      dnvNote: "2 yrs (PH + LATAM)",
+                    },
+                    {
+                      label: "Tax Benefits",
+                      tourist: null,
+                      nlv: null,
+                      student: null,
+                      dnv: true,
+                      dnvNote: "Beckham Law eligible",
+                    },
+                    {
+                      label: "Schengen Travel",
+                      tourist: true,
+                      nlv: true,
+                      student: true,
+                      dnv: true,
+                      dnvNote: "26 countries",
+                    },
+                  ].map((row, i) => (
+                    <tr key={i} className={`border-b border-[#f0ebe6] ${i % 2 === 0 ? "" : "bg-[#f9f5f2]/40"}`}>
+                      <td className="p-4 text-xs font-bold text-[#3a3a3a] uppercase tracking-wide">{row.label}</td>
+                      {/* Tourist */}
+                      <td className="p-4 text-center">
+                        {row.tourist === null ? (
+                          <X className="w-4 h-4 text-[#e0e0e0] mx-auto" />
+                        ) : row.tourist === true ? (
+                          <Check className="w-4 h-4 text-[#8fa38d] mx-auto" />
+                        ) : (
+                          <span className="text-xs text-[#6b6b6b]">{row.tourist}</span>
+                        )}
+                      </td>
+                      {/* NLV */}
+                      <td className="p-4 text-center">
+                        {row.nlv === null ? (
+                          <X className="w-4 h-4 text-[#e0e0e0] mx-auto" />
+                        ) : row.nlv === true ? (
+                          <Check className="w-4 h-4 text-[#8fa38d] mx-auto" />
+                        ) : (
+                          <span className="text-xs text-[#6b6b6b]">{row.nlv}</span>
+                        )}
+                      </td>
+                      {/* Student */}
+                      <td className="p-4 text-center">
+                        {row.student === null ? (
+                          <X className="w-4 h-4 text-[#e0e0e0] mx-auto" />
+                        ) : row.student === "partial" ? (
+                          <span className="text-[10px] text-[#aaaaaa] font-medium">Part-time only</span>
+                        ) : row.student === true ? (
+                          <Check className="w-4 h-4 text-[#8fa38d] mx-auto" />
+                        ) : (
+                          <span className="text-xs text-[#6b6b6b]">{row.student}</span>
+                        )}
+                      </td>
+                      {/* DNV */}
+                      <td className="p-4 text-center bg-[#f2d6c9]/10 border-l border-[#f2d6c9]/40">
+                        {row.dnv === true ? (
+                          <div className="flex flex-col items-center gap-0.5">
+                            <Check className="w-4 h-4 text-[#e3a99c]" />
+                            {row.dnvNote && <span className="text-[10px] text-[#e3a99c]/80 font-medium">{row.dnvNote}</span>}
+                          </div>
+                        ) : (
+                          <span className="text-xs font-bold text-[#e3a99c]">{row.dnv}</span>
+                        )}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="px-8 py-4 bg-[#f9f5f2] border-t border-[#e7ddd3] text-center">
+              <p className="text-xs text-[#aaaaaa]">NLV prohibits income-generating work. Student visa allows limited part-time work only. DNV is the only visa designed for remote workers. † See note below.</p>
+            </div>
+          </div>
+
+          {/* 2-yr citizenship FAQ callout */}
+          <div className="mt-6 rounded-2xl border border-[#e0eaeb] bg-[#f4f8f8] p-6">
+            <p className="text-[10px] font-bold tracking-widest text-[#7a8f90] uppercase mb-3">† Quick Fact ~ 2-Year Citizenship Path</p>
+            <div className="space-y-3 text-sm text-[#3a3a3a]">
+              <p>
+                <span className="font-bold">Who qualifies for 2-year citizenship in Spain?</span>{" "}
+                Under Spanish Law 36/2002, nationals from the following countries only need <span className="font-semibold text-[#7a8f90]">2 years of legal residency</span> to apply for citizenship ~ instead of the standard 10:
+              </p>
+              <div className="flex flex-wrap gap-1.5">
                 {[
-                  "90 days max, then you must leave",
-                  "Can't legally work from Spain",
-                  "No path to residency",
-                  "No tax benefits",
-                  "Repeat visa applications every year",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#f5f5f5] border border-[#e0e0e0] flex items-center justify-center flex-shrink-0">
-                      <span className="text-[10px] text-[#aaaaaa]">✗</span>
-                    </div>
-                    <span className="text-sm text-[#6b6b6b]">{item}</span>
-                  </div>
+                  "🇵🇭 Philippines","🇲🇽 Mexico","🇨🇴 Colombia","🇦🇷 Argentina","🇵🇪 Peru",
+                  "🇻🇪 Venezuela","🇨🇱 Chile","🇪🇨 Ecuador","🇧🇴 Bolivia","🇵🇾 Paraguay",
+                  "🇺🇾 Uruguay","🇨🇷 Costa Rica","🇵🇦 Panama","🇬🇹 Guatemala","🇭🇳 Honduras",
+                  "🇳🇮 Nicaragua","🇸🇻 El Salvador","🇩🇴 Dom. Republic","🇨🇺 Cuba","🇵🇹 Portugal",
+                  "🇬🇶 Eq. Guinea","🇦🇩 Andorra",
+                ].map((c) => (
+                  <span key={c} className="px-2 py-0.5 rounded-full bg-white border border-[#e0eaeb] text-[11px] text-[#3a3a3a]">{c}</span>
                 ))}
               </div>
-              <div className="space-y-4">
-                <p className="font-[family-name:var(--font-heading)] font-bold text-[#3a3a3a] mb-4 flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#d4e0d3] flex items-center justify-center text-xs">✓</span>
-                  Digital Nomad Visa
-                </p>
-                {[
-                  "up to 3-year visa, renewable",
-                  "Legal right to work remotely in Spain",
-                  "Path to permanent residency & EU citizenship",
-                  "Tax advantages for employed workers (Beckham Law)",
-                  "Travel freely across 26 Schengen countries",
-                ].map((item, i) => (
-                  <div key={i} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-[#d4e0d3] flex items-center justify-center flex-shrink-0">
-                      <Check className="w-3 h-3 text-[#8fa38d]" />
-                    </div>
-                    <span className="text-sm text-[#3a3a3a] font-medium">{item}</span>
-                  </div>
-                ))}
-              </div>
+              <p className="text-xs text-[#6b6b6b]">
+                This applies across visa types ~ DNV, NLV, or any other legal residency permit. The 2-year clock starts from the date your residency card (TIE) is issued. Sephardic Jews are also eligible regardless of nationality.
+              </p>
             </div>
           </div>
         </div>

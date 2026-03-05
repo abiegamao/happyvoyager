@@ -245,7 +245,7 @@ export default function MyStoryPage() {
 
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-white/5 border border-white/10 rounded-3xl p-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Before — Passive Nomad</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-4">Before ~ Passive Nomad</p>
               <div className="space-y-3">
                 {[
                   "Drifting between hostels and cheap flights",
@@ -262,7 +262,7 @@ export default function MyStoryPage() {
             </div>
 
             <div className="bg-[#e3a99c]/10 border border-[#e3a99c]/20 rounded-3xl p-8">
-              <p className="text-xs font-bold uppercase tracking-widest text-[#e3a99c] mb-4">Now — Digital Settler</p>
+              <p className="text-xs font-bold uppercase tracking-widest text-[#e3a99c] mb-4">Now ~ Digital Settler</p>
               <div className="space-y-3">
                 {[
                   "3-year EU residency, renewable to citizenship",
@@ -368,7 +368,7 @@ export default function MyStoryPage() {
 
           <div className="grid md:grid-cols-3 gap-5 mb-4">
 
-            {/* Card 1 — Free Assessment */}
+            {/* Card 1 ~ Free Assessment */}
             <Link
               href="/assessment"
               className="group relative bg-white border border-[#e7ddd3] rounded-3xl p-6 hover:shadow-xl hover:border-[#e3a99c]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col"
@@ -389,7 +389,7 @@ export default function MyStoryPage() {
               </span>
             </Link>
 
-            {/* Card 2 — Strategy Call */}
+            {/* Card 2 ~ Strategy Call */}
             <Link
               href="https://calendly.com/abie-gamao/spain-dnv"
               target="_blank"
@@ -412,7 +412,7 @@ export default function MyStoryPage() {
               </span>
             </Link>
 
-            {/* Card 3 — Done-with-You Package */}
+            {/* Card 3 ~ Done-with-You Package */}
             <Link
               href="/digital-nomad-visa#packages"
               className="group relative bg-white border border-[#e7ddd3] rounded-3xl p-6 hover:shadow-xl hover:border-[#8fa38d]/50 hover:-translate-y-1 transition-all duration-300 flex flex-col"

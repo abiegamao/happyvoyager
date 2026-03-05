@@ -97,7 +97,7 @@ export default function HeroSection() {
             </a>
           </div>
 
-          {/* Soft free option — not a button, just a text link */}
+          {/* Soft free option ~ not a button, just a text link */}
           <p className="font-[family-name:var(--font-body)] text-xs text-[#aaaaaa] mt-4 animate-slide-up delay-500">
             Not ready to invest?{" "}
             <a href="#free-playbook" className="underline underline-offset-2 hover:text-[#6b6b6b] transition-colors">

@@ -86,29 +86,45 @@ const servicesDropdown = [
   { emoji: "✈️", title: "Schengen Visa Assistance", sub: "Bridge the gap while you wait", link: "/schengen-visa", bg: "#f2d6c9" },
 ];
 
-const dnvDropdown = [
-  { name: "Overview", link: "/digital-nomad-visa#hero" },
-  { name: "Who It's For", link: "/digital-nomad-visa#who-is-it-for" },
-  { name: "Requirements", link: "/digital-nomad-visa#requirements" },
-  { name: "What's Included", link: "/digital-nomad-visa#whats-included" },
-  { name: "How It Works", link: "/digital-nomad-visa#how-it-works" },
-  { name: "Why Us", link: "/digital-nomad-visa#why-us" },
-  { name: "FAQ", link: "/digital-nomad-visa#faq" },
-  { name: "✦ Free Assessment", link: "/assessment" },
+const spainVisasDropdown = [
+  {
+    emoji: "🇪🇸",
+    title: "Digital Nomad Visa",
+    sub: "Remote workers & freelancers",
+    link: "/digital-nomad-visa",
+    bg: "#f2d6c9",
+    badge: "Our Specialty",
+  },
+  {
+    emoji: "🏡",
+    title: "Non-Lucrative Visa",
+    sub: "Retirees & passive income earners",
+    link: "/non-lucrative-visa",
+    bg: "#e0eaeb",
+    badge: null,
+  },
+  {
+    emoji: "🎓",
+    title: "Student Visa",
+    sub: "Students & language learners",
+    link: "/student-visa",
+    bg: "#d4e0d3",
+    badge: null,
+  },
 ];
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
-  const [dnvOpen, setDnvOpen] = useState(false);
+  const [spainVisasOpen, setSpainVisasOpen] = useState(false);
   const [blogOpen, setBlogOpen] = useState(false);
   const [freeToolsOpen, setFreeToolsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
-  const [mobileDnvOpen, setMobileDnvOpen] = useState(false);
+  const [mobileSpainVisasOpen, setMobileSpainVisasOpen] = useState(false);
   const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
   const [mobileFreeToolsOpen, setMobileFreeToolsOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const dnvTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const spainVisasTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const blogTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const freeToolsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -120,12 +136,12 @@ export default function Header() {
     timeoutRef.current = setTimeout(() => setServicesOpen(false), 120);
   };
 
-  const openDnvDropdown = () => {
-    if (dnvTimeoutRef.current) clearTimeout(dnvTimeoutRef.current);
-    setDnvOpen(true);
+  const openSpainVisasDropdown = () => {
+    if (spainVisasTimeoutRef.current) clearTimeout(spainVisasTimeoutRef.current);
+    setSpainVisasOpen(true);
   };
-  const closeDnvDropdown = () => {
-    dnvTimeoutRef.current = setTimeout(() => setDnvOpen(false), 120);
+  const closeSpainVisasDropdown = () => {
+    spainVisasTimeoutRef.current = setTimeout(() => setSpainVisasOpen(false), 120);
   };
 
   const openBlogDropdown = () => {
@@ -207,39 +223,57 @@ export default function Header() {
             )}
           </div>
 
-          {/* DNV */}
+          {/* Spain Visas */}
           <div
             className="relative"
-            onMouseEnter={openDnvDropdown}
-            onMouseLeave={closeDnvDropdown}
+            onMouseEnter={openSpainVisasDropdown}
+            onMouseLeave={closeSpainVisasDropdown}
           >
-            <Link
-              href="/digital-nomad-visa"
+            <button
               className="relative flex items-center gap-1 px-3 py-2 rounded-full text-[#e3a99c] font-semibold text-sm bg-[#e3a99c]/10 border border-[#e3a99c]/30 hover:bg-[#e3a99c] hover:text-white transition-all duration-200 whitespace-nowrap"
             >
-              🇪🇸 Digital Nomad Visa
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dnvOpen ? "rotate-180" : ""}`} />
-            </Link>
+              🇪🇸 Spain Visas
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${spainVisasOpen ? "rotate-180" : ""}`} />
+            </button>
 
-            {dnvOpen && (
+            {spainVisasOpen && (
               <div
                 className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50"
-                onMouseEnter={openDnvDropdown}
-                onMouseLeave={closeDnvDropdown}
+                onMouseEnter={openSpainVisasDropdown}
+                onMouseLeave={closeSpainVisasDropdown}
               >
-                <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden min-w-[200px] py-2">
-                  {dnvDropdown.map((item) => (
-                    <a
-                      key={item.name}
+                <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden w-[288px] py-2">
+                  <p className="px-4 pt-2 pb-1 text-[10px] font-bold tracking-widest text-[#aaaaaa] uppercase">
+                    Visa Guides
+                  </p>
+                  {spainVisasDropdown.map((item) => (
+                    <Link
+                      key={item.link}
                       href={item.link}
-                      className={`flex items-center px-5 py-3 text-sm transition-colors duration-150 ${
-                        item.name.includes("Assessment")
-                          ? "text-[#e3a99c] font-bold bg-[#f2d6c9]/20 hover:bg-[#f2d6c9]/40 border-t border-[#e7ddd3] mt-1"
-                          : "text-[#3a3a3a] hover:bg-[#f9f5f2] hover:text-[#e3a99c]"
-                      }`}
+                      className="flex items-start gap-3 px-4 py-2.5 hover:bg-[#f9f5f2] transition-colors duration-150 group"
                     >
-                      {item.name}
-                    </a>
+                      <span
+                        className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0 mt-0.5"
+                        style={{ backgroundColor: item.bg }}
+                      >
+                        {item.emoji}
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs font-bold text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">
+                            {item.title}
+                          </p>
+                          {item.badge && (
+                            <span className="text-[9px] font-bold tracking-widest uppercase text-[#e3a99c] bg-[#f2d6c9] rounded-full px-1.5 py-0.5 leading-none flex-shrink-0">
+                              {item.badge}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-[11px] text-[#aaaaaa] mt-0.5 leading-snug">
+                          {item.sub}
+                        </p>
+                      </div>
+                    </Link>
                   ))}
                 </div>
               </div>
@@ -396,30 +430,42 @@ export default function Header() {
           onClose={() => setIsMobileMenuOpen(false)}
           className="bg-[#f9f5f2] border-t border-[#e7ddd3]"
         >
-          {/* DNV expandable */}
+          {/* Spain Visas expandable */}
           <div className="w-full">
             <button
-              onClick={() => setMobileDnvOpen(!mobileDnvOpen)}
+              onClick={() => setMobileSpainVisasOpen(!mobileSpainVisasOpen)}
               className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-[#e3a99c]/10 border border-[#e3a99c]/30 text-[#e3a99c] font-semibold text-sm"
             >
-              <span>🇪🇸 Digital Nomad Visa</span>
-              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileDnvOpen ? "rotate-180" : ""}`} />
+              <span>🇪🇸 Spain Visas</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileSpainVisasOpen ? "rotate-180" : ""}`} />
             </button>
-            {mobileDnvOpen && (
-              <div className="mt-2 ml-3 flex flex-col gap-2 border-l-2 border-[#e3a99c]/30 pl-4">
-                {dnvDropdown.map((item) => (
-                  <a
-                    key={item.name}
+            {mobileSpainVisasOpen && (
+              <div className="mt-2 ml-3 flex flex-col gap-1 border-l-2 border-[#e3a99c]/30 pl-4">
+                {spainVisasDropdown.map((item) => (
+                  <Link
+                    key={item.link}
                     href={item.link}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className={`text-sm transition-colors py-0.5 font-medium ${
-                      item.name.includes("Assessment")
-                        ? "text-[#e3a99c] font-bold"
-                        : "text-[#e3a99c] hover:text-[#d38b7b]"
-                    }`}
+                    className="flex items-center gap-2.5 py-1.5 group"
                   >
-                    {item.name}
-                  </a>
+                    <span
+                      className="w-6 h-6 rounded-lg flex items-center justify-center text-xs flex-shrink-0"
+                      style={{ backgroundColor: item.bg }}
+                    >
+                      {item.emoji}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">
+                        {item.title}
+                      </p>
+                      <p className="text-[11px] text-[#aaaaaa] leading-snug">{item.sub}</p>
+                    </div>
+                    {item.badge && (
+                      <span className="text-[9px] font-bold tracking-widest uppercase text-[#e3a99c] bg-[#f2d6c9] rounded-full px-1.5 py-0.5 ml-auto leading-none flex-shrink-0">
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
                 ))}
               </div>
             )}
