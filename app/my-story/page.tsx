@@ -101,7 +101,7 @@ export default function MyStoryPage() {
 
               <div className="flex items-center gap-4">
                 <div className="w-14 h-14 rounded-full overflow-hidden ring-4 ring-[#f2d6c9] flex-shrink-0">
-                  <img src="/assets/story_abie.jpg" alt="Abie Maxey" className="w-full h-full object-cover" />
+                  <img src="/assets/avatar.png" alt="Abie Maxey" className="w-full h-full object-cover" />
                 </div>
                 <div>
                   <p className="font-bold text-[#3a3a3a]">Abie Maxey</p>

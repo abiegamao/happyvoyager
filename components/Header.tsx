@@ -147,7 +147,7 @@ export default function Header() {
   return (
     <Navbar className="fixed top-0 z-50 font-[family-name:var(--font-body)]">
       {/* ── Desktop ───────────────────────────────────────────────────────── */}
-      <NavBody className="bg-[#f9f5f2]/95 border-[#e7ddd3] max-w-[1400px] mx-auto">
+      <NavBody>
         <Link href="/#hero" className="relative z-20 flex-shrink-0">
           <img
             src="/assets/logo.png"
@@ -360,7 +360,7 @@ export default function Header() {
       </NavBody>
 
       {/* ── Mobile ────────────────────────────────────────────────────────── */}
-      <MobileNav className="bg-[#f9f5f2]/95 px-4">
+      <MobileNav className="px-4">
         <MobileNavHeader>
           <Link href="/#hero">
             <img

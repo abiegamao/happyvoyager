@@ -163,7 +163,7 @@ export default async function BlogListingPage({
                     My Road to Spanish Citizenship (+ A2 by 2026)
                   </h3>
                   <p className="text-[#6b6b6b] text-sm leading-relaxed mb-4 max-w-xl">
-                    Filipinos only need 2 years of residency — not 10. No renunciation. And I&apos;m doing it publicly, with live countdowns, a study plan, and zero chill. This is the endgame.
+                    Filipinos only need 2 years of residency, not 10. No renunciation. And I&apos;m doing it publicly, with live countdowns, a study plan, and zero chill. This is the endgame.
                   </p>
                   <span className="inline-flex items-center gap-2 text-sm font-bold text-[#8fa38d] group-hover:gap-3 transition-all">
                     Follow the journey
