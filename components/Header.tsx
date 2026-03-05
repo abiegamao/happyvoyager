@@ -80,10 +80,10 @@ const freeToolsItems = [
 ];
 
 const servicesDropdown = [
-  { name: "Pricing & Packages", link: "/#pricing" },
-  { name: "Book Appointment (NIE/TIE)", link: "/appointments" },
-  { name: "Document Translations", link: "/translations" },
-  { name: "Schengen Visa Assistance", link: "/schengen-visa" },
+  { emoji: "💼", title: "Pricing & Packages", sub: "Full support, transparent pricing", link: "/#pricing", bg: "#f2d6c9" },
+  { emoji: "📅", title: "Book Appointment (NIE/TIE)", sub: "Lock in your NIE or TIE date", link: "/appointments", bg: "#e0eaeb" },
+  { emoji: "🌐", title: "Document Translations", sub: "Certified, fast & apostille-ready", link: "/translations", bg: "#d4e0d3" },
+  { emoji: "✈️", title: "Schengen Visa Assistance", sub: "Bridge the gap while you wait", link: "/schengen-visa", bg: "#f2d6c9" },
 ];
 
 const dnvDropdown = [
@@ -165,7 +165,7 @@ export default function Header() {
             onMouseEnter={openDropdown}
             onMouseLeave={closeDropdown}
           >
-            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium whitespace-nowrap">
+            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#3a3a3a] hover:bg-[#f2d6c9]/40 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium whitespace-nowrap">
               Services
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`} />
             </button>
@@ -176,14 +176,30 @@ export default function Header() {
                 onMouseEnter={openDropdown}
                 onMouseLeave={closeDropdown}
               >
-                <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden min-w-[220px] py-2">
+                <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden w-[272px] py-2">
+                  <p className="px-4 pt-2 pb-1 text-[10px] font-bold tracking-widest text-[#aaaaaa] uppercase">
+                    What We Offer
+                  </p>
                   {servicesDropdown.map((item) => (
                     <a
-                      key={item.name}
+                      key={item.title}
                       href={item.link}
-                      className="flex items-center px-5 py-3 text-sm text-[#3a3a3a] hover:bg-[#f9f5f2] hover:text-[#e3a99c] transition-colors duration-150"
+                      className="flex items-start gap-3 px-4 py-2.5 hover:bg-[#f9f5f2] transition-colors duration-150 group"
                     >
-                      {item.name}
+                      <span
+                        className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0 mt-0.5"
+                        style={{ backgroundColor: item.bg }}
+                      >
+                        {item.emoji}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">
+                          {item.title}
+                        </p>
+                        <p className="text-[11px] text-[#aaaaaa] mt-0.5 leading-snug">
+                          {item.sub}
+                        </p>
+                      </div>
                     </a>
                   ))}
                 </div>
@@ -236,7 +252,7 @@ export default function Header() {
             onMouseEnter={openFreeToolsDropdown}
             onMouseLeave={closeFreeToolsDropdown}
           >
-            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#8fa38d] font-semibold hover:bg-[#d4e0d3]/40 hover:text-[#5d7a5b] transition-colors duration-200 text-sm whitespace-nowrap">
+            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#8fa38d] font-semibold hover:bg-[#f2d6c9]/40 hover:text-[#e3a99c] transition-colors duration-200 text-sm whitespace-nowrap">
               ✨ Free Tools
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${freeToolsOpen ? "rotate-180" : ""}`} />
             </button>
@@ -289,7 +305,7 @@ export default function Header() {
             onMouseEnter={openBlogDropdown}
             onMouseLeave={closeBlogDropdown}
           >
-            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium whitespace-nowrap">
+            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#3a3a3a] hover:bg-[#f2d6c9]/40 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium whitespace-nowrap">
               Blog
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${blogOpen ? "rotate-180" : ""}`} />
             </button>
@@ -344,7 +360,7 @@ export default function Header() {
             <a
               key={idx}
               href={item.link}
-              className="relative px-3 py-2 text-[#3a3a3a] hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium rounded-full hover:bg-gray-100 whitespace-nowrap"
+              className="relative px-3 py-2 text-[#3a3a3a] hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium rounded-full hover:bg-[#f2d6c9]/40 whitespace-nowrap"
             >
               {item.name}
             </a>
@@ -455,15 +471,26 @@ export default function Header() {
               <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`} />
             </button>
             {mobileServicesOpen && (
-              <div className="mt-2 ml-3 flex flex-col gap-2 border-l-2 border-[#e7ddd3] pl-4">
+              <div className="mt-2 ml-3 flex flex-col gap-1 border-l-2 border-[#e7ddd3] pl-4">
                 {servicesDropdown.map((item) => (
                   <a
-                    key={item.name}
+                    key={item.title}
                     href={item.link}
                     onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-sm text-[#6b6b6b] hover:text-[#e3a99c] transition-colors py-0.5"
+                    className="flex items-center gap-2.5 py-1.5 group"
                   >
-                    {item.name}
+                    <span
+                      className="w-6 h-6 rounded-lg flex items-center justify-center text-xs flex-shrink-0"
+                      style={{ backgroundColor: item.bg }}
+                    >
+                      {item.emoji}
+                    </span>
+                    <div className="min-w-0">
+                      <p className="text-sm font-medium text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">
+                        {item.title}
+                      </p>
+                      <p className="text-[11px] text-[#aaaaaa] leading-snug">{item.sub}</p>
+                    </div>
                   </a>
                 ))}
               </div>
