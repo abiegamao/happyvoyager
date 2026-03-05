@@ -230,7 +230,7 @@ export default function NonLucrativeVisaPage() {
             <span>·</span>
             <span>12 min read</span>
             <span>·</span>
-            <ShareButton />
+            <ShareButton title="Spain Non-Lucrative Visa (NLV): The Complete Guide for Passive Income Earners" />
           </div>
         </div>
       </section>

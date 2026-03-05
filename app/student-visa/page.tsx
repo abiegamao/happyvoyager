@@ -68,7 +68,7 @@ export default function StudentVisaPage() {
               <span>·</span>
               <span>10 min read</span>
               <span>·</span>
-              <ShareButton />
+              <ShareButton title="Spain Student Visa: The Complete Guide (2026)" />
             </div>
           </div>
         </section>
