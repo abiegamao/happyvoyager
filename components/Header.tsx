@@ -14,9 +14,38 @@ import {
 } from "@/components/ui/resizable-navbar";
 
 const navLinks = [
-  { name: "Blog", link: "/blog" },
   { name: "About", link: "/my-story" },
   { name: "Contact", link: "/contact" },
+];
+
+const blogFeatured = [
+  {
+    emoji: "🔴",
+    tag: "Live · 2026",
+    title: "DNV Updates 2026",
+    sub: "What UGE actually expects now",
+    link: "/dnv-updates-2026",
+    accent: "#e3a99c",
+    bg: "#f2d6c9",
+  },
+  {
+    emoji: "📋",
+    tag: "Step-by-step",
+    title: "How to Apply for the DNV",
+    sub: "The exact system I used",
+    link: "/how-to-apply-spain-digital-nomad-visa",
+    accent: "#7a8f90",
+    bg: "#e0eaeb",
+  },
+  {
+    emoji: "🏆",
+    tag: "The endgame",
+    title: "My Road to Citizenship",
+    sub: "2 years. Not 10. Live countdown.",
+    link: "/road-to-spanish-citizenship",
+    accent: "#8fa38d",
+    bg: "#d4e0d3",
+  },
 ];
 
 const servicesDropdown = [
@@ -42,10 +71,13 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const [dnvOpen, setDnvOpen] = useState(false);
+  const [blogOpen, setBlogOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileDnvOpen, setMobileDnvOpen] = useState(false);
+  const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dnvTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const blogTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openDropdown = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -63,6 +95,15 @@ export default function Header() {
 
   const closeDnvDropdown = () => {
     dnvTimeoutRef.current = setTimeout(() => setDnvOpen(false), 120);
+  };
+
+  const openBlogDropdown = () => {
+    if (blogTimeoutRef.current) clearTimeout(blogTimeoutRef.current);
+    setBlogOpen(true);
+  };
+
+  const closeBlogDropdown = () => {
+    blogTimeoutRef.current = setTimeout(() => setBlogOpen(false), 120);
   };
 
   return (
@@ -151,6 +192,56 @@ export default function Header() {
                       {item.name}
                     </a>
                   ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Blog dropdown */}
+          <div
+            className="relative"
+            onMouseEnter={openBlogDropdown}
+            onMouseLeave={closeBlogDropdown}
+          >
+            <button className="flex items-center gap-1 px-4 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium">
+              Blog
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${blogOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {blogOpen && (
+              <div
+                className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50"
+                onMouseEnter={openBlogDropdown}
+                onMouseLeave={closeBlogDropdown}
+              >
+                <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden w-[280px] py-2">
+                  <p className="px-4 pt-2 pb-1 text-[10px] font-bold tracking-widest text-[#aaaaaa] uppercase">Featured Guides</p>
+                  {blogFeatured.map((item) => (
+                    <Link
+                      key={item.link}
+                      href={item.link}
+                      className="flex items-start gap-3 px-4 py-2.5 hover:bg-[#f9f5f2] transition-colors duration-150 group"
+                    >
+                      <span
+                        className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0 mt-0.5"
+                        style={{ backgroundColor: item.bg }}
+                      >
+                        {item.emoji}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs font-bold text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">{item.title}</p>
+                        <p className="text-[11px] text-[#aaaaaa] mt-0.5 leading-snug">{item.sub}</p>
+                      </div>
+                    </Link>
+                  ))}
+                  <div className="mx-4 my-1.5 h-px bg-[#f0ebe6]" />
+                  <Link
+                    href="/blog"
+                    className="flex items-center justify-between px-4 py-2.5 text-xs font-bold text-[#e3a99c] hover:bg-[#f9f5f2] transition-colors duration-150"
+                  >
+                    Browse all articles
+                    <span className="text-[#e3a99c]">→</span>
+                  </Link>
                 </div>
               </div>
             )}
@@ -253,6 +344,41 @@ export default function Header() {
                     {item.name}
                   </a>
                 ))}
+              </div>
+            )}
+          </div>
+
+          {/* Blog expandable */}
+          <div className="w-full">
+            <button
+              onClick={() => setMobileBlogOpen(!mobileBlogOpen)}
+              className="flex items-center justify-between w-full text-base font-medium text-[#3a3a3a] hover:text-[#e3a99c] transition-colors py-1"
+            >
+              Blog
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileBlogOpen ? "rotate-180" : ""}`} />
+            </button>
+            {mobileBlogOpen && (
+              <div className="mt-2 ml-3 flex flex-col gap-1 border-l-2 border-[#e7ddd3] pl-4">
+                {blogFeatured.map((item) => (
+                  <Link
+                    key={item.link}
+                    href={item.link}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 py-1.5 group"
+                  >
+                    <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs flex-shrink-0" style={{ backgroundColor: item.bg }}>
+                      {item.emoji}
+                    </span>
+                    <span className="text-sm font-medium text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">{item.title}</span>
+                  </Link>
+                ))}
+                <Link
+                  href="/blog"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-xs font-bold text-[#e3a99c] py-1 mt-1"
+                >
+                  Browse all articles →
+                </Link>
               </div>
             )}
           </div>

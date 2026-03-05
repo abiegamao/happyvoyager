@@ -19,6 +19,7 @@ import {
   UserCheck,
   BookOpen,
 } from "lucide-react";
+import ShareButton from "@/components/ShareButton";
 
 const sections = [
   { id: "is-this-you", label: "Is This Visa For You?" },
@@ -806,6 +807,14 @@ export default function HowToApplyDNVPage() {
             </div>
           </section>
 
+        </div>
+      </div>
+
+      {/* ── SHARE STRIP ── */}
+      <div className="border-t border-[#e7ddd3] py-5 px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <p className="text-sm text-[#aaaaaa]">Know someone working through their DNV application? Send this their way.</p>
+          <ShareButton title="How to Apply for the Spain Digital Nomad Visa ~ Step by Step" />
         </div>
       </div>
 

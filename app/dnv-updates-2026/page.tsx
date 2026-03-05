@@ -19,6 +19,7 @@ import {
   TrendingUp,
   BadgeCheck,
 } from "lucide-react";
+import ShareButton from "@/components/ShareButton";
 
 const sections = [
   { id: "eligibility", label: "Core Eligibility" },
@@ -536,6 +537,14 @@ export default function DNVUpdates2026Page() {
             </div>
           </section>
 
+        </div>
+      </div>
+
+      {/* ── SHARE STRIP ── */}
+      <div className="border-t border-[#e7ddd3] py-5 px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <p className="text-sm text-[#aaaaaa]">Found this useful? Share it with someone planning their move.</p>
+          <ShareButton title="Spain DNV Updates 2026 ~ What changed and what it means for you" />
         </div>
       </div>
 

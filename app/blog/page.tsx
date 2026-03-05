@@ -143,6 +143,35 @@ export default async function BlogListingPage({
                 </div>
               </Link>
 
+              {/* Pinned: Road to Spanish Citizenship */}
+              <Link
+                href="/road-to-spanish-citizenship"
+                className="group flex flex-col md:flex-row gap-6 bg-[#d4e0d3]/40 border border-[#8fa38d]/30 rounded-[2rem] p-6 md:p-8 hover:shadow-xl hover:border-[#8fa38d]/60 hover:bg-[#d4e0d3]/60 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="flex-shrink-0 md:w-56 h-40 md:h-auto rounded-2xl overflow-hidden bg-[#8fa38d]/20 flex items-center justify-center">
+                  <span className="text-5xl">🏆</span>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8fa38d]/20 border border-[#8fa38d]/30 text-xs font-bold tracking-widest text-[#8fa38d] uppercase">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#8fa38d] animate-pulse" />
+                      The Endgame · Live Countdown
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-white/60 border border-[#d4e0d3] text-xs font-bold text-[#aaaaaa] uppercase tracking-widest">Spanish Citizenship</span>
+                  </div>
+                  <h3 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-bold text-[#3a3a3a] mb-3 leading-tight group-hover:text-[#8fa38d] transition-colors">
+                    My Road to Spanish Citizenship (+ A2 by 2026)
+                  </h3>
+                  <p className="text-[#6b6b6b] text-sm leading-relaxed mb-4 max-w-xl">
+                    Filipinos only need 2 years of residency — not 10. No renunciation. And I&apos;m doing it publicly, with live countdowns, a study plan, and zero chill. This is the endgame.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-[#8fa38d] group-hover:gap-3 transition-all">
+                    Follow the journey
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
+
             </div>
           )}
 

@@ -5,8 +5,9 @@ import AuthorAboutSection from "@/components/AuthorAboutSection";
 import CommentSection from "@/components/CommentSection";
 import Image from "next/image";
 import Link from "next/link";
-import { Calendar, User, Clock, Share2 } from "lucide-react";
+import { Calendar, User } from "lucide-react";
 import { getSupabaseBlogBySlug, SupabaseBlogDetail } from "@/lib/supabase-blogs";
+import ShareButton from "@/components/ShareButton";
 
 // Next.js 13+ params handling
 interface PageProps {
@@ -178,10 +179,7 @@ export default async function SingleBlogPage({ params }: PageProps) {
                       </>
                     )}
                   </div>
-                  <button className="flex items-center space-x-2 text-sm font-semibold text-[var(--color-primary)] hover:text-[var(--color-charcoal)] transition-colors">
-                    <Share2 className="w-4 h-4" />
-                    <span>Share Article</span>
-                  </button>
+                  <ShareButton title={blog.title} />
                 </div>
               </article>
 
