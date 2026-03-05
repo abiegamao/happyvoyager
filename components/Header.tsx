@@ -48,6 +48,37 @@ const blogFeatured = [
   },
 ];
 
+const freeToolsItems = [
+  {
+    emoji: "✨",
+    title: "DNV Assessment",
+    sub: "See if you qualify in 2 min",
+    link: "/assessment",
+    bg: "#f2d6c9",
+  },
+  {
+    emoji: "📋",
+    title: "Document Checklist",
+    sub: "Full list, printable & ready",
+    link: "/document-checklist",
+    bg: "#e0eaeb",
+  },
+  {
+    emoji: "📖",
+    title: "Playbook Lite",
+    sub: "The DNV roadmap condensed",
+    link: "/#pricing",
+    bg: "#d4e0d3",
+  },
+  {
+    emoji: "🗓",
+    title: "Schengen Day Calculator",
+    sub: "Track your 90/180 days live",
+    link: "/schengen-calculator",
+    bg: "#e0eaeb",
+  },
+];
+
 const servicesDropdown = [
   { name: "Pricing & Packages", link: "/#pricing" },
   { name: "Book Appointment (NIE/TIE)", link: "/appointments" },
@@ -63,7 +94,6 @@ const dnvDropdown = [
   { name: "How It Works", link: "/digital-nomad-visa#how-it-works" },
   { name: "Why Us", link: "/digital-nomad-visa#why-us" },
   { name: "FAQ", link: "/digital-nomad-visa#faq" },
-  { name: "Free Checklist", link: "/document-checklist" },
   { name: "✦ Free Assessment", link: "/assessment" },
 ];
 
@@ -72,18 +102,20 @@ export default function Header() {
   const [servicesOpen, setServicesOpen] = useState(false);
   const [dnvOpen, setDnvOpen] = useState(false);
   const [blogOpen, setBlogOpen] = useState(false);
+  const [freeToolsOpen, setFreeToolsOpen] = useState(false);
   const [mobileServicesOpen, setMobileServicesOpen] = useState(false);
   const [mobileDnvOpen, setMobileDnvOpen] = useState(false);
   const [mobileBlogOpen, setMobileBlogOpen] = useState(false);
+  const [mobileFreeToolsOpen, setMobileFreeToolsOpen] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const dnvTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const blogTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const freeToolsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const openDropdown = () => {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
     setServicesOpen(true);
   };
-
   const closeDropdown = () => {
     timeoutRef.current = setTimeout(() => setServicesOpen(false), 120);
   };
@@ -92,7 +124,6 @@ export default function Header() {
     if (dnvTimeoutRef.current) clearTimeout(dnvTimeoutRef.current);
     setDnvOpen(true);
   };
-
   const closeDnvDropdown = () => {
     dnvTimeoutRef.current = setTimeout(() => setDnvOpen(false), 120);
   };
@@ -101,15 +132,22 @@ export default function Header() {
     if (blogTimeoutRef.current) clearTimeout(blogTimeoutRef.current);
     setBlogOpen(true);
   };
-
   const closeBlogDropdown = () => {
     blogTimeoutRef.current = setTimeout(() => setBlogOpen(false), 120);
   };
 
+  const openFreeToolsDropdown = () => {
+    if (freeToolsTimeoutRef.current) clearTimeout(freeToolsTimeoutRef.current);
+    setFreeToolsOpen(true);
+  };
+  const closeFreeToolsDropdown = () => {
+    freeToolsTimeoutRef.current = setTimeout(() => setFreeToolsOpen(false), 120);
+  };
+
   return (
     <Navbar className="fixed top-0 z-50 font-[family-name:var(--font-body)]">
-      {/* Desktop */}
-      <NavBody className="bg-[#f9f5f2]/95 border-[#e7ddd3]">
+      {/* ── Desktop ───────────────────────────────────────────────────────── */}
+      <NavBody className="bg-[#f9f5f2]/95 border-[#e7ddd3] max-w-[1400px] mx-auto">
         <Link href="/#hero" className="relative z-20 flex-shrink-0">
           <img
             src="/assets/logo.png"
@@ -118,19 +156,18 @@ export default function Header() {
           />
         </Link>
 
-        {/* Nav items ~ Services dropdown + rest */}
-        <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-2 text-sm font-medium lg:flex lg:space-x-2">
-          {/* Services dropdown */}
+        {/* Nav items */}
+        <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center gap-0.5 text-sm font-medium lg:flex">
+
+          {/* Services */}
           <div
             className="relative"
             onMouseEnter={openDropdown}
             onMouseLeave={closeDropdown}
           >
-            <button className="flex items-center gap-1 px-4 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium">
+            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium whitespace-nowrap">
               Services
-              <ChevronDown
-                className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`}
-              />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${servicesOpen ? "rotate-180" : ""}`} />
             </button>
 
             {servicesOpen && (
@@ -154,23 +191,19 @@ export default function Header() {
             )}
           </div>
 
-          {/* DNV dropdown link */}
+          {/* DNV */}
           <div
             className="relative"
             onMouseEnter={openDnvDropdown}
             onMouseLeave={closeDnvDropdown}
           >
-            <div className="flex items-center">
-              <Link
-                href="/digital-nomad-visa"
-                className="relative flex items-center gap-1 px-4 py-2 rounded-full text-[#e3a99c] font-semibold text-sm bg-[#e3a99c]/10 border border-[#e3a99c]/30 hover:bg-[#e3a99c] hover:text-white transition-all duration-200"
-              >
-                🇪🇸 Digital Nomad Visa
-                <ChevronDown
-                  className={`w-3.5 h-3.5 transition-transform duration-200 ${dnvOpen ? "rotate-180" : ""}`}
-                />
-              </Link>
-            </div>
+            <Link
+              href="/digital-nomad-visa"
+              className="relative flex items-center gap-1 px-3 py-2 rounded-full text-[#e3a99c] font-semibold text-sm bg-[#e3a99c]/10 border border-[#e3a99c]/30 hover:bg-[#e3a99c] hover:text-white transition-all duration-200 whitespace-nowrap"
+            >
+              🇪🇸 Digital Nomad Visa
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${dnvOpen ? "rotate-180" : ""}`} />
+            </Link>
 
             {dnvOpen && (
               <div
@@ -197,13 +230,66 @@ export default function Header() {
             )}
           </div>
 
-          {/* Blog dropdown */}
+          {/* Free Tools ✨ */}
+          <div
+            className="relative"
+            onMouseEnter={openFreeToolsDropdown}
+            onMouseLeave={closeFreeToolsDropdown}
+          >
+            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#8fa38d] font-semibold hover:bg-[#d4e0d3]/40 hover:text-[#5d7a5b] transition-colors duration-200 text-sm whitespace-nowrap">
+              ✨ Free Tools
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${freeToolsOpen ? "rotate-180" : ""}`} />
+            </button>
+
+            {freeToolsOpen && (
+              <div
+                className="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50"
+                onMouseEnter={openFreeToolsDropdown}
+                onMouseLeave={closeFreeToolsDropdown}
+              >
+                <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden w-[272px] py-2">
+                  <p className="px-4 pt-2 pb-1 text-[10px] font-bold tracking-widest text-[#aaaaaa] uppercase">
+                    Free Resources
+                  </p>
+                  {freeToolsItems.map((item) => (
+                    <Link
+                      key={item.link}
+                      href={item.link}
+                      className="flex items-start gap-3 px-4 py-2.5 hover:bg-[#f9f5f2] transition-colors duration-150 group"
+                    >
+                      <span
+                        className="w-8 h-8 rounded-xl flex items-center justify-center text-base flex-shrink-0 mt-0.5"
+                        style={{ backgroundColor: item.bg }}
+                      >
+                        {item.emoji}
+                      </span>
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2">
+                          <p className="text-xs font-bold text-[#3a3a3a] group-hover:text-[#8fa38d] transition-colors leading-snug">
+                            {item.title}
+                          </p>
+                          <span className="text-[9px] font-bold tracking-widest uppercase text-[#8fa38d] bg-[#d4e0d3]/60 rounded-full px-1.5 py-0.5 leading-none">
+                            FREE
+                          </span>
+                        </div>
+                        <p className="text-[11px] text-[#aaaaaa] mt-0.5 leading-snug">
+                          {item.sub}
+                        </p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Blog */}
           <div
             className="relative"
             onMouseEnter={openBlogDropdown}
             onMouseLeave={closeBlogDropdown}
           >
-            <button className="flex items-center gap-1 px-4 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium">
+            <button className="flex items-center gap-1 px-3 py-2 rounded-full text-[#3a3a3a] hover:bg-gray-100 hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium whitespace-nowrap">
               Blog
               <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${blogOpen ? "rotate-180" : ""}`} />
             </button>
@@ -215,7 +301,9 @@ export default function Header() {
                 onMouseLeave={closeBlogDropdown}
               >
                 <div className="bg-white border border-[#e7ddd3] rounded-2xl shadow-xl overflow-hidden w-[280px] py-2">
-                  <p className="px-4 pt-2 pb-1 text-[10px] font-bold tracking-widest text-[#aaaaaa] uppercase">Featured Guides</p>
+                  <p className="px-4 pt-2 pb-1 text-[10px] font-bold tracking-widest text-[#aaaaaa] uppercase">
+                    Featured Guides
+                  </p>
                   {blogFeatured.map((item) => (
                     <Link
                       key={item.link}
@@ -229,8 +317,12 @@ export default function Header() {
                         {item.emoji}
                       </span>
                       <div className="min-w-0">
-                        <p className="text-xs font-bold text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">{item.title}</p>
-                        <p className="text-[11px] text-[#aaaaaa] mt-0.5 leading-snug">{item.sub}</p>
+                        <p className="text-xs font-bold text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">
+                          {item.title}
+                        </p>
+                        <p className="text-[11px] text-[#aaaaaa] mt-0.5 leading-snug">
+                          {item.sub}
+                        </p>
                       </div>
                     </Link>
                   ))}
@@ -247,12 +339,12 @@ export default function Header() {
             )}
           </div>
 
-          {/* Other nav links */}
+          {/* Static links */}
           {navLinks.map((item, idx) => (
             <a
               key={idx}
               href={item.link}
-              className="relative px-4 py-2 text-[#3a3a3a] hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium rounded-full hover:bg-gray-100"
+              className="relative px-3 py-2 text-[#3a3a3a] hover:text-[#e3a99c] transition-colors duration-200 text-sm font-medium rounded-full hover:bg-gray-100 whitespace-nowrap"
             >
               {item.name}
             </a>
@@ -261,13 +353,13 @@ export default function Header() {
 
         <Link
           href="https://calendly.com/abie-gamao/spain-dnv"
-          className="relative z-20 flex-shrink-0 px-6 py-2.5 rounded-full bg-[#3a3a3a] text-white text-sm font-semibold hover:bg-[#e3a99c] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5"
+          className="relative z-20 flex-shrink-0 px-5 py-2.5 rounded-full bg-[#3a3a3a] text-white text-sm font-semibold hover:bg-[#e3a99c] transition-all duration-300 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 whitespace-nowrap"
         >
           Book a Call
         </Link>
       </NavBody>
 
-      {/* Mobile */}
+      {/* ── Mobile ────────────────────────────────────────────────────────── */}
       <MobileNav className="bg-[#f9f5f2]/95 px-4">
         <MobileNavHeader>
           <Link href="/#hero">
@@ -294,12 +386,8 @@ export default function Header() {
               onClick={() => setMobileDnvOpen(!mobileDnvOpen)}
               className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-[#e3a99c]/10 border border-[#e3a99c]/30 text-[#e3a99c] font-semibold text-sm"
             >
-              <div className="flex items-center gap-2">
-                <span>🇪🇸 Digital Nomad Visa</span>
-              </div>
-              <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${mobileDnvOpen ? "rotate-180" : ""}`}
-              />
+              <span>🇪🇸 Digital Nomad Visa</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileDnvOpen ? "rotate-180" : ""}`} />
             </button>
             {mobileDnvOpen && (
               <div className="mt-2 ml-3 flex flex-col gap-2 border-l-2 border-[#e3a99c]/30 pl-4">
@@ -321,6 +409,42 @@ export default function Header() {
             )}
           </div>
 
+          {/* Free Tools expandable */}
+          <div className="w-full">
+            <button
+              onClick={() => setMobileFreeToolsOpen(!mobileFreeToolsOpen)}
+              className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl bg-[#d4e0d3]/40 border border-[#8fa38d]/30 text-[#8fa38d] font-semibold text-sm"
+            >
+              <span>✨ Free Tools</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileFreeToolsOpen ? "rotate-180" : ""}`} />
+            </button>
+            {mobileFreeToolsOpen && (
+              <div className="mt-2 ml-3 flex flex-col gap-1 border-l-2 border-[#8fa38d]/30 pl-4">
+                {freeToolsItems.map((item) => (
+                  <Link
+                    key={item.link}
+                    href={item.link}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 py-1.5 group"
+                  >
+                    <span
+                      className="w-6 h-6 rounded-lg flex items-center justify-center text-xs flex-shrink-0"
+                      style={{ backgroundColor: item.bg }}
+                    >
+                      {item.emoji}
+                    </span>
+                    <span className="text-sm font-medium text-[#3a3a3a] group-hover:text-[#8fa38d] transition-colors leading-snug">
+                      {item.title}
+                    </span>
+                    <span className="text-[9px] font-bold tracking-widest uppercase text-[#8fa38d] bg-[#d4e0d3]/60 rounded-full px-1.5 py-0.5 ml-auto leading-none">
+                      FREE
+                    </span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+
           {/* Services expandable */}
           <div className="w-full">
             <button
@@ -328,9 +452,7 @@ export default function Header() {
               className="flex items-center justify-between w-full text-base font-medium text-[#3a3a3a] hover:text-[#e3a99c] transition-colors py-1"
             >
               Services
-              <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`}
-              />
+              <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${mobileServicesOpen ? "rotate-180" : ""}`} />
             </button>
             {mobileServicesOpen && (
               <div className="mt-2 ml-3 flex flex-col gap-2 border-l-2 border-[#e7ddd3] pl-4">
@@ -366,10 +488,15 @@ export default function Header() {
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="flex items-center gap-2.5 py-1.5 group"
                   >
-                    <span className="w-6 h-6 rounded-lg flex items-center justify-center text-xs flex-shrink-0" style={{ backgroundColor: item.bg }}>
+                    <span
+                      className="w-6 h-6 rounded-lg flex items-center justify-center text-xs flex-shrink-0"
+                      style={{ backgroundColor: item.bg }}
+                    >
                       {item.emoji}
                     </span>
-                    <span className="text-sm font-medium text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">{item.title}</span>
+                    <span className="text-sm font-medium text-[#3a3a3a] group-hover:text-[#e3a99c] transition-colors leading-snug">
+                      {item.title}
+                    </span>
                   </Link>
                 ))}
                 <Link

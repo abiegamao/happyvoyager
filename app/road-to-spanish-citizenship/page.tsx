@@ -32,21 +32,21 @@ const examFacts = [
     exam: "DELE A2",
     full: "Diploma de Español como Lengua Extranjera",
     by: "Instituto Cervantes",
-    cost: "~€108–€220",
+    cost: ",€108–€220",
     format: "Reading, writing, listening, speaking",
     pass: "Score of B or above in each skill",
-    results: "~90 days after exam",
+    results: ",90 days after exam",
     emoji: "🗣️",
     color: "#e3a99c",
     bg: "#f2d6c9",
-    note: "Unless your native language is Spanish ~ then you're exempt. (Tagalog doesn't count, unfortunately.)",
+    note: "Unless your native language is Spanish , then you're exempt. (Tagalog doesn't count, unfortunately.)",
   },
   {
     exam: "CCSE",
     full: "Conocimientos Constitucionales y Socioculturales de España",
     by: "Instituto Cervantes",
     cost: "€85",
-    format: "25 questions ~ multiple choice + true/false",
+    format: "25 questions , multiple choice + true/false",
     pass: "Minimum 15 correct (60%)",
     results: "Same day usually",
     emoji: "📚",
@@ -60,9 +60,9 @@ const citizenshipPerks = [
   { emoji: "🌍", title: "EU passport", body: "Live, work, and move freely across all 27 EU member states. No visa. No expiry. No asking permission." },
   { emoji: "🚫", title: "No more Schengen stress", body: "The 90-in-180 rule? Gone. The countdown clock in my head? Silenced. Forever." },
   { emoji: "🇵🇭", title: "Keep your Philippine passport", body: "Filipinos don't have to renounce. One of the rare countries with this agreement. I get to be both." },
-  { emoji: "🏥", title: "Full public services access", body: "Healthcare, education, social security ~ as a citizen, not a visitor, not a guest." },
-  { emoji: "🗳️", title: "The right to vote", body: "After years of navigating systems I had no say in ~ I'll finally have a voice in the country I call home." },
-  { emoji: "♾️", title: "No more renewals", body: "No 3-year DNV renewal. No 5-year long-term residency renewal. Just ~ done. A permanent status." },
+  { emoji: "🏥", title: "Full public services access", body: "Healthcare, education, social security , as a citizen, not a visitor, not a guest." },
+  { emoji: "🗳️", title: "The right to vote", body: "After years of navigating systems I had no say in , I'll finally have a voice in the country I call home." },
+  { emoji: "♾️", title: "No more renewals", body: "No 3-year DNV renewal. No 5-year long-term residency renewal. Just , done. A permanent status." },
 ];
 
 const requirements = [
@@ -71,7 +71,7 @@ const requirements = [
     color: "#8fa38d",
     bg: "#d4e0d3",
     title: "2 years of legal residency",
-    body: "For Filipinos specifically. The standard is 10 years ~ we get 2. That's the deal. DNV counts from day one of legal residence.",
+    body: "For Filipinos specifically. The standard is 10 years... we get 2. That's the deal. DNV counts from day one of legal residence.",
     tag: "🇵🇭 Filipino advantage",
   },
   {
@@ -79,7 +79,7 @@ const requirements = [
     color: "#e3a99c",
     bg: "#f2d6c9",
     title: "DELE A2 (language) + CCSE (civics)",
-    body: "Two exams administered by Instituto Cervantes. Both required for Filipinos. Results take ~90 days so register early.",
+    body: "Two exams administered by Instituto Cervantes. Both required for Filipinos. Results take ,90 days so register early.",
     tag: "Both exams required",
   },
   {
@@ -103,7 +103,7 @@ const requirements = [
     color: "#e3a99c",
     bg: "#f2d6c9",
     title: "Swear loyalty to Spain",
-    body: "After approval you have 180 days to take the oath before the Civil Registry, a notary, or a Spanish consulate. Miss it ~ you lose it.",
+    body: "After approval you have 180 days to take the oath before the Civil Registry, a notary, or a Spanish consulate. Miss it , you lose it.",
     tag: "180-day window",
   },
 ];
@@ -111,19 +111,19 @@ const requirements = [
 const docs = [
   { cat: "Identity", items: ["Valid Philippine passport", "Spanish residence card (TIE)", "2 recent passport photos"] },
   { cat: "Residency proof", items: ["Historical empadronamiento (from your municipality)", "All residence permits / renewal records", "Proof of continuous residence (no 3+ month gaps)"] },
-  { cat: "Criminal records", items: ["NBI clearance ~ apostilled + sworn Spanish translation", "Spanish criminal record certificate (Certificado de Antecedentes Penales)", "Criminal records from any country lived in last 5 years"] },
-  { cat: "Civil documents", items: ["Birth certificate ~ apostilled + sworn Spanish translation", "If married: marriage certificate (apostilled + translated)"] },
+  { cat: "Criminal records", items: ["NBI clearance ~apostilled + sworn Spanish translation", "Spanish criminal record certificate (Certificado de Antecedentes Penales)", "Criminal records from any country lived in last 5 years"] },
+  { cat: "Civil documents", items: ["Birth certificate ~apostilled + sworn Spanish translation", "If married: marriage certificate (apostilled + translated)"] },
   { cat: "Exam certificates", items: ["DELE A2 certificate (or higher)", "CCSE certificate"] },
-  { cat: "Financial", items: ["Proof of income / tax returns (Spain)", "Application fee receipt ~ paid at bank or online"] },
+  { cat: "Financial", items: ["Proof of income / tax returns (Spain)", "Application fee receipt , paid at bank or online"] },
 ];
 
 const a2plan = [
-  { month: "Mar–Apr 2026", task: "Start structured lessons ~ italki + language exchange", done: false, emoji: "📱" },
+  { month: "Mar–Apr 2026", task: "Start structured lessons , italki + language exchange", done: false, emoji: "📱" },
   { month: "May–Jun 2026", task: "Work through DELE A2 prep book (Preparación al DELE A2)", done: false, emoji: "📖" },
   { month: "Jul 2026", task: "Register for DELE A2 exam (results take 90 days!)", done: false, emoji: "✍️" },
-  { month: "Aug–Sep 2026", task: "Intensive speaking practice ~ think in Spanish, journal in Spanish", done: false, emoji: "🗣️" },
-  { month: "Oct 2026", task: "Exam month ~ give it everything", done: false, emoji: "🎯" },
-  { month: "Dec 2026", task: "Results in + certificate in hand ~ goal complete", done: false, emoji: "🏆" },
+  { month: "Aug–Sep 2026", task: "Intensive speaking practice , think in Spanish, journal in Spanish", done: false, emoji: "🗣️" },
+  { month: "Oct 2026", task: "Exam month , give it everything", done: false, emoji: "🎯" },
+  { month: "Dec 2026", task: "Results in + certificate in hand , goal complete", done: false, emoji: "🏆" },
 ];
 
 export default function RoadToSpanishCitizenshipPage() {
@@ -150,12 +150,12 @@ export default function RoadToSpanishCitizenshipPage() {
           </h1>
 
           <p className="font-[family-name:var(--font-body)] text-xl text-[#6b6b6b] leading-relaxed max-w-2xl mb-4">
-            I didn&apos;t move to Spain to visit. I moved to stay. And eventually ~ to belong.
+            I didn&apos;t move to Spain to visit. I moved to stay. And eventually... to belong.
             This is my public commitment to finishing what I started: EU citizenship, Philippine passport intact,
             no lawyer, no nonsense.
           </p>
           <p className="font-[family-name:var(--font-body)] text-base text-[#aaaaaa] max-w-2xl mb-10">
-            Written March 2026 · Updated as I go · Accountability is the whole point.
+            DNV approved Jan 8, 2026 · Updated as I go · Accountability is the whole point.
           </p>
 
           {/* Meta */}
@@ -214,8 +214,8 @@ export default function RoadToSpanishCitizenshipPage() {
                 </p>
                 <p>
                   Then I found the footnote that changed everything. Spain has a bilateral agreement with a
-                  handful of countries ~ Ibero-American nations, Portugal, Andorra, Equatorial Guinea, and
-                  yes, <strong className="text-[#3a3a3a]">the Philippines</strong> ~ that reduces the residency requirement to
+                  handful of countries , Ibero-American nations, Portugal, Andorra, Equatorial Guinea, and
+                  yes, <strong className="text-[#3a3a3a]">the Philippines</strong> , that reduces the residency requirement to
                   <strong className="text-[#3a3a3a]"> just 2 years.</strong>
                 </p>
                 <p>
@@ -235,7 +235,7 @@ export default function RoadToSpanishCitizenshipPage() {
                   <p className="font-bold text-[#3a3a3a] mb-1">Filipino-specific residency requirement</p>
                   <p className="text-sm text-[#6b6b6b] leading-relaxed">
                     The Philippines is one of a handful of countries where Spain reduces the standard
-                    10-year residency to <strong>2 years</strong> ~ and allows <strong>dual citizenship</strong> (no renunciation required).
+                    10-year residency to <strong>2 years</strong> , and allows <strong>dual citizenship</strong> (no renunciation required).
                     This is written into Spanish law under the bilateral nationality agreement.
                     The DNV counts toward residency from day one.
                   </p>
@@ -253,7 +253,7 @@ export default function RoadToSpanishCitizenshipPage() {
                 An EU passport with a Philippine soul.
               </h2>
               <p className="text-[#6b6b6b] leading-relaxed mb-8 text-[17px]">
-                I want to be clear about what I&apos;m working toward ~ because it&apos;s not just a document.
+                I want to be clear about what I&apos;m working toward, because it&apos;s not just a document.
                 It&apos;s the end of asking permission to exist in spaces I&apos;ve already earned.
               </p>
 
@@ -346,14 +346,14 @@ export default function RoadToSpanishCitizenshipPage() {
               <div className="space-y-5 text-[#6b6b6b] leading-relaxed text-[17px] mb-8">
                 <p>
                   Okay. I&apos;m Filipino. I grew up speaking Tagalog and English.
-                  Spanish is technically related to Tagalog (loanwords, history, colonisation ~ you know how it goes),
+                  Spanish is technically related to Tagalog (loanwords, history, colonisation , you know how it goes),
                   but <em>knowing</em> Spanish? That&apos;s a different thing. My Spanish right now is approximately:
                   <strong className="text-[#3a3a3a]"> café con leche, por favor</strong> and a very enthusiastic
                   <strong className="text-[#3a3a3a]"> ¡Gracias!</strong>
                 </p>
                 <p>
                   I need DELE A2 by the end of 2026. That gives me under 10 months.
-                  The exam itself is basic ~ conversational Spanish for daily situations ~
+                  The exam itself is basic ~conversational Spanish for daily situations,
                   but A2 is not nothing. I have to read, write, listen, and speak.
                   And I have to do it all in a language I&apos;m still learning while also building a business.
                 </p>
@@ -387,7 +387,7 @@ export default function RoadToSpanishCitizenshipPage() {
                 <p className="text-sm text-[#6b6b6b] leading-relaxed">
                   <strong className="text-[#3a3a3a]">I&apos;ll update this section</strong> as I go through the plan.
                   Wins, fails, what I&apos;m using, how many times I said something embarrassing at the mercado.
-                  All of it. If you&apos;re learning too, follow along ~ or better yet, hold me to it.
+                  All of it. If you&apos;re learning too, follow along , or better yet, hold me to it.
                 </p>
               </div>
             </section>
@@ -403,7 +403,7 @@ export default function RoadToSpanishCitizenshipPage() {
               </h2>
               <p className="text-[#6b6b6b] leading-relaxed mb-8 text-[17px]">
                 These are the requirements for Filipinos applying through the 2-year residency route.
-                Different routes (marriage, birth, etc.) have different rules ~ but this is my path.
+                Different routes (marriage, birth, etc.) have different rules , but this is my path.
               </p>
 
               <div className="space-y-4">
@@ -439,8 +439,8 @@ export default function RoadToSpanishCitizenshipPage() {
                 The paper trail.<br />Start collecting now.
               </h2>
               <p className="text-[#6b6b6b] leading-relaxed mb-8 text-[17px]">
-                Spanish bureaucracy is not known for being fast. Some of these documents ~ especially the
-                NBI clearance, apostilles, and sworn translations ~ take weeks. Start before you think you need to.
+                Spanish bureaucracy is not known for being fast. Some of these documents , especially the
+                NBI clearance, apostilles, and sworn translations ~take weeks. Start before you think you need to.
               </p>
 
               <div className="grid sm:grid-cols-2 gap-5">
@@ -484,28 +484,27 @@ export default function RoadToSpanishCitizenshipPage() {
 
               <div className="relative space-y-0">
                 {[
-                  { year: "Early 2026", event: "DNV approved 🎉", status: "done", body: "The hard part is behind me. Legal residency in Spain starts now. The 2-year clock is officially ticking.", color: "#8fa38d" },
-                  { year: "Mar–Dec 2026", event: "Study Spanish. Pass DELE A2.", status: "active", body: "My public commitment. A2 by December 31, 2026. Also registering for CCSE exam ~ it's easier and I want it out of the way.", color: "#e3a99c" },
+                  { year: "Jan 8, 2026", event: "DNV approved 🎉", status: "done", body: "Legal residency in Spain starts now. The 2-year clock is officially ticking from this exact date.", color: "#8fa38d" },
+                  { year: "Mar–Dec 2026", event: "Study Spanish. Pass DELE A2.", status: "active", body: "My public commitment. A2 by December 31, 2026. Also registering for CCSE exam , it's easier and I want it out of the way.", color: "#e3a99c" },
                   { year: "2027", event: "CCSE exam + document prep", status: "upcoming", body: "Get the CCSE certificate. Start collecting NBI clearances, apostilles, sworn translations. These take time. Don't wait.", color: "#bbcccd" },
-                  { year: "Early 2028", event: "File citizenship application", status: "upcoming", body: "Submit via Sede Electrónica del Ministerio de Justicia. Online applications process faster ~ targeting 5–6 months.", color: "#bbcccd" },
-                  { year: "Late 2028", event: "Oath. Spanish passport. Done. 🇪🇸", status: "upcoming", body: "Swear loyalty to the King and the Constitution within 180 days of approval. Collect the passport. Don't cry (I will cry).", color: "#e3a99c" },
+                  { year: "Jan 8, 2028", event: "File citizenship application 📬", status: "upcoming", body: "Exactly 2 years from DNV approval , the earliest I can file. Submit online via Sede Electrónica del Ministerio de Justicia. The processing clock starts here.", color: "#bbcccd" },
+                  { year: "Apr 2028 minimum", event: "Processing period ⏳", status: "upcoming", body: "Minimum 3 months to process. Realistically 6–18 months depending on backlog. Online applications are faster. This is the waiting game , and I will not be calm.", color: "#bbcccd" },
+                  { year: "Late 2028 / Early 2029", event: "Oath. Spanish passport. Done. 🇪🇸", status: "upcoming", body: "Swear loyalty to the King and the Constitution within 180 days of approval. Collect the passport. Don't cry (I will cry).", color: "#e3a99c" },
                 ].map((step, i) => (
                   <div key={i} className="flex gap-5 pb-8 relative">
                     <div className="flex flex-col items-center flex-shrink-0">
-                      <div className={`w-10 h-10 rounded-full border-4 border-white shadow-md flex items-center justify-center z-10 ${
-                        step.status === "done" ? "bg-[#8fa38d]" :
-                        step.status === "active" ? "bg-[#e3a99c] animate-pulse" :
-                        "bg-[#e7ddd3]"
-                      }`}>
+                      <div className={`w-10 h-10 rounded-full border-4 border-white shadow-md flex items-center justify-center z-10 ${step.status === "done" ? "bg-[#8fa38d]" :
+                          step.status === "active" ? "bg-[#e3a99c] animate-pulse" :
+                            "bg-[#e7ddd3]"
+                        }`}>
                         <span className="text-white text-xs font-bold">{i + 1}</span>
                       </div>
-                      {i < 4 && <div className="w-0.5 bg-[#e7ddd3] flex-1 mt-1" />}
+                      {i < 5 && <div className="w-0.5 bg-[#e7ddd3] flex-1 mt-1" />}
                     </div>
-                    <div className={`flex-1 bg-white border rounded-2xl p-5 mb-2 ${
-                      step.status === "active" ? "border-[#e3a99c]/40 shadow-md" :
-                      step.status === "done" ? "border-[#8fa38d]/30" :
-                      "border-[#e7ddd3]"
-                    }`}>
+                    <div className={`flex-1 bg-white border rounded-2xl p-5 mb-2 ${step.status === "active" ? "border-[#e3a99c]/40 shadow-md" :
+                        step.status === "done" ? "border-[#8fa38d]/30" :
+                          "border-[#e7ddd3]"
+                      }`}>
                       <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                         <h3 className="font-bold text-[#3a3a3a]">{step.event}</h3>
                         <span className="text-[10px] font-bold px-2.5 py-1 rounded-full" style={{ color: step.color, backgroundColor: step.color + "15" }}>
@@ -582,7 +581,7 @@ export default function RoadToSpanishCitizenshipPage() {
             </span>
           </h2>
           <p className="font-[family-name:var(--font-body)] text-lg text-white/60 mb-4 max-w-xl mx-auto leading-relaxed">
-            I didn&apos;t just want to travel. I wanted to build a life ~ deliberately, legally, and without
+            I didn&apos;t just want to travel. I wanted to build a life , deliberately, legally, and without
             needing a powerful passport to do it.
           </p>
           <p className="font-[family-name:var(--font-body)] text-lg text-white/60 mb-10 max-w-xl mx-auto leading-relaxed">
@@ -607,7 +606,7 @@ export default function RoadToSpanishCitizenshipPage() {
       <div className="border-t border-[#e7ddd3] py-5 px-6 bg-white">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
           <p className="text-sm text-[#aaaaaa]">Know someone dreaming of EU citizenship? Send this their way.</p>
-          <ShareButton title="My Road to Spanish Citizenship ~ A Filipino's 2-Year Plan for an EU Passport" />
+          <ShareButton title="My Road to Spanish Citizenship , A Filipino's 2-Year Plan for an EU Passport" />
         </div>
       </div>
 

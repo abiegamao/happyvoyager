@@ -90,20 +90,22 @@ function CountdownBlock({
 }
 
 export default function CitizenshipCountdown() {
-  // Citizenship eligibility: 2 years from DNV approval (March 5, 2026)
-  const citizenshipDate = new Date("2028-03-05T00:00:00");
+  // DNV approved: Jan 8, 2026
+  // File eligibility: Jan 8, 2028 (2 years of residency)
+  // Minimum processing: 3 months → earliest possible citizenship: Apr 8, 2028
+  const citizenshipDate = new Date("2028-04-08T00:00:00");
   // A2 exam goal: end of 2026
   const a2Date = new Date("2026-12-31T23:59:59");
 
   return (
     <div className="grid md:grid-cols-2 gap-5">
       <CountdownBlock
-        label="Citizenship eligibility in"
+        label="Earliest citizenship possible"
         emoji="🇪🇸 The Big One"
         target={citizenshipDate}
         accent="#8fa38d"
         bg="bg-[#d4e0d3]/40"
-        note="2 years of legal residency required. Filing window opens March 2028 — then approx. 6–18 months to process."
+        note="DNV approved Jan 8, 2026 → file Jan 8, 2028 → minimum 3 months processing = April 2028 earliest. Realistically late 2028 or early 2029."
       />
       <CountdownBlock
         label="DELE A2 exam goal"
