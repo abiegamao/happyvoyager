@@ -20,9 +20,42 @@ The landing site will fetch playbook data from Supabase and track user progress 
 
 ## Database Schema
 
+### Existing Table: `playbook_purchasers` (NEEDS MODIFICATION)
+
+Current schema:
+
+| Column              | Type          | Constraints          |
+| ------------------- | ------------- | -------------------- |
+| `id`                | `uuid`        | PK                   |
+| `email`             | `text`        | NOT NULL, **UNIQUE** |
+| `name`              | `text`        | nullable             |
+| `stripe_session_id` | `text`        | UNIQUE               |
+| `purchased_at`      | `timestamptz` | default `now()`      |
+
+**Problem:** The `email` column has a UNIQUE constraint, so each email can only have ONE purchase row. There is no `playbook_slug` or `playbook_id` column — the table doesn't track _which_ playbook was purchased. If a user buys Spain DNV and later buys Visa Runner, the second purchase can't be recorded.
+
+**Required changes:**
+
+1. Add `playbook_id` column (`uuid`, FK → `playbooks.id`, NOT NULL)
+2. Drop the UNIQUE constraint on `email`
+3. Add a UNIQUE constraint on `(email, playbook_id)` — one purchase per email per playbook
+4. Migrate existing rows: assign them to the correct `playbook_id` (likely all Spain DNV for now)
+
+Updated schema after migration:
+
+| Column              | Type          | Constraints                   | Description                            |
+| ------------------- | ------------- | ----------------------------- | -------------------------------------- |
+| `id`                | `uuid`        | PK                            |                                        |
+| `email`             | `text`        | NOT NULL                      | Purchaser's email                      |
+| `name`              | `text`        |                               | Purchaser's name                       |
+| `playbook_id`       | `uuid`        | FK → `playbooks.id`, NOT NULL | **NEW** — which playbook was purchased |
+| `stripe_session_id` | `text`        | UNIQUE                        | Stripe checkout session                |
+| `purchased_at`      | `timestamptz` | default `now()`               |                                        |
+
+**New constraint:** UNIQUE on `(email, playbook_id)`
+
 ### Existing Tables (no changes)
 
-- `playbook_access` — already stores `email` + `playbook_slug` from Stripe webhook
 - `blog_posts`, `blog_comments`, `user_roles` — unrelated, untouched
 
 ---
@@ -131,13 +164,13 @@ Tracks which lessons a user has completed. Keyed by email (from Stripe purchase,
 ```
 playbooks
   │
-  ├──< playbook_phases         (1 playbook → many phases)
+  ├──< playbook_phases            (1 playbook → many phases)
   │       │
-  │       └──< playbook_lessons (1 phase → many lessons)
+  │       └──< playbook_lessons    (1 phase → many lessons)
   │               │
-  │               └──< playbook_lesson_progress (1 lesson → many user completions)
+  │               └──< playbook_lesson_progress  (1 lesson → many user completions)
   │
-  └──< playbook_access          (existing table: 1 playbook → many email grants)
+  └──< playbook_purchasers        (1 playbook → many purchases, keyed by email + playbook_id)
 ```
 
 ---
@@ -207,10 +240,13 @@ Replace the static imports from `data/playbooks/` with Supabase queries:
 ### Phase 1: Database Setup
 
 1. Create the 4 new tables via Supabase migration
-2. Set up RLS policies:
+2. **Modify `playbook_purchasers`**: add `playbook_id` column, drop email-only UNIQUE, add `(email, playbook_id)` UNIQUE
+3. Migrate existing purchase rows → assign to the correct `playbook_id`
+4. Set up RLS policies:
    - `playbooks`, `playbook_phases`, `playbook_lessons`: public read, authenticated write (dashboard admins)
    - `playbook_lesson_progress`: insert/select/delete where `email` matches (via API route, not direct client access)
-3. Create `updated_at` trigger function for auto-updating timestamps
+   - `playbook_purchasers`: public read where `email` matches (for access checks)
+5. Create `updated_at` trigger function for auto-updating timestamps
 
 ### Phase 2: Seed Existing Data
 
@@ -251,5 +287,17 @@ Replace the static imports from `data/playbooks/` with Supabase queries:
 | New dashboard pages      | 5                                                                                  |
 | New dashboard components | ~6                                                                                 |
 | New landing API routes   | 1 (`/api/playbook/progress` with GET/POST/DELETE)                                  |
-| Existing tables modified | 0                                                                                  |
+| Existing tables modified | 1 (`playbook_purchasers` — add `playbook_id`, fix UNIQUE constraint)               |
 | Auth changes             | None — email-only tracking preserved                                               |
+
+---
+
+## Future Improvements
+
+- **Bundle pricing**: Allow purchasing multiple playbooks at a discount (e.g. "Spain Complete Bundle" = DNV + NLV + Beckham Law). Would need a `playbook_bundles` table mapping bundles → playbooks, and the Stripe webhook would insert multiple `playbook_purchasers` rows per checkout.
+- **Subscription model**: Instead of one-time purchases per playbook, offer a subscription that unlocks all playbooks. Would add a `subscription_status` column to a user/subscriber table and bypass per-playbook access checks.
+- **Access expiry**: Add an `expires_at` column to `playbook_purchasers` if time-limited access is needed (e.g. 1-year access). Currently access is lifetime.
+- **Gifting / coupon codes**: Allow one email to purchase access for another email. Would need a `gifted_to_email` or separate `access_grants` table.
+- **Full auth on landing site**: If user accounts are added later, replace `email` keys in `playbook_purchasers` and `playbook_lesson_progress` with `user_id` FK → `auth.users`.
+- **Analytics**: Track lesson open events (not just completions) for engagement analytics. Would need a `playbook_lesson_events` table with event types (opened, completed, time_spent).
+- **Certificates**: Auto-generate a completion certificate when all lessons in a playbook are marked complete.
