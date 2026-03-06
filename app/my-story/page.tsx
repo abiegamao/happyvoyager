@@ -132,7 +132,7 @@ const timeline = [
   {
     period: "Proving a Point",
     title: "Mobility is a skill, not a privilege",
-    body: "Coming from the Global South, the stereotype is that we travel to overstay or escape. I traveled to prove a point. People told me I had to go home to apply for visas. Instead, I successfully applied for Canadian and Schengen visas from third countries, praying for a yes while stretching every dollar. Mobility isn't about the passport you're born with. It's about the system you build.",
+    body: "Coming from the Global South, the stereotype is that we travel to overstay or escape. I traveled to prove a point and build a life. People told me I had to go home to apply for visas. Instead, I successfully applied for Canadian and Schengen visas from third countries, praying for a yes while stretching every dollar. Mobility isn't about the passport you're born with. It's about the system you build.",
     icon: MapPin,
     color: "#bbcccd",
     align: "left",
@@ -140,7 +140,7 @@ const timeline = [
   {
     period: "The Crash",
     title: "The lost of safety net",
-    body: "After six years of working for someone else, I was suddenly locked out of my job and left without a financial safety net. The nomad life that felt like freedom suddenly felt very fragile. I had a choice: go home and accept defeat, or treat my life like a system that needed a hard reset.",
+    body: "After six years of working for someone else, I was suddenly locked out of my job and left without a safety net. The nomad life that felt like freedom suddenly felt very fragile. I had a choice: go home and accept defeat, or treat my life like a system that needed a hard reset.",
     icon: AlertTriangle,
     color: "#e3a99c",
     align: "right",

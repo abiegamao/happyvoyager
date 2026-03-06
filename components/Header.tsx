@@ -150,7 +150,7 @@ function HeaderInner({ darkBg }: { darkBg?: boolean }) {
     <Navbar className="fixed top-0 z-50 font-[family-name:var(--font-body)]">
       {/* ── Desktop ───────────────────────────────────────────────────────── */}
       <NavBody className={darkBg ? "!bg-[#f9f5f2]/95 !backdrop-blur-md shadow-[0_0_0_1px_rgba(231,221,211,0.6)]" : ""}>
-        <Link href="/#hero" className="relative z-20 flex-shrink-0">
+        <Link href="/#" className="relative z-20 flex-shrink-0">
           <img
             src="/assets/logo.png"
             alt="Happy Voyager"
