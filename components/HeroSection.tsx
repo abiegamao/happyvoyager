@@ -69,9 +69,9 @@ export default function HeroSection() {
           </div>
 
           {/* Heading */}
-          <h1 className="font-[family-name:var(--font-heading)] text-5xl lg:text-7xl font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
+          <h1 className="font-[family-name:var(--font-heading)] text-[2.4rem] lg:text-[3.6rem] font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
             Get Spain&apos;s Digital Nomad Visa{" "}
-            <span className="text-[#e3a99c] relative">
+            <span className="font-script text-[#e3a99c] text-6xl md:text-7xl lg:text-8xl relative inline-block transform -rotate-2">
               Without Paying a Lawyer
             </span>
           </h1>

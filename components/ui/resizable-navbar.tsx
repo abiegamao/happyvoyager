@@ -146,15 +146,10 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
   return (
     <motion.div
       animate={{
-        backdropFilter: visible ? "blur(12px)" : "none",
+        backdropFilter: visible ? "blur(12px)" : "blur(8px)",
         boxShadow: visible
-          ? "0 0 0 1px rgba(231, 221, 211, 0.6), 0 4px 24px rgba(58, 58, 58, 0.07)"
-          : "none",
-        width: visible ? "95%" : "100%",
-        paddingRight: visible ? "12px" : "0px",
-        paddingLeft: visible ? "12px" : "0px",
-        borderRadius: visible ? "9999px" : "0px",
-        y: visible ? 12 : 0,
+          ? "0 0 0 1px rgba(231, 221, 211, 0.8), 0 4px 24px rgba(58, 58, 58, 0.10)"
+          : "0 0 0 1px rgba(231, 221, 211, 0.4)",
       }}
       transition={{
         type: "spring",
@@ -162,8 +157,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
         damping: 40,
       }}
       className={cn(
-        "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
-        visible && "bg-[#f9f5f2]/90",
+        "relative z-50 mx-auto flex w-full flex-col items-center justify-between bg-[#f9f5f2]/95 px-5 py-3 lg:hidden",
         className,
       )}
     >
@@ -198,11 +192,12 @@ export const MobileNavMenu = ({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, y: -8, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -8, scale: 0.98 }}
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-2xl bg-[#f9f5f2] px-4 py-8 shadow-[0_0_0_1px_rgba(231,221,211,0.8),_0_8px_32px_rgba(58,58,58,0.08)]",
+            "absolute inset-x-3 top-[4.5rem] z-50 flex flex-col items-start justify-start gap-4 rounded-3xl bg-[#f9f5f2] px-5 py-6 shadow-[0_8px_40px_rgba(58,58,58,0.14),_0_0_0_1px_rgba(231,221,211,0.9)]",
             className,
           )}
         >

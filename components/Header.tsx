@@ -159,7 +159,7 @@ function HeaderInner({ darkBg }: { darkBg?: boolean }) {
         </Link>
 
         {/* Nav items */}
-        <div className="absolute inset-0 hidden flex-1 flex-row items-center justify-center gap-0.5 text-sm font-medium lg:flex">
+        <div className="absolute inset-0 hidden flex-row items-center justify-center gap-0.5 text-sm font-medium lg:flex pr-72 pl-40">
 
           {/* Services */}
           <div
@@ -407,13 +407,13 @@ function HeaderInner({ darkBg }: { darkBg?: boolean }) {
       </NavBody>
 
       {/* ── Mobile ────────────────────────────────────────────────────────── */}
-      <MobileNav className={`px-4${darkBg ? " !bg-[#f9f5f2]/95 !backdrop-blur-md shadow-[0_0_0_1px_rgba(231,221,211,0.6)]" : ""}`}>
+      <MobileNav className={darkBg ? "!bg-[#f9f5f2]/95" : ""}>
         <MobileNavHeader>
           <Link href="/#hero">
             <img
               src="/assets/logo.png"
               alt="Happy Voyager"
-              className="h-10 w-auto object-contain"
+              className="h-11 w-auto object-contain"
             />
           </Link>
           <MobileNavToggle

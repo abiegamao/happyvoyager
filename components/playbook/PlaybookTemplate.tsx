@@ -633,7 +633,7 @@ export default function PlaybookTemplate({ config }: { config: PlaybookConfig })
             <p className="text-white/60 text-lg max-w-2xl leading-relaxed mb-8">
               {config.heroDescription}
             </p>
-            <div className="flex flex-wrap gap-6">
+            <div className="flex flex-wrap gap-6 mb-6">
               {[
                 { value: `${totalLessons}`, label: "Lessons" },
                 { value: `${config.phases.length}`, label: "Phases" },
@@ -744,27 +744,26 @@ export default function PlaybookTemplate({ config }: { config: PlaybookConfig })
           <main className="flex-1 min-w-0 px-4 lg:px-0 space-y-6">
 
             {/* Mobile sticky nav bar */}
-            <div className="lg:hidden sticky top-16 z-30 -mx-4 px-4 pt-2.5 pb-2 bg-[#f9f5f2]/95 backdrop-blur-sm border-b border-[#e7ddd3] space-y-2">
-              {/* Row 1 ~ All Lessons button */}
-              <div className="flex justify-center">
+            <div className="lg:hidden sticky top-16 z-30 -mx-4 px-4 pt-2 pb-2 bg-[#f9f5f2]/95 backdrop-blur-sm border-b border-[#e7ddd3]">
+              <div className="flex flex-wrap gap-1.5 justify-center">
+                {/* All Lessons pill */}
                 <button
                   onClick={() => setShowMobileNav(true)}
-                  className="flex items-center gap-2 px-4 py-2 rounded-full bg-[#3a3a3a] text-white text-xs font-bold shadow-sm"
+                  className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#3a3a3a] text-white whitespace-nowrap shadow-sm"
                 >
-                  <BookOpen className="w-3.5 h-3.5" />
+                  <BookOpen className="w-3 h-3" />
                   All Lessons
                 </button>
-              </div>
-              {/* Row 2 ~ Phase pills */}
-              <div className="flex gap-1 overflow-x-auto scrollbar-hide">
+                {/* Phase pills */}
                 {config.phases.map((phase) => (
                   <button
                     key={phase.id}
                     onClick={() => scrollToPhase(phase.id)}
-                    className={`flex-shrink-0 px-2 py-0.5 rounded-full text-[10px] font-semibold transition-colors whitespace-nowrap ${activePhase === phase.id
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${
+                      activePhase === phase.id
                         ? "bg-[#e3a99c] text-white"
                         : "bg-white border border-[#e7ddd3] text-[#6b6b6b]"
-                      }`}
+                    }`}
                   >
                     {phase.emoji} {phase.phase}
                   </button>
