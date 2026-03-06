@@ -85,17 +85,6 @@ export default function PlaybookLayout({
                             </div>
                         </div>
                     </div>
-
-                    {/* Right: Actions */}
-                    <div className="flex items-center justify-end gap-3 h-full w-auto md:w-[250px] flex-shrink-0">
-                        <button className="hidden md:block text-[13px] font-medium text-[#37352f] hover:bg-[#efefed] px-3 py-1.5 rounded-full transition-colors">
-                            View my integrations
-                        </button>
-                        <Link href="#" className="hidden md:flex items-center justify-center bg-[#1d5fb5] hover:bg-[#1952a0] text-white text-[13px] font-medium px-4 py-1.5 rounded-full transition-colors">
-                            Get Notion free &rsaquo;
-                        </Link>
-                    </div>
-
                 </div>
             </header>
 
