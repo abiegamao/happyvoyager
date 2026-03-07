@@ -315,8 +315,8 @@ export default function MyStoryPage() {
 
                     {/* Icon node (desktop) */}
                     <div className="hidden md:flex absolute left-1/2 -translate-x-1/2 w-12 h-12 rounded-full border-4 border-white shadow-md items-center justify-center z-10"
-                      style={{ backgroundColor: item.color + "20" }}>
-                      <Icon className="w-5 h-5" style={{ color: item.color }} />
+                      style={{ backgroundColor: item.color}}>
+                      <Icon className="w-5 h-5" style={{ color: "#ffffff" }} />
                     </div>
 
                     {/* Empty column for layout */}
