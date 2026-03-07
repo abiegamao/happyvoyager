@@ -44,54 +44,6 @@ function tagStyle(tag: string) {
 }
 
 /* ─────────────────────────────────────────────
-   Lesson Modal (iframe)
-───────────────────────────────────────────── */
-function LessonModal({
-  url,
-  title,
-  onClose,
-}: {
-  url: string;
-  title: string;
-  onClose: () => void;
-}) {
-  return (
-    <div className="fixed inset-0 z-[95] flex flex-col">
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
-      <div className="relative flex flex-col w-full h-full max-w-5xl mx-auto my-4 lg:my-8 rounded-2xl overflow-hidden shadow-2xl">
-        <div className="flex-shrink-0 flex items-center justify-between gap-4 bg-[#3a3a3a] text-white px-4 py-3">
-          <div className="flex items-center gap-2.5 min-w-0">
-            <div className="w-1.5 h-1.5 rounded-full bg-[#e3a99c] flex-shrink-0" />
-            <p className="text-sm font-semibold text-white truncate">{title}</p>
-          </div>
-          <div className="flex items-center gap-3 flex-shrink-0">
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1 text-[11px] text-white/50 hover:text-white/90 transition-colors"
-            >
-              Full page <ExternalLink className="w-3 h-3" />
-            </a>
-            <button
-              onClick={onClose}
-              className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-            >
-              <X className="w-4 h-4 text-white" />
-            </button>
-          </div>
-        </div>
-        <iframe
-          src={`${url}${url.includes("?") ? "&" : "?"}embed=1`}
-          className="flex-1 w-full border-0 bg-[#f9f5f2]"
-          title={title}
-        />
-      </div>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────
    Lesson Content Modal
    For Pro lessons that don't have a dedicated
    page yet ~ shows description + bullets inline
@@ -511,7 +463,7 @@ export default function PlaybookTemplate({
   const [showModal, setShowModal] = useState(false);
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
-  const [lessonModal, setLessonModal] = useState<{ url: string; title: string } | null>(null);
+
   const [lessonContentModal, setLessonContentModal] = useState<{
     lesson: PlaybookConfig["phases"][0]["lessons"][0];
     accentColor: string;
@@ -586,7 +538,7 @@ export default function PlaybookTemplate({
 
   const openFreeLesson = (url: string, title: string) => {
     if (emailCaptured) {
-      setLessonModal({ url, title });
+      window.location.href = url;
     } else {
       setEmailCaptureTarget({ url, title });
     }
@@ -609,7 +561,7 @@ export default function PlaybookTemplate({
     }
     if (isPro) {
       if (lesson.link) {
-        setLessonModal({ url: lesson.link, title: lesson.title });
+        window.location.href = lesson.link;
       } else {
         setLessonContentModal({ lesson, accentColor: phaseAccent, bgColor: phaseBg });
       }
@@ -666,17 +618,10 @@ export default function PlaybookTemplate({
           onSubmit={(email) => {
             localStorage.setItem("hv_email", email);
             setEmailCaptured(true);
-            setLessonModal({ url: emailCaptureTarget.url, title: emailCaptureTarget.title });
+            window.location.href = emailCaptureTarget.url;
             setEmailCaptureTarget(null);
           }}
           onClose={() => setEmailCaptureTarget(null)}
-        />
-      )}
-      {lessonModal && (
-        <LessonModal
-          url={lessonModal.url}
-          title={lessonModal.title}
-          onClose={() => setLessonModal(null)}
         />
       )}
       {lessonContentModal && (
@@ -748,7 +693,7 @@ export default function PlaybookTemplate({
                                 setShowWaitlistModal(true);
                               } else if (isPro) {
                                 if (lesson.link) {
-                                  setLessonModal({ url: lesson.link, title: lesson.title });
+                                  window.location.href = lesson.link;
                                 } else {
                                   setLessonContentModal({ lesson, accentColor: phase.accent, bgColor: phase.bg });
                                 }
@@ -934,7 +879,7 @@ export default function PlaybookTemplate({
                                   setShowWaitlistModal(true);
                                 } else if (isPro) {
                                   if (lesson.link) {
-                                    setLessonModal({ url: lesson.link, title: lesson.title });
+                                    window.location.href = lesson.link;
                                   } else {
                                     setLessonContentModal({ lesson, accentColor: phase.accent, bgColor: phase.bg });
                                   }
@@ -1195,7 +1140,7 @@ export default function PlaybookTemplate({
                                     onClick={(e) => {
                                       e.stopPropagation();
                                       if (isPro) {
-                                        setLessonModal({ url: lesson.link!, title: lesson.title });
+                                        window.location.href = lesson.link!;
                                       } else {
                                         openFreeLesson(lesson.link!, lesson.title);
                                       }
