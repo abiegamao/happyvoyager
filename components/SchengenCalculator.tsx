@@ -11,7 +11,18 @@ import {
   Info,
   RotateCcw,
   Download,
+  CalendarIcon,
+  ChevronDown,
 } from "lucide-react";
+
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 interface Trip {
@@ -59,6 +70,18 @@ function toUTC(s: string): Date {
 
 function toISO(d: Date): string {
   return d.toISOString().slice(0, 10);
+}
+
+function parseLocalDate(s: string): Date | undefined {
+  if (!s) return undefined;
+  const parts = s.split('-');
+  if (parts.length !== 3) return undefined;
+  return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+}
+
+function formatLocalDate(d: Date): string {
+  const pad = (n: number) => n.toString().padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
 }
 
 function addDays(d: Date, n: number): Date {
@@ -696,14 +719,28 @@ export default function SchengenCalculator() {
                             Entry Date
                           </label>
                         )}
-                        <input
-                          type="date"
-                          value={trip.entry}
-                          onChange={(e) =>
-                            updateTrip(trip.id, "entry", e.target.value)
-                          }
-                          className="w-full rounded-xl border border-[#e7ddd3] px-4 py-2.5 text-sm text-[#3a3a3a] bg-[#f9f5f2] focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/40 focus:border-[#e3a99c] transition-all"
-                        />
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              className={`w-full flex items-center justify-between rounded-xl border border-[#e7ddd3] px-4 py-2.5 text-sm ${
+                                !trip.entry ? "text-muted-foreground" : "text-[#3a3a3a]"
+                              } bg-[#f9f5f2] focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/40 focus:border-[#e3a99c] transition-all text-left font-normal`}
+                            >
+                              {trip.entry ? fmtDate(trip.entry) : <span>Pick a date</span>}
+                              <CalendarIcon className="mr-2 h-4 w-4 opacity-50 shrink-0" />
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="bg-background w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={parseLocalDate(trip.entry)}
+                              onSelect={(date) => {
+                                updateTrip(trip.id, "entry", date ? formatLocalDate(date) : "");
+                              }}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
                       </div>
                       <div>
                         {i === 0 && (
@@ -711,16 +748,30 @@ export default function SchengenCalculator() {
                             Exit Date
                           </label>
                         )}
-                        <input
-                          type="date"
-                          value={trip.exit}
-                          onChange={(e) =>
-                            updateTrip(trip.id, "exit", e.target.value)
-                          }
-                          className={`w-full rounded-xl border px-4 py-2.5 text-sm text-[#3a3a3a] bg-[#f9f5f2] focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/40 focus:border-[#e3a99c] transition-all ${
-                            hasError ? "border-red-300" : "border-[#e7ddd3]"
-                          }`}
-                        />
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <button
+                              className={`w-full flex items-center justify-between rounded-xl border px-4 py-2.5 text-sm ${
+                                !trip.exit ? "text-muted-foreground" : "text-[#3a3a3a]"
+                              } bg-[#f9f5f2] focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/40 focus:border-[#e3a99c] transition-all text-left font-normal ${
+                                hasError ? "border-red-300" : "border-[#e7ddd3]"
+                              }`}
+                            >
+                              {trip.exit ? fmtDate(trip.exit) : <span>Pick a date</span>}
+                              <CalendarIcon className="mr-2 h-4 w-4 opacity-50 shrink-0" />
+                            </button>
+                          </PopoverTrigger>
+                          <PopoverContent className="bg-background w-auto p-0" align="start">
+                            <Calendar
+                              mode="single"
+                              selected={parseLocalDate(trip.exit)}
+                              onSelect={(date) => {
+                                updateTrip(trip.id, "exit", date ? formatLocalDate(date) : "");
+                              }}
+                              initialFocus
+                            />
+                          </PopoverContent>
+                        </Popover>
                         {hasError && (
                           <p className="text-[10px] text-red-400 mt-1">
                             Exit must be after entry.
@@ -733,20 +784,31 @@ export default function SchengenCalculator() {
                             Country
                           </label>
                         )}
-                        <select
-                          value={trip.country}
-                          onChange={(e) =>
-                            updateTrip(trip.id, "country", e.target.value)
-                          }
-                          className="w-full rounded-xl border border-[#e7ddd3] px-3 py-2.5 text-sm text-[#3a3a3a] bg-[#f9f5f2] focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/40 focus:border-[#e3a99c] transition-all cursor-pointer"
-                        >
-                          <option value="">Select country</option>
-                          {SCHENGEN_COUNTRIES.map((c) => (
-                            <option key={c.name} value={c.name}>
-                              {c.flag} {c.name}
-                            </option>
-                          ))}
-                        </select>
+                        <DropdownMenu>
+                          <DropdownMenuTrigger asChild>
+                            <button className="w-full flex items-center justify-between rounded-xl border border-[#e7ddd3] px-3 py-2.5 text-sm text-[#3a3a3a] bg-[#f9f5f2] focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/40 focus:border-[#e3a99c] transition-all cursor-pointer">
+                              {trip.country ? (
+                                <span className="flex items-center gap-2 truncate">
+                                  {SCHENGEN_COUNTRIES.find((c) => c.name === trip.country)?.flag} {trip.country}
+                                </span>
+                              ) : (
+                                <span className="text-muted-foreground">Select country</span>
+                              )}
+                              <ChevronDown className="h-4 w-4 opacity-50 shrink-0" />
+                            </button>
+                          </DropdownMenuTrigger>
+                          <DropdownMenuContent className="bg-background w-[var(--radix-dropdown-menu-trigger-width)] max-h-[300px] overflow-y-auto" align="start">
+                            {SCHENGEN_COUNTRIES.map((c) => (
+                              <DropdownMenuItem
+                                key={c.name}
+                                onClick={() => updateTrip(trip.id, "country", c.name)}
+                                className="cursor-pointer"
+                              >
+                                {c.flag} {c.name}
+                              </DropdownMenuItem>
+                            ))}
+                          </DropdownMenuContent>
+                        </DropdownMenu>
                       </div>
                     </div>
 
