@@ -44,7 +44,7 @@ export default function PlaybookPage() {
         sessionStorage.setItem("playbook_email", email.toLowerCase().trim());
         sessionStorage.setItem("playbook_name", data.name?.split(" ")[0] || "");
 
-        router.push("/playbook/whats-this-playbook-about");
+        router.push("/playbook/spain-dnv/home");
     };
 
     return (
