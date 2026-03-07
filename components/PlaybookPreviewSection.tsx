@@ -84,6 +84,20 @@ export default function PlaybookPreviewSection() {
             Packaged for You
           </h2>
 
+          <div className="flex items-center justify-center gap-2 mb-8">
+            <div className="flex -space-x-2">
+              {[1, 2, 3, 4].map((i) => (
+                <div key={i} className="w-8 h-8 rounded-full border-2 border-[#f9f5f2] bg-[#e7ddd3] flex items-center justify-center text-[10px] font-bold text-[#3a3a3a] overflow-hidden">
+                  <img src={`/assets/avatar-${i}.jpg`} alt="Nomad" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                  <span className="bg-[#e7ddd3] w-full h-full flex items-center justify-center">N</span>
+                </div>
+              ))}
+            </div>
+            <p className="font-[family-name:var(--font-body)] text-sm font-bold text-[#3a3a3a]">
+              Join 420+ Nomads on the waitlist
+            </p>
+          </div>
+
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed mb-8">
             From eligibility check to visa approval, this is my complete,
             step-by-step system. No lawyers. No guesswork. Just the playbook I used myself.

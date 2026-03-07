@@ -38,10 +38,10 @@ export default function PlaybookCatalogPage() {
             </p>
             <div className="flex flex-wrap gap-6 justify-center">
               {[
+                { value: "1,420+", label: "Nomads Waiting" },
                 { value: `${PLAYBOOKS.length + WAITLIST_PLAYBOOKS.length + COMING_SOON.length}`, label: "Playbooks" },
                 { value: `${totalLessons}+`, label: "Lessons" },
                 { value: `${PLAYBOOKS.length}`, label: "Available now" },
-                { value: `${COMING_SOON.length}`, label: "Coming soon" },
               ].map((s) => (
                 <div key={s.label} className="text-center">
                   <p className="text-2xl font-bold text-white">{s.value}</p>

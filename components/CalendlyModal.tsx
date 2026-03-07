@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { X } from "lucide-react";
 
 interface CalendlyModalProps {
@@ -19,6 +20,12 @@ export default function CalendlyModal({
     url = DEFAULT_CALENDLY_URL,
     title = DEFAULT_TITLE
 }: CalendlyModalProps) {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     // Inject Calendly widget script once
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -32,17 +39,20 @@ export default function CalendlyModal({
 
     // Manually initialize the widget when the modal opens
     useEffect(() => {
-        if (isOpen && (window as any).Calendly) {
+        if (isOpen && mounted && (window as any).Calendly) {
             // Give the DOM a tiny moment to ensure the widget container is rendered
             const timer = setTimeout(() => {
-                (window as any).Calendly.initInlineWidget({
-                    url: `${url}?hide_landing_page_details=1&hide_gdpr_banner=1`,
-                    parentElement: document.getElementById('calendly-inline-container'),
-                });
+                const container = document.getElementById('calendly-inline-container');
+                if (container) {
+                    (window as any).Calendly.initInlineWidget({
+                        url: `${url}?hide_landing_page_details=1&hide_gdpr_banner=1`,
+                        parentElement: container,
+                    });
+                }
             }, 100);
             return () => clearTimeout(timer);
         }
-    }, [isOpen, url]);
+    }, [isOpen, mounted, url]);
 
     // Lock body scroll while open
     useEffect(() => {
@@ -54,10 +64,10 @@ export default function CalendlyModal({
         return () => { document.body.style.overflow = ""; };
     }, [isOpen]);
 
-    if (!isOpen) return null;
+    if (!isOpen || !mounted) return null;
 
-    return (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
+    return createPortal(
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
             {/* Backdrop */}
             <div
                 className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -92,6 +102,7 @@ export default function CalendlyModal({
                     />
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 }
