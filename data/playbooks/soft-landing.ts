@@ -26,7 +26,7 @@ const softLanding: PlaybookConfig = {
     emoji: "🌞",
     tagline: "Life in Spain, from day one",
     description:
-      "NIE appointments, bank accounts, healthcare registration, SIM cards, housing contracts, and schooling ~ everything you need to actually live here once the visa is stamped.",
+      "Appointments, bank accounts, healthcare registration, SIM cards, housing contracts, and schooling ~ everything you need to actually live here once the visa is stamped.",
     status: "waitlist",
     accent: "#c47c5a",
     bg: "#f5e6dc",
