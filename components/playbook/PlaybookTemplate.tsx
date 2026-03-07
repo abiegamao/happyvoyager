@@ -17,9 +17,17 @@ import {
   Trophy,
   RefreshCw,
   Mail,
+  LogOut,
 } from "lucide-react";
 import type { PlaybookConfig } from "@/data/playbooks/types";
 import WaitlistModal from "./WaitlistModal";
+
+/* ─────────────────────────────────────────────
+   Admin bypass ~ email addresses that get Pro
+   access without a Stripe purchase
+───────────────────────────────────────────── */
+const ADMIN_EMAILS = ["joenabie@me.com"];
+const isAdminEmail = (e: string) => ADMIN_EMAILS.includes(e.toLowerCase().trim());
 
 /* ─────────────────────────────────────────────
    Tag color helper
@@ -77,6 +85,80 @@ function LessonModal({
           className="flex-1 w-full border-0 bg-[#f9f5f2]"
           title={title}
         />
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────
+   Lesson Content Modal
+   For Pro lessons that don't have a dedicated
+   page yet ~ shows description + bullets inline
+───────────────────────────────────────────── */
+function LessonContentModal({
+  lesson,
+  accentColor,
+  bgColor,
+  onClose,
+}: {
+  lesson: { number: string; title: string; description: string; bullets: string[]; time: string; tag: string };
+  accentColor: string;
+  bgColor: string;
+  onClose: () => void;
+}) {
+  return (
+    <div className="fixed inset-0 z-[95] flex items-center justify-center p-4">
+      <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" onClick={onClose} />
+      <div className="relative w-full max-w-2xl max-h-[90vh] flex flex-col bg-[#f9f5f2] rounded-3xl shadow-2xl overflow-hidden">
+        {/* Header */}
+        <div className="flex items-center justify-between gap-4 px-6 py-4 bg-[#3a3a3a] text-white flex-shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <div className="w-1.5 h-1.5 rounded-full bg-[#e3a99c] flex-shrink-0" />
+            <p className="text-sm font-semibold text-white truncate">
+              Lesson {lesson.number} ~ {lesson.title}
+            </p>
+          </div>
+          <button
+            onClick={onClose}
+            className="w-7 h-7 rounded-lg bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors flex-shrink-0"
+          >
+            <X className="w-4 h-4 text-white" />
+          </button>
+        </div>
+        {/* Body */}
+        <div className="flex-1 overflow-y-auto px-6 py-6">
+          <div className="flex items-center gap-2 mb-4">
+            <span className={`text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full ${tagStyle(lesson.tag)}`}>
+              {lesson.tag}
+            </span>
+            <span className="flex items-center gap-1 text-[10px] text-[#aaaaaa]">
+              <Clock className="w-3 h-3" />
+              {lesson.time}
+            </span>
+          </div>
+          <h2 className="font-[family-name:var(--font-heading)] text-2xl font-bold text-[#3a3a3a] mb-4 leading-tight">
+            {lesson.title}
+          </h2>
+          <p className="text-sm text-[#6b6b6b] leading-relaxed mb-6">
+            {lesson.description}
+          </p>
+          <div className="rounded-2xl p-5" style={{ backgroundColor: bgColor }}>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-[#6b6b6b] mb-3">
+              What&apos;s covered
+            </p>
+            <ul className="space-y-3">
+              {lesson.bullets.map((bullet) => (
+                <li key={bullet} className="flex items-start gap-3 text-sm text-[#3a3a3a] leading-relaxed">
+                  <span
+                    className="w-1.5 h-1.5 rounded-full mt-2 flex-shrink-0"
+                    style={{ backgroundColor: accentColor }}
+                  />
+                  {bullet}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -182,6 +264,14 @@ function UnlockModal({
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [success, setSuccess] = useState(false);
+
+  // Auto-close after success animation
+  useEffect(() => {
+    if (!success) return;
+    const t = setTimeout(onClose, 2000);
+    return () => clearTimeout(t);
+  }, [success, onClose]);
 
   const switchTab = (t: "buy" | "restore") => {
     setTab(t);
@@ -222,8 +312,20 @@ function UnlockModal({
       setError("Please enter your email address.");
       return;
     }
+    const clean = email.toLowerCase().trim();
     setLoading(true);
     setError("");
+
+    // Admin bypass ~ no Stripe check needed
+    if (isAdminEmail(clean)) {
+      localStorage.setItem(`hv_pro_${playbookSlug}`, clean);
+      localStorage.setItem("hv_email", clean);
+      onProUnlocked(clean);
+      setLoading(false);
+      setSuccess(true);
+      return;
+    }
+
     try {
       const res = await fetch("/api/stripe/verify", {
         method: "POST",
@@ -232,11 +334,10 @@ function UnlockModal({
       });
       const data = await res.json();
       if (data.hasAccess) {
-        const clean = email.toLowerCase().trim();
         localStorage.setItem(`hv_pro_${playbookSlug}`, clean);
         localStorage.setItem("hv_email", clean);
         onProUnlocked(clean);
-        onClose();
+        setSuccess(true);
       } else {
         setError("No purchase found for this email. Try a different address or get access below.");
       }
@@ -266,98 +367,120 @@ function UnlockModal({
           Full access to all {totalLessons} lessons ~ application to Spanish passport.
         </p>
 
-        {/* Tabs */}
-        <div className="flex rounded-xl bg-[#f0ebe6] p-1 mb-6">
-          <button
-            onClick={() => switchTab("buy")}
-            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${tab === "buy" ? "bg-white text-[#3a3a3a] shadow-sm" : "text-[#6b6b6b]"
-              }`}
-          >
-            Get Access
-          </button>
-          <button
-            onClick={() => switchTab("restore")}
-            className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${tab === "restore" ? "bg-white text-[#3a3a3a] shadow-sm" : "text-[#6b6b6b]"
-              }`}
-          >
-            Restore Access
-          </button>
-        </div>
-
-        {tab === "buy" && (
-          <>
-            <ul className="space-y-2 mb-5">
-              {modalFeatures.map((item) => (
-                <li key={item} className="flex items-center gap-2.5 text-sm text-[#3a3a3a]">
-                  <CheckCircle2 className="w-4 h-4 text-[#8fa38d] flex-shrink-0" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <form onSubmit={handleBuy} className="space-y-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                placeholder="your@email.com"
-                className="w-full px-4 py-3 rounded-xl border border-[#e7ddd3] bg-[#f9f5f2] text-[#3a3a3a] text-sm focus:outline-none focus:border-[#e3a99c] transition-colors"
-                autoFocus
-              />
-              {error && <p className="text-red-400 text-xs">{error}</p>}
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3.5 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
-              >
-                {loading ? (
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                ) : (
-                  <>
-                    <Zap className="w-4 h-4" />
-                    Get Instant Access →
-                  </>
-                )}
-              </button>
-            </form>
-            <p className="text-center text-[10px] text-[#aaaaaa] mt-3">
-              Secure payment via Stripe. One-time purchase ~ lifetime access.
-            </p>
-          </>
+        {/* Success state */}
+        {success && (
+          <div className="flex flex-col items-center justify-center py-8 gap-4">
+            <div className="relative">
+              <div className="w-16 h-16 rounded-full bg-[#d4e0d3] flex items-center justify-center">
+                <CheckCircle2 className="w-8 h-8 text-[#8fa38d]" />
+              </div>
+              <div className="absolute inset-0 rounded-full bg-[#8fa38d]/30 animate-ping" />
+            </div>
+            <div className="text-center">
+              <h3 className="font-[family-name:var(--font-heading)] text-xl font-bold text-[#3a3a3a] mb-1">
+                Access Restored!
+              </h3>
+              <p className="text-sm text-[#6b6b6b]">Unlocking all lessons now...</p>
+            </div>
+          </div>
         )}
 
-        {tab === "restore" && (
+        {/* Tabs ~ hidden once success animation plays */}
+        {!success && (
           <>
-            <p className="text-sm text-[#6b6b6b] mb-5 text-center leading-relaxed">
-              Already purchased? Enter the email you used to restore full access on this device.
-            </p>
-            <form onSubmit={handleRestore} className="space-y-3">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                placeholder="your@email.com"
-                className="w-full px-4 py-3 rounded-xl border border-[#e7ddd3] bg-[#f9f5f2] text-[#3a3a3a] text-sm focus:outline-none focus:border-[#e3a99c] transition-colors"
-                autoFocus
-              />
-              {error && <p className="text-red-400 text-xs">{error}</p>}
+            <div className="flex rounded-xl bg-[#f0ebe6] p-1 mb-6">
               <button
-                type="submit"
-                disabled={loading}
-                className="w-full py-3.5 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
+                onClick={() => switchTab("buy")}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${tab === "buy" ? "bg-white text-[#3a3a3a] shadow-sm" : "text-[#6b6b6b]"
+                  }`}
               >
-                {loading ? (
-                  <RefreshCw className="w-4 h-4 animate-spin" />
-                ) : (
-                  <>
-                    <Unlock className="w-4 h-4" />
-                    Restore My Access
-                  </>
-                )}
+                Get Access
               </button>
-            </form>
-            <p className="text-center text-[10px] text-[#aaaaaa] mt-3">
-              Can&apos;t find it? Email hello@abiemaxey.com for help.
-            </p>
+              <button
+                onClick={() => switchTab("restore")}
+                className={`flex-1 py-2 rounded-lg text-xs font-bold transition-all ${tab === "restore" ? "bg-white text-[#3a3a3a] shadow-sm" : "text-[#6b6b6b]"
+                  }`}
+              >
+                Restore Access
+              </button>
+            </div>
+
+            {tab === "buy" && (
+              <>
+                <ul className="space-y-2 mb-5">
+                  {modalFeatures.map((item) => (
+                    <li key={item} className="flex items-center gap-2.5 text-sm text-[#3a3a3a]">
+                      <CheckCircle2 className="w-4 h-4 text-[#8fa38d] flex-shrink-0" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <form onSubmit={handleBuy} className="space-y-3">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3 rounded-xl border border-[#e7ddd3] bg-[#f9f5f2] text-[#3a3a3a] text-sm focus:outline-none focus:border-[#e3a99c] transition-colors"
+                    autoFocus
+                  />
+                  {error && <p className="text-red-400 text-xs">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-3.5 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
+                  >
+                    {loading ? (
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <>
+                        <Zap className="w-4 h-4" />
+                        Get Instant Access →
+                      </>
+                    )}
+                  </button>
+                </form>
+                <p className="text-center text-[10px] text-[#aaaaaa] mt-3">
+                  Secure payment via Stripe. One-time purchase ~ lifetime access.
+                </p>
+              </>
+            )}
+
+            {tab === "restore" && (
+              <>
+                <p className="text-sm text-[#6b6b6b] mb-5 text-center leading-relaxed">
+                  Already purchased? Enter the email you used to restore full access on this device.
+                </p>
+                <form onSubmit={handleRestore} className="space-y-3">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => { setEmail(e.target.value); setError(""); }}
+                    placeholder="your@email.com"
+                    className="w-full px-4 py-3 rounded-xl border border-[#e7ddd3] bg-[#f9f5f2] text-[#3a3a3a] text-sm focus:outline-none focus:border-[#e3a99c] transition-colors"
+                    autoFocus
+                  />
+                  {error && <p className="text-red-400 text-xs">{error}</p>}
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-3.5 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors duration-300 flex items-center justify-center gap-2 disabled:opacity-70"
+                  >
+                    {loading ? (
+                      <RefreshCw className="w-4 h-4 animate-spin" />
+                    ) : (
+                      <>
+                        <Unlock className="w-4 h-4" />
+                        Restore My Access
+                      </>
+                    )}
+                  </button>
+                </form>
+                <p className="text-center text-[10px] text-[#aaaaaa] mt-3">
+                  Can&apos;t find it? Email hello@abiemaxey.com for help.
+                </p>
+              </>
+            )}
           </>
         )}
       </div>
@@ -388,6 +511,11 @@ export default function PlaybookTemplate({
   const [showWaitlistModal, setShowWaitlistModal] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
   const [lessonModal, setLessonModal] = useState<{ url: string; title: string } | null>(null);
+  const [lessonContentModal, setLessonContentModal] = useState<{
+    lesson: PlaybookConfig["phases"][0]["lessons"][0];
+    accentColor: string;
+    bgColor: string;
+  } | null>(null);
   const [emailCaptureTarget, setEmailCaptureTarget] = useState<{ url: string; title: string } | null>(null);
   const [emailCaptured, setEmailCaptured] = useState(false);
   const [isPro, setIsPro] = useState(false);
@@ -421,6 +549,13 @@ export default function PlaybookTemplate({
 
     const storedProEmail = localStorage.getItem(proKey);
     if (storedProEmail) {
+      // Admin bypass ~ no Stripe check needed
+      if (isAdminEmail(storedProEmail)) {
+        setIsPro(true);
+        setProEmail(storedProEmail);
+        setEmailCaptured(true);
+        return;
+      }
       fetch("/api/stripe/verify", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -462,13 +597,21 @@ export default function PlaybookTemplate({
     );
   };
 
-  const handleLessonClick = (lesson: { free: boolean; link: string | null; title: string }) => {
+  const handleLessonClick = (
+    lesson: PlaybookConfig["phases"][0]["lessons"][0],
+    phaseAccent: string,
+    phaseBg: string,
+  ) => {
     if (waitlistMode) {
       setShowWaitlistModal(true);
       return;
     }
     if (isPro) {
-      if (lesson.link) setLessonModal({ url: lesson.link, title: lesson.title });
+      if (lesson.link) {
+        setLessonModal({ url: lesson.link, title: lesson.title });
+      } else {
+        setLessonContentModal({ lesson, accentColor: phaseAccent, bgColor: phaseBg });
+      }
     } else if (lesson.free && lesson.link) {
       openFreeLesson(lesson.link, lesson.title);
     } else if (!lesson.free) {
@@ -535,6 +678,14 @@ export default function PlaybookTemplate({
           onClose={() => setLessonModal(null)}
         />
       )}
+      {lessonContentModal && (
+        <LessonContentModal
+          lesson={lessonContentModal.lesson}
+          accentColor={lessonContentModal.accentColor}
+          bgColor={lessonContentModal.bgColor}
+          onClose={() => setLessonContentModal(null)}
+        />
+      )}
 
       {/* ── Mobile Nav Bottom Sheet ───────────────────────────── */}
       {showMobileNav && (
@@ -595,7 +746,11 @@ export default function PlaybookTemplate({
                               if (waitlistMode) {
                                 setShowWaitlistModal(true);
                               } else if (isPro) {
-                                if (lesson.link) setLessonModal({ url: lesson.link, title: lesson.title });
+                                if (lesson.link) {
+                                  setLessonModal({ url: lesson.link, title: lesson.title });
+                                } else {
+                                  setLessonContentModal({ lesson, accentColor: phase.accent, bgColor: phase.bg });
+                                }
                               } else if (lesson.free) {
                                 if (lesson.link) openFreeLesson(lesson.link, lesson.title);
                               } else {
@@ -717,6 +872,16 @@ export default function PlaybookTemplate({
                 ))
               )}
             </div>
+            {!waitlistMode && config.freeVersion && (
+              <div className="mt-1 mb-0">
+                <Link
+                  href={config.freeVersion.link}
+                  className="text-white/40 hover:text-white/70 text-xs font-medium transition-colors underline underline-offset-2"
+                >
+                  {config.freeVersion.label}
+                </Link>
+              </div>
+            )}
           </div>
         </div>
 
@@ -767,7 +932,11 @@ export default function PlaybookTemplate({
                                 if (waitlistMode) {
                                   setShowWaitlistModal(true);
                                 } else if (isPro) {
-                                  if (lesson.link) setLessonModal({ url: lesson.link, title: lesson.title });
+                                  if (lesson.link) {
+                                    setLessonModal({ url: lesson.link, title: lesson.title });
+                                  } else {
+                                    setLessonContentModal({ lesson, accentColor: phase.accent, bgColor: phase.bg });
+                                  }
                                 } else if (lesson.free) {
                                   if (lesson.link) openFreeLesson(lesson.link, lesson.title);
                                 } else {
@@ -839,11 +1008,10 @@ export default function PlaybookTemplate({
                   <button
                     key={phase.id}
                     onClick={() => scrollToPhase(phase.id)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${
-                      activePhase === phase.id
+                    className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-colors whitespace-nowrap ${activePhase === phase.id
                         ? "bg-[#e3a99c] text-white"
                         : "bg-white border border-[#e7ddd3] text-[#6b6b6b]"
-                    }`}
+                      }`}
                   >
                     {phase.emoji} {phase.phase}
                   </button>
@@ -875,12 +1043,26 @@ export default function PlaybookTemplate({
             ) : isPro ? (
               <div className="bg-[#d4e0d3]/50 border border-[#8fa38d]/40 rounded-2xl px-5 py-4 flex items-center gap-3">
                 <CheckCircle2 className="w-4 h-4 text-[#8fa38d] flex-shrink-0" />
-                <div>
+                <div className="flex-1">
                   <p className="text-sm font-semibold text-[#3a3a3a]">Pro Access Active</p>
                   <p className="text-xs text-[#6b6b6b] mt-0.5">
                     All {totalLessons} lessons unlocked. Logged in as {proEmail}.
                   </p>
                 </div>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem(proKey);
+                    localStorage.removeItem("hv_email");
+                    setIsPro(false);
+                    setProEmail("");
+                    setEmailCaptured(false);
+                  }}
+                  className="flex-shrink-0 flex items-center gap-1.5 text-[10px] font-bold uppercase tracking-widest text-[#aaaaaa] hover:text-[#3a3a3a] transition-colors"
+                  title="Log out"
+                >
+                  <LogOut className="w-3 h-3" />
+                  Log out
+                </button>
               </div>
             ) : (
               <div className="bg-[#d4e0d3]/50 border border-[#8fa38d]/40 rounded-2xl px-5 py-4 flex items-start gap-3">
@@ -935,12 +1117,11 @@ export default function PlaybookTemplate({
                     return (
                       <div
                         key={lesson.id}
-                        className={`relative bg-white border rounded-2xl overflow-hidden transition-all duration-200 ${
-                          accessible
+                        className={`relative bg-white border rounded-2xl overflow-hidden transition-all duration-200 ${accessible
                             ? "border-[#e7ddd3] hover:border-[#e3a99c] hover:shadow-md cursor-pointer"
                             : "border-[#e7ddd3] cursor-pointer"
-                        }`}
-                        onClick={() => handleLessonClick(lesson)}
+                          }`}
+                        onClick={() => handleLessonClick(lesson, phase.accent, phase.bg)}
                       >
                         <div className="p-5">
                           <div className="flex items-start justify-between gap-4">

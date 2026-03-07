@@ -58,6 +58,10 @@ export interface PlaybookConfig {
   modalFeatures: string[];   // bullet list in UnlockModal
   finalCtaTitle: string;
   finalCtaDescription: string;
+  freeVersion?: {            // optional link to a free/lite version
+    label: string;
+    link: string;
+  };
   catalog: PlaybookCatalogMeta;
   phases: Phase[];
   nextPlaybook?: NextPlaybookPreview; // "What's Next" chapter reveal

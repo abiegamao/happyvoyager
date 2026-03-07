@@ -13,12 +13,13 @@ import visaRunner from "./visa-runner";
 import softLanding from "./soft-landing";
 import spanishPassport from "./spanish-passport";
 import schengenFirst from "./schengen-first";
+import deleA2 from "./dele-a2";
 
 // ── Available playbooks (purchasable) ────────
 export const PLAYBOOKS: PlaybookConfig[] = [spainDnv];
 
 // ── Waitlist playbooks (preview + email capture) ──
-export const WAITLIST_PLAYBOOKS: PlaybookConfig[] = [schengenFirst, visaRunner, softLanding, spanishPassport];
+export const WAITLIST_PLAYBOOKS: PlaybookConfig[] = [schengenFirst, visaRunner, softLanding, deleA2, spanishPassport];
 
 // ── Coming-soon catalog entries (display only) ──
 export const COMING_SOON = [

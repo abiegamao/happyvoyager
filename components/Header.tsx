@@ -58,8 +58,8 @@ const freeToolsItems = [
   },
   {
     emoji: "🗓",
-    title: "Schengen Day Calculator",
-    sub: "Track your 90/180 days live",
+    title: "Schengen Day & Budget Tracker",
+    sub: "Track your 90/180 days and budget",
     link: "/schengen-calculator",
     bg: "#e0eaeb",
   },

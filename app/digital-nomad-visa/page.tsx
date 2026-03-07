@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import PlaybookAccessModal from "@/components/PlaybookAccessModal";
 import PricingSection from "@/components/PricingSection";
 import {
   FileText,
@@ -257,7 +256,6 @@ const faqs = [
 
 export default function DigitalNomadVisaPage() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [playbookOpen, setPlaybookOpen] = useState(false);
 
   return (
     <main className="min-h-screen bg-[#f9f5f2] overflow-hidden">
@@ -898,8 +896,6 @@ export default function DigitalNomadVisaPage() {
         </div>
       </section>
 
-      {/* ── Free Playbook ─────────────────────────────────────────────────── */}
-      <PlaybookAccessModal isOpen={playbookOpen} onClose={() => setPlaybookOpen(false)} />
       <section className="bg-[#f9f5f2] border-y border-[#e7ddd3] py-14 px-6">
         <div className="max-w-xl mx-auto text-center">
           <p className="text-xs font-bold tracking-widest text-[#7a8f90] uppercase mb-3">Not ready to commit?</p>
@@ -910,13 +906,13 @@ export default function DigitalNomadVisaPage() {
           <p className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b] mb-7">
             The exact steps, documents, and process I used to get approved. No lawyer needed.
           </p>
-          <button
-            onClick={() => setPlaybookOpen(true)}
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-all duration-300 group cursor-pointer"
+          <Link
+            href="/playbook/spain-dnv"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-all duration-300 group"
           >
             Start Here for Free
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </button>
+          </Link>
           <p className="text-xs text-[#aaaaaa] mt-4">Instant access · Lifetime updates · Zero spam</p>
         </div>
       </section>

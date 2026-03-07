@@ -11,7 +11,6 @@ import PricingSection from "@/components/PricingSection";
 import FAQSection from "@/components/FAQSection";
 import OtherServicesSection from "@/components/OtherServicesSection";
 import DNVTeaser from "@/components/DNVTeaser";
-import FreePlaybookButton from "@/components/FreePlaybookButton";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
 import PageTransition from "@/components/ui/PageTransition";
@@ -59,7 +58,6 @@ export default function Home() {
         {/* <DestinationsSection /> */}
         <AnimateIn delay={0.05}><FAQSection /></AnimateIn>
 
-        {/* Free Playbook fallback */}
         <AnimateIn>
           <div id="free-playbook" className="bg-[#f9f5f2] border-t border-[#e7ddd3] py-14 px-6">
             <div className="max-w-xl mx-auto text-center">
@@ -71,7 +69,13 @@ export default function Home() {
               <p className="font-[family-name:var(--font-body)] text-sm text-[#6b6b6b] mb-7">
                 Instant access · Lifetime updates · Zero spam
               </p>
-              <FreePlaybookButton />
+              <a
+                href="/playbook/spain-dnv"
+                className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-all duration-300 group"
+              >
+                Start Here for Free
+                <span className="group-hover:translate-x-1 transition-transform inline-block">→</span>
+              </a>
             </div>
           </div>
         </AnimateIn>

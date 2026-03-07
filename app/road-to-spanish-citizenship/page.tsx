@@ -32,7 +32,7 @@ const examFacts = [
     exam: "DELE A2",
     full: "Diploma de Español como Lengua Extranjera",
     by: "Instituto Cervantes",
-    cost: ",€108–€220",
+    cost: "~€108–€220",
     format: "Reading, writing, listening, speaking",
     pass: "Score of B or above in each skill",
     results: ",90 days after exam",
@@ -494,16 +494,16 @@ export default function RoadToSpanishCitizenshipPage() {
                   <div key={i} className="flex gap-5 pb-8 relative">
                     <div className="flex flex-col items-center flex-shrink-0">
                       <div className={`w-10 h-10 rounded-full border-4 border-white shadow-md flex items-center justify-center z-10 ${step.status === "done" ? "bg-[#8fa38d]" :
-                          step.status === "active" ? "bg-[#e3a99c] animate-pulse" :
-                            "bg-[#e7ddd3]"
+                        step.status === "active" ? "bg-[#e3a99c] animate-pulse" :
+                          "bg-[#e7ddd3]"
                         }`}>
                         <span className="text-white text-xs font-bold">{i + 1}</span>
                       </div>
                       {i < 5 && <div className="w-0.5 bg-[#e7ddd3] flex-1 mt-1" />}
                     </div>
                     <div className={`flex-1 bg-white border rounded-2xl p-5 mb-2 ${step.status === "active" ? "border-[#e3a99c]/40 shadow-md" :
-                        step.status === "done" ? "border-[#8fa38d]/30" :
-                          "border-[#e7ddd3]"
+                      step.status === "done" ? "border-[#8fa38d]/30" :
+                        "border-[#e7ddd3]"
                       }`}>
                       <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
                         <h3 className="font-bold text-[#3a3a3a]">{step.event}</h3>

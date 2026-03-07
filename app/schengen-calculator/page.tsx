@@ -4,9 +4,9 @@ import SchengenCalculator from "@/components/SchengenCalculator";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Schengen 90/180 Day Calculator | Happy Voyager",
+  title: "Schengen Trip Tracker ~ Days & Budget | Happy Voyager",
   description:
-    "Track your Schengen days in real time. Add your past trips, see your rolling 180-day window, and plan future travel without guessing.",
+    "Track your Schengen 90/180-day compliance and calculate required travel funds by country. Add your trips, pick destinations, and instantly know your status and budget.",
 };
 
 export default function SchengenCalculatorPage() {
