@@ -8,6 +8,7 @@ import Image from "next/image";
 import { TopbarLinks } from "@/components/playbook/TopbarLinks";
 import { phases } from "./data";
 import { motion, AnimatePresence } from "motion/react";
+import { SearchModal } from "@/components/playbook/SearchModal";
 
 export default function PlaybookLayout({
   children,
@@ -21,6 +22,7 @@ export default function PlaybookLayout({
   const [expandedPhases, setExpandedPhases] = useState<Record<string, boolean>>(
     {},
   );
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   const isGatePage = pathname === "/playbook/spain-dnv";
   const isLessonPage = pathname.includes("/lessons/");
@@ -60,6 +62,17 @@ export default function PlaybookLayout({
       }
     }
   }, [pathname]);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
 
   const togglePhase = (phaseId: string) => {
     setExpandedPhases((prev) => ({ ...prev, [phaseId]: !prev[phaseId] }));
@@ -103,16 +116,26 @@ export default function PlaybookLayout({
           </div>
 
           <div className="hidden md:flex justify-center flex-1 max-w-[480px]">
-            <div className="flex items-center gap-2 px-3 py-2 w-full bg-[#f7f7f5] hover:bg-[#efefed] rounded-full transition-colors cursor-pointer text-[#787774]">
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="flex items-center gap-2 px-3 py-2 w-full bg-[#f7f7f5] hover:bg-[#efefed] rounded-full transition-colors cursor-default text-[#787774]"
+            >
               <Search className="w-4 h-4 opacity-70" />
-              <span className="text-[14px] font-medium mr-auto">Search...</span>
+              <span className="text-[14px] font-medium mr-auto">
+                Search...
+              </span>
               <span className="text-[12px] opacity-70 font-medium">Ctrl K</span>
-            </div>
+            </button>
           </div>
         </div>
       </header>
 
       <TopbarLinks />
+
+      <SearchModal
+        isOpen={isSearchOpen}
+        onClose={() => setIsSearchOpen(false)}
+      />
 
       <div className="flex-1 flex overflow-hidden max-w-[1400px] w-full mx-auto">
         {isLessonPage && sidebarOpen && (
