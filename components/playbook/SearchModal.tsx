@@ -117,10 +117,14 @@ export function SearchModal({
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "ArrowDown") {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev + 1) % results.length);
+      if (results.length > 0) {
+        setSelectedIndex((prev) => (prev + 1) % results.length);
+      }
     } else if (e.key === "ArrowUp") {
       e.preventDefault();
-      setSelectedIndex((prev) => (prev - 1 + results.length) % results.length);
+      if (results.length > 0) {
+        setSelectedIndex((prev) => (prev - 1 + results.length) % results.length);
+      }
     } else if (e.key === "Enter") {
       if (results[selectedIndex]) {
         handleSelect(results[selectedIndex]);
