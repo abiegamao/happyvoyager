@@ -103,7 +103,7 @@ export default function PlaybookPage() {
                             </div>
 
                             {error && (
-                                <div className="flex items-start gap-2.5 px-3 py-2.5 rounded bg-[#fdf2f2] border border-[#f9cpx-3]">
+                                <div className="flex items-start gap-2.5 px-3 py-2.5 rounded bg-[#fdf2f2] border border-[#f9caca]">
                                     <AlertCircle className="w-4 h-4 text-[#d83a52] flex-shrink-0 mt-0.5" />
                                     <p className="text-[13px] text-[#d83a52]">
                                         {error}
