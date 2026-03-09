@@ -1,7 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import CalendlyModal from "@/components/CalendlyModal";
+import BookCallButton from "@/components/BookCallButton";
 import {
   Instagram,
   AtSign,
@@ -19,8 +22,8 @@ const footerLinks = {
     { name: "Contact", href: "/contact" },
   ],
   workWithMe: [
-    { name: "Get the Playbook", href: "/#pricing" },
-    { name: "Book a Strategy Call", href: "https://calendly.com/abie-gamao/spain-dnv" },
+    { name: "Get the Playbook", href: "/#pricing", calendly: false },
+    { name: "Book a Strategy Call", href: "#", calendly: true },
     { name: "Appointments (NIE/TIE)", href: "/appointments" },
     { name: "Document Translations", href: "/translations" },
     { name: "Schengen Visa Assistance", href: "/schengen-visa" },
@@ -36,10 +39,11 @@ const socialLinks = [
   { icon: Youtube, href: "https://www.youtube.com/@abiemaxey", label: "YouTube" },
 ];
 
-export default function Footer() {
+function FooterInner() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success">("idle");
   const [error, setError] = useState("");
+  const [calendlyOpen, setCalendlyOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -90,6 +94,7 @@ export default function Footer() {
 
   return (
     <footer className="relative bg-[#3a3a3a] text-white overflow-hidden pt-20 pb-12">
+      <CalendlyModal isOpen={calendlyOpen} onClose={() => setCalendlyOpen(false)} />
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
 
         {/* Top Split */}
@@ -188,7 +193,17 @@ export default function Footer() {
             <ul className="space-y-4">
               {footerLinks.workWithMe.map((link, i) => (
                 <li key={i}>
-                  <a href={link.href} className="text-white/60 hover:text-[#e3a99c] transition-colors">{link.name}</a>
+                  {link.calendly ? (
+                    <BookCallButton
+                      className="text-white/60 hover:text-[#e3a99c] transition-colors text-left"
+                      url="https://calendly.com/abie-gamao/spain-dnv"
+                      title="Book a Strategy Call"
+                    >
+                      {link.name}
+                    </BookCallButton>
+                  ) : (
+                    <a href={link.href} className="text-white/60 hover:text-[#e3a99c] transition-colors">{link.name}</a>
+                  )}
                 </li>
               ))}
             </ul>
@@ -218,5 +233,19 @@ export default function Footer() {
 
       </div>
     </footer>
+  );
+}
+
+function FooterWithEmbedCheck() {
+  const searchParams = useSearchParams();
+  if (searchParams.get("embed") === "1") return null;
+  return <FooterInner />;
+}
+
+export default function Footer() {
+  return (
+    <Suspense fallback={<FooterInner />}>
+      <FooterWithEmbedCheck />
+    </Suspense>
   );
 }

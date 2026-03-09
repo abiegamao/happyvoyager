@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import BookCallButton from "@/components/BookCallButton";
 import {
   ArrowRight,
   AlertTriangle,
@@ -19,6 +20,7 @@ import {
   TrendingUp,
   BadgeCheck,
 } from "lucide-react";
+import ShareButton from "@/components/ShareButton";
 
 const sections = [
   { id: "eligibility", label: "Core Eligibility" },
@@ -525,17 +527,24 @@ export default function DNVUpdates2026Page() {
                 Full DNV Guide
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
               </Link>
-              <Link
-                href="https://calendly.com/abie-gamao/spain-dnv"
-                target="_blank"
-                rel="noopener noreferrer"
+              <BookCallButton
                 className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full border-2 border-white/20 text-white font-bold hover:border-white hover:bg-white/10 transition-all duration-300 text-sm"
+                url="https://calendly.com/abie-gamao/spain-dnv"
+                title="Book a Strategy Call"
               >
                 Book a Strategy Call
-              </Link>
+              </BookCallButton>
             </div>
           </section>
 
+        </div>
+      </div>
+
+      {/* ── SHARE STRIP ── */}
+      <div className="border-t border-[#e7ddd3] py-5 px-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <p className="text-sm text-[#aaaaaa]">Found this useful? Share it with someone planning their move.</p>
+          <ShareButton title="Spain DNV Updates 2026 ~ What changed and what it means for you" />
         </div>
       </div>
 

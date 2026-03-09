@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
 import {
   ArrowRight,
   MapPin,
@@ -69,9 +70,9 @@ export default function HeroSection() {
           </div>
 
           {/* Heading */}
-          <h1 className="font-[family-name:var(--font-heading)] text-5xl lg:text-7xl font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
+          <h1 className="font-[family-name:var(--font-heading)] text-[2.4rem] lg:text-[3.6rem] font-bold text-[#3a3a3a] leading-[1.1] mb-6 animate-slide-up relative">
             Get Spain&apos;s Digital Nomad Visa{" "}
-            <span className="text-[#e3a99c] relative">
+            <span className="font-script text-[#e3a99c] text-5xl md:text-5xl lg:text-6xl relative inline-block transform -rotate-2">
               Without Paying a Lawyer
             </span>
           </h1>
@@ -89,21 +90,15 @@ export default function HeroSection() {
               See the Packages
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
             </a>
-            <a
-              href="https://calendly.com/abie-gamao/spain-dnv"
+            <Link
+              href="/playbook/spain-dnv"
               className="px-8 py-4 rounded-full text-[#3a3a3a] font-semibold bg-white transition-colors w-full sm:w-auto text-center border-2 border-transparent hover:border-[#e7ddd3]"
             >
-              Book a Call
-            </a>
+              Get Free Playbook
+            </Link>
           </div>
 
-          {/* Soft free option — not a button, just a text link */}
-          <p className="font-[family-name:var(--font-body)] text-xs text-[#aaaaaa] mt-4 animate-slide-up delay-500">
-            Not ready to invest?{" "}
-            <a href="#free-playbook" className="underline underline-offset-2 hover:text-[#6b6b6b] transition-colors">
-              Start with the free version →
-            </a>
-          </p>
+
 
           {/* Personal proof trust strip */}
           <div className="flex flex-wrap gap-x-5 gap-y-2 mt-8 animate-slide-up delay-500">

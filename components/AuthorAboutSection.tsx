@@ -75,7 +75,7 @@ export default function AuthorAboutSection() {
                 <div className="flex justify-center mb-6">
                     <div className="relative w-32 h-32 rounded-full overflow-hidden ring-4 ring-[var(--color-secondary)]">
                         <Image
-                            src="/assets/story_abie.jpg"
+                            src="/assets/avatar.png"
                             alt="The Happy Voyager"
                             fill
                             className="object-cover"

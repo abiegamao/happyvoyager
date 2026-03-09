@@ -195,7 +195,7 @@ export default function ContactPage() {
                             <div className="bg-white rounded-3xl p-6 shadow-sm border border-[#e7ddd3]">
                                 <div className="flex items-center gap-4 mb-4">
                                     <img
-                                        src="/assets/story_abie.jpg"
+                                        src="/assets/avatar.png"
                                         alt="Abie Maxey"
                                         className="w-14 h-14 rounded-2xl object-cover border-2 border-[#e7ddd3]"
                                     />

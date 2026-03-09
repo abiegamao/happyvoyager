@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Plus, Minus, HelpCircle } from "lucide-react";
+import BookCallButton from "@/components/BookCallButton";
 
 const faqs = [
   {
@@ -79,29 +80,26 @@ export default function FAQSection() {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`rounded-2xl transition-all duration-300 ${
-                openIndex === index
-                  ? "bg-[#f9f5f2] border border-[#e3a99c]/30 shadow-sm"
-                  : "bg-white border border-[#e7ddd3] hover:border-[#bbcccd]"
-              }`}
+              className={`rounded-2xl transition-all duration-300 ${openIndex === index
+                ? "bg-[#f9f5f2] border border-[#e3a99c]/30 shadow-sm"
+                : "bg-white border border-[#e7ddd3] hover:border-[#bbcccd]"
+                }`}
             >
               <button
                 onClick={() => toggleFAQ(index)}
                 className="w-full flex items-center justify-between gap-4 p-5 md:p-7 text-left"
               >
                 <span
-                  className={`font-[family-name:var(--font-heading)] text-base md:text-lg font-bold leading-snug transition-colors flex-1 min-w-0 ${
-                    openIndex === index ? "text-[#3a3a3a]" : "text-[#6b6b6b]"
-                  }`}
+                  className={`font-[family-name:var(--font-heading)] text-base md:text-lg font-bold leading-snug transition-colors flex-1 min-w-0 ${openIndex === index ? "text-[#3a3a3a]" : "text-[#6b6b6b]"
+                    }`}
                 >
                   {faq.question}
                 </span>
                 <div
-                  className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-300 ${
-                    openIndex === index
-                      ? "bg-[#e3a99c] text-white shadow-md"
-                      : "bg-[#f2f2f2] text-[#6b6b6b]"
-                  }`}
+                  className={`flex-shrink-0 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center transition-all duration-300 ${openIndex === index
+                    ? "bg-[#e3a99c] text-white shadow-md"
+                    : "bg-[#f2f2f2] text-[#6b6b6b]"
+                    }`}
                 >
                   {openIndex === index ? (
                     <Minus className="w-4 h-4 md:w-5 md:h-5" />
@@ -112,9 +110,8 @@ export default function FAQSection() {
               </button>
 
               <div
-                className={`overflow-hidden transition-all duration-300 ${
-                  openIndex === index ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
-                }`}
+                className={`overflow-hidden transition-all duration-300 ${openIndex === index ? "max-h-[600px] opacity-100" : "max-h-0 opacity-0"
+                  }`}
               >
                 <div className="px-5 md:px-7 pb-6">
                   <p className="font-[family-name:var(--font-body)] text-[#6b6b6b] leading-relaxed text-base md:text-lg">
@@ -131,13 +128,14 @@ export default function FAQSection() {
           <h3 className="font-[family-name:var(--font-heading)] text-xl md:text-2xl font-bold text-[#3a3a3a] mb-4">
             Still have questions?
           </h3>
-          <a
-            href="https://calendly.com/abie-gamao/spain-dnv"
+          <BookCallButton
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#3a3a3a] text-white font-bold hover:bg-[#e3a99c] transition-colors"
+            url="https://calendly.com/abie-gamao/spain-dnv"
+            title="Book a Strategy Call"
           >
             <HelpCircle className="w-5 h-5" />
             <span>Book a Strategy Call</span>
-          </a>
+          </BookCallButton>
         </div>
       </div>
     </section>

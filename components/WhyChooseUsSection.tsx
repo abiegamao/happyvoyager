@@ -134,7 +134,7 @@ export default function WhyChooseUsSection() {
                   <video
                     ref={videoRef}
                     src="https://res.cloudinary.com/drpxke63n/video/upload/v1769924749/compressed-J6ARCBXq_t9uxqp.mp4"
-                    poster="/assets/hero_image2.jpeg"
+                    poster="/assets/story_image.jpg"
                     className="w-full h-full object-cover cursor-pointer rounded-[2rem]"
                     loop
                     muted={isMuted}

@@ -317,6 +317,46 @@ export default function SchengenVisaPage() {
         </div>
       </section>
 
+      {/* ── Schengen Calculator Feature ─────────────────────────────────── */}
+      <section className="py-10 px-6 bg-[#f9f5f2]">
+        <div className="max-w-4xl mx-auto">
+          <Link
+            href="/schengen-calculator"
+            className="group flex flex-col sm:flex-row items-center gap-6 p-6 rounded-3xl bg-white border border-[#e7ddd3] hover:border-[#bbcccd] hover:shadow-lg transition-all duration-300"
+          >
+            {/* Icon block */}
+            <div className="w-16 h-16 rounded-2xl bg-[#e0eaeb] flex items-center justify-center flex-shrink-0 text-3xl group-hover:scale-105 transition-transform duration-300">
+              🗓
+            </div>
+
+            {/* Text */}
+            <div className="flex-1 text-center sm:text-left">
+              <div className="flex items-center justify-center sm:justify-start gap-2 mb-1">
+                <p className="text-xs font-bold tracking-widest uppercase text-[#7a8f90]">
+                  Free Tool
+                </p>
+                <span className="text-[9px] font-bold tracking-widest uppercase text-[#8fa38d] bg-[#d4e0d3]/60 rounded-full px-1.5 py-0.5 leading-none">
+                  NEW
+                </span>
+              </div>
+              <h3 className="text-lg font-bold text-[#3a3a3a] mb-1 group-hover:text-[#7a8f90] transition-colors">
+                Already in Schengen? Track your 90/180 days.
+              </h3>
+              <p className="text-sm text-[#6b6b6b] leading-relaxed">
+                Know exactly how many days you have left, plan future trips, and see when you can safely re-enter.
+                Free, instant, no login required.
+              </p>
+            </div>
+
+            {/* Arrow CTA */}
+            <div className="flex-shrink-0 flex items-center gap-2 px-5 py-2.5 rounded-full border border-[#bbcccd] text-[#7a8f90] text-sm font-semibold group-hover:bg-[#e0eaeb] group-hover:border-[#7a8f90] transition-all duration-200 whitespace-nowrap">
+              Open Calculator
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </div>
+          </Link>
+        </div>
+      </section>
+
       {/* ── Who It's For ───────────────────────────────────────────────── */}
       <section className="section-padding bg-[#f9f5f2]">
         <div className="max-w-5xl mx-auto">

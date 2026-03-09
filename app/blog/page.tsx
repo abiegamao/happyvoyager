@@ -2,6 +2,7 @@ import BlogCard from "@/components/BlogCard";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BlogFilters from "@/components/BlogFilters";
+import PageTransition from "@/components/ui/PageTransition";
 
 import { getSupabaseBlogs, getSupabaseCategories } from "@/lib/supabase-blogs";
 import Link from "next/link";
@@ -40,6 +41,7 @@ export default async function BlogListingPage({
   };
 
   return (
+    <PageTransition>
     <div className="min-h-screen bg-[var(--color-background)] flex flex-col font-sans">
       <Header />
 
@@ -52,12 +54,11 @@ export default async function BlogListingPage({
 
           <div className="container mx-auto relative z-10 max-w-4xl text-center space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-script text-[var(--color-charcoal)] animate-fade-in relative inline-block">
-              <span className="relative z-10">Our Travel Journal</span>
+              <span className="relative z-10">Guides & Resources</span>
               <span className="absolute bottom-2 left-0 w-full h-3 bg-[var(--color-primary)]/30 -rotate-1 rounded-full -z-10" />
             </h1>
             <p className="text-lg md:text-xl text-[var(--color-muted-foreground)] max-w-2xl mx-auto leading-relaxed">
-              Stories, tips, and inspiration for your next handcrafted journey.
-              Discover the world through our eyes.
+              Everything I know about the Spain Digital Nomad Visa, written the way I wish someone had written it for me.
             </p>
           </div>
         </section>
@@ -71,21 +72,24 @@ export default async function BlogListingPage({
             <div>
               <h2 className="text-3xl md:text-4xl font-script text-[var(--color-charcoal)] mb-2 relative inline-block">
                 <span className="relative z-10">
-                  {search || (category && category !== "all") ? "Filtered Stories" : "Featured Stories"}
+                  {search || (category && category !== "all") ? "Filtered Articles" : "Latest Articles"}
                 </span>
                 <span className="absolute bottom-1 left-0 w-full h-2 bg-[var(--color-primary)]/20 -rotate-1 rounded-full -z-10" />
               </h2>
               <p className="text-[var(--color-muted-foreground)] mt-2">
                 {search || (category && category !== "all")
                   ? `Found ${total} ${total === 1 ? 'article' : 'articles'}`
-                  : "Handpicked articles and travel guides"}
+                  : "In-depth DNV guides, visa updates, and remote living resources"}
               </p>
             </div>
           </div>
 
-          {/* Pinned: DNV Updates 2026 */}
+          {/* Pinned Articles */}
           {(!search && (!category || category === "all")) && (
-            <div className="mb-10">
+            <div>
+            <div className="mb-10 space-y-5">
+
+              {/* Pinned: DNV Updates 2026 */}
               <Link
                 href="/dnv-updates-2026"
                 className="group flex flex-col md:flex-row gap-6 bg-[#3a3a3a] rounded-[2rem] p-6 md:p-8 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
@@ -113,6 +117,153 @@ export default async function BlogListingPage({
                   </span>
                 </div>
               </Link>
+
+              {/* Pinned: How to Apply Step by Step */}
+              <Link
+                href="/how-to-apply-spain-digital-nomad-visa"
+                className="group flex flex-col md:flex-row gap-6 bg-white border border-[#e7ddd3] rounded-[2rem] p-6 md:p-8 hover:shadow-xl hover:border-[#e3a99c]/40 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="flex-shrink-0 md:w-56 h-40 md:h-auto rounded-2xl overflow-hidden bg-[#f2d6c9]/40 flex items-center justify-center">
+                  <span className="text-5xl">📋</span>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#f2d6c9]/60 border border-[#f2d6c9] text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
+                      Step-by-Step Guide · Pinned
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-[#f9f5f2] border border-[#e7ddd3] text-xs font-bold text-[#aaaaaa] uppercase tracking-widest">Spain DNV</span>
+                  </div>
+                  <h3 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-bold text-[#3a3a3a] mb-3 leading-tight group-hover:text-[#e3a99c] transition-colors">
+                    How I Applied for the Spain DNV, Step by Step
+                  </h3>
+                  <p className="text-[#6b6b6b] text-sm leading-relaxed mb-4 max-w-xl">
+                    I applied with 10 Schengen days left. No lawyer. No agency. Here&apos;s the exact system I used: documents, fees, the UGE process, Social Security, TIE card, and every mistake to avoid along the way.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-[#e3a99c] group-hover:gap-3 transition-all">
+                    Read the full guide
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
+
+              {/* Pinned: Road to Spanish Citizenship */}
+              <Link
+                href="/road-to-spanish-citizenship"
+                className="group flex flex-col md:flex-row gap-6 bg-[#d4e0d3]/40 border border-[#8fa38d]/30 rounded-[2rem] p-6 md:p-8 hover:shadow-xl hover:border-[#8fa38d]/60 hover:bg-[#d4e0d3]/60 transition-all duration-300 hover:-translate-y-1"
+              >
+                <div className="flex-shrink-0 md:w-56 h-40 md:h-auto rounded-2xl overflow-hidden bg-[#8fa38d]/20 flex items-center justify-center">
+                  <span className="text-5xl">🏆</span>
+                </div>
+                <div className="flex flex-col justify-center">
+                  <div className="flex flex-wrap items-center gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#8fa38d]/20 border border-[#8fa38d]/30 text-xs font-bold tracking-widest text-[#8fa38d] uppercase">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#8fa38d] animate-pulse" />
+                      The Endgame · Live Countdown
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-white/60 border border-[#d4e0d3] text-xs font-bold text-[#aaaaaa] uppercase tracking-widest">Spanish Citizenship</span>
+                  </div>
+                  <h3 className="font-[family-name:var(--font-heading)] text-2xl md:text-3xl font-bold text-[#3a3a3a] mb-3 leading-tight group-hover:text-[#8fa38d] transition-colors">
+                    My Road to Spanish Citizenship (+ A2 by 2026)
+                  </h3>
+                  <p className="text-[#6b6b6b] text-sm leading-relaxed mb-4 max-w-xl">
+                    Filipinos only need 2 years of residency, not 10. No renunciation. And I&apos;m doing it publicly, with live countdowns, a study plan, and zero chill. This is the endgame.
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-[#8fa38d] group-hover:gap-3 transition-all">
+                    Follow the journey
+                    <ArrowRight className="w-4 h-4" />
+                  </span>
+                </div>
+              </Link>
+
+            </div>
+
+            {/* Soft Landing Guides ~ compact grid */}
+            <div className="mb-10">
+              <p className="text-[10px] font-bold tracking-widest uppercase text-[#c47c5a] mb-5">
+                🌞 Soft Landing Guides
+              </p>
+              <div className="grid md:grid-cols-3 gap-4">
+
+                {/* NIE & TIE Guide */}
+                <Link
+                  href="/nie-and-tie-guide"
+                  className="group bg-white border border-[#e7ddd3] rounded-2xl overflow-hidden hover:border-[#6b8cba]/50 hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="px-5 pt-5 pb-4 bg-[#dde8f5]">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <span className="text-3xl">🪪</span>
+                      <span className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-[#6b8cba] text-white flex-shrink-0">
+                        Identity Docs
+                      </span>
+                    </div>
+                    <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-[#3a3a3a] leading-snug">
+                      NIE vs TIE: What&apos;s the Difference and How to Get Both
+                    </h3>
+                  </div>
+                  <div className="px-5 py-4">
+                    <p className="text-xs text-[#6b6b6b] leading-relaxed mb-3">
+                      The 6-step TIE process, 790-012 fee, cita previa, and every document you need. The fastest path to legal identity in Spain.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#6b8cba] group-hover:gap-2 transition-all">
+                      Read the guide <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </div>
+                </Link>
+
+                {/* Padrón Guide */}
+                <Link
+                  href="/padron-guide"
+                  className="group bg-white border border-[#e7ddd3] rounded-2xl overflow-hidden hover:border-[#8fa38d]/60 hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="px-5 pt-5 pb-4 bg-[#d4e0d3]">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <span className="text-3xl">📋</span>
+                      <span className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-[#8fa38d] text-white flex-shrink-0">
+                        Registration
+                      </span>
+                    </div>
+                    <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-[#3a3a3a] leading-snug">
+                      What Is the Padrón and Why You Need It First
+                    </h3>
+                  </div>
+                  <div className="px-5 py-4">
+                    <p className="text-xs text-[#6b6b6b] leading-relaxed mb-3">
+                      Your Padrón municipal is required for your TIE, bank account, healthcare, and schools. Here&apos;s how to register and what to bring.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#8fa38d] group-hover:gap-2 transition-all">
+                      Read the guide <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </div>
+                </Link>
+
+                {/* Bank Account Guide */}
+                <Link
+                  href="/spain-bank-account-guide"
+                  className="group bg-white border border-[#e7ddd3] rounded-2xl overflow-hidden hover:border-[#c9a84c]/60 hover:shadow-lg transition-all duration-300"
+                >
+                  <div className="px-5 pt-5 pb-4 bg-[#f5ecd7]">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <span className="text-3xl">🏦</span>
+                      <span className="text-[9px] font-bold tracking-widest uppercase px-2.5 py-1 rounded-full bg-[#c9a84c] text-white flex-shrink-0">
+                        Banking
+                      </span>
+                    </div>
+                    <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-[#3a3a3a] leading-snug">
+                      Opening a Bank Account in Spain as an Expat (2026)
+                    </h3>
+                  </div>
+                  <div className="px-5 py-4">
+                    <p className="text-xs text-[#6b6b6b] leading-relaxed mb-3">
+                      Sabadell vs BBVA vs CaixaBank, what documents to bring, and how to structure Wise + Revolut + a Spanish IBAN for life here.
+                    </p>
+                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c9a84c] group-hover:gap-2 transition-all">
+                      Read the guide <ArrowRight className="w-3 h-3" />
+                    </span>
+                  </div>
+                </Link>
+
+              </div>
+            </div>
             </div>
           )}
 
@@ -191,5 +342,6 @@ export default async function BlogListingPage({
 
       <Footer />
     </div>
+    </PageTransition>
   );
 }
