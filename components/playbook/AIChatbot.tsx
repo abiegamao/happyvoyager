@@ -93,6 +93,7 @@ export function AIChatbot() {
                             <a
                               className="text-blue-500 hover:underline"
                               target="_blank"
+                              rel="noopener noreferrer"
                               {...props}
                             />
                           ),
