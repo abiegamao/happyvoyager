@@ -3,10 +3,14 @@
 import { useChat } from "@ai-sdk/react";
 import { type UIMessage } from "ai";
 import { useEffect, useRef, useState } from "react";
-import { MessageCircle, X, Send, Bot, User } from "lucide-react";
+import { X, Send, User } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import Image from "next/image";
+
+const ABIE_AVATAR =
+  "https://res.cloudinary.com/dg1i3ew9w/image/upload/v1773167430/Sticker_packs_m9fnbz.png";
 
 export function AIChatbot() {
   const [isOpen, setIsOpen] = useState(false);
@@ -37,16 +41,16 @@ export function AIChatbot() {
               className="mb-4 w-80 md:w-96 h-[500px] max-h-[80vh] bg-white rounded-2xl shadow-2xl border border-[#e8e8e5] flex flex-col overflow-hidden"
             >
               <div className="flex items-center justify-between p-4 bg-[#f7f7f5] border-b border-[#e8e8e5]">
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 rounded-full bg-[#181817] flex items-center justify-center text-white">
-                    <Bot className="w-5 h-5" />
+                <div className="flex items-center gap-2.5">
+                  <div className="w-9 h-9 rounded-full overflow-hidden border border-[#e8e8e5] shrink-0">
+                    <Image src={ABIE_AVATAR} alt="Abie" width={36} height={36} className="w-full h-full object-cover" />
                   </div>
                   <div>
                     <h3 className="font-semibold text-[15px] text-[#181817]">
-                      Playbook AI
+                      Abie
                     </h3>
                     <p className="text-[12px] text-[#787774] leading-tight">
-                      Answers based on guides
+                      Your Spain DNV guide
                     </p>
                   </div>
                 </div>
@@ -66,17 +70,13 @@ export function AIChatbot() {
                       m.role === "user" ? "flex-row-reverse" : "flex-row"
                     }`}
                   >
-                    <div
-                      className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 ${
-                        m.role === "user"
-                          ? "bg-[#efefed] text-[#181817]"
-                          : "bg-[#181817] text-white"
-                      }`}
-                    >
+                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#e8e8e5]">
                       {m.role === "user" ? (
-                        <User className="w-4 h-4" />
+                        <div className="w-full h-full bg-[#efefed] flex items-center justify-center">
+                          <User className="w-4 h-4 text-[#181817]" />
+                        </div>
                       ) : (
-                        <Bot className="w-4 h-4" />
+                        <Image src={ABIE_AVATAR} alt="Abie" width={32} height={32} className="w-full h-full object-cover" />
                       )}
                     </div>
                     <div
@@ -122,8 +122,8 @@ export function AIChatbot() {
                 ))}
                 {(status === "submitted" || status === "streaming") && (
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full bg-[#181817] flex items-center justify-center shrink-0 text-white">
-                      <Bot className="w-4 h-4" />
+                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#e8e8e5]">
+                      <Image src={ABIE_AVATAR} alt="Abie" width={32} height={32} className="w-full h-full object-cover" />
                     </div>
                     <div className="bg-[#f7f7f5] text-[#181817] rounded-2xl rounded-tl-sm border border-[#e8e8e5] px-4 py-3 text-[14px]">
                       <div className="flex gap-1">
@@ -170,12 +170,14 @@ export function AIChatbot() {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 bg-[#181817] text-white rounded-full flex items-center justify-center shadow-lg hover:bg-[#333] transition-transform hover:scale-105 active:scale-95"
+          className="w-14 h-14 rounded-full overflow-hidden shadow-lg hover:scale-105 active:scale-95 transition-transform border-2 border-white"
         >
           {isOpen ? (
-            <X className="w-6 h-6" />
+            <div className="w-full h-full bg-[#181817] flex items-center justify-center">
+              <X className="w-6 h-6 text-white" />
+            </div>
           ) : (
-            <MessageCircle className="w-6 h-6" />
+            <Image src={ABIE_AVATAR} alt="Chat with Abie" width={56} height={56} className="w-full h-full object-cover" />
           )}
         </button>
       </div>

@@ -14,7 +14,7 @@ export default function PlaybookHome() {
           {/* Cover Image */}
           <div className="rounded-xl overflow-hidden border border-[#EAE9E9] mb-10">
             <Image
-              src="https://res.cloudinary.com/dg1i3ew9w/image/upload/v1773164761/AbieMaxey_s_Website_Spain_Digital_hoaw2f.png"
+              src="https://res.cloudinary.com/dg1i3ew9w/image/upload/v1773167430/Sticker_packs_m9fnbz.png"
               alt="Spain Digital Nomad Visa Playbook"
               width={840}
               height={400}
