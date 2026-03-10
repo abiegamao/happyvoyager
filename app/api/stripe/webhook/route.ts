@@ -44,21 +44,45 @@ export async function POST(request: NextRequest) {
       session.metadata?.playbook_slug ?? "spain-dnv";
 
     if (email) {
-      // Upsert into playbook_access table
-      const { error: dbError } = await supabase
-        .from("playbook_access")
+      // Upsert user info
+      const { data: purchaser, error: purchaserError } = await supabase
+        .from("playbook_purchasers")
         .upsert(
-          {
-            email: email.toLowerCase(),
-            playbook_slug: playbookSlug,
-            stripe_session_id: session.id,
-            stripe_customer_id: (session.customer as string) || null,
-          },
-          { onConflict: "email,playbook_slug" }
-        );
+          { email: email.toLowerCase(), name: session.customer_details?.name ?? null },
+          { onConflict: "email" }
+        )
+        .select("id")
+        .single();
 
-      if (dbError) {
-        console.error("Supabase upsert error:", dbError);
+      if (purchaserError || !purchaser) {
+        console.error("Supabase purchaser upsert error:", purchaserError);
+      }
+
+      // Upsert purchase record
+      if (purchaser) {
+        const { data: playbookData } = await supabase
+          .from("playbooks")
+          .select("id")
+          .eq("slug", playbookSlug)
+          .single();
+
+        if (playbookData) {
+          const { error: purchaseError } = await supabase
+            .from("playbook_purchases")
+            .upsert(
+              {
+                purchaser_id: purchaser.id,
+                playbook_id: playbookData.id,
+                stripe_session_id: session.id,
+                stripe_customer_id: (session.customer as string) || null,
+              },
+              { onConflict: "purchaser_id,playbook_id" }
+            );
+
+          if (purchaseError) {
+            console.error("Supabase purchase upsert error:", purchaseError);
+          }
+        }
       }
 
       // Send welcome email via Resend

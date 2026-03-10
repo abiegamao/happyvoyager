@@ -39,17 +39,36 @@ export async function GET(request: NextRequest) {
     }
 
     // Backup upsert in case webhook hasn't fired yet
-    await supabase
-      .from("playbook_access")
+    const { data: purchaser } = await supabase
+      .from("playbook_purchasers")
       .upsert(
-        {
-          email: email.toLowerCase(),
-          playbook_slug: playbookSlug,
-          stripe_session_id: session.id,
-          stripe_customer_id: (session.customer as string) || null,
-        },
-        { onConflict: "email,playbook_slug" }
-      );
+        { email: email.toLowerCase(), name: session.customer_details?.name ?? null },
+        { onConflict: "email" }
+      )
+      .select("id")
+      .single();
+
+    if (purchaser) {
+      const { data: playbookData } = await supabase
+        .from("playbooks")
+        .select("id")
+        .eq("slug", playbookSlug)
+        .single();
+
+      if (playbookData) {
+        await supabase
+          .from("playbook_purchases")
+          .upsert(
+            {
+              purchaser_id: purchaser.id,
+              playbook_id: playbookData.id,
+              stripe_session_id: session.id,
+              stripe_customer_id: (session.customer as string) || null,
+            },
+            { onConflict: "purchaser_id,playbook_id" }
+          );
+      }
+    }
 
     return NextResponse.json({
       hasAccess: true,

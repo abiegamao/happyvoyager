@@ -1,14 +1,18 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu } from "lucide-react";
+import { Menu, ArrowLeft, ArrowRight } from "lucide-react";
 import { guides, type ContentBlock } from "../data";
 import { use } from "react";
+import Link from "next/link";
 
 export default function GuidePage(props: { params: Promise<{ guideId: string }> }) {
   const params = use(props.params);
   const guideId = params.guideId;
   const activeGuide = guides.find((g) => g.id === guideId) || guides[0];
+  const currentIndex = guides.findIndex((g) => g.id === guideId);
+  const prevGuide = guides[currentIndex - 1] ?? null;
+  const nextGuide = guides[currentIndex + 1] ?? null;
 
   const [activeSection, setActiveSection] = useState<string>("");
   const [completedItems, setCompletedItems] = useState<Record<string, boolean>>({});
@@ -62,59 +66,42 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
     );
   };
 
-  const renderText = (text: string) => {
-    // Matches [label](url) or raw http/https URLs
-    const markdownRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
+  // Converts **bold** markers in a plain string to <strong> nodes
+  const applyBold = (str: string, keyPrefix: string): React.ReactNode[] => {
+    const parts = str.split(/(\*\*[^*]+\*\*)/g);
+    return parts.map((part, idx) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={`${keyPrefix}-b${idx}`} className="font-semibold text-[#37352f]">{part.slice(2, -2)}</strong>;
+      }
+      return part;
+    });
+  };
 
-    // Use a unified approach or check for markdown first
-    const parts: (string | React.ReactNode)[] = [];
-    let lastIndex = 0;
-    
-    // First, handle markdown links
-    const markdownMatches = Array.from(text.matchAll(markdownRegex));
-    
-    // This is getting complex, let's simplify by using a single regex that captures both
-    // and splitting based on that.
+  const renderText = (text: string) => {
+    // Split by markdown links [label](url) or bare URLs
     const combinedRegex = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s]+)/g;
     const segments = text.split(combinedRegex);
-    
-    // regex.split with capture groups returns the captured groups in the array
-    // [textBefore, label, url, rawUrl, textAfter, ...]
-    // For each match, we get 3 extra elements.
-    
-    const result: (string | React.ReactNode)[] = [];
+
+    const result: React.ReactNode[] = [];
     let i = 0;
     while (i < segments.length) {
       const plain = segments[i];
-      if (plain) result.push(plain);
-      
+      if (plain) result.push(...applyBold(plain, `t${i}`));
+
       if (i + 1 < segments.length) {
         const label = segments[i + 1];
         const url = segments[i + 2];
         const rawUrl = segments[i + 3];
-        
+
         if (label && url) {
           result.push(
-            <a
-              key={`link-${i}`}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#2383e2] hover:underline underline-offset-4"
-            >
+            <a key={`link-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="text-[#2383e2] hover:underline underline-offset-4">
               {label}
             </a>
           );
         } else if (rawUrl) {
           result.push(
-            <a
-              key={`link-${i}`}
-              href={rawUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-[#2383e2] hover:underline underline-offset-4"
-            >
+            <a key={`link-${i}`} href={rawUrl} target="_blank" rel="noopener noreferrer" className="text-[#2383e2] hover:underline underline-offset-4">
               {rawUrl}
             </a>
           );
@@ -122,7 +109,7 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
       }
       i += 4;
     }
-    
+
     return result.length > 0 ? result : text;
   };
 
@@ -379,6 +366,40 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
               ))}
             </div>
           </div>
+
+          {/* Prev / Next Guide Navigation */}
+          <div className="border-t border-[#EAE9E9] pt-8 mt-8 flex flex-col sm:flex-row gap-4">
+            {prevGuide ? (
+              <Link
+                href={`/playbook/spain-dnv/guides/${prevGuide.id}`}
+                className="flex-1 flex items-center gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group"
+              >
+                <ArrowLeft className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
+                <div className="min-w-0">
+                  <div className="text-[11px] text-[#787774] font-medium mb-0.5">Previous</div>
+                  <div className="text-[14px] font-semibold text-[#37352f] truncate">{prevGuide.title}</div>
+                </div>
+              </Link>
+            ) : (
+              <div className="flex-1" />
+            )}
+
+            {nextGuide ? (
+              <Link
+                href={`/playbook/spain-dnv/guides/${nextGuide.id}`}
+                className="flex-1 flex items-center justify-end gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group text-right"
+              >
+                <div className="min-w-0">
+                  <div className="text-[11px] text-[#787774] font-medium mb-0.5">Next</div>
+                  <div className="text-[14px] font-semibold text-[#37352f] truncate">{nextGuide.title}</div>
+                </div>
+                <ArrowRight className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
+              </Link>
+            ) : (
+              <div className="flex-1" />
+            )}
+          </div>
+
         </div>
       </div>
 

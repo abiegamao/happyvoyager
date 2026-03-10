@@ -39,7 +39,7 @@ export const guides: Guide[] = [
         content: [
           {
             type: "intro",
-            text: "Spain's Digital Nomad Visa (officially “Visado de Teletrabajador”) allows non-EU remote workers to live legally in Spain while working for companies or clients outside Spain. It’s one of Europe’s most attractive options for digital nomads. Introduced in 2023 as part of Spain’s Startup Act, the visa lets non-EU citizens (including UK nationals) live & work remotely in Spain for up to five years.",
+            text: "Spain's Digital Nomad Visa (officially 'Visado de Teletrabajador') allows non-EU remote workers to live legally in Spain while working for companies or clients outside Spain. It's one of Europe's most attractive options for digital nomads. Introduced in 2023 as part of Spain's Startup Act, the visa lets non-EU citizens (including UK nationals) live & work remotely in Spain for up to five years.",
           },
         ],
       },
@@ -54,7 +54,7 @@ export const guides: Guide[] = [
               "Age: 18+",
               "Nationality: Non-EU/EEA citizens only",
               "Work Status: Remote employee OR freelancer/entrepreneur",
-              "Professional credentials: A university degree (bachelor’s or higher), OR 3+ years documented work experience in your field",
+              "Professional credentials: A university degree (bachelor's or higher), OR 3+ years documented work experience in your field",
             ],
           },
           {
@@ -68,8 +68,8 @@ export const guides: Guide[] = [
           },
           {
             type: "callout",
-            icon: "📝",
-            text: "Note: These thresholds are tied to 200% of Spain’s minimum wage and increases annually.",
+            icon: "→",
+            text: "Note: These thresholds are tied to 200% of Spain's minimum wage and increases annually.",
             bgClass: "bg-[#F1F1EF]",
             borderClass: "border-transparent text-[#37352f]",
           },
@@ -115,18 +115,18 @@ export const guides: Guide[] = [
         content: [
           {
             type: "intro",
-            text: "And if you pick the UGE route like I did, you will need a Schengen Visa if your nationality requires a visa to step foot in Spain. If you’re from the US, UK, Canada, EU, you typically don’t need this Schengen visa anymore.",
+            text: "And if you pick the UGE route like I did, you will need a Schengen Visa if your nationality requires a visa to step foot in Spain. If you're from the US, UK, Canada, EU, you typically don't need this Schengen visa anymore.",
           },
           {
             type: "callout",
-            icon: "🌍",
-            text: "FUN FACT: Did you know that you can get a Schengen Visa from any country regardless if you’re just a tourist?\n\nhttps://www.instagram.com/reel/DNuzDc_RAwj/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==\n\nYou just need to prove:\n✔ You’re a long-term traveller (been out of your country for more than 6 months+)\nor..\n✔ You have an exceptional circumstance. Read more about it here.\n\nI did this twice in the USA 🇺🇸 and Bosnia 🇧🇦 via the Netherlands Embassy. 👈 Here’s the proof.\n\nI love applying via the Netherlands as they have been really generous. I always get 90-days multiple entry even when I only requested for 2-weeks. I heard you can do this via France Embassy as well. But they tend to give you lesser days than Netherlands.",
+            icon: "→",
+            text: "FUN FACT: Did you know that you can get a Schengen Visa from any country regardless if you're just a tourist?\n\nhttps://www.instagram.com/reel/DNuzDc_RAwj/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==\n\nYou just need to prove:\nYou're a long-term traveller (been out of your country for more than 6 months+)\nor..\nYou have an exceptional circumstance. Read more about it here.\n\nI did this twice in the USA and Bosnia via the Netherlands Embassy. Here's the proof.\n\nI love applying via the Netherlands as they have been really generous. I always get 90-days multiple entry even when I only requested for 2-weeks. I heard you can do this via France Embassy as well. But they tend to give you lesser days than Netherlands.",
             bgClass: "bg-[#EDF3EC]",
             borderClass: "border-[#D1E2CD]",
           },
           {
             type: "intro",
-            text: "If you want to apply via Netherlands 🇳🇱 like I did, here’s how to start.",
+            text: "If you want to apply via Netherlands like I did, here's how to start.",
           },
         ],
       },
@@ -145,7 +145,7 @@ export const guides: Guide[] = [
           {
             type: "highlight",
             items: [
-              "🇵🇭 Philippine passport holder",
+              "Philippine passport holder",
               "Applied inside Spain via UGE, not through a consulate",
               "Did everything DIY, legally and intentionally",
               "Fulfilled missing requirements remotely, without flying back home",
@@ -166,7 +166,7 @@ export const guides: Guide[] = [
           { type: "divider" },
           {
             type: "intro",
-            text: "🇭🇷 My First Step: Croatia ( click to expand more )",
+            text: "My First Step: Croatia ( click to expand more )",
           },
           {
             type: "image",
@@ -200,19 +200,19 @@ export const guides: Guide[] = [
           },
           {
             type: "intro",
-            text: "To be honest, I wasn’t completely sold on Spain on my first visit. I felt like exploring more of the EU before I commit. Im glad I did. I would not know Croatia and the Balkans the way I know now and appreciate its people.\n\nSo I was thinking, if I wanted a taste of EU without too much paperwork, taxes & bureaucracy, Croatia seems like a good amount of trial of the European life.. and so I did.\n\nI am sharing this just in case you want to test the EU waters first just like me.",
+            text: "To be honest, I wasn't completely sold on Spain on my first visit. I felt like exploring more of the EU before I commit. Im glad I did. I would not know Croatia and the Balkans the way I know now and appreciate its people.\n\nSo I was thinking, if I wanted a taste of EU without too much paperwork, taxes & bureaucracy, Croatia seems like a good amount of trial of the European life.. and so I did.\n\nI am sharing this just in case you want to test the EU waters first just like me.",
           },
           {
             type: "highlight",
             items: [
-              "If you’re interest about this visa, join the [Croatia’s Digital Nomad Playbook waitlist](https://example.com).",
+              "If you're interest about this visa, join the [Croatia's Digital Nomad Playbook waitlist](https://example.com).",
             ],
           },
         ],
       },
       {
         id: "why-spain",
-        title: "🇪🇸 Why I moved to Spain",
+        title: "Why I moved to Spain",
         content: [
           {
             type: "image",
@@ -229,20 +229,20 @@ export const guides: Guide[] = [
             items: [
               "Fast-track citizenship: 2 years for Filipinos (vs 10 for most others)",
               "System integration: Public healthcare, Legal protections, Long-term stability",
-              "EU market access: Once you’re integrated in Spain, Europe and its 28 countries opens up (+ the US is suddenly much closer, legally and strategically)",
-              "Optionality: I wasn’t just securing residency, I was unlocking the entire European Union 🇪🇺",
+              "EU market access: Once you're integrated in Spain, Europe and its 28 countries opens up (+ the US is suddenly much closer, legally and strategically)",
+              "Optionality: I wasn't just securing residency, I was unlocking the entire European Union",
               "Nomad Life end of era: I want to do greater things, and that requires less movement. Im ready for depth.",
             ],
           },
           {
             type: "intro",
-            text: "And yes.. This was the fastest “upgrade” I could make without marrying anyone.\n\n(not that I don’t want to marry at all)",
+            text: "And yes.. This was the fastest 'upgrade' I could make without marrying anyone.\n\n(not that I don't want to marry at all)",
           },
         ],
       },
       {
         id: "timeline",
-        title: "🗓️ My DNV Timeline",
+        title: "My DNV Timeline",
         content: [
           { type: "divider" },
           {
@@ -255,14 +255,14 @@ export const guides: Guide[] = [
               ["Nov 24", "Submitted my DNV application to the UGE"],
               ["Dec 19", "Requerimiento received (additional requirement)\n- New DNV requirement implemented: self-employment proof"],
               ["Dec 20", "Submitted DTI Certification\n- I quickly created one online!"],
-              ["Jan 8", "Approved: 3-year residency 🎉"],
+              ["Jan 8", "Approved: 3-year residency"],
               ["Feb 3", "Scheduled TIE fingerprinting in Madrid without Padron!"],
               ["Feb 20", "TIE ready for pickup!"],
             ],
           },
           {
             type: "intro",
-            text: "No lawyer. No fixer. Just documents, timing, and clarity.\n\nNow, if that sounds like you could take. Let’s proceed: How do I submit my application?",
+            text: "No lawyer. No fixer. Just documents, timing, and clarity.\n\nNow, if that sounds like you could take. Let's proceed: How do I submit my application?",
           },
         ],
       },
@@ -275,7 +275,7 @@ export const guides: Guide[] = [
     sections: [
       {
         id: "where-to-apply",
-        title: "🏛️ Where to apply: UGE vs Consulate",
+        title: "Where to apply: UGE vs Consulate",
         content: [
           { type: "divider" },
           {
@@ -292,7 +292,7 @@ export const guides: Guide[] = [
           },
           {
             type: "highlight",
-            label: "Apply via UGE in Spain 🇪🇸",
+            label: "Apply via UGE in Spain",
             items: [
               "€2,894+ minimum income requirement",
               "Fully online submission",
@@ -316,11 +316,11 @@ export const guides: Guide[] = [
           },
           {
             type: "highlight",
-            label: "Apply via Spanish Consulate 🏠",
+            label: "Apply via Spanish Consulate",
             items: [
               "€2,303+ minimum income requirement",
-              "In-person appointments, paper submission ⚠",
-              "Slower, more variable timelines ⚠ (1-3+ months)",
+              "In-person appointments, paper submission",
+              "Slower, more variable timelines (1-3+ months)",
               "Stricter with documents (years of tax returns needed)",
               "1-year residency upon approval",
             ],
@@ -331,8 +331,8 @@ export const guides: Guide[] = [
           },
           {
             type: "callout",
-            icon: "💡",
-            text: "I personally don’t recommend applying in your own country (Spanish Consulate). Applying via Consulate only gives you 1 year residency and you can't get a TIE (Residency Card) until you re-apply in Spain. It’s like applying twice. Consulates are far stricter and slower.",
+            icon: "→",
+            text: "I personally don't recommend applying in your own country (Spanish Consulate). Applying via Consulate only gives you 1 year residency and you can't get a TIE (Residency Card) until you re-apply in Spain. It's like applying twice. Consulates are far stricter and slower.",
             bgClass: "bg-[#F1F1EF]",
           },
         ],
@@ -381,7 +381,7 @@ export const guides: Guide[] = [
         content: [
           {
             type: "intro",
-            text: "In order: Declaration of Entry → NIE → Digital Certification → Application Submission. All submissions are done online via the UGE’s website using a digital certificate.",
+            text: "In order: Declaration of Entry → NIE → Digital Certification → Application Submission. All submissions are done online via the UGE's website using a digital certificate.",
           },
           {
             type: "highlight",
@@ -404,13 +404,13 @@ export const guides: Guide[] = [
             type: "highlight",
             label: "3. Digital Certificate (Certificado Digital)",
             items: [
-              "Your “login” to government systems.",
+              "Your 'login' to government systems.",
               "Download FNMT Software and verify in person. [More details here](https://example.com).",
             ],
           },
           {
             type: "intro",
-            text: "Once you have all three, you are ready to access the UGE’s website and submit your Digital Nomad Application! ✓\n\n**Next:** What documents do I need to submit?",
+            text: "Once you have all three, you are ready to access the UGE's website and submit your Digital Nomad Application!\n\n**Next:** What documents do I need to submit?",
           },
         ],
       },
@@ -524,7 +524,7 @@ export const guides: Guide[] = [
           },
           {
             type: "intro",
-            text: "1. Here’s how I organised my requirements in folders. I created a folder named “Spain DNV Documents” and created subfolders with the numbered requirements. Feel free to follow my structure.",
+            text: "1. Here's how I organised my requirements in folders. I created a folder named 'Spain DNV Documents' and created subfolders with the numbered requirements. Feel free to follow my structure.",
           },
           {
             type: "image",
@@ -534,7 +534,7 @@ export const guides: Guide[] = [
           },
           {
             type: "intro",
-            text: "You have to place it this way so it will be easy for you to re-upload it here.\n\nTrust there’s a chance the form will time-out, cause issues and you will need to start over or reupload again.",
+            text: "You have to place it this way so it will be easy for you to re-upload it here.\n\nTrust there's a chance the form will time-out, cause issues and you will need to start over or reupload again.",
           },
         ],
       },
@@ -551,7 +551,7 @@ export const guides: Guide[] = [
         content: [
           {
             type: "intro",
-            text: "Let’s do the Within Spain Route via UGE. This is the path for those already in Spain or entering as a tourist.",
+            text: "Let's do the Within Spain Route via UGE. This is the path for those already in Spain or entering as a tourist.",
           },
           {
             type: "highlight",
@@ -567,7 +567,7 @@ export const guides: Guide[] = [
             items: [
               "Rent an apartment or arrange long-term accommodation",
               "Obtain a rental contract or proof of residence",
-              "Register your address (empadronamiento) at the local city hall (Note: it’s hard to get this, you can get TIE first before this logic)",
+              "Register your address (empadronamiento) at the local city hall (Note: it's hard to get this, you can get TIE first before this logic)",
             ],
           },
           {
@@ -608,7 +608,7 @@ export const guides: Guide[] = [
           },
           {
             type: "callout",
-            icon: "⚖️",
+            icon: "→",
             text: "Note: Some applicants hire a lawyer with a digital certificate solely for the submission process (typically €500-3000)",
           },
           {
@@ -687,8 +687,8 @@ export const guides: Guide[] = [
         content: [
           {
             type: "callout",
-            icon: "⏳",
-            text: "Once submitted, you’ve paused the **Schengen Clock**. You are now legally staying in Spain even past the 90 days. Just don’t leave until you get your TIE (residency card).",
+            icon: "→",
+            text: "Once submitted, you've paused the **Schengen Clock**. You are now legally staying in Spain even past the 90 days. Just don't leave until you get your TIE (residency card).",
           },
           {
             type: "intro",
@@ -709,16 +709,16 @@ export const guides: Guide[] = [
         content: [
           {
             type: "intro",
-            text: "Congrats, that’s it! You have successfully submitted your application via UGE. Now, the waiting begins.",
+            text: "Congrats, that's it! You have successfully submitted your application via UGE. Now, the waiting begins.",
           },
           {
             type: "callout",
-            icon: "🎉",
+            icon: "→",
             text: "You have 20-business days to wait for the decision. In the meantime, you can continue living your life in Spain legally.",
           },
           {
             type: "intro",
-            text: "Don’t forget to check your notifications (**Ver Notificaciones**) from time to time. You may leave Spain as long as you have a valid way to come back (like remaining Schengen days or a valid visa).",
+            text: "Don't forget to check your notifications (**Ver Notificaciones**) from time to time. You may leave Spain as long as you have a valid way to come back (like remaining Schengen days or a valid visa).",
           },
         ],
       },
@@ -728,14 +728,14 @@ export const guides: Guide[] = [
         content: [
           {
             type: "callout",
-            icon: "🤫",
-            text: "If it goes past **20-business days** and the UGE didn’t request for any documents, you can file for **Silencio Admin Positivo**, and you’re automatically approved.",
+            icon: "→",
+            text: "If it goes past **20-business days** and the UGE didn't request for any documents, you can file for **Silencio Admin Positivo**, and you're automatically approved.",
           },
         ],
       },
       {
         id: "tracking-walkthrough",
-        title: "Tracking your Application’s Progress",
+        title: "Tracking your Application's Progress",
         content: [
           {
             type: "intro",
@@ -743,8 +743,8 @@ export const guides: Guide[] = [
           },
           {
             type: "callout",
-            icon: "📢",
-            text: "P.S. They won’t email you, so you have to constantly watch for it manually!",
+            icon: "→",
+            text: "P.S. They won't email you, so you have to constantly watch for it manually!",
           },
           {
             type: "intro",

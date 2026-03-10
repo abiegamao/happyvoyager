@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import {
@@ -18,22 +18,49 @@ export default function PlaybookPage() {
     const [email, setEmail] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [checking, setChecking] = useState(true);
     const router = useRouter();
+
+    useEffect(() => {
+        if (sessionStorage.getItem("playbook_email")) {
+            router.replace("/playbook/spain-dnv/home");
+        } else {
+            setChecking(false);
+        }
+    }, [router]);
+
+    if (checking) return null;
 
     const handleAccess = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
         setError("");
 
-        const { data, error: dbError } = await supabase
+        const { data: purchaser, error: dbError } = await supabase
             .from("playbook_purchasers")
-            .select("email, name")
+            .select("id, name")
             .eq("email", email.toLowerCase().trim())
             .single();
 
+        if (dbError || !purchaser) {
+            setLoading(false);
+            setError(
+                "No purchase found for this email. Please use the email you purchased with."
+            );
+            return;
+        }
+
+        // Verify they purchased this specific playbook
+        const { data: access } = await supabase
+            .from("playbook_purchases")
+            .select("id, playbooks!inner(slug)")
+            .eq("purchaser_id", purchaser.id)
+            .eq("playbooks.slug", "spain-dnv")
+            .maybeSingle();
+
         setLoading(false);
 
-        if (dbError || !data) {
+        if (!access) {
             setError(
                 "No purchase found for this email. Please use the email you purchased with."
             );
@@ -42,7 +69,7 @@ export default function PlaybookPage() {
 
         // Save to session so they don't have to re-enter
         sessionStorage.setItem("playbook_email", email.toLowerCase().trim());
-        sessionStorage.setItem("playbook_name", data.name?.split(" ")[0] || "");
+        sessionStorage.setItem("playbook_name", purchaser.name?.split(" ")[0] || "");
 
         router.push("/playbook/spain-dnv/home");
     };

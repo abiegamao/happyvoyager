@@ -36,16 +36,44 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ received: true });
         }
 
-        const { error } = await supabaseAdmin
+        // Upsert user info
+        const { data: purchaser, error: purchaserError } = await supabaseAdmin
             .from("playbook_purchasers")
             .upsert(
-                { email, name, stripe_session_id: sessionId },
-                { onConflict: "stripe_session_id" } // idempotent — safe for Stripe retries
-            );
+                { email, name },
+                { onConflict: "email" }
+            )
+            .select("id")
+            .single();
 
-        if (error) {
-            console.error("Supabase insert error:", error);
+        if (purchaserError || !purchaser) {
+            console.error("Supabase purchaser upsert error:", purchaserError);
             return NextResponse.json({ error: "DB error" }, { status: 500 });
+        }
+
+        // Upsert purchase record (defaults to spain-dnv)
+        const { data: playbookData } = await supabaseAdmin
+            .from("playbooks")
+            .select("id")
+            .eq("slug", "spain-dnv")
+            .single();
+
+        if (playbookData) {
+            const { error: purchaseError } = await supabaseAdmin
+                .from("playbook_purchases")
+                .upsert(
+                    {
+                        purchaser_id: purchaser.id,
+                        playbook_id: playbookData.id,
+                        stripe_session_id: sessionId,
+                    },
+                    { onConflict: "purchaser_id,playbook_id" }
+                );
+
+            if (purchaseError) {
+                console.error("Supabase purchase upsert error:", purchaseError);
+                return NextResponse.json({ error: "DB error" }, { status: 500 });
+            }
         }
 
         console.log(`✅ Playbook access granted to: ${email}`);

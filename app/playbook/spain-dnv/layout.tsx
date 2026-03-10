@@ -233,7 +233,7 @@ export default function PlaybookLayout({
         )}
 
         {/* Main Content Area */}
-        <main className="flex-1 flex flex-col min-w-0 bg-white h-full overflow-y-auto">
+        <main className="flex-1 flex flex-col min-w-0 bg-white h-full overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none] [-ms-overflow-style:none]">
           <div className="flex-1 flex flex-col pt-8 pb-24">{children}</div>
         </main>
       </div>

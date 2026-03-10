@@ -250,9 +250,6 @@ export function SearchModal({
                   Select
                 </span>
               </div>
-              <div className="flex items-center gap-1">
-                <span>Created by AntiGravity</span>
-              </div>
             </div>
           </motion.div>
         </div>
