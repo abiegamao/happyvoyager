@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { Menu, ArrowLeft, ArrowRight } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { Menu, ArrowLeft, ArrowRight, X, ZoomIn, ZoomOut } from "lucide-react";
 import { guides, type ContentBlock } from "../data";
 import { use } from "react";
 import Link from "next/link";
@@ -16,6 +16,57 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
 
   const [activeSection, setActiveSection] = useState<string>("");
   const [completedItems, setCompletedItems] = useState<Record<string, boolean>>({});
+  const [lightbox, setLightbox] = useState<{ src: string; alt: string } | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [pan, setPan] = useState({ x: 0, y: 0 });
+  const lightboxRef = useRef<HTMLDivElement>(null);
+  const dragState = useRef<{ dragging: boolean; startX: number; startY: number; originX: number; originY: number }>({
+    dragging: false, startX: 0, startY: 0, originX: 0, originY: 0,
+  });
+
+  const openLightbox = (src: string, alt: string) => {
+    setLightbox({ src, alt });
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  };
+
+  const closeLightbox = useCallback(() => {
+    setLightbox(null);
+    setZoom(1);
+    setPan({ x: 0, y: 0 });
+  }, []);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if (zoom <= 1) return;
+    e.preventDefault();
+    dragState.current = { dragging: true, startX: e.clientX, startY: e.clientY, originX: pan.x, originY: pan.y };
+  };
+
+  const onMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!dragState.current.dragging) return;
+    setPan({
+      x: dragState.current.originX + (e.clientX - dragState.current.startX),
+      y: dragState.current.originY + (e.clientY - dragState.current.startY),
+    });
+  }, []);
+
+  const onMouseUp = useCallback(() => {
+    dragState.current.dragging = false;
+  }, []);
+
+  // Reset pan when zoom returns to 1
+  useEffect(() => {
+    if (zoom <= 1) setPan({ x: 0, y: 0 });
+  }, [zoom]);
+
+  useEffect(() => {
+    if (!lightbox) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [lightbox, closeLightbox]);
 
   // Intersection observer for TOC highlighting
   useEffect(() => {
@@ -250,7 +301,11 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                         if (block.type === "image") {
                           return (
                             <div key={key} className="my-8">
-                              <div className="rounded-xl overflow-hidden border border-[#EAE9E9] bg-[#F7F7F5] transition-all hover:shadow-md">
+                              <div
+                                className="rounded-xl overflow-hidden border border-[#EAE9E9] bg-[#F7F7F5] transition-all hover:shadow-md cursor-zoom-in"
+                                onClick={() => openLightbox(block.src, block.alt || "Guide image")}
+                                title="Click to enlarge"
+                              >
                                 <img
                                   src={block.src}
                                   alt={block.alt || "Guide image"}
@@ -402,6 +457,72 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
 
         </div>
       </div>
+
+      {/* ─── Lightbox ─── */}
+      {lightbox && (
+        <div
+          ref={lightboxRef}
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
+          onClick={(e) => { if (e.target === lightboxRef.current) closeLightbox(); }}
+        >
+          {/* Toolbar */}
+          <div className="absolute top-4 right-4 flex items-center gap-2 z-10">
+            <button
+              onClick={() => setZoom((z) => Math.min(z + 0.5, 4))}
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              title="Zoom in"
+            >
+              <ZoomIn className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => setZoom((z) => Math.max(z - 0.5, 0.5))}
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              title="Zoom out"
+            >
+              <ZoomOut className="w-5 h-5" />
+            </button>
+            <button
+              onClick={closeLightbox}
+              className="p-2 rounded-full bg-white/10 hover:bg-white/20 text-white transition-colors"
+              title="Close (Esc)"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Zoom hint */}
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/50 text-xs select-none">
+            {Math.round(zoom * 100)}% · scroll to zoom{zoom > 1 ? " · drag to pan" : ""} · Esc to close
+          </div>
+
+          {/* Image container */}
+          <div
+            className="overflow-hidden max-w-[90vw] max-h-[90vh] flex items-center justify-center"
+            style={{ cursor: zoom > 1 ? (dragState.current.dragging ? "grabbing" : "grab") : "default" }}
+            onWheel={(e) => {
+              e.preventDefault();
+              setZoom((z) => Math.min(Math.max(z - e.deltaY * 0.001, 0.5), 4));
+            }}
+            onMouseDown={onMouseDown}
+            onMouseMove={onMouseMove}
+            onMouseUp={onMouseUp}
+            onMouseLeave={onMouseUp}
+          >
+            <img
+              src={lightbox.src}
+              alt={lightbox.alt}
+              style={{
+                transform: `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`,
+                transformOrigin: "center center",
+                transition: dragState.current.dragging ? "none" : "transform 0.15s ease",
+              }}
+              className="max-w-[85vw] max-h-[85vh] rounded-lg shadow-2xl object-contain select-none"
+              draggable={false}
+              onClick={(e) => e.stopPropagation()}
+            />
+          </div>
+        </div>
+      )}
 
       {/* ─── Right Sidebar: On This Page (Sticky) ─── */}
       <aside className="hidden lg:flex w-[240px] flex-shrink-0 flex-col sticky top-[32px] max-h-[calc(100vh-140px)] overflow-y-auto">

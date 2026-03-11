@@ -471,7 +471,7 @@ export default function Lesson1Page() {
     : null;
 
   return (
-    <div className="flex w-full h-full bg-white text-[#37352f] font-sans">
+    <div className="flex w-full h-full bg-none text-[#37352f] font-sans">
       <div className="flex-1 px-[calc(min(64px,5vw))] lg:px-12 py-6">
         <div className="max-w-[840px] pl-0 lg:pl-10 mx-auto w-full pb-24">
           {/* Breadcrumb */}

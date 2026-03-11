@@ -302,18 +302,8 @@ export default function PlaybookLayout({
                                 const isProgressLocked =
                                   lessonIndex > 0 &&
                                   !completedLessonIds.includes(allLessonIds[lessonIndex - 1]);
-                                return (
-                                  <Link
-                                    key={lesson.id}
-                                    href={`/playbook/spain-dnv/lessons/lesson-${parseInt(lesson.number)}`}
-                                    className={`flex items-center gap-2 px-2 py-1.5 rounded text-[13px] transition-colors ${
-                                      isActive
-                                        ? "bg-[#f2d6c9] text-[#3a3a3a] font-medium"
-                                        : isProgressLocked
-                                        ? "text-[#c0b8b0] hover:text-[#3a3a3a] hover:bg-[#f2d6c9]/40"
-                                        : "text-[#787774] hover:text-[#3a3a3a] hover:bg-[#f2d6c9]/40"
-                                    }`}
-                                  >
+                                const lessonContent = (
+                                  <>
                                     <span className="text-[11px] font-medium text-[#b0a89e] w-5 flex-shrink-0">
                                       {lesson.number}
                                     </span>
@@ -325,6 +315,26 @@ export default function PlaybookLayout({
                                     ) : completedLessonIds.includes(lesson.id) ? (
                                       <span className="w-3 h-3 ml-auto flex-shrink-0 text-[#8fa38d] text-[10px] font-bold">✓</span>
                                     ) : null}
+                                  </>
+                                );
+                                return isProgressLocked ? (
+                                  <span
+                                    key={lesson.id}
+                                    className="flex items-center gap-2 px-2 py-1.5 rounded text-[13px] text-[#c0b8b0] cursor-not-allowed select-none"
+                                  >
+                                    {lessonContent}
+                                  </span>
+                                ) : (
+                                  <Link
+                                    key={lesson.id}
+                                    href={`/playbook/spain-dnv/lessons/lesson-${parseInt(lesson.number)}`}
+                                    className={`flex items-center gap-2 px-2 py-1.5 rounded text-[13px] transition-colors ${
+                                      isActive
+                                        ? "bg-[#f2d6c9] text-[#3a3a3a] font-medium"
+                                        : "text-[#787774] hover:text-[#3a3a3a] hover:bg-[#f2d6c9]/40"
+                                    }`}
+                                  >
+                                    {lessonContent}
                                   </Link>
                                 );
                               })}

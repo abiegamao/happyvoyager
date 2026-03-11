@@ -81,7 +81,7 @@ export default function LessonPageContent({
   };
 
   return (
-    <div className="flex w-full h-full bg-white text-[#37352f] font-sans">
+    <div className="flex w-full h-full bg-none text-[#37352f] font-sans">
       <div className="flex-1 px-[calc(min(64px,5vw))] lg:px-12 py-6">
         <div className="max-w-[840px] pl-0 lg:pl-10 mx-auto w-full pb-24">
           {/* Breadcrumb */}
@@ -254,20 +254,34 @@ export default function LessonPageContent({
             )}
 
             {next ? (
-              <Link
-                href={next.path}
-                className="flex-1 flex items-center justify-end gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group text-right"
-              >
-                <div className="min-w-0">
-                  <div className="text-[11px] text-[#787774] font-medium mb-0.5">
-                    Next
+              isDone ? (
+                <Link
+                  href={next.path}
+                  className="flex-1 flex items-center justify-end gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group text-right"
+                >
+                  <div className="min-w-0">
+                    <div className="text-[11px] text-[#787774] font-medium mb-0.5">
+                      Next
+                    </div>
+                    <div className="text-[14px] font-semibold text-[#37352f] truncate">
+                      {next.number}. {next.title}
+                    </div>
                   </div>
-                  <div className="text-[14px] font-semibold text-[#37352f] truncate">
-                    {next.number}. {next.title}
+                  <ArrowRight className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
+                </Link>
+              ) : (
+                <div className="flex-1 flex items-center justify-end gap-3 p-5 rounded-xl border border-[#EAE9E9] bg-[#fafafa] text-right opacity-50 cursor-not-allowed select-none">
+                  <div className="min-w-0">
+                    <div className="text-[11px] text-[#787774] font-medium mb-0.5">
+                      Next
+                    </div>
+                    <div className="text-[14px] font-semibold text-[#37352f] truncate">
+                      {next.number}. {next.title}
+                    </div>
                   </div>
+                  <Lock className="w-4 h-4 text-[#c4c4c2] flex-shrink-0" />
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
-              </Link>
+              )
             ) : (
               <div className="flex-1" />
             )}
