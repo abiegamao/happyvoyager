@@ -30,12 +30,6 @@ export function TopbarLinks() {
       active: pathname.includes("/progress"),
     },
     {
-      label: "Results",
-      href: "#",
-      active: false,
-      disabled: true,
-    },
-    {
       label: "FAQs & Tips",
       href: "/playbook/spain-dnv/faqs-and-tips",
       active: pathname.includes("/faqs-and-tips"),
@@ -50,11 +44,8 @@ export function TopbarLinks() {
             <Link
               key={tab.label}
               href={tab.href}
-              aria-disabled={tab.disabled}
               className={`text-[14px] font-medium transition-colors whitespace-nowrap h-full flex items-center border-b-[3px] ${
-                tab.disabled
-                  ? "text-[#c4c4c2] cursor-default pointer-events-none border-transparent"
-                  : tab.active
+                tab.active
                     ? "text-[#37352f] border-[#37352f]"
                     : "text-[#787774] hover:text-[#37352f] border-transparent"
               }`}
