@@ -159,7 +159,7 @@ export async function POST(request: NextRequest) {
               </p>
               <hr style="border: none; border-top: 1px solid #e7ddd3; margin: 24px 0;" />
               <p style="color: #aaaaaa; font-size: 12px;">
-                If you'd like to cancel, you can manage your subscription from your Stripe billing portal.<br />
+                If you'd like to cancel, you can manage your subscription from your <a href="https://billing.stripe.com/p/login/3cI6oB9OKdBh6mdgcl73G00" style="color: #e3a99c; text-decoration: underline;">Stripe billing portal</a>.<br />
                 Questions? Reply to this email or contact hello@abiemaxey.com
               </p>
             </div>
