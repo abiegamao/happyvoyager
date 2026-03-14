@@ -70,9 +70,12 @@ function PlaybookLayoutInner({
   const isLessonPage = pathname.includes("/lessons/");
 
   useEffect(() => {
-    const email = sessionStorage.getItem("playbook_email");
-    if (!email && !isGatePage) {
-      router.replace("/playbook/spain-dnv");
+    // Check for auth session ~ either Supabase Auth cookies or legacy sessionStorage
+    const hasLegacySession = sessionStorage.getItem("playbook_email") || sessionStorage.getItem("playbook_session");
+    // Also check for Supabase auth cookie presence (sb-*-auth-token)
+    const hasAuthCookie = document.cookie.split(";").some((c) => c.trim().startsWith("sb-"));
+    if (!hasLegacySession && !hasAuthCookie && !isGatePage) {
+      router.replace("/playbook");
     } else {
       setIsChecking(false);
     }

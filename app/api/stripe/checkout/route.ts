@@ -1,21 +1,33 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { createSupabaseServer } from "@/lib/supabase-server";
 
-// Price ID map ~ add a new entry per playbook
+// Price ID map ~ add a new entry per playbook/package
 const PRICE_IDS: Record<string, string | undefined> = {
   "spain-dnv": process.env.STRIPE_PRICE_SPAIN_DNV ?? process.env.STRIPE_PLAYBOOK_PRICE_ID,
   "spain-nlv": process.env.STRIPE_PRICE_SPAIN_NLV,
+  "guided-navigator": process.env.STRIPE_PRICE_GUIDED_NAVIGATOR,
+  "vip-concierge": process.env.STRIPE_PRICE_VIP_CONCIERGE,
 };
 
 export async function POST(request: NextRequest) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
   try {
-    const { email, slug } = await request.json();
+    // Verify Supabase auth ~ require login before checkout
+    const supabase = await createSupabaseServer();
+    const { data: { user } } = await supabase.auth.getUser();
 
-    if (!email) {
-      return NextResponse.json({ error: "Email required" }, { status: 400 });
+    if (!user?.email) {
+      return NextResponse.json(
+        { error: "You must be logged in to make a purchase" },
+        { status: 401 }
+      );
     }
 
+    // Use the authenticated email (ignore any email in body)
+    const authEmail = user.email;
+
+    const { slug } = await request.json();
     const playbookSlug: string = slug ?? "spain-dnv";
     const priceId =
       PRICE_IDS[playbookSlug] ??
@@ -23,7 +35,7 @@ export async function POST(request: NextRequest) {
 
     if (!priceId) {
       return NextResponse.json(
-        { error: "No price configured for this playbook" },
+        { error: "No price configured for this package" },
         { status: 400 }
       );
     }
@@ -35,10 +47,10 @@ export async function POST(request: NextRequest) {
 
     const session = await stripe.checkout.sessions.create({
       mode: "payment",
-      customer_email: email,
+      customer_email: authEmail,
       line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${origin}/playbook/${playbookSlug}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/playbook/${playbookSlug}`,
+      success_url: `${origin}/playbook?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${origin}/playbook`,
       metadata: {
         playbook_slug: playbookSlug,
       },

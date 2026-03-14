@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Star, Zap, ArrowRight, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 
 const pricingPlans = [
   {
@@ -11,6 +12,7 @@ const pricingPlans = [
     originalPrice: "149",
     currency: "€",
     period: "one-time",
+    slug: "spain-dnv",
     features: [
       "Complete step-by-step system",
       "Document templates",
@@ -22,7 +24,6 @@ const pricingPlans = [
     cta: "Get the Playbook Pro",
     popular: false,
     color: "#bbcccd",
-    paymentLink: "https://buy.stripe.com/test_00w6oA4PB0ZWcLE7pT9bO01",
     playbookAccess: true,
   },
   {
@@ -33,6 +34,7 @@ const pricingPlans = [
     originalPrice: "350",
     currency: "€",
     period: "one-time",
+    slug: "guided-navigator",
     features: [
       "Everything in The Playbook Pro",
       "1-hour video consultation",
@@ -42,7 +44,6 @@ const pricingPlans = [
     cta: "Get the Guided Navigator",
     popular: true,
     color: "#e3a99c",
-    paymentLink: "https://buy.stripe.com/3cI00cb2O2OC3F76trew804",
   },
   {
     name: "The VIP Concierge",
@@ -52,6 +53,7 @@ const pricingPlans = [
     originalPrice: "900",
     currency: "€",
     period: "one-time",
+    slug: "vip-concierge",
     features: [
       "Everything in The Guided Navigator",
       "1on1 Strategy Calls & Chat Support",
@@ -67,7 +69,6 @@ const pricingPlans = [
     foundingNote: "Founding client spots available",
     popular: false,
     color: "#8fa38d",
-    paymentLink: "https://buy.stripe.com/9B65kwb2O2OCb7zeZXew807",
   },
 ];
 
@@ -207,17 +208,15 @@ export default function PricingSection() {
               )}
 
               {/* CTA Button */}
-              <a
-                href={plan.paymentLink}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href={`/playbook?intent=purchase&slug=${plan.slug}`}
                 className={`block w-full py-4 rounded-xl text-center font-[family-name:var(--font-body)] font-bold transition-all duration-300 ${plan.popular
                   ? "bg-[#3a3a3a] text-white hover:bg-[#e3a99c] shadow-lg hover:shadow-[#e3a99c]/30"
                   : "bg-white border-2 border-[#e7ddd3] text-[#3a3a3a] hover:border-[#3a3a3a] hover:bg-[#3a3a3a] hover:text-white"
                   }`}
               >
                 {plan.cta}
-              </a>
+              </Link>
 
               {/* Already purchased link — Playbook Pro only */}
               {"playbookAccess" in plan && (
