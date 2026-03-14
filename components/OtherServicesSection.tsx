@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarCheck, Globe, Plane, ArrowRight } from "lucide-react";
+import { CalendarCheck, Globe, Plane, Users, ArrowRight } from "lucide-react";
 
 const services = [
   {
@@ -33,6 +33,16 @@ const services = [
     href: "/schengen-visa",
     cta: "Learn More",
   },
+  {
+    icon: Users,
+    color: "#e3a99c",
+    bg: "#f2d6c9",
+    label: "Translation Companion",
+    description:
+      "Hire a bilingual companion to accompany you to your appointment and translate everything in real-time.",
+    href: "/translation-companion",
+    cta: "Book a Companion",
+  },
 ];
 
 export default function OtherServicesSection() {
@@ -50,7 +60,7 @@ export default function OtherServicesSection() {
         </div>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
           {services.map((s) => {
             const Icon = s.icon;
             return (

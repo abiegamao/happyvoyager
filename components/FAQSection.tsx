@@ -1,44 +1,64 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import Link from "next/link";
 import { Plus, Minus, HelpCircle } from "lucide-react";
 import BookCallButton from "@/components/BookCallButton";
 
-const faqs = [
+const faqs: { question: string; answer: ReactNode }[] = [
   {
-    question: "What is the Spain Digital Nomad Visa?",
+    question: "Can I really do this without a lawyer?",
     answer:
-      "The Spain Digital Nomad Visa (officially called the Visa para teletrabajo de carácter internacional) is a residence visa that allows remote workers and freelancers to live and work legally in Spain. It's designed for people who work remotely for companies or clients outside of Spain. The visa is initially granted for up to 3 years and can be renewed.",
+      "Yes. I did it myself with a non-EU passport and zero legal help. Lawyers charge €2,000~€3,500 for the same process. The Playbook gives you the exact steps, templates, screenshots, and working links I used. If you want someone to check your work, the Guided Navigator adds a full document review. If you want it fully handled, the VIP Concierge does everything for you.",
+  },
+  {
+    question: "What if I'm not sure I qualify yet?",
+    answer:
+      "That's exactly why Phase 0 of the Playbook exists ~ it walks you through the eligibility check before you touch any paperwork. You need a minimum of ~€2,894/mo from foreign clients (employment, freelance, or business). The Playbook helps you figure out if this visa fits your situation before you spend time or money.",
+  },
+  {
+    question: "What if I start the trial and it's not for me?",
+    answer:
+      "Cancel anytime during your 14-day trial. No questions, no hoops. The trial gives you full access so you can explore every phase and decide if it's worth it. Most people know within the first few lessons.",
+  },
+  {
+    question: "I found free info online. Why would I pay for this?",
+    answer:
+      "Free info is scattered, outdated, and often wrong ~ especially for non-EU applicants. Spanish government links break constantly, and forums are full of conflicting advice. The Playbook is a tested system built from real experience: verified links, correct templates, step-by-step screenshots, and an AI assistant that answers your specific questions 24/7. It saves you weeks of research and helps avoid costly mistakes.",
+  },
+  {
+    question: "Can I bring my family with me?",
+    answer:
+      "Yes. Spain allows you to include your spouse or partner and dependent children. They can apply together with you or join later through family reunification. Each person needs their own documents, and the income requirement increases slightly per dependent. The Playbook covers this in detail.",
   },
   {
     question: "How long does the whole process take?",
     answer:
-      "The online application through the UGE portal typically takes 20–45 business days for a decision. Factor in time for gathering documents, apostilles, and translations, that can add 2–4 weeks. Start to approval: expect 2–3 months total.",
+      "The UGE portal decision usually takes 20~45 business days. Add 2~4 weeks for gathering documents, apostilles, and translations. From start to approval: expect about 2~3 months total. The Playbook gives you a timeline so you know exactly what to do and when.",
   },
   {
-    question: "What are the income requirements?",
-    answer:
-      "You need to prove a minimum monthly income of approximately €2,849 (200% of Spain's minimum wage). This can come from employment, freelance work, or business ownership. The key requirement is that your income must come from clients or employers outside of Spain.",
+    question: "Do I need to speak Spanish to apply?",
+    answer: (
+      <>
+        No language requirement for the visa. The UGE portal is in Spanish but the Playbook walks you through every screen with screenshots. Your documents just need certified translations ~ no test, no interview. Need a translator for your appointment? Our{" "}
+        <Link href="/translation-companion" className="text-[#e3a99c] underline underline-offset-2 hover:text-[#d69586] font-semibold">
+          Translation Companion
+        </Link>{" "}
+        service pairs you with a live interpreter who joins you at the NIE, TIE, or empadronamiento office so nothing gets lost. Basic Spanish helps with daily life, and we have a DELE A2 Playbook coming soon for that.
+      </>
+    ),
   },
   {
-    question: "Do I need a lawyer to apply?",
-    answer:
-      "No, that's exactly why this playbook exists. The process is straightforward with the right guidance. I applied without a lawyer and saved €2,000+. The playbook gives you everything you need. If you want hands-on support, the Strategy Call or full package is there for that.",
-  },
-  {
-    question: "Can I bring my family?",
-    answer:
-      "Yes. Spain allows you to include family members in your application or they can apply for family reunification after you receive your visa. This includes your spouse/partner and dependent children. Each family member needs their own documents, and income requirements increase slightly per person.",
-  },
-  {
-    question: "Do I need to speak Spanish?",
-    answer:
-      "No Spanish language requirement for the visa. That said, basic Spanish helps a lot with daily life and bureaucratic steps. The UGE portal is in Spanish, but the documents just need certified translations, no language test required.",
-  },
-  {
-    question: "What about taxes? Do I pay in Spain?",
-    answer:
-      "Yes, once you're a tax resident you'll be subject to Spanish taxes. The Beckham Law (Régimen Especial para Trabajadores Desplazados) offers a flat 24% tax rate for 6 years ~ but this applies to employed workers only, not autónomos (self-employed). If you're freelancing for foreign clients, your income is generally not considered Spanish-sourced and may be exempt. Tax rules vary by situation ~ always consult a Spanish gestor or tax advisor.",
+    question: "What about taxes once I move to Spain?",
+    answer: (
+      <>
+        Once you&apos;re a tax resident, you&apos;ll pay Spanish taxes. The Beckham Law offers a flat 24% rate for 6 years for employed workers. Freelancers have different rules depending on where their income comes from. Try our free{" "}
+        <Link href="/tax-calculator" className="text-[#e3a99c] underline underline-offset-2 hover:text-[#d69586] font-semibold">
+          Tax &amp; Autónomo Calculator
+        </Link>{" "}
+        to estimate your take-home pay. Phase 4 of the Playbook breaks down your tax obligations and renewal strategy. For your specific situation, always confirm with a Spanish tax advisor (gestor).
+      </>
+    ),
   },
 ];
 
@@ -114,9 +134,9 @@ export default function FAQSection() {
                   }`}
               >
                 <div className="px-5 md:px-7 pb-6">
-                  <p className="font-[family-name:var(--font-body)] text-[#6b6b6b] leading-relaxed text-base md:text-lg">
+                  <div className="font-[family-name:var(--font-body)] text-[#6b6b6b] leading-relaxed text-base md:text-lg">
                     {faq.answer}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>
