@@ -19,7 +19,10 @@ export async function GET(request: NextRequest) {
 
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    if (session.payment_status !== "paid") {
+    // Handle subscription checkout (trial or paid)
+    const isSubscription = session.mode === "subscription";
+
+    if (!isSubscription && session.payment_status !== "paid") {
       return NextResponse.json({ hasAccess: false });
     }
 
@@ -56,6 +59,16 @@ export async function GET(request: NextRequest) {
         .single();
 
       if (playbookData) {
+        // For subscriptions, get the subscription ID and status
+        let subscriptionStatus: string | null = null;
+        let stripeSubscriptionId: string | null = null;
+
+        if (isSubscription && session.subscription) {
+          stripeSubscriptionId = session.subscription as string;
+          const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+          subscriptionStatus = subscription.status === "trialing" ? "trialing" : "active";
+        }
+
         await supabase
           .from("playbook_purchases")
           .upsert(
@@ -64,6 +77,12 @@ export async function GET(request: NextRequest) {
               playbook_id: playbookData.id,
               stripe_session_id: session.id,
               stripe_customer_id: (session.customer as string) || null,
+              ...(isSubscription
+                ? {
+                    subscription_status: subscriptionStatus,
+                    stripe_subscription_id: stripeSubscriptionId,
+                  }
+                : {}),
             },
             { onConflict: "purchaser_id,playbook_id" }
           );

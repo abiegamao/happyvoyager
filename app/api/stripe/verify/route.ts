@@ -32,7 +32,7 @@ export async function POST(request: NextRequest) {
 
     const { data: access, error: accessError } = await supabase
       .from("playbook_purchases")
-      .select("id, playbooks!inner(slug)")
+      .select("id, subscription_status, access_expires_at, playbooks!inner(slug)")
       .eq("purchaser_id", purchaser.id)
       .eq("playbooks.slug", playbookSlug)
       .maybeSingle();
@@ -42,8 +42,28 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ hasAccess: false });
     }
 
+    if (!access) {
+      return NextResponse.json({ hasAccess: false });
+    }
+
+    // Determine access based on subscription status
+    const { subscription_status, access_expires_at } = access;
+
+    let hasAccess = false;
+
+    if (!subscription_status) {
+      // One-time purchase ~ permanent access
+      hasAccess = true;
+    } else if (subscription_status === "active" || subscription_status === "trialing") {
+      // Active subscription or in trial
+      hasAccess = true;
+    } else if (subscription_status === "canceled" && access_expires_at) {
+      // Canceled but still within paid period
+      hasAccess = new Date(access_expires_at) > new Date();
+    }
+
     return NextResponse.json({
-      hasAccess: !!access,
+      hasAccess,
       name: purchaser.name ?? null,
     });
   } catch (error) {
