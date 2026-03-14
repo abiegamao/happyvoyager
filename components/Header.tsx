@@ -14,12 +14,14 @@ import {
   IconSchool,
   IconClipboardCheck,
   IconCalendarStats,
+  IconCalculator,
   IconBroadcast,
   IconListCheck,
   IconTrophy,
   IconSparkles,
   IconBook,
   IconFlag,
+  IconFriends,
 } from "@tabler/icons-react";
 import {
   Navbar,
@@ -82,6 +84,13 @@ const freeToolsItems: { icon: NavIcon; title: string; sub: string; link: string;
     link: "/schengen-calculator",
     bg: "#e0eaeb",
   },
+  {
+    icon: IconCalculator,
+    title: "Tax & Autónomo Calculator",
+    sub: "Estimate your take-home pay in Spain",
+    link: "/tax-calculator",
+    bg: "#d4e0d3",
+  },
 ];
 
 const servicesDropdown: { icon: NavIcon; title: string; sub: string; link: string; bg: string }[] = [
@@ -89,6 +98,7 @@ const servicesDropdown: { icon: NavIcon; title: string; sub: string; link: strin
   { icon: IconCalendar, title: "Book Appointment (NIE/TIE)", sub: "Lock in your NIE or TIE date", link: "/appointments", bg: "#e0eaeb" },
   { icon: IconLanguage, title: "Document Translations", sub: "Certified, fast & apostille-ready", link: "/translations", bg: "#d4e0d3" },
   { icon: IconPlane, title: "Schengen Visa Assistance", sub: "Bridge the gap while you wait", link: "/schengen-visa", bg: "#f2d6c9" },
+  { icon: IconFriends, title: "Translation Companion", sub: "Bilingual support at your appointment", link: "/translation-companion", bg: "#e7ddd3" },
 ];
 
 const spainVisasDropdown: { icon: NavIcon; title: string; sub: string; link: string; bg: string; badge: string | null }[] = [

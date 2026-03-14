@@ -9,6 +9,8 @@ import {
   File,
   Sparkles,
   Link as LinkIcon,
+  MessageCircle,
+  Bot,
 } from "lucide-react";
 
 const mainFeatures = [
@@ -84,23 +86,9 @@ export default function PlaybookPreviewSection() {
             Packaged for You
           </h2>
 
-          <div className="flex items-center justify-center gap-2 mb-8">
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full border-2 border-[#f9f5f2] bg-[#e7ddd3] flex items-center justify-center text-[10px] font-bold text-[#3a3a3a] overflow-hidden">
-                  <img src={`/assets/avatar-${i}.jpg`} alt="Nomad" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
-                  <span className="bg-[#e7ddd3] w-full h-full flex items-center justify-center">N</span>
-                </div>
-              ))}
-            </div>
-            <p className="font-[family-name:var(--font-body)] text-sm font-bold text-[#3a3a3a]">
-              Join 420+ Nomads on the waitlist
-            </p>
-          </div>
-
           <p className="font-[family-name:var(--font-body)] text-lg text-[#6b6b6b] leading-relaxed mb-8">
-            From eligibility check to visa approval, this is my complete,
-            step-by-step system. No lawyers. No guesswork. Just the playbook I used myself.
+            Not just a visa guide ~ a complete system that takes you from &ldquo;should I move to Spain?&rdquo;
+            all the way to Spanish citizenship. 6 phases, 24 lessons, zero guesswork.
           </p>
         </div>
 
@@ -124,6 +112,67 @@ export default function PlaybookPreviewSection() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* AI Guide Highlight */}
+        <div className="relative rounded-[2.5rem] p-8 md:p-12 mb-8 bg-gradient-to-br from-[#3a3a3a] to-[#2a2a2a] text-white overflow-hidden">
+          <div className="absolute top-0 right-0 w-80 h-80 bg-[#e3a99c]/10 rounded-full blur-[80px] pointer-events-none" />
+          <div className="absolute bottom-0 left-0 w-60 h-60 bg-[#8fa38d]/10 rounded-full blur-[60px] pointer-events-none" />
+
+          <div className="relative z-10 flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            {/* Left ~ icon + text */}
+            <div className="flex-1 text-center lg:text-left">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 mb-6">
+                <Bot className="w-4 h-4 text-[#e3a99c]" />
+                <span className="text-xs font-bold tracking-widest text-[#e3a99c] uppercase">
+                  AI-Powered
+                </span>
+              </div>
+
+              <h3 className="font-[family-name:var(--font-heading)] text-3xl md:text-4xl font-bold mb-4 leading-tight">
+                Your AI guide inside{" "}
+                <span className="font-script text-[#e3a99c] text-4xl md:text-5xl relative inline-block transform -rotate-1">
+                  every lesson
+                </span>
+              </h3>
+
+              <p className="font-[family-name:var(--font-body)] text-[#e7ddd3] leading-relaxed max-w-lg">
+                Stuck on a step? Ask Abie ~ your AI assistant trained on the entire playbook.
+                Get instant answers about eligibility, documents, timelines, and next steps
+                without leaving the lesson.
+              </p>
+            </div>
+
+            {/* Right ~ mock chat */}
+            <div className="w-full max-w-sm flex-shrink-0">
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/10 p-5 space-y-3">
+                {/* User message */}
+                <div className="flex justify-end">
+                  <div className="bg-[#e3a99c] rounded-2xl rounded-br-md px-4 py-2.5 max-w-[85%]">
+                    <p className="text-sm font-medium text-white">
+                      Do I need to apostille my degree if it&apos;s from the Philippines?
+                    </p>
+                  </div>
+                </div>
+                {/* AI response */}
+                <div className="flex gap-2">
+                  <div className="w-7 h-7 rounded-full bg-[#e3a99c]/30 flex items-center justify-center flex-shrink-0 mt-1">
+                    <MessageCircle className="w-3.5 h-3.5 text-[#e3a99c]" />
+                  </div>
+                  <div className="bg-white/10 rounded-2xl rounded-bl-md px-4 py-2.5">
+                    <p className="text-sm text-[#e7ddd3] leading-relaxed">
+                      Yes! Philippine degrees need apostille via DFA, then
+                      sworn translation to Spanish. Phase 1, Lesson 5 walks
+                      you through it step by step.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <p className="text-center text-xs text-white/40 mt-3">
+                Available 24/7 inside every Playbook Pro lesson
+              </p>
+            </div>
+          </div>
         </div>
 
         {/* Bonuses Section */}
