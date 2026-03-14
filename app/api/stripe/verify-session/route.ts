@@ -92,6 +92,7 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({
       hasAccess: true,
       email: email.toLowerCase(),
+      name: session.customer_details?.name ?? null,
       slug: playbookSlug,
     });
   } catch (error) {
