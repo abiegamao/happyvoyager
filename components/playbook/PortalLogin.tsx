@@ -309,7 +309,10 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
           {purchaseIntent && (
             <div className="mb-4 px-4 py-3 rounded-xl bg-[#e3a99c]/10 border border-[#e3a99c]/30 text-center">
               <p className="text-[13px] text-[#3a3a3a] font-semibold">
-                Log in or create an account to complete your purchase
+                Create a free account to start your trial
+              </p>
+              <p className="text-[11px] text-[#787774] mt-0.5">
+                No credit card required ~ try the playbook free for 14 days
               </p>
             </div>
           )}
@@ -337,9 +340,16 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
                       : "text-[#b0a89e] hover:text-[#787774]"
                   }`}
                 >
-                  Sign Up
+                  Sign Up Free
                 </button>
               </div>
+            )}
+
+            {/* Free signup note */}
+            {mode === "signup" && !purchaseIntent && (
+              <p className="text-[12px] text-[#787774] text-center -mt-3 mb-5">
+                Free to sign up ~ start a 14-day trial of any playbook
+              </p>
             )}
 
             {mode === "forgot" && (
@@ -467,7 +477,7 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
                   </>
                 ) : (
                   <>
-                    {mode === "forgot" ? "Send reset link" : mode === "signup" ? "Create account" : "Log in"}
+                    {mode === "forgot" ? "Send reset link" : mode === "signup" ? "Create free account" : "Log in"}
                     <ArrowRight className="w-4 h-4" />
                   </>
                 )}
@@ -477,9 +487,9 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
 
           {/* Bottom link */}
           <p className="mt-6 text-[13px] text-[#787774] text-center">
-            Haven&apos;t purchased yet?{" "}
+            Sign up is free ~ try the playbook with a{" "}
             <Link href="/#pricing" className="text-[#e3a99c] font-semibold hover:underline">
-              See the Packages →
+              14-day free trial →
             </Link>
           </p>
 
