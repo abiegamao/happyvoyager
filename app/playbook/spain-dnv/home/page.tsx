@@ -1,11 +1,37 @@
 "use client";
 
 import { CheckCircle, Globe, Instagram, Youtube, Linkedin, Clock, ArrowRight, Sparkles, Mail, CalendarDays, Flag } from "lucide-react";
+import {
+  IconTarget,
+  IconClipboardList,
+  IconFileText,
+  IconPlane,
+  IconRefresh,
+  IconTrophy,
+} from "@tabler/icons-react";
 import Link from "next/link";
 import Image from "next/image";
 import { phases, playbookMeta, totalLessons } from "../data";
+import { WAITLIST_PLAYBOOKS } from "@/data/playbooks";
 import { useEffect, useState } from "react";
+import { motion } from "motion/react";
 import AnimateIn from "@/components/ui/AnimateIn";
+
+const phaseIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+  qualify: IconTarget,
+  prepare: IconClipboardList,
+  apply: IconFileText,
+  arrive: IconPlane,
+  maintain: IconRefresh,
+  "become-spanish": IconTrophy,
+};
+
+const journeyChain = [
+  { emoji: "🇪🇺", title: "Schengen First", slug: "schengen-first", accent: "#bbcccd", label: "Chapter 0" },
+  { emoji: "🇪🇸", title: "Spain DNV", slug: "spain-dnv", accent: "#e3a99c", label: "You are here", current: true },
+  { emoji: "🌞", title: "Soft Landing", slug: "soft-landing", accent: "#c47c5a", label: "Chapter 2" },
+  { emoji: "🏆", title: "Spanish Passport", slug: "spanish-passport", accent: "#c9a84c", label: "Chapter 3" },
+];
 
 export default function PlaybookHome() {
   const [name, setName] = useState("");
@@ -217,66 +243,211 @@ export default function PlaybookHome() {
             </Link>
           </AnimateIn>
 
-          {/* Phases overview */}
-          <div className="space-y-4">
+          {/* Roadmap ~ Premium Timeline */}
+          <div className="mt-4">
             <AnimateIn delay={0.35}>
-              <div className="mb-2">
+              <div className="mb-8">
                 <h2 className="text-[28px] font-bold tracking-tight" style={{ color: "var(--pb-text)" }}>
                   Your <span className="font-script text-[#e3a99c] text-[32px]">Roadmap</span>
                 </h2>
                 <p className="text-[14px] mt-1" style={{ color: "var(--pb-text-muted)" }}>
-                  Follow the phases in order for the best results.
+                  6 phases. Application to citizenship.
                 </p>
               </div>
             </AnimateIn>
 
-            {phases.map((phase, idx) => {
-              const firstLesson = parseInt(phase.lessons[0]?.number ?? "1");
-              return (
-                <AnimateIn key={phase.id} delay={0.4 + idx * 0.08}>
-                  <div className="rounded-2xl glass-pb overflow-hidden playbook-card group">
-                    <div className="h-0.5" style={{ background: `linear-gradient(90deg, ${phase.accent}, transparent)` }} />
-                    <div className="p-6 flex items-start justify-between gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-3 mb-1">
-                          <span
-                            className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
-                            style={{ color: phase.accent, backgroundColor: `${phase.accent}15` }}
-                          >
-                            {phase.phase}
-                          </span>
-                          <span className="text-[12px]" style={{ color: "var(--pb-text-muted)" }}>
-                            {phase.lessons.length} lessons
-                            {phase.lessons.filter((l: any) => l.free).length > 0 && (
-                              <span className="text-[#8fa38d] ml-1">
-                                ({phase.lessons.filter((l: any) => l.free).length} free)
-                              </span>
-                            )}
-                          </span>
-                        </div>
-                        <h3 className="text-[18px] font-bold mb-1" style={{ color: "var(--pb-text)" }}>
-                          {phase.title}
-                        </h3>
-                        <p className="text-[14px] leading-relaxed mb-2" style={{ color: "var(--pb-text-secondary)" }}>
-                          {phase.description}
-                        </p>
-                        <p className="text-[12px] italic" style={{ color: "var(--pb-text-muted)" }}>
-                          {phase.milestone}
-                        </p>
-                      </div>
+            <div className="relative">
+              {/* Animated timeline line */}
+              <motion.div
+                className="absolute left-[19px] top-0 bottom-0 w-px origin-top"
+                style={{ background: "linear-gradient(180deg, #e3a99c, #8fa38d, #c9a84c, #e3a99c)" }}
+                initial={{ scaleY: 0, opacity: 0 }}
+                whileInView={{ scaleY: 1, opacity: 0.3 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, ease: "easeOut", delay: 0.4 }}
+              />
+
+              <div className="space-y-1">
+                {phases.map((phase, idx) => {
+                  const firstLesson = parseInt(phase.lessons[0]?.number ?? "1");
+                  const PhaseIcon = phaseIcons[phase.id] ?? IconTarget;
+                  const freeCount = phase.lessons.filter((l: any) => l.free).length;
+
+                  return (
+                    <motion.div
+                      key={phase.id}
+                      initial={{ opacity: 0, x: -12 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.5, delay: 0.15 * idx, ease: [0.25, 0.46, 0.45, 0.94] }}
+                    >
                       <Link
                         href={`/playbook/spain-dnv/lessons/lesson-${firstLesson}`}
-                        className="flex items-center gap-1.5 text-[13px] font-medium flex-shrink-0 transition-all mt-1 group-hover:gap-2.5"
-                        style={{ color: phase.accent }}
+                        className="group flex items-center gap-4 py-3.5 px-2 -mx-2 rounded-xl transition-colors"
+                        style={{ backgroundColor: "transparent" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--pb-surface-hover)"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "transparent"; }}
                       >
-                        Start
-                        <ArrowRight className="w-3.5 h-3.5" />
+                        {/* Icon node */}
+                        <motion.div
+                          className="relative z-[1] w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm"
+                          style={{ backgroundColor: `${phase.accent}18`, border: `1px solid ${phase.accent}30` }}
+                          whileHover={{ scale: 1.1 }}
+                          transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                        >
+                          <PhaseIcon className="w-[18px] h-[18px]" style={{ color: phase.accent }} strokeWidth={2} />
+                        </motion.div>
+
+                        {/* Content */}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: phase.accent }}>
+                              {phase.phase}
+                            </span>
+                            <span className="text-[11px]" style={{ color: "var(--pb-text-muted)" }}>
+                              {phase.lessons.length} lessons
+                              {freeCount > 0 && (
+                                <span className="text-[#8fa38d] ml-1">· {freeCount} free</span>
+                              )}
+                            </span>
+                          </div>
+                          <h3 className="text-[16px] font-bold leading-tight" style={{ color: "var(--pb-text)" }}>
+                            {phase.title}
+                          </h3>
+                        </div>
+
+                        {/* Arrow */}
+                        <ArrowRight
+                          className="w-4 h-4 flex-shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                          style={{ color: phase.accent }}
+                        />
                       </Link>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          {/* ─── Connected Playbooks ─── */}
+          <div className="mt-16">
+            <AnimateIn delay={0.85}>
+              <div className="mb-8">
+                <h2 className="text-[28px] font-bold tracking-tight" style={{ color: "var(--pb-text)" }}>
+                  The <span className="font-script text-[#c9a84c] text-[32px]">Journey</span>
+                </h2>
+                <p className="text-[14px] mt-1" style={{ color: "var(--pb-text-muted)" }}>
+                  This playbook is one chapter. Here&apos;s the full picture.
+                </p>
+              </div>
+            </AnimateIn>
+
+            {/* Journey Chain */}
+            <AnimateIn delay={0.88}>
+              <div className="rounded-2xl glass-pb overflow-hidden mb-8">
+                <div className="p-5 flex items-center justify-between gap-1 overflow-x-auto">
+                  {journeyChain.map((step, idx) => (
+                    <div key={step.slug} className="flex items-center gap-1 flex-shrink-0">
+                      <Link
+                        href={`/playbook/${step.slug}`}
+                        className={`relative flex flex-col items-center gap-1.5 px-4 py-3 rounded-xl transition-all group ${
+                          step.current ? "" : "hover:opacity-80"
+                        }`}
+                        style={step.current ? {
+                          backgroundColor: `${step.accent}15`,
+                          border: `1px solid ${step.accent}40`,
+                        } : undefined}
+                      >
+                        <span className="text-2xl">{step.emoji}</span>
+                        <span
+                          className="text-[11px] font-bold leading-tight text-center max-w-[80px]"
+                          style={{ color: step.current ? step.accent : "var(--pb-text-muted)" }}
+                        >
+                          {step.title}
+                        </span>
+                        {step.current && (
+                          <span
+                            className="text-[8px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full"
+                            style={{ backgroundColor: `${step.accent}20`, color: step.accent }}
+                          >
+                            You are here
+                          </span>
+                        )}
+                      </Link>
+                      {idx < journeyChain.length - 1 && (
+                        <motion.div
+                          className="text-[14px] font-light mx-1"
+                          style={{ color: "var(--pb-text-muted)" }}
+                          initial={{ opacity: 0, x: -4 }}
+                          whileInView={{ opacity: 0.4, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: 0.2 * idx, duration: 0.4 }}
+                        >
+                          →
+                        </motion.div>
+                      )}
                     </div>
-                  </div>
-                </AnimateIn>
-              );
-            })}
+                  ))}
+                </div>
+              </div>
+            </AnimateIn>
+
+            {/* Playbook Cards */}
+            <div className="grid md:grid-cols-2 gap-4">
+              {WAITLIST_PLAYBOOKS.map((playbook, idx) => {
+                const lessonCount = playbook.phases.reduce((acc, p) => acc + p.lessons.length, 0);
+                return (
+                  <motion.div
+                    key={playbook.slug}
+                    initial={{ opacity: 0, y: 16 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-30px" }}
+                    transition={{ duration: 0.5, delay: 0.1 * idx, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  >
+                    <Link
+                      href={`/playbook/${playbook.slug}`}
+                      className="block rounded-2xl glass-pb overflow-hidden group playbook-card h-full"
+                    >
+                      <div className="h-0.5" style={{ backgroundColor: playbook.catalog.accent }} />
+                      <div className="p-5">
+                        <div className="flex items-start gap-3.5">
+                          <span className="text-2xl flex-shrink-0 mt-0.5">{playbook.catalog.emoji}</span>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center gap-2 mb-1 flex-wrap">
+                              <h3 className="text-[15px] font-bold leading-tight" style={{ color: "var(--pb-text)" }}>
+                                {playbook.heroTitle}
+                              </h3>
+                              <span
+                                className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full flex-shrink-0"
+                                style={{
+                                  color: playbook.catalog.accent,
+                                  backgroundColor: `${playbook.catalog.accent}15`,
+                                  border: `1px solid ${playbook.catalog.accent}30`,
+                                }}
+                              >
+                                Early Access
+                              </span>
+                            </div>
+                            <p className="text-[13px] leading-relaxed line-clamp-2 mb-3" style={{ color: "var(--pb-text-muted)" }}>
+                              {playbook.catalog.tagline}
+                            </p>
+                            <div className="flex items-center gap-4 text-[11px]" style={{ color: "var(--pb-text-muted)" }}>
+                              <span className="font-semibold">{lessonCount} lessons</span>
+                              <span>{playbook.phases.length} phases</span>
+                              <span>{playbook.totalTime}</span>
+                            </div>
+                          </div>
+                          <ArrowRight
+                            className="w-4 h-4 flex-shrink-0 mt-1 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200"
+                            style={{ color: playbook.catalog.accent }}
+                          />
+                        </div>
+                      </div>
+                    </Link>
+                  </motion.div>
+                );
+              })}
+            </div>
           </div>
 
           {/* Final CTA */}
