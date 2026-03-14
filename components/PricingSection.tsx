@@ -29,8 +29,8 @@ const getPlaybookProPlan = (period: BillingPeriod) => ({
   color: "#bbcccd",
   paymentLink:
     period === "monthly"
-      ? "https://buy.stripe.com/test_MONTHLY_PLACEHOLDER"
-      : "https://buy.stripe.com/test_YEARLY_PLACEHOLDER",
+      ? "https://buy.stripe.com/aFa8wJ7GC68P4e54tD73G02"
+      : "https://buy.stripe.com/bJebIV0eagNth0Rd0973G03",
   playbookAccess: true,
 });
 
