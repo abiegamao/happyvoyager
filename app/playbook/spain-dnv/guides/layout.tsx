@@ -57,7 +57,7 @@ export default function GuidesLayout({
 
             <div>
               <div className="px-3 py-2 text-[12px] font-semibold mb-1" style={{ color: "var(--pb-text-secondary)" }}>
-                Get started
+                Free Reference
               </div>
 
               <div className="space-y-0.5">
@@ -67,15 +67,18 @@ export default function GuidesLayout({
                     <div key={guide.id} className="space-y-0.5">
                       <button
                         onClick={() => handleGuideClick(guide.id)}
-                        className={`flex items-center gap-2.5 w-full px-3 py-1.5 rounded-md text-left transition-colors group ${
+                        className={`flex items-center gap-2 w-full px-3 py-1.5 rounded-md text-left transition-colors group ${
                           isActive
                             ? "bg-[#e3a99c]/15 text-[#e3a99c] font-semibold border-l-2 border-[#e3a99c]"
                             : "font-medium"
                         }`}
                         style={!isActive ? { color: "var(--pb-text-muted)" } : undefined}
                       >
-                        <span className="text-[14px] truncate leading-tight py-0.5">
+                        <span className="text-[14px] truncate leading-tight py-0.5 flex-1">
                           {guide.title}
+                        </span>
+                        <span className="text-[10px] font-semibold text-[#8fa38d] bg-[#8fa38d]/15 px-1.5 py-0.5 rounded-full flex-shrink-0">
+                          Free
                         </span>
                       </button>
 

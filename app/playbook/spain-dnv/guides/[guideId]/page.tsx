@@ -170,9 +170,14 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
       <div className="flex-1 min-w-0">
         <div className="px-6 lg:px-12 py-0">
           <div className="max-w-[720px] mx-auto">
-            {/* Subtitle */}
-            <div className="font-semibold text-[14px] mb-3" style={{ color: "var(--pb-text-secondary)" }}>
-              {activeGuide.subtitle}
+            {/* Subtitle + Free badge */}
+            <div className="flex items-center gap-3 mb-3">
+              <span className="font-semibold text-[14px]" style={{ color: "var(--pb-text-secondary)" }}>
+                {activeGuide.subtitle}
+              </span>
+              <span className="text-[11px] font-semibold text-[#8fa38d] bg-[#8fa38d]/15 px-2 py-0.5 rounded-full">
+                Free Guide
+              </span>
             </div>
 
             {/* Title */}

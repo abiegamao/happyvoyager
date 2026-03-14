@@ -188,6 +188,35 @@ export default function PlaybookHome() {
             </div>
           </AnimateIn>
 
+          {/* Free Guides callout */}
+          <AnimateIn delay={0.32}>
+            <Link
+              href="/playbook/spain-dnv/guides"
+              className="block rounded-2xl glass-pb overflow-hidden playbook-card group"
+            >
+              <div className="h-0.5 bg-[#8fa38d]" />
+              <div className="p-6 flex items-center justify-between gap-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[11px] font-bold uppercase tracking-wider text-[#8fa38d] bg-[#8fa38d]/15 px-2 py-0.5 rounded">
+                      Free
+                    </span>
+                  </div>
+                  <h3 className="text-[18px] font-bold mb-1" style={{ color: "var(--pb-text)" }}>
+                    Reference Guides
+                  </h3>
+                  <p className="text-[14px] leading-relaxed" style={{ color: "var(--pb-text-secondary)" }}>
+                    Visa basics, eligibility, document checklist, application process ~ browse free reference material before starting the course.
+                  </p>
+                </div>
+                <span className="flex items-center gap-1.5 text-[13px] font-medium flex-shrink-0 transition-all text-[#8fa38d] group-hover:gap-2.5">
+                  Browse
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </span>
+              </div>
+            </Link>
+          </AnimateIn>
+
           {/* Phases overview */}
           <div className="space-y-4">
             <AnimateIn delay={0.35}>
@@ -218,6 +247,11 @@ export default function PlaybookHome() {
                           </span>
                           <span className="text-[12px]" style={{ color: "var(--pb-text-muted)" }}>
                             {phase.lessons.length} lessons
+                            {phase.lessons.filter((l: any) => l.free).length > 0 && (
+                              <span className="text-[#8fa38d] ml-1">
+                                ({phase.lessons.filter((l: any) => l.free).length} free)
+                              </span>
+                            )}
                           </span>
                         </div>
                         <h3 className="text-[18px] font-bold mb-1" style={{ color: "var(--pb-text)" }}>

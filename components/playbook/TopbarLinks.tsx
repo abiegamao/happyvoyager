@@ -24,7 +24,7 @@ export function TopbarLinks() {
         pathname === "/playbook/spain-dnv",
     },
     {
-      label: "Guides",
+      label: "Free Guides",
       href: "/playbook/spain-dnv/guides",
       icon: IconBook,
       active: pathname.includes("/guides"),
