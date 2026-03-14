@@ -24,7 +24,7 @@ import { ProgressContext } from "./progress-context";
 import { PlaybookThemeProvider, usePlaybookTheme } from "./theme-context";
 import Footer from "@/components/Footer";
 
-const phaseIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+const phaseIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number; style?: React.CSSProperties }>> = {
   qualify: IconTarget,
   prepare: IconClipboardList,
   apply: IconFileText,
