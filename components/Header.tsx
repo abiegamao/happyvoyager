@@ -77,8 +77,8 @@ const freeToolsItems: { icon: NavIcon; title: string; sub: string; link: string;
   },
   {
     icon: IconCalendarStats,
-    title: "Schengen Day & Budget Tracker",
-    sub: "Track your 90/180 days and budget",
+    title: "Schengen Trip Tracker",
+    sub: "90/180 compliance + budget by country",
     link: "/schengen-calculator",
     bg: "#e0eaeb",
   },
