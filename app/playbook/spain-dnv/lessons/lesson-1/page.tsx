@@ -20,6 +20,8 @@ import {
   Sparkles,
   Lock,
 } from "lucide-react";
+import AnimateIn from "@/components/ui/AnimateIn";
+import { motion } from "motion/react";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -248,7 +250,7 @@ function calculateResult(answers: Answers): Result {
       summary:
         "As an EU/EEA citizen, you don't need the Digital Nomad Visa. You can register directly in Spain as an EU resident through the EU Registration Certificate.",
       color: "#8fa38d",
-      bg: "#d4e0d3",
+      bg: "rgba(143,163,141,0.15)",
       applicationPath:
         "EU Registration Certificate, apply at your local Oficina de Extranjeria.",
       workTrack:
@@ -271,7 +273,7 @@ function calculateResult(answers: Answers): Result {
       summary:
         "You don't have an active remote income setup yet, but the DNV is achievable with the right groundwork. Map out what you need to qualify ~ income targets, contracts, documentation strategy.",
       color: "#7a8f90",
-      bg: "#e0eaeb",
+      bg: "rgba(122,143,144,0.15)",
       applicationPath:
         "To be determined once you have an active remote income setup.",
       workTrack:
@@ -388,9 +390,9 @@ function calculateResult(answers: Answers): Result {
   };
 
   const colors = {
-    strong: { color: "#8fa38d", bg: "#d4e0d3" },
-    likely: { color: "#b8943a", bg: "#fef3cd" },
-    review: { color: "#c0625a", bg: "#fde8e6" },
+    strong: { color: "#8fa38d", bg: "rgba(143,163,141,0.15)" },
+    likely: { color: "#c9a84c", bg: "rgba(201,168,76,0.15)" },
+    review: { color: "#c0625a", bg: "rgba(192,98,90,0.15)" },
   };
 
   return {
@@ -471,114 +473,119 @@ export default function Lesson1Page() {
     : null;
 
   return (
-    <div className="flex w-full h-full bg-none text-[#37352f] font-sans">
+    <div className="flex w-full h-full font-sans" style={{ color: "var(--pb-text)" }}>
       <div className="flex-1 px-[calc(min(64px,5vw))] lg:px-12 py-6">
         <div className="max-w-[840px] pl-0 lg:pl-10 mx-auto w-full pb-24">
           {/* Breadcrumb */}
-          <nav className="flex items-center gap-1.5 text-[13px] text-[#787774] mb-8 flex-wrap">
+          <nav className="flex items-center gap-1.5 text-[13px] mb-8 flex-wrap" style={{ color: "var(--pb-text-muted)" }}>
             <Link
               href="/playbook/spain-dnv/home"
-              className="hover:text-[#37352f] transition-colors"
+              className="hover:opacity-70 transition-colors"
             >
               Playbook
             </Link>
-            <ChevronRight className="w-3 h-3" />
+            <ChevronRight className="w-3 h-3" style={{ color: "var(--pb-text-muted)" }} />
             <span>
               {phase.phase}: {phase.title}
             </span>
-            <ChevronRight className="w-3 h-3" />
-            <span className="text-[#37352f] font-medium">Lesson 01</span>
+            <ChevronRight className="w-3 h-3" style={{ color: "var(--pb-text-muted)" }} />
+            <span className="font-medium" style={{ color: "var(--pb-text)" }}>Lesson 01</span>
           </nav>
 
           {/* Lesson Header */}
-          <div className="mb-10 border-b border-[#EAE9E9] pb-8">
-            <div className="flex items-center gap-3 mb-4 flex-wrap">
-              <span
-                className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
-                style={{ color: phase.accent, backgroundColor: phase.bg }}
-              >
-                {phase.phase}
-              </span>
-              <span
-                className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full"
-                style={{ backgroundColor: phase.bg, color: phase.accent }}
-              >
-                Interactive Tool
-              </span>
-              <span className="text-[12px] text-[#787774] flex items-center gap-1">
-                <Clock className="w-3 h-3" />2 min
-              </span>
-              <span className="text-[11px] font-semibold text-[#2383e2] bg-[#e8f0fe] px-2 py-0.5 rounded-full">
-                Free
-              </span>
+          <AnimateIn delay={0}>
+            <div className="mb-10 pb-8" style={{ borderBottom: "1px solid var(--pb-border)" }}>
+              <div className="flex items-center gap-3 mb-4 flex-wrap">
+                <span
+                  className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded"
+                  style={{ color: phase.accent, backgroundColor: `${phase.accent}15` }}
+                >
+                  {phase.phase}
+                </span>
+                <span
+                  className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full"
+                  style={{ backgroundColor: `${phase.accent}15`, color: phase.accent }}
+                >
+                  Interactive Tool
+                </span>
+                <span className="text-[12px] flex items-center gap-1" style={{ color: "var(--pb-text-muted)" }}>
+                  <Clock className="w-3 h-3" />2 min
+                </span>
+                <span className="text-[11px] font-semibold text-[#8fa38d] bg-[#8fa38d]/15 px-2 py-0.5 rounded-full">
+                  Free
+                </span>
+              </div>
+
+              <h1 className="text-[36px] leading-[1.15] font-bold tracking-tight mb-4" style={{ color: "var(--pb-text)" }}>
+                Is the DNV Right for You?
+              </h1>
+
+              <p className="text-[17px] leading-[1.7]" style={{ color: "var(--pb-text-secondary)" }}>
+                Answer 6 quick questions about your work setup, income, and
+                situation. Get a personalised eligibility verdict and your best
+                application path.
+              </p>
             </div>
-
-            <h1 className="text-[36px] leading-[1.15] font-bold text-[#37352f] tracking-tight mb-4">
-              Is the DNV Right for You?
-            </h1>
-
-            <p className="text-[17px] leading-[1.7] text-[#787774]">
-              Answer 6 quick questions about your work setup, income, and
-              situation. Get a personalised eligibility verdict and your best
-              application path.
-            </p>
-          </div>
+          </AnimateIn>
 
           {/* ── INTRO ── */}
           {isIntro && (
-            <div className="mb-10">
-              <div className="rounded-xl border border-[#EAE9E9] p-6 mb-6">
-                <h3 className="text-[16px] font-semibold text-[#37352f] mb-4">
-                  What you&apos;ll get
-                </h3>
-                <div className="space-y-3">
-                  {[
-                    {
-                      icon: CheckCircle,
-                      text: "Eligibility verdict based on your income, work setup, and background",
-                    },
-                    {
-                      icon: MapPin,
-                      text: "Best application path ~ UGE in Spain vs. consulate abroad",
-                    },
-                    {
-                      icon: Briefcase,
-                      text: "Your employment track and which documents you'll need",
-                    },
-                    {
-                      icon: Clock,
-                      text: "Personalised next steps to start or strengthen your application",
-                    },
-                  ].map((item, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                      <div
-                        className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                        style={{
-                          backgroundColor: phase.bg,
-                          color: phase.accent,
-                        }}
-                      >
-                        <item.icon className="w-3 h-3" />
+            <AnimateIn delay={0.1}>
+              <div className="mb-10">
+                <div className="rounded-xl glass-pb p-6 mb-6">
+                  <h3 className="text-[16px] font-semibold mb-4" style={{ color: "var(--pb-text)" }}>
+                    What you&apos;ll get
+                  </h3>
+                  <div className="space-y-3">
+                    {[
+                      {
+                        icon: CheckCircle,
+                        text: "Eligibility verdict based on your income, work setup, and background",
+                      },
+                      {
+                        icon: MapPin,
+                        text: "Best application path ~ UGE in Spain vs. consulate abroad",
+                      },
+                      {
+                        icon: Briefcase,
+                        text: "Your employment track and which documents you'll need",
+                      },
+                      {
+                        icon: Clock,
+                        text: "Personalised next steps to start or strengthen your application",
+                      },
+                    ].map((item, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <div
+                          className="w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                          style={{
+                            backgroundColor: `${phase.accent}15`,
+                            color: phase.accent,
+                          }}
+                        >
+                          <item.icon className="w-3 h-3" />
+                        </div>
+                        <span className="text-[14px] leading-relaxed" style={{ color: "var(--pb-text-secondary)" }}>
+                          {item.text}
+                        </span>
                       </div>
-                      <span className="text-[14px] text-[#37352f] leading-relaxed">
-                        {item.text}
-                      </span>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
                 </div>
-              </div>
 
-              <button
-                onClick={() => setStep(1)}
-                className="flex items-center gap-2 px-6 py-3 rounded-lg bg-[#37352f] text-white text-[14px] font-semibold hover:bg-[#2f2f2f] transition-colors"
-              >
-                Start the Assessment
-                <ArrowRight className="w-4 h-4" />
-              </button>
-              <p className="mt-3 text-[12px] text-[#787774]">
-                Free ~ Takes about 2 minutes
-              </p>
-            </div>
+                <motion.button
+                  onClick={() => setStep(1)}
+                  whileTap={{ scale: 0.97 }}
+                  className="flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-[#2a2a2a] text-[14px] font-semibold hover:bg-white/90 transition-colors"
+                >
+                  Start the Assessment
+                  <ArrowRight className="w-4 h-4" />
+                </motion.button>
+                <p className="mt-3 text-[12px]" style={{ color: "var(--pb-text-muted)" }}>
+                  Free ~ Takes about 2 minutes
+                </p>
+              </div>
+            </AnimateIn>
           )}
 
           {/* ── QUESTIONS ── */}
@@ -595,16 +602,16 @@ export default function Lesson1Page() {
                         style={{
                           backgroundColor:
                             i + 1 < step
-                              ? phase.bg
+                              ? `${phase.accent}20`
                               : i + 1 === step
-                                ? "#37352f"
-                                : "#f7f7f5",
+                                ? "var(--pb-pill-bg)"
+                                : "var(--pb-input-bg)",
                           color:
                             i + 1 < step
                               ? phase.accent
                               : i + 1 === step
-                                ? "white"
-                                : "#c4c4c2",
+                                ? "var(--pb-text)"
+                                : "var(--pb-text-muted)",
                         }}
                       >
                         {i + 1 < step ? (
@@ -615,30 +622,32 @@ export default function Lesson1Page() {
                       </div>
                     ))}
                   </div>
-                  <span className="text-[12px] font-medium text-[#787774]">
+                  <span className="text-[12px] font-medium" style={{ color: "var(--pb-text-muted)" }}>
                     {step} / {totalSteps}
                   </span>
                 </div>
-                <div className="h-1.5 bg-[#EAE9E9] rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-[#37352f] rounded-full transition-all duration-500"
-                    style={{ width: `${(step / totalSteps) * 100}%` }}
+                <div className="h-1.5 rounded-full overflow-hidden" style={{ backgroundColor: "var(--pb-border)" }}>
+                  <motion.div
+                    className="h-full bg-gradient-to-r from-[#e3a99c] to-[#c9a84c] rounded-full"
+                    initial={false}
+                    animate={{ width: `${(step / totalSteps) * 100}%` }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                   />
                 </div>
               </div>
 
               {/* Question */}
-              <div className="rounded-xl border border-[#EAE9E9] p-6 mb-5">
+              <div className="rounded-xl glass-pb p-6 mb-5">
                 <span
                   className="inline-block text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded mb-4"
-                  style={{ color: phase.accent, backgroundColor: phase.bg }}
+                  style={{ color: phase.accent, backgroundColor: `${phase.accent}15` }}
                 >
                   {currentQuestion.tag}
                 </span>
-                <h2 className="text-[22px] font-bold text-[#37352f] mb-2 leading-tight">
+                <h2 className="text-[22px] font-bold mb-2 leading-tight" style={{ color: "var(--pb-text)" }}>
                   {currentQuestion.title}
                 </h2>
-                <p className="text-[14px] text-[#787774] mb-6 leading-relaxed">
+                <p className="text-[14px] mb-6 leading-relaxed" style={{ color: "var(--pb-text-secondary)" }}>
                   {currentQuestion.subtitle}
                 </p>
 
@@ -646,35 +655,60 @@ export default function Lesson1Page() {
                   {currentQuestion.options.map((option) => {
                     const isChosen = selected === option.id;
                     return (
-                      <button
+                      <motion.button
                         key={option.id}
                         onClick={() => handleSelect(option.id)}
-                        className={`w-full flex items-center gap-3 p-4 rounded-lg border-2 text-left transition-all ${
+                        whileTap={{ scale: 0.98 }}
+                        className={`w-full flex items-center gap-3 p-4 rounded-xl border-2 text-left transition-all ${
                           isChosen
-                            ? "border-[#37352f] bg-[#f7f7f5]"
-                            : "border-[#EAE9E9] hover:border-[#c4c4c2] hover:bg-[#fafafa]"
+                            ? "border-[#e3a99c] bg-[#e3a99c]/10"
+                            : ""
                         }`}
+                        style={
+                          !isChosen
+                            ? {
+                                borderColor: "var(--pb-border)",
+                              }
+                            : undefined
+                        }
+                        onMouseEnter={(e) => {
+                          if (!isChosen) {
+                            e.currentTarget.style.borderColor = "var(--pb-border)";
+                            e.currentTarget.style.backgroundColor = "var(--pb-surface-hover)";
+                          }
+                        }}
+                        onMouseLeave={(e) => {
+                          if (!isChosen) {
+                            e.currentTarget.style.borderColor = "var(--pb-border)";
+                            e.currentTarget.style.backgroundColor = "transparent";
+                          }
+                        }}
                       >
                         <div className="flex-1 min-w-0">
-                          <p className="text-[14px] font-semibold text-[#37352f]">
+                          <p className="text-[14px] font-semibold" style={{ color: "var(--pb-text)" }}>
                             {option.label}
                           </p>
-                          <p className="text-[12px] text-[#787774] mt-0.5">
+                          <p className="text-[12px] mt-0.5" style={{ color: "var(--pb-text-muted)" }}>
                             {option.description}
                           </p>
                         </div>
                         <div
                           className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-all ${
                             isChosen
-                              ? "border-[#37352f] bg-[#37352f]"
-                              : "border-[#c4c4c2]"
+                              ? "border-[#e3a99c] bg-[#e3a99c]"
+                              : ""
                           }`}
+                          style={
+                            !isChosen
+                              ? { borderColor: "var(--pb-text-muted)" }
+                              : undefined
+                          }
                         >
                           {isChosen && (
                             <div className="w-2 h-2 rounded-full bg-white" />
                           )}
                         </div>
-                      </button>
+                      </motion.button>
                     );
                   })}
                 </div>
@@ -685,207 +719,234 @@ export default function Lesson1Page() {
                 {step > 1 && (
                   <button
                     onClick={handleBack}
-                    className="flex items-center gap-2 px-5 py-3 rounded-lg border border-[#EAE9E9] text-[#787774] text-[14px] font-semibold hover:bg-[#f7f7f5] transition-colors"
+                    className="flex items-center gap-2 px-5 py-3 rounded-xl text-[14px] font-semibold transition-colors"
+                    style={{
+                      border: "1px solid var(--pb-border)",
+                      color: "var(--pb-text-secondary)",
+                    }}
                   >
                     <ArrowLeft className="w-4 h-4" />
                     Back
                   </button>
                 )}
-                <button
+                <motion.button
                   onClick={handleNext}
                   disabled={!selected}
-                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-[14px] font-semibold transition-all ${
+                  whileTap={selected ? { scale: 0.97 } : {}}
+                  className={`flex-1 flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-[14px] font-semibold transition-all ${
                     selected
-                      ? "bg-[#37352f] text-white hover:bg-[#2f2f2f]"
-                      : "bg-[#EAE9E9] text-[#c4c4c2] cursor-not-allowed"
+                      ? "bg-white text-[#2a2a2a] hover:bg-white/90"
+                      : "cursor-not-allowed"
                   }`}
+                  style={
+                    !selected
+                      ? {
+                          backgroundColor: "var(--pb-input-bg)",
+                          color: "var(--pb-text-muted)",
+                        }
+                      : undefined
+                  }
                 >
                   {step === totalSteps ? "See My Result" : "Next Question"}
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </motion.button>
               </div>
             </div>
           )}
 
           {/* ── RESULT ── */}
           {isResult && result && StatusIcon && (
-            <div className="mb-10">
-              {/* Verdict */}
-              <div
-                className="rounded-xl p-6 mb-6 border"
-                style={{
-                  backgroundColor: result.bg,
-                  borderColor: result.color + "40",
-                }}
-              >
-                <div className="flex items-start gap-4">
-                  <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
-                    style={{ backgroundColor: result.color + "25" }}
-                  >
-                    <StatusIcon
-                      className="w-5 h-5"
-                      style={{ color: result.color }}
-                    />
-                  </div>
-                  <div>
-                    <p
-                      className="text-[11px] font-bold uppercase tracking-wider mb-1"
-                      style={{ color: result.color }}
-                    >
-                      Your eligibility verdict
-                    </p>
-                    <h2
-                      className="text-[22px] font-bold leading-tight mb-3"
-                      style={{ color: result.color }}
-                    >
-                      {result.verdict}
-                    </h2>
-                    <p
-                      className="text-[14px] leading-relaxed"
-                      style={{ color: result.color, opacity: 0.85 }}
-                    >
-                      {result.summary}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Details */}
-              <div className="space-y-4 mb-6">
-                {/* Application Path */}
-                <div className="rounded-lg border border-[#EAE9E9] p-5">
-                  <div className="flex items-start gap-3">
+            <AnimateIn delay={0}>
+              <div className="mb-10">
+                {/* Verdict */}
+                <div
+                  className="rounded-xl p-6 mb-6 border"
+                  style={{
+                    backgroundColor: result.bg,
+                    borderColor: `${result.color}30`,
+                  }}
+                >
+                  <div className="flex items-start gap-4">
                     <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{
-                        backgroundColor: phase.bg,
-                        color: phase.accent,
-                      }}
+                      className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
+                      style={{ backgroundColor: `${result.color}25` }}
                     >
-                      <MapPin className="w-3.5 h-3.5" />
+                      <StatusIcon
+                        className="w-5 h-5"
+                        style={{ color: result.color }}
+                      />
                     </div>
                     <div>
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#787774] mb-1.5">
-                        Your application path
+                      <p
+                        className="text-[11px] font-bold uppercase tracking-wider mb-1"
+                        style={{ color: result.color }}
+                      >
+                        Your eligibility verdict
                       </p>
-                      <p className="text-[14px] text-[#37352f] font-semibold mb-1">
-                        {result.applicationPath}
-                      </p>
-                      <p className="text-[12px] text-[#787774]">
-                        {result.timingNote}
+                      <h2
+                        className="text-[22px] font-bold leading-tight mb-3"
+                        style={{ color: result.color }}
+                      >
+                        {result.verdict}
+                      </h2>
+                      <p
+                        className="text-[14px] leading-relaxed"
+                        style={{ color: result.color, opacity: 0.85 }}
+                      >
+                        {result.summary}
                       </p>
                     </div>
                   </div>
                 </div>
 
-                {/* Work Track */}
-                {result.workTrack && (
-                  <div className="rounded-lg border border-[#EAE9E9] p-5">
+                {/* Details */}
+                <div className="space-y-4 mb-6">
+                  {/* Application Path */}
+                  <div className="rounded-xl glass-pb p-5">
                     <div className="flex items-start gap-3">
-                      <div className="w-7 h-7 rounded-full bg-[#f2d6c9] flex items-center justify-center flex-shrink-0">
-                        <Briefcase className="w-3.5 h-3.5 text-[#e3a99c]" />
+                      <div
+                        className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{
+                          backgroundColor: `${phase.accent}15`,
+                          color: phase.accent,
+                        }}
+                      >
+                        <MapPin className="w-3.5 h-3.5" />
                       </div>
                       <div>
-                        <p className="text-[11px] font-bold uppercase tracking-wider text-[#787774] mb-1.5">
-                          Your employment track
+                        <p className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--pb-text-muted)" }}>
+                          Your application path
                         </p>
-                        <p className="text-[14px] text-[#787774] leading-relaxed">
-                          {result.workTrack}
+                        <p className="text-[14px] font-semibold mb-1" style={{ color: "var(--pb-text)" }}>
+                          {result.applicationPath}
+                        </p>
+                        <p className="text-[12px]" style={{ color: "var(--pb-text-muted)" }}>
+                          {result.timingNote}
                         </p>
                       </div>
                     </div>
                   </div>
-                )}
 
-                {/* Next Steps */}
-                <div className="rounded-lg border border-[#EAE9E9] p-5">
-                  <div className="flex items-start gap-3">
-                    <div
-                      className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
-                      style={{
-                        backgroundColor: phase.bg,
-                        color: phase.accent,
-                      }}
-                    >
-                      <CheckCircle className="w-3.5 h-3.5" />
+                  {/* Work Track */}
+                  {result.workTrack && (
+                    <div className="rounded-xl glass-pb p-5">
+                      <div className="flex items-start gap-3">
+                        <div className="w-7 h-7 rounded-full bg-[#e3a99c]/15 flex items-center justify-center flex-shrink-0">
+                          <Briefcase className="w-3.5 h-3.5 text-[#e3a99c]" />
+                        </div>
+                        <div>
+                          <p className="text-[11px] font-bold uppercase tracking-wider mb-1.5" style={{ color: "var(--pb-text-muted)" }}>
+                            Your employment track
+                          </p>
+                          <p className="text-[14px] leading-relaxed" style={{ color: "var(--pb-text-secondary)" }}>
+                            {result.workTrack}
+                          </p>
+                        </div>
+                      </div>
                     </div>
-                    <div className="flex-1">
-                      <p className="text-[11px] font-bold uppercase tracking-wider text-[#787774] mb-3">
-                        Your personalised next steps
-                      </p>
-                      <div className="space-y-2">
-                        {result.nextSteps.map((s, i) => (
-                          <div key={i} className="flex items-start gap-2.5">
-                            <div
-                              className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
-                              style={{
-                                backgroundColor: phase.bg,
-                                color: phase.accent,
-                              }}
-                            >
-                              <span className="text-[10px] font-bold">
-                                {i + 1}
-                              </span>
+                  )}
+
+                  {/* Next Steps */}
+                  <div className="rounded-xl glass-pb p-5">
+                    <div className="flex items-start gap-3">
+                      <div
+                        className="w-7 h-7 rounded-full flex items-center justify-center flex-shrink-0"
+                        style={{
+                          backgroundColor: `${phase.accent}15`,
+                          color: phase.accent,
+                        }}
+                      >
+                        <CheckCircle className="w-3.5 h-3.5" />
+                      </div>
+                      <div className="flex-1">
+                        <p className="text-[11px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--pb-text-muted)" }}>
+                          Your personalised next steps
+                        </p>
+                        <div className="space-y-2">
+                          {result.nextSteps.map((s, i) => (
+                            <div key={i} className="flex items-start gap-2.5">
+                              <div
+                                className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                                style={{
+                                  backgroundColor: `${phase.accent}15`,
+                                  color: phase.accent,
+                                }}
+                              >
+                                <span className="text-[10px] font-bold">
+                                  {i + 1}
+                                </span>
+                              </div>
+                              <p className="text-[14px]" style={{ color: "var(--pb-text-secondary)" }}>{s}</p>
                             </div>
-                            <p className="text-[14px] text-[#787774]">{s}</p>
-                          </div>
-                        ))}
+                          ))}
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              {/* CTA */}
-              <div className="rounded-xl bg-[#37352f] p-6 mb-6">
-                <h3 className="text-[18px] font-bold text-white mb-2">
-                  {result.status === "strong"
-                    ? "Ready to move forward?"
-                    : "Let's map your path"}
-                </h3>
-                <p className="text-[14px] text-white/60 mb-5 leading-relaxed">
-                  {result.status === "strong"
-                    ? "Continue through the playbook to get everything from your first document to citizenship."
-                    : "Book a consultation to go through your profile in detail and build your application strategy."}
-                </p>
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Link
-                    href="/playbook/spain-dnv/lessons/lesson-2"
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg bg-white text-[#37352f] text-[14px] font-semibold hover:bg-[#f7f7f5] transition-colors"
-                  >
-                    Next Lesson
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
-                  <Link
-                    href="/booking"
-                    className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-lg border border-white/20 text-white text-[14px] font-semibold hover:bg-white/10 transition-colors"
-                  >
-                    Book a Consultation
-                  </Link>
+                {/* CTA */}
+                <div className="rounded-xl p-6 mb-6" style={{ background: "linear-gradient(135deg, #e3a99c 0%, #c9a84c 100%)" }}>
+                  <h3 className="text-[18px] font-bold text-white mb-2">
+                    {result.status === "strong"
+                      ? "Ready to move forward?"
+                      : "Let's map your path"}
+                  </h3>
+                  <p className="text-[14px] text-white/70 mb-5 leading-relaxed">
+                    {result.status === "strong"
+                      ? "Continue through the playbook to get everything from your first document to citizenship."
+                      : "Book a consultation to go through your profile in detail and build your application strategy."}
+                  </p>
+                  <div className="flex flex-col sm:flex-row gap-3">
+                    <Link
+                      href="/playbook/spain-dnv/lessons/lesson-2"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#2a2a2a] text-white text-[14px] font-semibold hover:bg-[#1e1e1e] transition-colors border border-white/10"
+                    >
+                      Next Lesson
+                      <ArrowRight className="w-4 h-4" />
+                    </Link>
+                    <Link
+                      href="/booking"
+                      className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl border border-white/30 text-white text-[14px] font-semibold hover:bg-white/10 transition-colors"
+                    >
+                      Book a Consultation
+                    </Link>
+                  </div>
                 </div>
-              </div>
 
-              {/* Retake */}
-              <button
-                onClick={handleRestart}
-                className="flex items-center gap-2 text-[13px] text-[#787774] hover:text-[#37352f] transition-colors"
-              >
-                <RefreshCw className="w-3.5 h-3.5" />
-                Retake assessment
-              </button>
-            </div>
+                {/* Retake */}
+                <button
+                  onClick={handleRestart}
+                  className="flex items-center gap-2 text-[13px] hover:opacity-70 transition-colors"
+                  style={{ color: "var(--pb-text-muted)" }}
+                >
+                  <RefreshCw className="w-3.5 h-3.5" />
+                  Retake assessment
+                </button>
+              </div>
+            </AnimateIn>
           )}
 
           {/* Mark Complete */}
           <div className="mb-12">
-            <button
+            <motion.button
               onClick={toggleComplete}
-              className={`flex items-center gap-3 px-5 py-3 rounded-lg border text-[14px] font-semibold transition-colors ${
+              whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 25 }}
+              className={`flex items-center gap-3 px-5 py-3 rounded-xl border text-[14px] font-semibold transition-all duration-300 ${
                 isDone
-                  ? "bg-[#37352f] text-white border-[#37352f]"
-                  : "bg-white text-[#37352f] border-[#EAE9E9] hover:bg-[#f7f7f5]"
+                  ? "bg-[#8fa38d] text-white border-[#8fa38d] shadow-[0_0_20px_rgba(143,163,141,0.3)]"
+                  : ""
               }`}
+              style={
+                !isDone
+                  ? {
+                      backgroundColor: "var(--pb-input-bg)",
+                      color: "var(--pb-text)",
+                      borderColor: "var(--pb-border)",
+                    }
+                  : undefined
+              }
             >
               {isDone ? (
                 <>
@@ -894,30 +955,44 @@ export default function Lesson1Page() {
                 </>
               ) : (
                 <>
-                  <div className="w-4 h-4 rounded border border-[#c4c4c2]" />
+                  <div className="w-4 h-4 rounded" style={{ border: "1px solid var(--pb-text-muted)" }} />
                   Mark as complete
                 </>
               )}
-            </button>
+            </motion.button>
           </div>
 
           {/* Prev / Next */}
-          <div className="border-t border-[#EAE9E9] pt-8 flex flex-col sm:flex-row gap-4">
+          <div className="pt-8 flex flex-col sm:flex-row gap-4" style={{ borderTop: "1px solid var(--pb-border)" }}>
             <div className="flex-1" />
-            <Link
-              href="/playbook/spain-dnv/lessons/lesson-2"
-              className="flex-1 flex items-center justify-end gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group text-right"
-            >
-              <div className="min-w-0">
-                <div className="text-[11px] text-[#787774] font-medium mb-0.5">
-                  Next
+            {isDone ? (
+              <Link
+                href="/playbook/spain-dnv/lessons/lesson-2"
+                className="flex-1 flex items-center justify-end gap-3 p-5 rounded-2xl glass-pb transition-all group text-right"
+              >
+                <div className="min-w-0">
+                  <div className="text-[11px] font-medium mb-0.5" style={{ color: "var(--pb-text-muted)" }}>
+                    Next
+                  </div>
+                  <div className="text-[14px] font-semibold truncate" style={{ color: "var(--pb-text)" }}>
+                    02. Understanding Spain&apos;s Visa Landscape
+                  </div>
                 </div>
-                <div className="text-[14px] font-semibold text-[#37352f] truncate">
-                  02. Understanding Spain&apos;s Visa Landscape
+                <ArrowRight className="w-4 h-4 group-hover:opacity-70 transition-colors flex-shrink-0" style={{ color: "var(--pb-text-muted)" }} />
+              </Link>
+            ) : (
+              <div className="flex-1 flex items-center justify-end gap-3 p-5 rounded-2xl glass-pb text-right opacity-30 cursor-not-allowed select-none">
+                <div className="min-w-0">
+                  <div className="text-[11px] font-medium mb-0.5" style={{ color: "var(--pb-text-muted)" }}>
+                    Next
+                  </div>
+                  <div className="text-[14px] font-semibold truncate" style={{ color: "var(--pb-text)" }}>
+                    02. Understanding Spain&apos;s Visa Landscape
+                  </div>
                 </div>
+                <Lock className="w-4 h-4 flex-shrink-0" style={{ color: "var(--pb-text-muted)" }} />
               </div>
-              <ArrowRight className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
-            </Link>
+            )}
           </div>
         </div>
       </div>

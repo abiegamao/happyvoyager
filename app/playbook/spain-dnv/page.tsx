@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { supabase } from "@/lib/supabase";
 import { useRouter } from "next/navigation";
 import {
     ArrowRight,
@@ -41,42 +40,27 @@ export default function PlaybookPage() {
         setLoading(true);
         setError("");
 
-        const { data: purchaser, error: dbError } = await supabase
-            .from("playbook_purchasers")
-            .select("id, name")
-            .eq("email", email.toLowerCase().trim())
-            .single();
+        try {
+            const res = await fetch("/api/stripe/verify", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: email.toLowerCase().trim(), slug: "spain-dnv" }),
+            });
+            const { hasAccess, name } = await res.json();
 
-        if (dbError || !purchaser) {
+            if (!hasAccess) {
+                setError("No purchase found for this email. Please use the email you purchased with.");
+                return;
+            }
+
+            sessionStorage.setItem("playbook_email", email.toLowerCase().trim());
+            sessionStorage.setItem("playbook_name", (name as string | null)?.split(" ")[0] || "");
+            router.push("/playbook/spain-dnv/home");
+        } catch {
+            setError("Something went wrong. Please try again.");
+        } finally {
             setLoading(false);
-            setError(
-                "No purchase found for this email. Please use the email you purchased with."
-            );
-            return;
         }
-
-        // Verify they purchased this specific playbook
-        const { data: access } = await supabase
-            .from("playbook_purchases")
-            .select("id, playbooks!inner(slug)")
-            .eq("purchaser_id", purchaser.id)
-            .eq("playbooks.slug", "spain-dnv")
-            .maybeSingle();
-
-        setLoading(false);
-
-        if (!access) {
-            setError(
-                "No purchase found for this email. Please use the email you purchased with."
-            );
-            return;
-        }
-
-        // Save to session so they don't have to re-enter
-        sessionStorage.setItem("playbook_email", email.toLowerCase().trim());
-        sessionStorage.setItem("playbook_name", purchaser.name?.split(" ")[0] || "");
-
-        router.push("/playbook/spain-dnv/home");
     };
 
     return (

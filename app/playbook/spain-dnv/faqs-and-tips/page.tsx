@@ -1,14 +1,13 @@
 "use client";
 
-import { TopbarLinks } from "@/components/playbook/TopbarLinks";
-import { 
-  Banknote, 
-  Clock, 
-  Lightbulb, 
-  AlertTriangle, 
-  Target, 
-  RefreshCcw, 
-  ShieldAlert, 
+import {
+  Banknote,
+  Clock,
+  Lightbulb,
+  AlertTriangle,
+  Target,
+  RefreshCcw,
+  ShieldAlert,
   Link as LinkIcon,
   CheckCircle2,
   XCircle,
@@ -22,408 +21,401 @@ import {
   Facebook
 } from "lucide-react";
 import Link from "next/link";
+import AnimateIn from "@/components/ui/AnimateIn";
 
 export default function FaqsAndTipsPage() {
   return (
-    <div className="min-h-screen bg-none">
-      
+    <div className="min-h-screen font-sans" style={{ color: "var(--pb-text)" }}>
+
       <main className="max-w-[1400px] mx-auto px-4 md:px-6 py-8 md:py-12">
         {/* Header */}
-        <div className="max-w-[900px] mb-12">
-          <h1 className="text-[40px] font-bold text-[#37352f] leading-tight mb-4">
-            FAQs & Expert Tips
-          </h1>
-          <p className="text-[18px] text-[#787774] leading-relaxed">
-            Everything else you need to know about the Spain Digital Nomad Visa. Costs, timelines, common pitfalls, and the path to permanent residency.
-          </p>
-        </div>
+        <AnimateIn delay={0}>
+          <div className="max-w-[900px] mb-12">
+            <h1 className="text-[40px] font-bold leading-tight mb-4" style={{ color: "var(--pb-text)" }}>
+              FAQs & Expert <span className="font-script text-[#e3a99c] text-[44px]">Tips</span>
+            </h1>
+            <p className="text-[18px] leading-relaxed" style={{ color: "var(--pb-text-secondary)" }}>
+              Everything else you need to know about the Spain Digital Nomad Visa. Costs, timelines, common pitfalls, and the path to permanent residency.
+            </p>
+          </div>
+        </AnimateIn>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
           {/* Main Content Area */}
           <div className="lg:col-span-8 space-y-12">
-            
+
             {/* Costs Section */}
-            <section id="costs" className="bg-white rounded-xl border border-[#EAE9E9] p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-[#F1F0EF] flex items-center justify-center">
-                  <Banknote className="w-6 h-6 text-[#37352f]" />
+            <AnimateIn delay={0.1}>
+              <section id="costs" className="glass-pb-elevated rounded-2xl p-8">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "var(--pb-input-bg)" }}>
+                    <Banknote className="w-6 h-6" style={{ color: "var(--pb-text-secondary)" }} />
+                  </div>
+                  <h2 className="text-[24px] font-bold" style={{ color: "var(--pb-text)" }}>Total DIY Costs</h2>
                 </div>
-                <h2 className="text-[24px] font-bold text-[#37352f]">Total DIY Costs</h2>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                  <h3 className="text-[16px] font-semibold text-[#37352f] mb-4 uppercase tracking-wider">Document Preparation</h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">Criminal Background Check</span>
-                      <span className="font-medium">$20 – $50</span>
-                    </li>
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">Apostille Fees (per doc)</span>
-                      <span className="font-medium">$20 – $100</span>
-                    </li>
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">Translation (per page)</span>
-                      <span className="font-medium">€20 – €50</span>
-                    </li>
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">Passport Photos</span>
-                      <span className="font-medium">$10 – $20</span>
-                    </li>
-                  </ul>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div>
+                    <h3 className="text-[16px] font-semibold mb-4 uppercase tracking-wider" style={{ color: "var(--pb-text-secondary)" }}>Document Preparation</h3>
+                    <ul className="space-y-3">
+                      {[
+                        { label: "Criminal Background Check", cost: "$20 – $50" },
+                        { label: "Apostille Fees (per doc)", cost: "$20 – $100" },
+                        { label: "Translation (per page)", cost: "€20 – €50" },
+                        { label: "Passport Photos", cost: "$10 – $20" },
+                      ].map((item) => (
+                        <li key={item.label} className="flex justify-between text-[15px]">
+                          <span style={{ color: "var(--pb-text-muted)" }}>{item.label}</span>
+                          <span className="font-medium" style={{ color: "var(--pb-text)" }}>{item.cost}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3 className="text-[16px] font-semibold mb-4 uppercase tracking-wider" style={{ color: "var(--pb-text-secondary)" }}>Application Fees</h3>
+                    <ul className="space-y-3">
+                      {[
+                        { label: "Visa Application Fee", cost: "€80" },
+                        { label: "NIE Application", cost: "€10 – €12" },
+                        { label: "TIE Card", cost: "€20" },
+                        { label: "Health Insurance (pm)", cost: "€50 – €150" },
+                      ].map((item) => (
+                        <li key={item.label} className="flex justify-between text-[15px]">
+                          <span style={{ color: "var(--pb-text-muted)" }}>{item.label}</span>
+                          <span className="font-medium" style={{ color: "var(--pb-text)" }}>{item.cost}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-[16px] font-semibold text-[#37352f] mb-4 uppercase tracking-wider">Application Fees</h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">Visa Application Fee</span>
-                      <span className="font-medium">€80</span>
-                    </li>
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">NIE Application</span>
-                      <span className="font-medium">€10 – €12</span>
-                    </li>
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">TIE Card</span>
-                      <span className="font-medium">€20</span>
-                    </li>
-                    <li className="flex justify-between text-[15px] text-[#37352f]">
-                      <span className="text-[#787774]">Health Insurance (pm)</span>
-                      <span className="font-medium">€50 – €150</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
 
-              <div className="mt-8 pt-6 border-t border-[#F1F0EF] flex items-center justify-between">
-                <div>
-                  <p className="text-[14px] text-[#787774] italic">Estimate based on DIY submission with no shortcuts.</p>
+                <div className="mt-8 pt-6 flex items-center justify-between" style={{ borderTop: "1px solid var(--pb-border)" }}>
+                  <div>
+                    <p className="text-[14px] italic" style={{ color: "var(--pb-text-muted)" }}>Estimate based on DIY submission with no shortcuts.</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-[14px] font-medium uppercase tracking-wider mb-1" style={{ color: "var(--pb-text-muted)" }}>Estimated Total</p>
+                    <p className="text-[32px] font-bold" style={{ color: "var(--pb-text)" }}>€400 – €700</p>
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-[14px] text-[#787774] font-medium uppercase tracking-wider mb-1">Estimated Total</p>
-                  <p className="text-[32px] font-bold text-[#37352f]">€400 – €700</p>
-                </div>
-              </div>
-            </section>
+              </section>
+            </AnimateIn>
 
             {/* Timeline Section */}
-            <section id="timeline" className="space-y-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-[#F1F0EF] flex items-center justify-center">
-                  <Clock className="w-6 h-6 text-[#37352f]" />
-                </div>
-                <h2 className="text-[24px] font-bold text-[#37352f]">Timeline Expectations</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-white p-6 rounded-xl border border-[#EAE9E9] shadow-sm">
-                  <div className="flex items-center gap-2 mb-4">
-                    <MapPin className="w-5 h-5 text-[#787774]" />
-                    <h3 className="font-bold text-[#37352f]">Consulate Route</h3>
+            <AnimateIn delay={0.15}>
+              <section id="timeline" className="space-y-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "var(--pb-input-bg)" }}>
+                    <Clock className="w-6 h-6" style={{ color: "var(--pb-text-secondary)" }} />
                   </div>
-                  <ul className="space-y-3 text-[15px]">
-                    <li className="flex gap-3">
-                      <span className="text-[#787774] font-medium">1-2m</span>
-                      <span className="text-[#37352f]">Document preparation</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#787774] font-medium">20-60d</span>
-                      <span className="text-[#37352f]">Consulate processing</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-[#787774] font-medium">1-3m</span>
-                      <span className="text-[#37352f]">Travel and TIE application</span>
-                    </li>
-                    <li className="pt-3 border-t border-[#F1F0EF] font-bold text-[#37352f] flex justify-between">
-                      <span>Total Time</span>
-                      <span className="text-[#37352f]">3 – 4 Months</span>
-                    </li>
-                  </ul>
+                  <h2 className="text-[24px] font-bold" style={{ color: "var(--pb-text)" }}>Timeline Expectations</h2>
                 </div>
 
-                <div className="bg-[#37352f] text-white p-6 rounded-xl shadow-sm">
-                  <div className="flex items-center gap-2 mb-4 text-white/80">
-                    <TrendingUp className="w-5 h-5" />
-                    <h3 className="font-bold text-white">Within Spain (UGE)</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="glass-pb rounded-2xl p-6">
+                    <div className="flex items-center gap-2 mb-4">
+                      <MapPin className="w-5 h-5" style={{ color: "var(--pb-text-muted)" }} />
+                      <h3 className="font-bold" style={{ color: "var(--pb-text)" }}>Consulate Route</h3>
+                    </div>
+                    <ul className="space-y-3 text-[15px]">
+                      {[
+                        { time: "1-2m", desc: "Document preparation" },
+                        { time: "20-60d", desc: "Consulate processing" },
+                        { time: "1-3m", desc: "Travel and TIE application" },
+                      ].map((item) => (
+                        <li key={item.time} className="flex gap-3">
+                          <span className="font-medium" style={{ color: "var(--pb-text-muted)" }}>{item.time}</span>
+                          <span style={{ color: "var(--pb-text-secondary)" }}>{item.desc}</span>
+                        </li>
+                      ))}
+                      <li className="pt-3 font-bold flex justify-between" style={{ borderTop: "1px solid var(--pb-border)", color: "var(--pb-text)" }}>
+                        <span>Total Time</span>
+                        <span>3 – 4 Months</span>
+                      </li>
+                    </ul>
                   </div>
-                  <ul className="space-y-3 text-[15px]">
-                    <li className="flex gap-3">
-                      <span className="text-white/60 font-medium whitespace-nowrap">Prep Early</span>
-                      <span className="text-white/90">Done before arrival</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-white/60 font-medium">1 Week</span>
-                      <span className="text-white/90">Application submission</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-white/60 font-medium">20 Days</span>
-                      <span className="text-white/90">UGE processing</span>
-                    </li>
-                    <li className="flex gap-3">
-                      <span className="text-white/60 font-medium">20-30d</span>
-                      <span className="text-white/90">TIE issuance after approval</span>
-                    </li>
-                    <li className="pt-3 border-t border-white/10 font-bold flex justify-between">
-                      <span>Total Time</span>
-                      <span className="text-white">2 – 3 Months</span>
-                    </li>
-                  </ul>
+
+                  <div className="rounded-2xl p-6 border border-[#e3a99c]/20" style={{ background: "linear-gradient(135deg, rgba(227,169,156,0.1) 0%, rgba(201,168,76,0.08) 100%)" }}>
+                    <div className="flex items-center gap-2 mb-4">
+                      <TrendingUp className="w-5 h-5 text-[#e3a99c]" />
+                      <h3 className="font-bold" style={{ color: "var(--pb-text)" }}>Within Spain (UGE)</h3>
+                    </div>
+                    <ul className="space-y-3 text-[15px]">
+                      {[
+                        { time: "Prep Early", desc: "Done before arrival" },
+                        { time: "1 Week", desc: "Application submission" },
+                        { time: "20 Days", desc: "UGE processing" },
+                        { time: "20-30d", desc: "TIE issuance after approval" },
+                      ].map((item) => (
+                        <li key={item.time} className="flex gap-3">
+                          <span className="font-medium whitespace-nowrap" style={{ color: "var(--pb-text-muted)" }}>{item.time}</span>
+                          <span style={{ color: "var(--pb-text-secondary)" }}>{item.desc}</span>
+                        </li>
+                      ))}
+                      <li className="pt-3 font-bold flex justify-between" style={{ borderTop: "1px solid var(--pb-border)", color: "var(--pb-text)" }}>
+                        <span>Total Time</span>
+                        <span>2 – 3 Months</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </AnimateIn>
 
             {/* Success strategies */}
-            <section id="strategies" className="space-y-8 text-[#37352f]">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-[#F1F0EF] flex items-center justify-center">
-                  <Lightbulb className="w-6 h-6 text-[#37352f]" />
-                </div>
-                <h2 className="text-[24px] font-bold text-[#37352f]">Insider Knowledge</h2>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* Pros */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-[#059669]">
-                    <CheckCircle2 className="w-5 h-5" />
-                    <h3 className="font-bold">Application Success Tips</h3>
+            <AnimateIn delay={0.2}>
+              <section id="strategies" className="space-y-8">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "var(--pb-input-bg)" }}>
+                    <Lightbulb className="w-6 h-6" style={{ color: "var(--pb-text-secondary)" }} />
                   </div>
-                  <ul className="space-y-4">
-                    <li className="bg-white p-4 rounded-lg border border-[#EAE9E9] text-[14px]">
-                      <strong>Start Early:</strong> Apostilles take the longest. Order background checks immediately.
-                    </li>
-                    <li className="bg-white p-4 rounded-lg border border-[#EAE9E9] text-[14px]">
-                      <strong>Over-Document:</strong> It's better to provide too much proof than to leave gaps for a reviewer to question.
-                    </li>
-                    <li className="bg-white p-4 rounded-lg border border-[#EAE9E9] text-[14px]">
-                      <strong>Methodical Organization:</strong> Use the folder numbering system we recommended in Guide 4.
-                    </li>
-                  </ul>
+                  <h2 className="text-[24px] font-bold" style={{ color: "var(--pb-text)" }}>Insider Knowledge</h2>
                 </div>
 
-                {/* Mistakes */}
-                <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-[#DC2626]">
-                    <AlertTriangle className="w-5 h-5" />
-                    <h3 className="font-bold">Common Mistakes</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* Pros */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 text-[#8fa38d]">
+                      <CheckCircle2 className="w-5 h-5" />
+                      <h3 className="font-bold">Application Success Tips</h3>
+                    </div>
+                    <ul className="space-y-4">
+                      {[
+                        { title: "Start Early:", desc: "Apostilles take the longest. Order background checks immediately." },
+                        { title: "Over-Document:", desc: "It's better to provide too much proof than to leave gaps for a reviewer to question." },
+                        { title: "Methodical Organization:", desc: "Use the folder numbering system we recommended in Guide 4." },
+                      ].map((item) => (
+                        <li key={item.title} className="p-4 rounded-xl text-[14px]" style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)", color: "var(--pb-text-secondary)" }}>
+                          <strong style={{ color: "var(--pb-text)" }}>{item.title}</strong> {item.desc}
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <ul className="space-y-4">
-                    <li className="bg-white p-4 rounded-lg border border-[#EAE9E9] text-[14px] flex gap-3">
-                      <XCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span><strong>Expired Documents:</strong> Background checks older than 6 months are invalid.</span>
-                    </li>
-                    <li className="bg-white p-4 rounded-lg border border-[#EAE9E9] text-[14px] flex gap-3">
-                      <XCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span><strong>Missing Apostilles:</strong> Every home-country government document MUST be stamped.</span>
-                    </li>
-                    <li className="bg-white p-4 rounded-lg border border-[#EAE9E9] text-[14px] flex gap-3">
-                      <XCircle className="w-4 h-4 shrink-0 mt-0.5" />
-                      <span><strong>Uncertified Translators:</strong> Only Spanish "sworn" (jurado) translations are valid.</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
 
-              {/* Tips Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
-                <div className="bg-[#F1F0EF] p-6 rounded-xl">
-                  <h4 className="font-bold mb-3 flex items-center gap-2">
-                    <Banknote className="w-4 h-4" /> Money-Saving
-                  </h4>
-                  <ul className="space-y-2 text-[13px] text-[#787774]">
-                    <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#37352f] shrink-0 mt-1.5"></div> Apply in Spain – yields better residency length for the cost.</li>
-                    <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#37352f] shrink-0 mt-1.5"></div> Bundle translations – ask for family/multiple document discounts.</li>
-                    <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#37352f] shrink-0 mt-1.5"></div> Choose online-only health insurance like Sanitas or DKV.</li>
-                  </ul>
+                  {/* Mistakes */}
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2 text-[#c0625a]">
+                      <AlertTriangle className="w-5 h-5" />
+                      <h3 className="font-bold">Common Mistakes</h3>
+                    </div>
+                    <ul className="space-y-4">
+                      {[
+                        { title: "Expired Documents:", desc: "Background checks older than 6 months are invalid." },
+                        { title: "Missing Apostilles:", desc: "Every home-country government document MUST be stamped." },
+                        { title: "Uncertified Translators:", desc: "Only Spanish \"sworn\" (jurado) translations are valid." },
+                      ].map((item) => (
+                        <li key={item.title} className="p-4 rounded-xl text-[14px] flex gap-3" style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)", color: "var(--pb-text-secondary)" }}>
+                          <XCircle className="w-4 h-4 shrink-0 mt-0.5 text-[#c0625a]" />
+                          <span><strong style={{ color: "var(--pb-text)" }}>{item.title}</strong> {item.desc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <div className="bg-[#F1F0EF] p-6 rounded-xl">
-                  <h4 className="font-bold mb-3 flex items-center gap-2">
-                    <Target className="w-4 h-4" /> Lesser-Known Facts
-                  </h4>
-                  <ul className="space-y-2 text-[13px] text-[#787774]">
-                    <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#37352f] shrink-0 mt-1.5"></div> <strong>US W2 Support:</strong> As of 2025, employees are eligible with a Certificate of Coverage.</li>
-                    <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#37352f] shrink-0 mt-1.5"></div> <strong>Beckham Law:</strong> Employees pay flat 24% tax rate (not for Autonomo).</li>
-                    <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full bg-[#37352f] shrink-0 mt-1.5"></div> <strong>Schengen:</strong> Travel freely with your 3-year residency permit.</li>
-                  </ul>
+
+                {/* Tips Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-8">
+                  <div className="p-6 rounded-2xl" style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)" }}>
+                    <h4 className="font-bold mb-3 flex items-center gap-2" style={{ color: "var(--pb-text)" }}>
+                      <Banknote className="w-4 h-4 text-[#c9a84c]" /> Money-Saving
+                    </h4>
+                    <ul className="space-y-2 text-[13px]" style={{ color: "var(--pb-text-muted)" }}>
+                      <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ backgroundColor: "var(--pb-text-muted)" }}></div> Apply in Spain – yields better residency length for the cost.</li>
+                      <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ backgroundColor: "var(--pb-text-muted)" }}></div> Bundle translations – ask for family/multiple document discounts.</li>
+                      <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ backgroundColor: "var(--pb-text-muted)" }}></div> Choose online-only health insurance like Sanitas or DKV.</li>
+                    </ul>
+                  </div>
+                  <div className="p-6 rounded-2xl" style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)" }}>
+                    <h4 className="font-bold mb-3 flex items-center gap-2" style={{ color: "var(--pb-text)" }}>
+                      <Target className="w-4 h-4 text-[#e3a99c]" /> Lesser-Known Facts
+                    </h4>
+                    <ul className="space-y-2 text-[13px]" style={{ color: "var(--pb-text-muted)" }}>
+                      <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ backgroundColor: "var(--pb-text-muted)" }}></div> <span><strong style={{ color: "var(--pb-text-secondary)" }}>US W2 Support:</strong> As of 2025, employees are eligible with a Certificate of Coverage.</span></li>
+                      <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ backgroundColor: "var(--pb-text-muted)" }}></div> <span><strong style={{ color: "var(--pb-text-secondary)" }}>Beckham Law:</strong> Employees pay flat 24% tax rate (not for Autonomo).</span></li>
+                      <li className="flex gap-2"><div className="w-1.5 h-1.5 rounded-full shrink-0 mt-1.5" style={{ backgroundColor: "var(--pb-text-muted)" }}></div> <span><strong style={{ color: "var(--pb-text-secondary)" }}>Schengen:</strong> Travel freely with your 3-year residency permit.</span></li>
+                    </ul>
+                  </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </AnimateIn>
 
             {/* Renewal & Extensions */}
-            <section id="renewal" className="bg-[#37352f] text-white rounded-xl p-8 shadow-md">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center">
-                  <RefreshCcw className="w-6 h-6 text-white" />
+            <AnimateIn delay={0.25}>
+              <section id="renewal" className="rounded-2xl p-8 border border-[#e3a99c]/15" style={{ background: "linear-gradient(135deg, rgba(227,169,156,0.08) 0%, rgba(201,168,76,0.06) 100%)" }}>
+                <div className="flex items-center gap-3 mb-8">
+                  <div className="w-10 h-10 rounded-lg flex items-center justify-center" style={{ backgroundColor: "var(--pb-input-bg)" }}>
+                    <RefreshCcw className="w-6 h-6 text-[#e3a99c]" />
+                  </div>
+                  <h2 className="text-[24px] font-bold" style={{ color: "var(--pb-text)" }}>Visa Renewal & Extensions</h2>
                 </div>
-                <h2 className="text-[24px] font-bold">Visa Renewal & Extensions</h2>
-              </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="text-white/60 text-[13px] uppercase tracking-wider mb-2 font-bold">Renewal Timeline</h3>
-                    <div className="space-y-3">
-                      <div className="flex gap-4">
-                        <div className="text-[20px] font-bold">01</div>
-                        <div>
-                          <p className="font-medium">Initial Period</p>
-                          <p className="text-white/60 text-[13px]">Consulate (1yr) vs UGE (3yrs)</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-4">
-                        <div className="text-[20px] font-bold">02</div>
-                        <div>
-                          <p className="font-medium">First Renewal</p>
-                          <p className="text-white/60 text-[13px]">Extend for 2 more years</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-4">
-                        <div className="text-[20px] font-bold">03</div>
-                        <div>
-                          <p className="font-medium">Permanent Residence</p>
-                          <p className="text-white/60 text-[13px]">Available after 5 continuous years</p>
-                        </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                  <div className="space-y-6">
+                    <div>
+                      <h3 className="text-[13px] uppercase tracking-wider mb-2 font-bold" style={{ color: "var(--pb-text-muted)" }}>Renewal Timeline</h3>
+                      <div className="space-y-3">
+                        {[
+                          { num: "01", title: "Initial Period", desc: "Consulate (1yr) vs UGE (3yrs)" },
+                          { num: "02", title: "First Renewal", desc: "Extend for 2 more years" },
+                          { num: "03", title: "Permanent Residence", desc: "Available after 5 continuous years" },
+                        ].map((item) => (
+                          <div key={item.num} className="flex gap-4">
+                            <div className="text-[20px] font-bold text-[#e3a99c]">{item.num}</div>
+                            <div>
+                              <p className="font-medium" style={{ color: "var(--pb-text)" }}>{item.title}</p>
+                              <p className="text-[13px]" style={{ color: "var(--pb-text-muted)" }}>{item.desc}</p>
+                            </div>
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-white font-bold mb-4 flex items-center gap-2">
-                       <Banknote className="w-4 h-4" /> Spanish Citizenship
-                    </h4>
-                    <p className="text-[14px] text-white/80 leading-relaxed bg-white/5 p-4 rounded-lg border border-white/10 mb-4">
-                      Spain is uniquely generous to certain nationalities regarding citizenship.
-                    </p>
-                    <ul className="space-y-3 text-[14px]">
-                      <li className="flex gap-3 items-start">
-                        <CheckCircle2 className="w-4 h-4 text-[#059669] shrink-0 mt-1" />
-                        <span><strong>2 Years Only:</strong> For Filipinos and Latin American citizens.</span>
-                      </li>
-                      <li className="flex gap-3 items-start text-white/60">
-                        <CheckCircle2 className="w-4 h-4 shrink-0 mt-1" />
-                        <span><strong>10 Years:</strong> Standard requirement for all other nationalities.</span>
-                      </li>
-                    </ul>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="font-bold mb-4 flex items-center gap-2" style={{ color: "var(--pb-text)" }}>
+                         <Banknote className="w-4 h-4 text-[#c9a84c]" /> Spanish Citizenship
+                      </h4>
+                      <p className="text-[14px] leading-relaxed p-4 rounded-xl mb-4" style={{ backgroundColor: "var(--pb-input-bg)", border: "1px solid var(--pb-border)", color: "var(--pb-text-secondary)" }}>
+                        Spain is uniquely generous to certain nationalities regarding citizenship.
+                      </p>
+                      <ul className="space-y-3 text-[14px]">
+                        <li className="flex gap-3 items-start">
+                          <CheckCircle2 className="w-4 h-4 text-[#8fa38d] shrink-0 mt-1" />
+                          <span style={{ color: "var(--pb-text-secondary)" }}><strong style={{ color: "var(--pb-text)" }}>2 Years Only:</strong> For Filipinos and Latin American citizens.</span>
+                        </li>
+                        <li className="flex gap-3 items-start" style={{ color: "var(--pb-text-muted)" }}>
+                          <CheckCircle2 className="w-4 h-4 shrink-0 mt-1" />
+                          <span><strong style={{ color: "var(--pb-text-secondary)" }}>10 Years:</strong> Standard requirement for all other nationalities.</span>
+                        </li>
+                      </ul>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </AnimateIn>
 
              {/* Troubleshooting Rejections */}
-             <section id="troubleshooting" className="space-y-6">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="w-10 h-10 rounded-lg bg-[#FEE2E2] flex items-center justify-center">
-                  <ShieldAlert className="w-6 h-6 text-[#DC2626]" />
-                </div>
-                <h2 className="text-[24px] font-bold text-[#37352f]">Troubleshooting Issues</h2>
-              </div>
-
-              <div className="bg-white border-2 border-[#FEE2E2] rounded-xl p-8 overflow-hidden relative">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-[#FEE2E2]/20 rounded-full -mr-16 -mt-16 blur-3xl"></div>
-                <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div>
-                    <h3 className="font-bold text-[#37352f] mb-4">Common Rejection Reasons</h3>
-                    <ul className="space-y-2 text-[14px] text-[#787774]">
-                      <li className="flex gap-2">Insufficient proof of income (not being consistent)</li>
-                      <li className="flex gap-2">Contracts looking like "Micromanaged Employment" instead of Autonomo</li>
-                      <li className="flex gap-2">Criminal record certificate expired during review</li>
-                    </ul>
+             <AnimateIn delay={0.3}>
+               <section id="troubleshooting" className="space-y-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="w-10 h-10 rounded-lg bg-[#c0625a]/15 flex items-center justify-center">
+                    <ShieldAlert className="w-6 h-6 text-[#c0625a]" />
                   </div>
-                  <div>
-                    <h3 className="font-bold text-[#37352f] mb-4">What to do if rejected?</h3>
-                    <p className="text-[14px] text-[#787774] mb-4">Don't panic. You have options.</p>
-                    <div className="space-y-3">
-                      <div className="p-3 bg-white border border-[#EAE9E9] rounded-lg text-[13px] font-medium">
-                        1. Request Subnación (Detailed Explanation)
-                      </div>
-                      <div className="p-3 bg-white border border-[#EAE9E9] rounded-lg text-[13px] font-medium">
-                        2. Address specific issues and reapply immediately
+                  <h2 className="text-[24px] font-bold" style={{ color: "var(--pb-text)" }}>Troubleshooting Issues</h2>
+                </div>
+
+                <div className="glass-pb rounded-2xl p-8 overflow-hidden relative border border-[#c0625a]/10">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-[#c0625a]/5 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+                  <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                      <h3 className="font-bold mb-4" style={{ color: "var(--pb-text)" }}>Common Rejection Reasons</h3>
+                      <ul className="space-y-2 text-[14px]" style={{ color: "var(--pb-text-secondary)" }}>
+                        <li className="flex gap-2">Insufficient proof of income (not being consistent)</li>
+                        <li className="flex gap-2">Contracts looking like "Micromanaged Employment" instead of Autonomo</li>
+                        <li className="flex gap-2">Criminal record certificate expired during review</li>
+                      </ul>
+                    </div>
+                    <div>
+                      <h3 className="font-bold mb-4" style={{ color: "var(--pb-text)" }}>What to do if rejected?</h3>
+                      <p className="text-[14px] mb-4" style={{ color: "var(--pb-text-secondary)" }}>Don't panic. You have options.</p>
+                      <div className="space-y-3">
+                        <div className="p-3 rounded-xl text-[13px] font-medium" style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)", color: "var(--pb-text-secondary)" }}>
+                          1. Request Subnación (Detailed Explanation)
+                        </div>
+                        <div className="p-3 rounded-xl text-[13px] font-medium" style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)", color: "var(--pb-text-secondary)" }}>
+                          2. Address specific issues and reapply immediately
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </section>
+              </section>
+            </AnimateIn>
           </div>
 
           {/* Sticky Sidebar Links */}
           <div className="lg:col-span-4 space-y-6">
             <div className="sticky top-8 space-y-6">
-              
+
               {/* Useful Resources */}
-              <div className="bg-white rounded-xl border border-[#EAE9E9] p-6 shadow-sm">
-                <h3 className="text-[16px] font-bold text-[#37352f] mb-6 flex items-center gap-2">
-                  <LinkIcon className="w-5 h-5" /> Useful Resources
-                </h3>
-                <div className="space-y-6">
-                  <div>
-                    <h4 className="text-[12px] font-bold text-[#787774] uppercase tracking-wider mb-3">Finance & Banks</h4>
-                    <div className="grid grid-cols-2 gap-2">
-                      <a href="#" className="p-2 border border-[#F1F0EF] rounded-lg text-[13px] hover:bg-[#FBFBFA] transition-colors text-center">Santander</a>
-                      <a href="#" className="p-2 border border-[#F1F0EF] rounded-lg text-[13px] hover:bg-[#FBFBFA] transition-colors text-center">Wise</a>
-                      <a href="#" className="p-2 border border-[#F1F0EF] rounded-lg text-[13px] hover:bg-[#FBFBFA] transition-colors text-center">Revolut</a>
-                      <a href="#" className="p-2 border border-[#F1F0EF] rounded-lg text-[13px] hover:bg-[#FBFBFA] transition-colors text-center">N26</a>
+              <AnimateIn delay={0.35}>
+                <div className="glass-pb-elevated rounded-2xl p-6">
+                  <h3 className="text-[16px] font-bold mb-6 flex items-center gap-2" style={{ color: "var(--pb-text)" }}>
+                    <LinkIcon className="w-5 h-5" style={{ color: "var(--pb-text-muted)" }} /> Useful Resources
+                  </h3>
+                  <div className="space-y-6">
+                    <div>
+                      <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--pb-text-muted)" }}>Finance & Banks</h4>
+                      <div className="grid grid-cols-2 gap-2">
+                        {["Santander", "Wise", "Revolut", "N26"].map((bank) => (
+                          <a key={bank} href="#" className="p-2 rounded-xl text-[13px] transition-colors text-center" style={{ border: "1px solid var(--pb-border)", color: "var(--pb-text-secondary)" }}>{bank}</a>
+                        ))}
+                      </div>
                     </div>
-                  </div>
 
-                  <div>
-                    <h4 className="text-[12px] font-bold text-[#787774] uppercase tracking-wider mb-3">Government Portals</h4>
-                    <ul className="space-y-2">
-                      <li>
-                        <a href="https://www.sede.fnmt.gob.es" target="_blank" className="flex items-center justify-between group">
-                          <span className="text-[13px] text-[#37352f]">Digital Certificates</span>
-                          <ExternalLink className="w-3.5 h-3.5 text-[#787774] group-hover:text-[#37352f]" />
-                        </a>
-                      </li>
-                      <li>
-                        <a href="https://sutramiteconsular.maec.es" target="_blank" className="flex items-center justify-between group">
-                          <span className="text-[13px] text-[#37352f]">Consulate Tracking</span>
-                          <ExternalLink className="w-3.5 h-3.5 text-[#787774] group-hover:text-[#37352f]" />
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
+                    <div>
+                      <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--pb-text-muted)" }}>Government Portals</h4>
+                      <ul className="space-y-2">
+                        <li>
+                          <a href="https://www.sede.fnmt.gob.es" target="_blank" className="flex items-center justify-between group">
+                            <span className="text-[13px] group-hover:opacity-80 transition-colors" style={{ color: "var(--pb-text-secondary)" }}>Digital Certificates</span>
+                            <ExternalLink className="w-3.5 h-3.5" style={{ color: "var(--pb-text-muted)" }} />
+                          </a>
+                        </li>
+                        <li>
+                          <a href="https://sutramiteconsular.maec.es" target="_blank" className="flex items-center justify-between group">
+                            <span className="text-[13px] group-hover:opacity-80 transition-colors" style={{ color: "var(--pb-text-secondary)" }}>Consulate Tracking</span>
+                            <ExternalLink className="w-3.5 h-3.5" style={{ color: "var(--pb-text-muted)" }} />
+                          </a>
+                        </li>
+                      </ul>
+                    </div>
 
-                  <div>
-                    <h4 className="text-[12px] font-bold text-[#787774] uppercase tracking-wider mb-3">Follow Abie's Socials</h4>
-                    <div className="flex gap-4">
-                      <a href="#" className="w-8 h-8 rounded-full bg-[#F1F0EF] flex items-center justify-center text-[#787774] hover:text-[#37352f] hover:bg-[#EAE9E9] transition-all"><Youtube className="w-4 h-4" /></a>
-                      <a href="#" className="w-8 h-8 rounded-full bg-[#F1F0EF] flex items-center justify-center text-[#787774] hover:text-[#37352f] hover:bg-[#EAE9E9] transition-all"><Instagram className="w-4 h-4" /></a>
-                      <a href="#" className="w-8 h-8 rounded-full bg-[#F1F0EF] flex items-center justify-center text-[#787774] hover:text-[#37352f] hover:bg-[#EAE9E9] transition-all"><Facebook className="w-4 h-4" /></a>
+                    <div>
+                      <h4 className="text-[12px] font-bold uppercase tracking-wider mb-3" style={{ color: "var(--pb-text-muted)" }}>Follow Abie's Socials</h4>
+                      <div className="flex gap-4">
+                        {[Youtube, Instagram, Facebook].map((Icon, i) => (
+                          <a key={i} href="#" className="w-8 h-8 rounded-full flex items-center justify-center hover:text-[#e3a99c] transition-all" style={{ backgroundColor: "var(--pb-input-bg)", color: "var(--pb-text-muted)" }}>
+                            <Icon className="w-4 h-4" />
+                          </a>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
+              </AnimateIn>
 
               {/* Translation Callout */}
-              <div className="bg-[#FEFCE8] border border-[#FEF08A] rounded-xl p-6">
-                <h4 className="font-bold text-[#854D0E] mb-2 flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4" /> Need Translation?
-                </h4>
-                <p className="text-[13px] text-[#854D0E] mb-4">
-                  Spanish reviewers only accept <strong>Sworn Translations</strong>. Don't pay the standard €20-25 per page.
-                </p>
-                <div className="bg-white/80 rounded-lg p-3 text-center">
-                  <p className="text-[12px] text-[#854D0E] font-medium mb-1">Our Partner Rate</p>
-                  <p className="text-[20px] font-bold text-[#37352f]">€16 / page</p>
+              <AnimateIn delay={0.4}>
+                <div className="rounded-2xl p-6 border border-[#c9a84c]/20" style={{ background: "linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 100%)" }}>
+                  <h4 className="font-bold text-[#c9a84c] mb-2 flex items-center gap-2">
+                    <MessageCircle className="w-4 h-4" /> Need Translation?
+                  </h4>
+                  <p className="text-[13px] mb-4" style={{ color: "var(--pb-text-secondary)" }}>
+                    Spanish reviewers only accept <strong style={{ color: "var(--pb-text)" }}>Sworn Translations</strong>. Most agencies charge €30-70 per page.
+                  </p>
+                  <div className="rounded-xl p-3 text-center" style={{ backgroundColor: "var(--pb-input-bg)", border: "1px solid var(--pb-border)" }}>
+                    <p className="text-[12px] font-medium mb-1" style={{ color: "var(--pb-text-muted)" }}>Our Rate</p>
+                    <p className="text-[20px] font-bold" style={{ color: "var(--pb-text)" }}>€18–25 / page</p>
+                  </div>
+                  <button className="w-full mt-4 bg-[#c9a84c] text-[#2a2a2a] py-2 rounded-xl text-[13px] font-bold hover:bg-[#d4b35e] transition-colors">
+                    Contact Specialist
+                  </button>
                 </div>
-                <button className="w-full mt-4 bg-[#854D0E] text-white py-2 rounded-lg text-[13px] font-bold hover:bg-[#713F12] transition-colors">
-                  Contact Specialist
-                </button>
-              </div>
+              </AnimateIn>
 
               {/* Support Callout */}
-              <div className="p-6 bg-[#37352f] rounded-xl text-white text-center">
-                <HelpCircle className="w-8 h-8 mx-auto mb-3 text-white/40" />
-                <h3 className="font-bold mb-2">Still Unsure?</h3>
-                <p className="text-[12px] text-white/60 mb-4">Join our community of over 500+ nomads who did it DIY.</p>
-                <button className="w-full bg-white text-[#37352f] py-2 rounded-lg text-[13px] font-bold hover:bg-white/90 transition-colors">
-                   Join Nomad Spanglish
-                </button>
-              </div>
+              <AnimateIn delay={0.45}>
+                <div className="p-6 glass-pb-elevated rounded-2xl text-center">
+                  <HelpCircle className="w-8 h-8 mx-auto mb-3" style={{ color: "var(--pb-text-muted)" }} />
+                  <h3 className="font-bold mb-2" style={{ color: "var(--pb-text)" }}>Still Unsure?</h3>
+                  <p className="text-[12px] mb-4" style={{ color: "var(--pb-text-muted)" }}>Join our community of over 500+ nomads who did it DIY.</p>
+                  <button className="w-full bg-[#e3a99c] text-white py-2 rounded-xl text-[13px] font-bold hover:bg-[#d69586] transition-colors">
+                     Join Nomad Spanglish
+                  </button>
+                </div>
+              </AnimateIn>
 
             </div>
           </div>

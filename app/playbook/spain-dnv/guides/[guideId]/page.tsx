@@ -122,7 +122,7 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
     const parts = str.split(/(\*\*[^*]+\*\*)/g);
     return parts.map((part, idx) => {
       if (part.startsWith("**") && part.endsWith("**")) {
-        return <strong key={`${keyPrefix}-b${idx}`} className="font-semibold text-[#37352f]">{part.slice(2, -2)}</strong>;
+        return <strong key={`${keyPrefix}-b${idx}`} className="font-semibold" style={{ color: "var(--pb-text)" }}>{part.slice(2, -2)}</strong>;
       }
       return part;
     });
@@ -146,13 +146,13 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
 
         if (label && url) {
           result.push(
-            <a key={`link-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="text-[#2383e2] hover:underline underline-offset-4">
+            <a key={`link-${i}`} href={url} target="_blank" rel="noopener noreferrer" className="text-[#e3a99c] hover:underline underline-offset-4">
               {label}
             </a>
           );
         } else if (rawUrl) {
           result.push(
-            <a key={`link-${i}`} href={rawUrl} target="_blank" rel="noopener noreferrer" className="text-[#2383e2] hover:underline underline-offset-4">
+            <a key={`link-${i}`} href={rawUrl} target="_blank" rel="noopener noreferrer" className="text-[#e3a99c] hover:underline underline-offset-4">
               {rawUrl}
             </a>
           );
@@ -170,24 +170,26 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
       <div className="flex-1 min-w-0">
         <div className="px-6 lg:px-12 py-0">
           <div className="max-w-[720px] mx-auto">
-            {/* Subtitle */}
-            <div className="text-[#37352f] font-semibold text-[14px] mb-3">
-              {activeGuide.subtitle}
+            {/* Subtitle + Free badge */}
+            <div className="flex items-center gap-3 mb-3">
+              <span className="font-semibold text-[14px]" style={{ color: "var(--pb-text-secondary)" }}>
+                {activeGuide.subtitle}
+              </span>
+              <span className="text-[11px] font-semibold text-[#8fa38d] bg-[#8fa38d]/15 px-2 py-0.5 rounded-full">
+                Free Guide
+              </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-[32px] lg:text-[36px] leading-[1.1] font-bold text-[#37352f] tracking-tight mb-3">
+            <h1 className="text-[32px] lg:text-[36px] leading-[1.1] font-bold tracking-tight mb-3" style={{ color: "var(--pb-text)" }}>
               {activeGuide.title}
             </h1>
-
-            {/* Mobile guide selector removed in favor of layout level or separate mobile menu, 
-                assuming layout sidebar handles navigation */}
 
             {/* Sections */}
             <div className="space-y-8 mt-8">
               {activeGuide.sections.map((section) => (
                 <section key={section.id} id={section.id} className="scroll-mt-24">
-                  <h2 className="text-2xl font-semibold text-[#37352f] mb-4 mt-8 tracking-tight">
+                  <h2 className="text-2xl font-semibold mb-4 mt-8 tracking-tight" style={{ color: "var(--pb-text)" }}>
                     {section.title}
                   </h2>
 
@@ -198,7 +200,8 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <p
                               key={key}
-                              className="text-[#37352f] text-base leading-relaxed"
+                              className="text-base leading-relaxed"
+                              style={{ color: "var(--pb-text-secondary)" }}
                             >
                               {renderText(block.text)}
                             </p>
@@ -209,16 +212,13 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <div
                               key={key}
-                              className={`flex items-start gap-3 p-4 rounded ${
-                                block.bgClass || "bg-[#f1f1ef]"
-                              } border ${
-                                block.borderClass || "border-transparent"
-                              } my-4`}
+                              className="flex items-start gap-3 p-4 rounded-xl my-4"
+                              style={{ backgroundColor: "var(--pb-surface)", border: "1px solid var(--pb-border)" }}
                             >
                               <span className="text-xl leading-none flex-shrink-0 mt-0.5">
                                 {block.icon}
                               </span>
-                              <div className="text-[#37352f] text-[15px] leading-relaxed whitespace-pre-wrap">
+                              <div className="text-[15px] leading-relaxed whitespace-pre-wrap" style={{ color: "var(--pb-text-secondary)" }}>
                                 {renderText(block.text)}
                               </div>
                             </div>
@@ -229,15 +229,16 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <div key={key} className="my-4">
                               {block.label && (
-                                <h3 className="font-semibold text-[#37352f] text-base mb-2">
+                                <h3 className="font-semibold text-base mb-2" style={{ color: "var(--pb-text)" }}>
                                   {block.label}
                                 </h3>
                               )}
-                              <ul className="list-disc pl-6 space-y-1">
+                              <ul className="list-disc pl-6 space-y-1" style={{ "--tw-marker-color": "var(--pb-text-muted)" } as React.CSSProperties}>
                                 {block.items.map((item: string, i: number) => (
                                   <li
                                     key={i}
-                                    className="text-[15px] text-[#37352f] leading-relaxed pl-1"
+                                    className="text-[15px] leading-relaxed pl-1 marker:text-[var(--pb-text-muted)]"
+                                    style={{ color: "var(--pb-text-secondary)" }}
                                   >
                                     {renderText(item)}
                                   </li>
@@ -251,7 +252,7 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <div key={key} className="my-4">
                               {block.label && (
-                                <h3 className="font-semibold text-[#37352f] text-base mb-2">
+                                <h3 className="font-semibold text-base mb-2" style={{ color: "var(--pb-text)" }}>
                                   {block.label}
                                 </h3>
                               )}
@@ -261,7 +262,9 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                                   return (
                                     <label
                                       key={i}
-                                      className="flex items-start gap-2.5 cursor-pointer group hover:bg-[#efefed] rounded p-1 -ml-1 transition-colors"
+                                      className="flex items-start gap-2.5 cursor-pointer group rounded-lg p-1 -ml-1 transition-colors"
+                                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--pb-surface)")}
+                                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                                     >
                                       <div className="mt-[3px] relative cursor-pointer">
                                         <input
@@ -270,7 +273,10 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                                           checked={isChecked}
                                           onChange={() => toggleItem(item)}
                                         />
-                                        <div className="w-[15px] h-[15px] rounded-[3px] border border-[#d3d1cb] bg-white transition-colors peer-checked:bg-[#2383e2] peer-checked:border-[#2383e2] flex items-center justify-center">
+                                        <div
+                                          className="w-[15px] h-[15px] rounded-[3px] transition-colors peer-checked:bg-[#e3a99c] peer-checked:border-[#e3a99c] flex items-center justify-center"
+                                          style={{ backgroundColor: isChecked ? undefined : "var(--pb-input-bg)", border: isChecked ? undefined : "1px solid var(--pb-border)" }}
+                                        >
                                           {isChecked && (
                                             <svg
                                               viewBox="0 0 14 14"
@@ -284,9 +290,10 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                                       <span
                                         className={`text-[15px] leading-relaxed select-text ${
                                           isChecked
-                                            ? "text-[#787774] line-through opacity-70"
-                                            : "text-[#37352f]"
+                                            ? "line-through opacity-70"
+                                            : ""
                                         }`}
+                                        style={{ color: isChecked ? "var(--pb-text-muted)" : "var(--pb-text-secondary)" }}
                                       >
                                         {renderText(item)}
                                       </span>
@@ -302,7 +309,8 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <div key={key} className="my-8">
                               <div
-                                className="rounded-xl overflow-hidden border border-[#EAE9E9] bg-[#F7F7F5] transition-all hover:shadow-md cursor-zoom-in"
+                                className="rounded-xl overflow-hidden transition-all hover:shadow-md cursor-zoom-in"
+                                style={{ border: "1px solid var(--pb-border)", backgroundColor: "var(--pb-surface)" }}
                                 onClick={() => openLightbox(block.src, block.alt || "Guide image")}
                                 title="Click to enlarge"
                               >
@@ -316,7 +324,7 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                                 />
                               </div>
                               {block.caption && (
-                                <p className="text-[13px] text-[#787774] mt-2 text-center italic">
+                                <p className="text-[13px] mt-2 text-center italic" style={{ color: "var(--pb-text-muted)" }}>
                                   {block.caption}
                                 </p>
                               )}
@@ -328,7 +336,8 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <hr
                               key={key}
-                              className="my-8 border-t border-[#EAE9E9]"
+                              className="my-8 border-t"
+                              style={{ borderColor: "var(--pb-border)" }}
                             />
                           );
                         }
@@ -337,31 +346,37 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                           return (
                             <div
                               key={key}
-                              className="my-6 overflow-hidden rounded-lg border border-[#EAE9E9]"
+                              className="my-6 overflow-hidden rounded-xl"
+                              style={{ border: "1px solid var(--pb-border)" }}
                             >
                               <table className="w-full border-collapse text-left text-[14px]">
                                 <thead>
-                                  <tr className="bg-[#F7F7F5] border-b border-[#EAE9E9]">
+                                  <tr style={{ backgroundColor: "var(--pb-surface)", borderBottom: "1px solid var(--pb-border)" }}>
                                     {block.headers.map((header: string, hIdx: number) => (
                                       <th
                                         key={hIdx}
-                                        className="px-4 py-3 font-semibold text-[#37352f]"
+                                        className="px-4 py-3 font-semibold"
+                                        style={{ color: "var(--pb-text)" }}
                                       >
                                         {header}
                                       </th>
                                     ))}
                                   </tr>
                                 </thead>
-                                <tbody className="divide-y divide-[#EAE9E9]">
+                                <tbody style={{ borderColor: "var(--pb-border)" }}>
                                   {block.rows.map((row: string[], rIdx: number) => (
                                     <tr
                                       key={rIdx}
-                                      className="hover:bg-[#FBFBFA] transition-colors"
+                                      className="transition-colors"
+                                      style={{ borderBottom: rIdx < block.rows.length - 1 ? "1px solid var(--pb-border)" : undefined }}
+                                      onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--pb-surface-hover)")}
+                                      onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
                                     >
                                       {row.map((cell: string, cIdx: number) => (
                                         <td
                                           key={cIdx}
-                                          className="px-4 py-3 text-[#37352f] whitespace-pre-wrap leading-relaxed"
+                                          className="px-4 py-3 whitespace-pre-wrap leading-relaxed"
+                                          style={{ color: "var(--pb-text-secondary)" }}
                                         >
                                           {renderText(cell)}
                                         </td>
@@ -379,16 +394,23 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                             <details
                               key={key}
                               id={block.id}
-                              className="group my-4 border border-[#EAE9E9] rounded-lg overflow-hidden bg-[#F7F7F5]/50"
+                              className="group my-4 rounded-xl overflow-hidden"
+                              style={{ border: "1px solid var(--pb-border)", backgroundColor: "var(--pb-surface)" }}
                             >
-                              <summary className="flex items-center gap-2 p-4 cursor-pointer hover:bg-[#EFEFED] transition-colors list-none font-medium text-[#37352f]">
+                              <summary
+                                className="flex items-center gap-2 p-4 cursor-pointer transition-colors list-none font-medium"
+                                style={{ color: "var(--pb-text)" }}
+                                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--pb-surface-hover)")}
+                                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "transparent")}
+                              >
                                 <svg
                                   width="12"
                                   height="12"
                                   viewBox="0 0 12 12"
                                   fill="none"
                                   xmlns="http://www.w3.org/2000/svg"
-                                  className="transition-transform group-open:rotate-90 text-[#787774]"
+                                  className="transition-transform group-open:rotate-90"
+                                  style={{ color: "var(--pb-text-muted)" }}
                                 >
                                   <path
                                     d="M4 2L8 6L4 10"
@@ -400,9 +422,9 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                                 </svg>
                                 {block.title}
                               </summary>
-                              <div className="p-4 pt-0 space-y-4 border-t border-[#EAE9E9] bg-white">
+                              <div className="p-4 pt-0 space-y-4" style={{ borderTop: "1px solid var(--pb-border)", backgroundColor: "var(--pb-surface)" }}>
                                 <div className="mt-4">
-                                  {block.content.map((nestedBlock: ContentBlock, nIdx: number) => 
+                                  {block.content.map((nestedBlock: ContentBlock, nIdx: number) =>
                                     renderBlock(nestedBlock, `${key}-nested-${nIdx}`)
                                   )}
                                 </div>
@@ -423,16 +445,18 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
           </div>
 
           {/* Prev / Next Guide Navigation */}
-          <div className="border-t border-[#EAE9E9] pt-8 mt-8 flex flex-col sm:flex-row gap-4">
+          <div className="pt-8 mt-8 flex flex-col sm:flex-row gap-4" style={{ borderTop: "1px solid var(--pb-border)" }}>
             {prevGuide ? (
               <Link
                 href={`/playbook/spain-dnv/guides/${prevGuide.id}`}
-                className="flex-1 flex items-center gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group"
+                className="flex-1 flex items-center gap-3 p-5 rounded-2xl glass-pb transition-colors group"
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--pb-surface-hover)")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
               >
-                <ArrowLeft className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
+                <ArrowLeft className="w-4 h-4 transition-colors flex-shrink-0" style={{ color: "var(--pb-text-muted)" }} />
                 <div className="min-w-0">
-                  <div className="text-[11px] text-[#787774] font-medium mb-0.5">Previous</div>
-                  <div className="text-[14px] font-semibold text-[#37352f] truncate">{prevGuide.title}</div>
+                  <div className="text-[11px] font-medium mb-0.5" style={{ color: "var(--pb-text-muted)" }}>Previous</div>
+                  <div className="text-[14px] font-semibold truncate" style={{ color: "var(--pb-text)" }}>{prevGuide.title}</div>
                 </div>
               </Link>
             ) : (
@@ -442,13 +466,15 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
             {nextGuide ? (
               <Link
                 href={`/playbook/spain-dnv/guides/${nextGuide.id}`}
-                className="flex-1 flex items-center justify-end gap-3 p-5 rounded-xl border border-[#EAE9E9] hover:bg-[#f7f7f5] transition-colors group text-right"
+                className="flex-1 flex items-center justify-end gap-3 p-5 rounded-2xl glass-pb transition-colors group text-right"
+                onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--pb-surface-hover)")}
+                onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "")}
               >
                 <div className="min-w-0">
-                  <div className="text-[11px] text-[#787774] font-medium mb-0.5">Next</div>
-                  <div className="text-[14px] font-semibold text-[#37352f] truncate">{nextGuide.title}</div>
+                  <div className="text-[11px] font-medium mb-0.5" style={{ color: "var(--pb-text-muted)" }}>Next</div>
+                  <div className="text-[14px] font-semibold truncate" style={{ color: "var(--pb-text)" }}>{nextGuide.title}</div>
                 </div>
-                <ArrowRight className="w-4 h-4 text-[#787774] group-hover:text-[#37352f] transition-colors flex-shrink-0" />
+                <ArrowRight className="w-4 h-4 transition-colors flex-shrink-0" style={{ color: "var(--pb-text-muted)" }} />
               </Link>
             ) : (
               <div className="flex-1" />
@@ -527,12 +553,12 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
       {/* ─── Right Sidebar: On This Page (Sticky) ─── */}
       <aside className="hidden lg:flex w-[240px] flex-shrink-0 flex-col sticky top-[32px] max-h-[calc(100vh-140px)] overflow-y-auto">
         <div className="pt-0 pr-6 pl-4">
-          <div className="text-[13px] font-semibold text-[#787774] mb-3 flex items-center gap-2">
+          <div className="text-[13px] font-semibold mb-3 flex items-center gap-2" style={{ color: "var(--pb-text-muted)" }}>
             <Menu className="w-3.5 h-3.5" strokeWidth={2.5} />
             On this page
           </div>
           <nav className="flex flex-col relative ml-1">
-            <div className="absolute left-0 top-1 bottom-1 w-[1px] bg-[#EAE9E9] z-0" />
+            <div className="absolute left-0 top-1 bottom-1 w-[1px] z-0" style={{ backgroundColor: "var(--pb-border)" }} />
             {activeGuide.sections.map((section) => (
               <div key={section.id} className="flex flex-col">
                 <a
@@ -546,9 +572,24 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                   }}
                   className={`text-[13px] leading-[1.4] py-1.5 pl-4 relative z-10 border-l-[2px] transition-colors ${
                     activeSection === section.id
-                      ? "text-[#37352f] font-medium border-[#37352f]"
-                      : "text-[#787774] hover:text-[#37352f] border-transparent"
+                      ? "font-medium border-[#e3a99c]"
+                      : "border-transparent"
                   }`}
+                  style={{
+                    color: activeSection === section.id
+                      ? "var(--pb-text)"
+                      : "var(--pb-text-muted)",
+                  }}
+                  onMouseEnter={(e) => {
+                    if (activeSection !== section.id) {
+                      e.currentTarget.style.color = "var(--pb-text-secondary)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (activeSection !== section.id) {
+                      e.currentTarget.style.color = "var(--pb-text-muted)";
+                    }
+                  }}
                 >
                   {section.title}
                 </a>
@@ -568,7 +609,10 @@ export default function GuidePage(props: { params: Promise<{ guideId: string }> 
                         }
                         window.history.pushState(null, "", `#${block.id}`);
                       }}
-                      className="text-[12px] leading-[1.4] py-1 pl-8 pr-2 text-[#787774] hover:text-[#37352f] transition-colors mb-1 border-l-[2px] border-transparent"
+                      className="text-[12px] leading-[1.4] py-1 pl-8 pr-2 transition-colors mb-1 border-l-[2px] border-transparent"
+                      style={{ color: "var(--pb-text-muted)" }}
+                      onMouseEnter={(e) => (e.currentTarget.style.color = "var(--pb-text-secondary)")}
+                      onMouseLeave={(e) => (e.currentTarget.style.color = "var(--pb-text-muted)")}
                     >
                       {block.title}
                     </a>
