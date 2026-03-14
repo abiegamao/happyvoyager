@@ -393,11 +393,11 @@ export default function FaqsAndTipsPage() {
                     <MessageCircle className="w-4 h-4" /> Need Translation?
                   </h4>
                   <p className="text-[13px] mb-4" style={{ color: "var(--pb-text-secondary)" }}>
-                    Spanish reviewers only accept <strong style={{ color: "var(--pb-text)" }}>Sworn Translations</strong>. Don't pay the standard €20-25 per page.
+                    Spanish reviewers only accept <strong style={{ color: "var(--pb-text)" }}>Sworn Translations</strong>. Most agencies charge €30-70 per page.
                   </p>
                   <div className="rounded-xl p-3 text-center" style={{ backgroundColor: "var(--pb-input-bg)", border: "1px solid var(--pb-border)" }}>
-                    <p className="text-[12px] font-medium mb-1" style={{ color: "var(--pb-text-muted)" }}>Our Partner Rate</p>
-                    <p className="text-[20px] font-bold" style={{ color: "var(--pb-text)" }}>€16 / page</p>
+                    <p className="text-[12px] font-medium mb-1" style={{ color: "var(--pb-text-muted)" }}>Our Rate</p>
+                    <p className="text-[20px] font-bold" style={{ color: "var(--pb-text)" }}>€18–25 / page</p>
                   </div>
                   <button className="w-full mt-4 bg-[#c9a84c] text-[#2a2a2a] py-2 rounded-xl text-[13px] font-bold hover:bg-[#d4b35e] transition-colors">
                     Contact Specialist

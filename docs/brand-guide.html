@@ -1,0 +1,1223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Voyager ~ Brand Guidelines</title>
+<link href="https://fonts.cdnfonts.com/css/avenir" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Allura&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --cream: #f9f5f2;
+    --charcoal: #3a3a3a;
+    --rose: #e3a99c;
+    --rose-dark: #d69586;
+    --beige: #e7ddd3;
+    --peach: #f2d6c9;
+    --sage: #8fa38d;
+    --slate: #bbcccd;
+    --gold: #c9a84c;
+    --gray: #6b6b6b;
+    --light-gray: #aaaaaa;
+  }
+
+  body {
+    font-family: 'Avenir', 'Avenir Next', system-ui, -apple-system, sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .script { font-family: 'Allura', cursive; }
+
+  /* ── Hero ── */
+  .hero {
+    background: linear-gradient(180deg, var(--cream) 0%, var(--peach) 50%, var(--beige) 100%);
+    padding: 100px 40px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    right: -100px;
+    width: 400px;
+    height: 400px;
+    background: rgba(227,169,156,0.15);
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+    filter: blur(80px);
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    left: -60px;
+    width: 300px;
+    height: 300px;
+    background: rgba(143,163,141,0.12);
+    border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%;
+    filter: blur(80px);
+  }
+  .hero h1 {
+    font-size: 56px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 .accent { color: var(--rose); }
+  .hero h1 .script-word { font-family: 'Allura', cursive; color: var(--rose); font-size: 64px; font-weight: 400; }
+  .hero .tagline {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--rose);
+    margin-top: 16px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .subtitle {
+    font-size: 18px;
+    color: var(--gray);
+    margin-top: 12px;
+    max-width: 500px;
+    margin-inline: auto;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .version {
+    display: inline-block;
+    margin-top: 24px;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--light-gray);
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(10px);
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(0,0,0,0.06);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Layout ── */
+  .container { max-width: 1000px; margin: 0 auto; padding: 0 32px; }
+  section { padding: 80px 0; }
+  section + section { border-top: 1px solid rgba(0,0,0,0.06); }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    color: var(--rose);
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .section-desc {
+    font-size: 15px;
+    color: var(--gray);
+    max-width: 560px;
+    margin-bottom: 40px;
+  }
+
+  /* ── Color Grid ── */
+  .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 16px; }
+  .color-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--beige);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .color-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(58,58,58,0.08); }
+  .color-swatch { height: 100px; }
+  .color-info { padding: 12px 14px; }
+  .color-name { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+  .color-hex { font-size: 12px; color: var(--gray); font-family: 'SF Mono', 'Fira Code', monospace; }
+  .color-use { font-size: 11px; color: var(--light-gray); margin-top: 4px; }
+
+  /* ── Subsection ── */
+  .subsection { margin-top: 48px; }
+  .subsection-title { font-size: 18px; font-weight: 700; margin-bottom: 16px; }
+
+  /* ── Typography ── */
+  .type-specimen {
+    background: white;
+    border: 1px solid var(--beige);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 20px;
+  }
+  .type-label {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--light-gray);
+    margin-bottom: 12px;
+  }
+  .type-heading-demo { font-size: 40px; font-weight: 800; letter-spacing: -1px; line-height: 1.1; margin-bottom: 8px; }
+  .type-body-demo { font-size: 15px; color: var(--gray); line-height: 1.7; max-width: 600px; }
+  .type-script-demo { font-family: 'Allura', cursive; font-size: 48px; color: var(--rose); }
+
+  .type-scale {
+    display: grid;
+    gap: 16px;
+    margin-top: 32px;
+  }
+  .type-scale-row {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+  }
+  .type-scale-size {
+    font-size: 12px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: var(--light-gray);
+    min-width: 60px;
+    flex-shrink: 0;
+  }
+  .type-scale-weight {
+    font-size: 11px;
+    color: var(--light-gray);
+    min-width: 80px;
+    flex-shrink: 0;
+  }
+
+  /* ── Buttons ── */
+  .button-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-bottom: 24px; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-decoration: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #e3a99c, #d69586);
+    color: white;
+    box-shadow: 0 4px 15px rgba(227,169,156,0.4);
+  }
+  .btn-primary:hover { box-shadow: 0 8px 25px rgba(227,169,156,0.5); transform: translateY(-1px); }
+  .btn-secondary {
+    background: transparent;
+    color: var(--rose);
+    border: 1.5px solid var(--rose);
+  }
+  .btn-secondary:hover { background: rgba(227,169,156,0.08); }
+  .btn-ghost {
+    background: transparent;
+    color: var(--rose);
+    padding: 12px 8px;
+  }
+  .btn-ghost:hover { opacity: 0.7; }
+  .btn-cta {
+    background: linear-gradient(135deg, #e3a99c, #c9a84c);
+    color: white;
+    box-shadow: 0 4px 15px rgba(227,169,156,0.4);
+    padding: 14px 32px;
+  }
+
+  /* ── Cards ── */
+  .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .card-demo {
+    background: white;
+    border: 1px solid var(--beige);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1), box-shadow 0.3s;
+  }
+  .card-demo:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(58,58,58,0.1); }
+  .card-accent { height: 3px; }
+  .card-body { padding: 20px; }
+  .card-title { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+  .card-desc { font-size: 13px; color: var(--gray); line-height: 1.6; }
+  .card-meta { font-size: 11px; color: var(--light-gray); margin-top: 12px; display: flex; gap: 12px; }
+
+  /* Glass card */
+  .glass-demo {
+    background: rgba(255,255,255,0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .glass-demo-dark {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(255,255,255,0.08);
+    color: rgba(255,255,255,0.9);
+  }
+
+  /* ── Badges ── */
+  .badge-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  /* ── Gradients ── */
+  .gradient-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+  .gradient-swatch {
+    height: 80px;
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 14px;
+  }
+  .gradient-label { font-size: 11px; font-weight: 600; color: white; text-shadow: 0 1px 4px rgba(0,0,0,0.3); }
+
+  /* ── Dark Mode Preview ── */
+  .dark-preview {
+    background: #2a2a2a;
+    border-radius: 20px;
+    padding: 40px;
+    color: rgba(255,255,255,0.9);
+    position: relative;
+    overflow: hidden;
+  }
+  .dark-preview::before {
+    content: '';
+    position: absolute;
+    top: -60px;
+    right: -40px;
+    width: 200px;
+    height: 200px;
+    background: rgba(227,169,156,0.08);
+    border-radius: 50%;
+    filter: blur(60px);
+  }
+  .dark-preview .muted { color: rgba(255,255,255,0.3); }
+  .dark-preview .secondary { color: rgba(255,255,255,0.5); }
+
+  /* ── Tokens Table ── */
+  .token-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .token-table th {
+    text-align: left;
+    padding: 10px 16px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--light-gray);
+    border-bottom: 2px solid var(--beige);
+  }
+  .token-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+    vertical-align: middle;
+  }
+  .token-table code {
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12px;
+    background: rgba(0,0,0,0.04);
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+  .token-swatch-sm {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    vertical-align: middle;
+    margin-right: 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  /* ── Spacing ── */
+  .spacing-row { display: flex; align-items: center; gap: 16px; margin-bottom: 12px; }
+  .spacing-bar { height: 24px; background: var(--peach); border-radius: 6px; }
+  .spacing-label { font-size: 12px; color: var(--gray); min-width: 100px; flex-shrink: 0; }
+  .spacing-value { font-size: 11px; font-family: 'SF Mono', monospace; color: var(--light-gray); }
+
+  /* ── Icons ── */
+  .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 12px; }
+  .icon-card {
+    background: white;
+    border: 1px solid var(--beige);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.2s;
+  }
+  .icon-card:hover { transform: translateY(-2px); }
+  .icon-card .icon-emoji { font-size: 24px; margin-bottom: 6px; }
+  .icon-card .icon-label { font-size: 11px; color: var(--gray); }
+
+  /* ── Voice ── */
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .voice-card {
+    background: white;
+    border: 1px solid var(--beige);
+    border-radius: 16px;
+    padding: 24px;
+  }
+  .voice-card.do { border-top: 3px solid var(--sage); }
+  .voice-card.dont { border-top: 3px solid #c4523a; }
+  .voice-card h4 { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
+  .voice-card .do-label { color: var(--sage); }
+  .voice-card .dont-label { color: #c4523a; }
+  .voice-card p { font-size: 13px; color: var(--gray); line-height: 1.6; }
+  .voice-card blockquote {
+    font-size: 14px;
+    font-style: italic;
+    padding: 12px 16px;
+    border-left: 3px solid var(--beige);
+    margin: 8px 0;
+    color: var(--charcoal);
+    background: rgba(0,0,0,0.02);
+    border-radius: 0 8px 8px 0;
+  }
+
+  /* ── Animation Preview ── */
+  .anim-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .anim-card {
+    background: white;
+    border: 1px solid var(--beige);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+  .anim-dot {
+    width: 32px;
+    height: 32px;
+    background: var(--rose);
+    border-radius: 50%;
+  }
+  .anim-dot.float { animation: float 3s ease-in-out infinite; }
+  .anim-dot.pulse { animation: pulse-soft 2s ease-in-out infinite; }
+  .anim-dot.scale { animation: scale-in 1s ease-in-out infinite alternate; }
+  .anim-label { font-size: 11px; color: var(--light-gray); font-weight: 600; }
+
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+  @keyframes pulse-soft { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.6; transform: scale(0.92); } }
+  @keyframes scale-in { 0% { transform: scale(0.8); opacity: 0.6; } 100% { transform: scale(1); opacity: 1; } }
+
+  /* ── Playbook Accent Table ── */
+  .playbook-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+  .playbook-card {
+    border-radius: 16px;
+    overflow: hidden;
+    background: white;
+    border: 1px solid var(--beige);
+    transition: transform 0.2s;
+  }
+  .playbook-card:hover { transform: translateY(-4px); }
+  .playbook-header { padding: 20px; display: flex; align-items: center; gap: 12px; }
+  .playbook-emoji { font-size: 28px; }
+  .playbook-title { font-size: 14px; font-weight: 700; }
+  .playbook-tag { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 3px 8px; border-radius: 999px; }
+  .playbook-footer { padding: 12px 20px; border-top: 1px solid rgba(0,0,0,0.04); display: flex; gap: 12px; }
+  .playbook-footer span { font-size: 11px; font-family: 'SF Mono', monospace; }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero { padding: 60px 24px 50px; }
+    .hero h1 { font-size: 36px; }
+    .hero h1 .script-word { font-size: 42px; }
+    .container { padding: 0 20px; }
+    section { padding: 60px 0; }
+    .voice-grid { grid-template-columns: 1fr; }
+    .anim-grid { grid-template-columns: 1fr 1fr; }
+    .color-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ── Print ── */
+  @media print {
+    .hero { background: white !important; padding: 40px 0; }
+    section { padding: 40px 0; }
+    .color-card, .card-demo, .playbook-card { break-inside: avoid; }
+  }
+
+  /* ── TOC ── */
+  .toc {
+    background: white;
+    border: 1px solid var(--beige);
+    border-radius: 20px;
+    padding: 32px;
+    margin: -40px auto 0;
+    max-width: 600px;
+    position: relative;
+    z-index: 2;
+  }
+  .toc-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--light-gray); margin-bottom: 16px; }
+  .toc-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 24px; }
+  .toc-list a {
+    font-size: 13px;
+    color: var(--gray);
+    text-decoration: none;
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: color 0.15s;
+  }
+  .toc-list a:hover { color: var(--rose); }
+  .toc-num { font-size: 10px; font-weight: 700; color: var(--light-gray); min-width: 20px; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<div class="hero">
+  <h1>Happy <span class="script-word">Voyager</span></h1>
+  <div class="tagline">Freedom Engineer</div>
+  <p class="subtitle">Brand guidelines for designers, developers, and collaborators.</p>
+  <span class="version">v1.0 ~ March 2026</span>
+</div>
+
+<!-- TOC -->
+<div class="container">
+  <div class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#identity"><span class="toc-num">01</span> Brand Identity</a></li>
+      <li><a href="#colors"><span class="toc-num">02</span> Color Palette</a></li>
+      <li><a href="#typography"><span class="toc-num">03</span> Typography</a></li>
+      <li><a href="#components"><span class="toc-num">04</span> Components</a></li>
+      <li><a href="#glass"><span class="toc-num">05</span> Glassmorphism</a></li>
+      <li><a href="#gradients"><span class="toc-num">06</span> Gradients</a></li>
+      <li><a href="#playbooks"><span class="toc-num">07</span> Playbook System</a></li>
+      <li><a href="#dark"><span class="toc-num">08</span> Dark Mode</a></li>
+      <li><a href="#animation"><span class="toc-num">09</span> Animation</a></li>
+      <li><a href="#voice"><span class="toc-num">10</span> Tone of Voice</a></li>
+      <li><a href="#spacing"><span class="toc-num">11</span> Spacing & Layout</a></li>
+      <li><a href="#dos-donts"><span class="toc-num">12</span> Do's & Don'ts</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- ═══════════════ 01 IDENTITY ═══════════════ -->
+<div class="container">
+<section id="identity">
+  <div class="section-label">01 ~ Identity</div>
+  <div class="section-title">Brand Identity</div>
+  <p class="section-desc">Happy Voyager is a visa guidance platform built by Abie Maxey ~ a systems engineer, content creator, and DNV holder who moved to Spain completely DIY.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 32px;">
+    <div class="voice-card" style="border-top: 3px solid var(--rose);">
+      <h4>Brand Promise</h4>
+      <p>We turn the visa process from overwhelming bureaucracy into a clear, step-by-step system anyone can follow.</p>
+    </div>
+    <div class="voice-card" style="border-top: 3px solid var(--gold);">
+      <h4>Tagline</h4>
+      <p style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.25em; color: var(--rose); margin-bottom: 8px;">Freedom Engineer</p>
+      <p>"I turned a passport that felt like a cage into a boarding pass to Europe."</p>
+    </div>
+  </div>
+
+  <div class="subsection-title">Trust Signals</div>
+  <div style="display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px;">
+    <span style="background: rgba(143,163,141,0.15); color: var(--sage); padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;">Visa approved 2026</span>
+    <span style="background: rgba(227,169,156,0.15); color: var(--rose); padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;">$0 in lawyer fees</span>
+    <span style="background: rgba(201,168,76,0.15); color: var(--gold); padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;">3-year EU residency</span>
+    <span style="background: rgba(187,204,205,0.2); color: #7a8f90; padding: 6px 14px; border-radius: 999px; font-size: 12px; font-weight: 600;">Active nomad in Spain</span>
+  </div>
+</section>
+
+<!-- ═══════════════ 02 COLORS ═══════════════ -->
+<section id="colors">
+  <div class="section-label">02 ~ Palette</div>
+  <div class="section-title">Color Palette</div>
+  <p class="section-desc">A warm, earthy palette inspired by Mediterranean light, Spanish terracotta, and natural materials.</p>
+
+  <div class="subsection-title">Primary Colors</div>
+  <div class="color-grid">
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f9f5f2; border-bottom: 1px solid var(--beige);"></div>
+      <div class="color-info">
+        <div class="color-name">Cream</div>
+        <div class="color-hex">#f9f5f2</div>
+        <div class="color-use">Primary background</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #3a3a3a;"></div>
+      <div class="color-info">
+        <div class="color-name">Charcoal</div>
+        <div class="color-hex">#3a3a3a</div>
+        <div class="color-use">Primary text</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #e3a99c;"></div>
+      <div class="color-info">
+        <div class="color-name">Dusty Rose</div>
+        <div class="color-hex">#e3a99c</div>
+        <div class="color-use">Primary accent, CTAs</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #e7ddd3;"></div>
+      <div class="color-info">
+        <div class="color-name">Warm Beige</div>
+        <div class="color-hex">#e7ddd3</div>
+        <div class="color-use">Borders, dividers</div>
+      </div>
+    </div>
+    <div class="color-card">
+      <div class="color-swatch" style="background: #f2d6c9;"></div>
+      <div class="color-info">
+        <div class="color-name">Soft Peach</div>
+        <div class="color-hex">#f2d6c9</div>
+        <div class="color-use">Muted accents, badges</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Secondary Colors</div>
+    <div class="color-grid">
+      <div class="color-card">
+        <div class="color-swatch" style="background: #8fa38d;"></div>
+        <div class="color-info">
+          <div class="color-name">Sage</div>
+          <div class="color-hex">#8fa38d</div>
+          <div class="color-use">Free content, nature</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #bbcccd;"></div>
+        <div class="color-info">
+          <div class="color-name">Slate</div>
+          <div class="color-hex">#bbcccd</div>
+          <div class="color-use">Tertiary accent</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #c9a84c;"></div>
+        <div class="color-info">
+          <div class="color-name">Gold</div>
+          <div class="color-hex">#c9a84c</div>
+          <div class="color-use">Premium, achievements</div>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-swatch" style="background: #d69586;"></div>
+        <div class="color-info">
+          <div class="color-name">Dark Rose</div>
+          <div class="color-hex">#d69586</div>
+          <div class="color-use">Hover states</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Tag / Badge Colors</div>
+    <div class="badge-grid">
+      <span class="badge" style="background: #d4e0d3; color: #5d7a5b;">Tool</span>
+      <span class="badge" style="background: #f2d6c9; color: #c47a6a;">Core</span>
+      <span class="badge" style="background: #f5ecd7; color: #9a7a3a;">Tax</span>
+      <span class="badge" style="background: #e0eaeb; color: #4a7070;">Updated</span>
+      <span class="badge" style="background: #f2d6c9; color: #e3a99c;">Shortcut</span>
+      <span class="badge" style="background: rgba(143,163,141,0.15); color: #8fa38d;">Free</span>
+      <span class="badge" style="background: #f0ebe6; color: #7a7a7a;">Default</span>
+      <span class="badge" style="background: rgba(227,169,156,0.15); color: #e3a99c; border: 1px solid rgba(227,169,156,0.3);">Early Access</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 03 TYPOGRAPHY ═══════════════ -->
+<section id="typography">
+  <div class="section-label">03 ~ Typography</div>
+  <div class="section-title">Typography</div>
+  <p class="section-desc">Avenir for everything. Allura for magic.</p>
+
+  <div class="type-specimen">
+    <div class="type-label">Heading ~ Avenir Bold</div>
+    <div class="type-heading-demo">
+      Spain DNV <span class="script" style="color: var(--rose); font-size: 44px;">Playbook Pro</span>
+    </div>
+    <div class="type-body-demo" style="margin-top: 12px;">
+      The complete system for getting Spain's Digital Nomad Visa, building your life in Spain, and becoming a Spanish citizen ~ all in one place, step by step.
+    </div>
+  </div>
+
+  <div class="type-specimen">
+    <div class="type-label">Script Font ~ Allura</div>
+    <div class="type-script-demo">Your Roadmap</div>
+    <p style="font-size: 12px; color: var(--light-gray); margin-top: 8px;">Used sparingly for branded accent words: "Playbook <span class="script" style="color: var(--rose); font-size: 18px;">Pro</span>", "Your <span class="script" style="color: var(--rose); font-size: 18px;">Roadmap</span>", "The <span class="script" style="color: var(--gold); font-size: 18px;">Journey</span>"</p>
+  </div>
+
+  <div class="subsection-title">Type Scale</div>
+  <div class="type-scale">
+    <div class="type-scale-row">
+      <span class="type-scale-size">40px</span>
+      <span class="type-scale-weight">Bold 800</span>
+      <span style="font-size: 28px; font-weight: 800; letter-spacing: -0.5px;">Page Title (h1)</span>
+    </div>
+    <div class="type-scale-row">
+      <span class="type-scale-size">28px</span>
+      <span class="type-scale-weight">Bold 700</span>
+      <span style="font-size: 22px; font-weight: 700;">Section Heading</span>
+    </div>
+    <div class="type-scale-row">
+      <span class="type-scale-size">18px</span>
+      <span class="type-scale-weight">Bold 700</span>
+      <span style="font-size: 18px; font-weight: 700;">Card Title</span>
+    </div>
+    <div class="type-scale-row">
+      <span class="type-scale-size">15px</span>
+      <span class="type-scale-weight">Medium 500</span>
+      <span style="font-size: 15px; font-weight: 500; color: var(--gray);">Body text and descriptions</span>
+    </div>
+    <div class="type-scale-row">
+      <span class="type-scale-size">13px</span>
+      <span class="type-scale-weight">Regular 400</span>
+      <span style="font-size: 13px; color: var(--gray);">Secondary body, card content</span>
+    </div>
+    <div class="type-scale-row">
+      <span class="type-scale-size">11px</span>
+      <span class="type-scale-weight">Bold 700</span>
+      <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--light-gray);">LABEL / MICRO TEXT</span>
+    </div>
+    <div class="type-scale-row">
+      <span class="type-scale-size">9px</span>
+      <span class="type-scale-weight">Bold 700</span>
+      <span style="font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--light-gray);">BADGE / STATUS</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 04 COMPONENTS ═══════════════ -->
+<section id="components">
+  <div class="section-label">04 ~ Components</div>
+  <div class="section-title">Components</div>
+  <p class="section-desc">Buttons, cards, and badges ~ the building blocks.</p>
+
+  <div class="subsection-title">Buttons</div>
+  <div class="button-row">
+    <button class="btn btn-primary">Primary Button &rarr;</button>
+    <button class="btn btn-secondary">Secondary</button>
+    <button class="btn btn-ghost">Ghost Link &rarr;</button>
+  </div>
+  <div class="button-row">
+    <button class="btn btn-cta">Book a Consultation &rarr;</button>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Cards</div>
+    <div class="card-grid">
+      <div class="card-demo">
+        <div class="card-accent" style="background: var(--rose);"></div>
+        <div class="card-body">
+          <div class="card-title">Spain DNV Playbook Pro</div>
+          <div class="card-desc">The complete system for getting Spain's Digital Nomad Visa ~ from first document to citizenship.</div>
+          <div class="card-meta">
+            <span><strong>24</strong> lessons</span>
+            <span><strong>6</strong> phases</span>
+            <span>~3 hrs</span>
+          </div>
+        </div>
+      </div>
+      <div class="card-demo">
+        <div class="card-accent" style="background: var(--sage);"></div>
+        <div class="card-body">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span class="badge" style="background: rgba(143,163,141,0.15); color: var(--sage);">Free</span>
+          </div>
+          <div class="card-title">Reference Guides</div>
+          <div class="card-desc">Browse free reference material before starting the course ~ visa basics, eligibility, and document checklists.</div>
+        </div>
+      </div>
+      <div class="card-demo">
+        <div class="card-accent" style="background: var(--gold);"></div>
+        <div class="card-body">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <span class="badge" style="background: rgba(201,168,76,0.15); color: var(--gold); border: 1px solid rgba(201,168,76,0.3);">Early Access</span>
+          </div>
+          <div class="card-title">The Spanish Passport Playbook</div>
+          <div class="card-desc">Residency &rarr; EU passport, step by step. The full endgame.</div>
+          <div class="card-meta">
+            <span><strong>24</strong> lessons</span>
+            <span><strong>6</strong> phases</span>
+            <span>~4 hrs</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 05 GLASS ═══════════════ -->
+<section id="glass">
+  <div class="section-label">05 ~ Surfaces</div>
+  <div class="section-title">Glassmorphism</div>
+  <p class="section-desc">Frosted glass surfaces create depth and layering without heavy shadows.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 32px; background: linear-gradient(135deg, var(--peach), var(--beige)); border-radius: 20px;">
+    <div class="glass-demo">
+      <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--light-gray); margin-bottom: 8px;">glass-pb</div>
+      <div style="font-size: 14px; font-weight: 600;">Standard Surface</div>
+      <div style="font-size: 12px; color: var(--gray); margin-top: 4px;">rgba(255,255,255,0.7) + blur(20px)</div>
+    </div>
+    <div class="glass-demo" style="background: rgba(255,255,255,0.85); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);">
+      <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--light-gray); margin-bottom: 8px;">glass-pb-elevated</div>
+      <div style="font-size: 14px; font-weight: 600;">Elevated Surface</div>
+      <div style="font-size: 12px; color: var(--gray); margin-top: 4px;">rgba(255,255,255,0.85) + blur(24px)</div>
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding: 32px; background: #2a2a2a; border-radius: 20px; margin-top: 16px;">
+    <div class="glass-demo glass-demo-dark">
+      <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); margin-bottom: 8px;">glass-pb (dark)</div>
+      <div style="font-size: 14px; font-weight: 600;">Standard Surface</div>
+      <div style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px;">rgba(255,255,255,0.04) + blur(20px)</div>
+    </div>
+    <div class="glass-demo glass-demo-dark" style="background: rgba(255,255,255,0.07);">
+      <div style="font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: rgba(255,255,255,0.3); margin-bottom: 8px;">glass-pb-elevated (dark)</div>
+      <div style="font-size: 14px; font-weight: 600;">Elevated Surface</div>
+      <div style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 4px;">rgba(255,255,255,0.07) + blur(24px)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 06 GRADIENTS ═══════════════ -->
+<section id="gradients">
+  <div class="section-label">06 ~ Gradients</div>
+  <div class="section-title">Gradients</div>
+  <p class="section-desc">Warm, directional gradients for CTAs, backgrounds, and decorative elements.</p>
+
+  <div class="gradient-grid">
+    <div class="gradient-swatch" style="background: linear-gradient(135deg, #e3a99c, #d69586);">
+      <span class="gradient-label">Button</span>
+    </div>
+    <div class="gradient-swatch" style="background: linear-gradient(135deg, #e3a99c, #c9a84c);">
+      <span class="gradient-label">CTA Banner</span>
+    </div>
+    <div class="gradient-swatch" style="background: linear-gradient(135deg, #f2d6c9, #e3a99c);">
+      <span class="gradient-label">Primary</span>
+    </div>
+    <div class="gradient-swatch" style="background: linear-gradient(135deg, #bbcccd, #a8bfc0);">
+      <span class="gradient-label">Sage</span>
+    </div>
+    <div class="gradient-swatch" style="background: linear-gradient(180deg, #f9f5f2, #e7ddd3);">
+      <span class="gradient-label" style="color: var(--gray);">Warm BG</span>
+    </div>
+    <div class="gradient-swatch" style="background: linear-gradient(180deg, #e3a99c, #8fa38d, #c9a84c, #e3a99c);">
+      <span class="gradient-label">Timeline</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 07 PLAYBOOKS ═══════════════ -->
+<section id="playbooks">
+  <div class="section-label">07 ~ Playbook System</div>
+  <div class="section-title">Playbook Ecosystem</div>
+  <p class="section-desc">Each playbook has its own accent colour and background. They connect as chapters in a bigger journey.</p>
+
+  <div class="playbook-grid">
+    <div class="playbook-card">
+      <div style="height: 3px; background: #bbcccd;"></div>
+      <div class="playbook-header" style="background: #dde8e9;">
+        <span class="playbook-emoji">🇪🇺</span>
+        <div>
+          <div class="playbook-title">The Schengen First Playbook</div>
+          <span class="playbook-tag" style="background: rgba(187,204,205,0.2); color: #7a8f90;">Chapter 0</span>
+        </div>
+      </div>
+      <div class="playbook-footer">
+        <span>Accent: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#bbcccd</code></span>
+        <span>BG: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#dde8e9</code></span>
+      </div>
+    </div>
+
+    <div class="playbook-card">
+      <div style="height: 3px; background: #e3a99c;"></div>
+      <div class="playbook-header" style="background: #f2d6c9;">
+        <span class="playbook-emoji">🇪🇸</span>
+        <div>
+          <div class="playbook-title">Spain DNV Playbook Pro</div>
+          <span class="playbook-tag" style="background: rgba(227,169,156,0.2); color: var(--rose);">Chapter 1 ~ Available</span>
+        </div>
+      </div>
+      <div class="playbook-footer">
+        <span>Accent: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#e3a99c</code></span>
+        <span>BG: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#f2d6c9</code></span>
+      </div>
+    </div>
+
+    <div class="playbook-card">
+      <div style="height: 3px; background: #c47c5a;"></div>
+      <div class="playbook-header" style="background: #f5e6dc;">
+        <span class="playbook-emoji">🌞</span>
+        <div>
+          <div class="playbook-title">The Soft Landing Playbook</div>
+          <span class="playbook-tag" style="background: rgba(196,124,90,0.15); color: #c47c5a;">Chapter 2</span>
+        </div>
+      </div>
+      <div class="playbook-footer">
+        <span>Accent: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#c47c5a</code></span>
+        <span>BG: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#f5e6dc</code></span>
+      </div>
+    </div>
+
+    <div class="playbook-card">
+      <div style="height: 3px; background: #c9a84c;"></div>
+      <div class="playbook-header" style="background: #f5ecd7;">
+        <span class="playbook-emoji">🏆</span>
+        <div>
+          <div class="playbook-title">The Spanish Passport Playbook</div>
+          <span class="playbook-tag" style="background: rgba(201,168,76,0.15); color: var(--gold);">Chapter 3</span>
+        </div>
+      </div>
+      <div class="playbook-footer">
+        <span>Accent: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#c9a84c</code></span>
+        <span>BG: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#f5ecd7</code></span>
+      </div>
+    </div>
+
+    <div class="playbook-card">
+      <div style="height: 3px; background: #6b8cba;"></div>
+      <div class="playbook-header" style="background: #dde8f5;">
+        <span class="playbook-emoji">🛂</span>
+        <div>
+          <div class="playbook-title">The Visa Runner's Playbook</div>
+          <span class="playbook-tag" style="background: rgba(107,140,186,0.15); color: #6b8cba;">Companion</span>
+        </div>
+      </div>
+      <div class="playbook-footer">
+        <span>Accent: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#6b8cba</code></span>
+        <span>BG: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#dde8f5</code></span>
+      </div>
+    </div>
+
+    <div class="playbook-card">
+      <div style="height: 3px; background: #c4523a;"></div>
+      <div class="playbook-header" style="background: #f5ddd7;">
+        <span class="playbook-emoji">🗣️</span>
+        <div>
+          <div class="playbook-title">The DELE A2 Playbook</div>
+          <span class="playbook-tag" style="background: rgba(196,82,58,0.15); color: #c4523a;">Companion</span>
+        </div>
+      </div>
+      <div class="playbook-footer">
+        <span>Accent: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#c4523a</code></span>
+        <span>BG: <code style="font-family: 'SF Mono', monospace; font-size: 11px;">#f5ddd7</code></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Journey Chain -->
+  <div class="subsection">
+    <div class="subsection-title">Journey Flow</div>
+    <div style="display: flex; align-items: center; justify-content: center; gap: 8px; padding: 32px; background: white; border: 1px solid var(--beige); border-radius: 16px; flex-wrap: wrap;">
+      <div style="text-align: center; padding: 12px 16px; border-radius: 12px; background: rgba(187,204,205,0.1);">
+        <div style="font-size: 28px;">🇪🇺</div>
+        <div style="font-size: 10px; font-weight: 700; color: #bbcccd; margin-top: 4px;">Schengen First</div>
+      </div>
+      <span style="color: var(--light-gray); font-size: 18px;">&rarr;</span>
+      <div style="text-align: center; padding: 12px 16px; border-radius: 12px; background: rgba(227,169,156,0.15); border: 1px solid rgba(227,169,156,0.4);">
+        <div style="font-size: 28px;">🇪🇸</div>
+        <div style="font-size: 10px; font-weight: 700; color: var(--rose); margin-top: 4px;">Spain DNV</div>
+        <div style="font-size: 7px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--rose); background: rgba(227,169,156,0.2); padding: 2px 6px; border-radius: 999px; margin-top: 4px;">You are here</div>
+      </div>
+      <span style="color: var(--light-gray); font-size: 18px;">&rarr;</span>
+      <div style="text-align: center; padding: 12px 16px; border-radius: 12px; background: rgba(196,124,90,0.08);">
+        <div style="font-size: 28px;">🌞</div>
+        <div style="font-size: 10px; font-weight: 700; color: #c47c5a; margin-top: 4px;">Soft Landing</div>
+      </div>
+      <span style="color: var(--light-gray); font-size: 18px;">&rarr;</span>
+      <div style="text-align: center; padding: 12px 16px; border-radius: 12px; background: rgba(201,168,76,0.08);">
+        <div style="font-size: 28px;">🏆</div>
+        <div style="font-size: 10px; font-weight: 700; color: var(--gold); margin-top: 4px;">Spanish Passport</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 08 DARK MODE ═══════════════ -->
+<section id="dark">
+  <div class="section-label">08 ~ Themes</div>
+  <div class="section-title">Dark Mode</div>
+  <p class="section-desc">Full light/dark theming via CSS custom properties. Accent colours stay the same in both themes.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <!-- Light -->
+    <div style="background: #f9f5f2; border: 1px solid var(--beige); border-radius: 20px; padding: 28px; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -40px; right: -30px; width: 120px; height: 120px; background: rgba(227,169,156,0.12); border-radius: 50%; filter: blur(40px);"></div>
+      <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--light-gray); margin-bottom: 16px; position: relative;">Light Theme</div>
+      <div style="font-size: 20px; font-weight: 800; color: #3a3a3a; margin-bottom: 4px; position: relative;">Your Roadmap</div>
+      <div style="font-size: 13px; color: rgba(58,58,58,0.6); margin-bottom: 12px; position: relative;">6 phases. Application to citizenship.</div>
+      <div style="display: flex; gap: 8px; position: relative;">
+        <span style="background: rgba(227,169,156,0.15); color: #e3a99c; padding: 4px 10px; border-radius: 999px; font-size: 10px; font-weight: 700;">Phase 0</span>
+        <span style="background: rgba(143,163,141,0.15); color: #8fa38d; padding: 4px 10px; border-radius: 999px; font-size: 10px; font-weight: 700;">Free</span>
+      </div>
+    </div>
+
+    <!-- Dark -->
+    <div class="dark-preview" style="padding: 28px;">
+      <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: rgba(255,255,255,0.3); margin-bottom: 16px; position: relative;">Dark Theme</div>
+      <div style="font-size: 20px; font-weight: 800; color: rgba(255,255,255,0.9); margin-bottom: 4px; position: relative;">Your Roadmap</div>
+      <div style="font-size: 13px; color: rgba(255,255,255,0.5); margin-bottom: 12px; position: relative;">6 phases. Application to citizenship.</div>
+      <div style="display: flex; gap: 8px; position: relative;">
+        <span style="background: rgba(227,169,156,0.15); color: #e3a99c; padding: 4px 10px; border-radius: 999px; font-size: 10px; font-weight: 700;">Phase 0</span>
+        <span style="background: rgba(143,163,141,0.15); color: #8fa38d; padding: 4px 10px; border-radius: 999px; font-size: 10px; font-weight: 700;">Free</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Token Comparison</div>
+    <div style="background: white; border: 1px solid var(--beige); border-radius: 16px; overflow: hidden;">
+      <table class="token-table">
+        <thead>
+          <tr><th>Token</th><th>Light</th><th>Dark</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>--pb-bg</code></td>
+            <td><span class="token-swatch-sm" style="background: #f9f5f2;"></span>#f9f5f2</td>
+            <td><span class="token-swatch-sm" style="background: #2a2a2a;"></span>#2a2a2a</td>
+          </tr>
+          <tr>
+            <td><code>--pb-text</code></td>
+            <td><span class="token-swatch-sm" style="background: #3a3a3a;"></span>#3a3a3a</td>
+            <td><span class="token-swatch-sm" style="background: rgba(255,255,255,0.9); border-color: rgba(255,255,255,0.2);"></span>white @ 90%</td>
+          </tr>
+          <tr>
+            <td><code>--pb-surface</code></td>
+            <td>white @ 70%</td>
+            <td>white @ 4%</td>
+          </tr>
+          <tr>
+            <td><code>--pb-border</code></td>
+            <td>black @ 8%</td>
+            <td>white @ 8%</td>
+          </tr>
+          <tr>
+            <td><code>--pb-shadow</code></td>
+            <td>black @ 8%</td>
+            <td>black @ 15%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size: 12px; color: var(--light-gray); margin-top: 12px;">Brand accents (#e3a99c, #8fa38d, #c9a84c) remain unchanged across themes. Default is light; preference stored in <code style="font-family: 'SF Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px;">localStorage("playbook_theme")</code>.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ 09 ANIMATION ═══════════════ -->
+<section id="animation">
+  <div class="section-label">09 ~ Motion</div>
+  <div class="section-title">Animation</div>
+  <p class="section-desc">Subtle, purposeful, scroll-triggered. Animations enhance ~ never distract.</p>
+
+  <div class="anim-grid">
+    <div class="anim-card">
+      <div class="anim-dot float"></div>
+      <div class="anim-label">Float (6s)</div>
+    </div>
+    <div class="anim-card">
+      <div class="anim-dot pulse"></div>
+      <div class="anim-label">Pulse Soft (2s)</div>
+    </div>
+    <div class="anim-card">
+      <div class="anim-dot scale"></div>
+      <div class="anim-label">Scale In (1s)</div>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Motion Specs</div>
+    <div style="background: white; border: 1px solid var(--beige); border-radius: 16px; overflow: hidden;">
+      <table class="token-table">
+        <thead><tr><th>Pattern</th><th>Duration</th><th>Easing</th></tr></thead>
+        <tbody>
+          <tr><td>Fade in (scroll)</td><td>0.8~1s</td><td>[0.25, 0.46, 0.45, 0.94]</td></tr>
+          <tr><td>Slide up (scroll)</td><td>0.8s</td><td>cubic-bezier(0.4, 0, 0.2, 1)</td></tr>
+          <tr><td>Spring hover</td><td>~0.3s</td><td>spring(400, 20)</td></tr>
+          <tr><td>Staggered list</td><td>0.5s / item</td><td>0.15s delay increment</td></tr>
+          <tr><td>Modal entry</td><td>~0.4s</td><td>spring(300, 30)</td></tr>
+          <tr><td>Tab switch</td><td>~0.3s</td><td>spring(500, 35)</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 10 VOICE ═══════════════ -->
+<section id="voice">
+  <div class="section-label">10 ~ Voice</div>
+  <div class="section-title">Tone of Voice</div>
+  <p class="section-desc">Warm, direct, encouraging. Like a knowledgeable friend ~ not a legal bot.</p>
+
+  <div class="voice-grid">
+    <div class="voice-card">
+      <h4>Personality</h4>
+      <p><strong>Warm & direct</strong> ~ talk like a friend who's been there<br>
+      <strong>Encouraging</strong> ~ "You can do this" energy<br>
+      <strong>Honest</strong> ~ acknowledges complexity, doesn't oversimplify<br>
+      <strong>Personal</strong> ~ "When I submitted mine..."</p>
+    </div>
+    <div class="voice-card">
+      <h4>Writing Rules</h4>
+      <p>Use <code style="font-family: 'SF Mono', monospace; font-size: 12px; background: rgba(0,0,0,0.04); padding: 2px 4px; border-radius: 3px;">~</code> instead of em dash (&mdash;) in all content<br>
+      Keep it concise ~ no fluff, no filler<br>
+      Plain language first; briefly explain Spanish terms<br>
+      Active voice and direct instructions</p>
+    </div>
+  </div>
+
+  <div class="subsection" style="margin-top: 24px;">
+    <div class="voice-grid">
+      <div class="voice-card do">
+        <h4><span class="do-label">&#10003; Do</span></h4>
+        <blockquote>"This tripped me up too ~ here's what actually works."</blockquote>
+        <blockquote>"6 phases. Application to citizenship."</blockquote>
+        <blockquote>"No lawyer. No agency. Just a system."</blockquote>
+      </div>
+      <div class="voice-card dont">
+        <h4><span class="dont-label">&#10007; Don't</span></h4>
+        <blockquote>"Our comprehensive solution facilitates visa procurement processes."</blockquote>
+        <blockquote>"Please be advised that the following documentation is required."</blockquote>
+        <blockquote>"Terms and conditions may apply to your unique situation."</blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 11 SPACING ═══════════════ -->
+<section id="spacing">
+  <div class="section-label">11 ~ Layout</div>
+  <div class="section-title">Spacing & Layout</div>
+  <p class="section-desc">Consistent spacing, container widths, and z-index stacking.</p>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+    <div>
+      <div class="subsection-title">Container Widths</div>
+      <div class="spacing-row">
+        <div class="spacing-label">Site-wide</div>
+        <div class="spacing-bar" style="width: 100%;"></div>
+        <div class="spacing-value">1280px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">Playbook</div>
+        <div class="spacing-bar" style="width: 87%;"></div>
+        <div class="spacing-value">1400px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">Content</div>
+        <div class="spacing-bar" style="width: 60%;"></div>
+        <div class="spacing-value">840px</div>
+      </div>
+      <div class="spacing-row">
+        <div class="spacing-label">Sidebar</div>
+        <div class="spacing-bar" style="width: 18%;"></div>
+        <div class="spacing-value">260px</div>
+      </div>
+    </div>
+    <div>
+      <div class="subsection-title">Border Radius</div>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; margin-top: 8px;">
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--peach); border-radius: 999px; margin: 0 auto 6px;"></div>
+          <div style="font-size: 11px; color: var(--gray);">Full</div>
+          <div style="font-size: 10px; color: var(--light-gray);">Buttons</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--peach); border-radius: 16px; margin: 0 auto 6px;"></div>
+          <div style="font-size: 11px; color: var(--gray);">2xl</div>
+          <div style="font-size: 10px; color: var(--light-gray);">Cards</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--peach); border-radius: 12px; margin: 0 auto 6px;"></div>
+          <div style="font-size: 11px; color: var(--gray);">xl</div>
+          <div style="font-size: 10px; color: var(--light-gray);">Inputs</div>
+        </div>
+        <div style="text-align: center;">
+          <div style="width: 48px; height: 48px; background: var(--peach); border-radius: 10px; margin: 0 auto 6px;"></div>
+          <div style="font-size: 11px; color: var(--gray);">lg</div>
+          <div style="font-size: 10px; color: var(--light-gray);">Base</div>
+        </div>
+      </div>
+
+      <div class="subsection-title" style="margin-top: 32px;">Z-Index</div>
+      <div style="font-size: 13px; color: var(--gray);">
+        <div style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.04);"><code style="font-family: 'SF Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px;">z-50</code> Header, Modals</div>
+        <div style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.04);"><code style="font-family: 'SF Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px;">z-40</code> Topbar, Mobile sidebar</div>
+        <div style="padding: 6px 0; border-bottom: 1px solid rgba(0,0,0,0.04);"><code style="font-family: 'SF Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px;">z-10</code> Guides sidebar</div>
+        <div style="padding: 6px 0;"><code style="font-family: 'SF Mono', monospace; font-size: 11px; background: rgba(0,0,0,0.04); padding: 2px 6px; border-radius: 4px;">z-0</code> Desktop sidebar, Blobs</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════ 12 DOS DONTS ═══════════════ -->
+<section id="dos-donts">
+  <div class="section-label">12 ~ Quick Reference</div>
+  <div class="section-title">Do's & Don'ts</div>
+  <p class="section-desc">The essentials at a glance.</p>
+
+  <div class="voice-grid">
+    <div class="voice-card do">
+      <h4><span class="do-label">&#10003; Do</span></h4>
+      <p>
+        Use the warm, earthy palette consistently<br><br>
+        Apply glassmorphism for surface depth<br><br>
+        Keep animations subtle and scroll-triggered<br><br>
+        Write in a warm, direct, personal tone<br><br>
+        Use <code style="font-family: 'SF Mono', monospace; font-size: 11px;">~</code> instead of em dashes<br><br>
+        Show the founder's personal journey as social proof<br><br>
+        Keep imagery personal and travel-authentic
+      </p>
+    </div>
+    <div class="voice-card dont">
+      <h4><span class="dont-label">&#10007; Don't</span></h4>
+      <p>
+        Use pure white (#fff) as page background ~ use cream<br><br>
+        Use pure black (#000) for text ~ use charcoal<br><br>
+        Overload with animations ~ one or two per viewport<br><br>
+        Use stock photography<br><br>
+        Use formal or legal language<br><br>
+        Mix icon libraries within the same component<br><br>
+        Forget to test both light and dark themes
+      </p>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<div style="background: #3a3a3a; padding: 60px 32px; text-align: center; margin-top: 80px;">
+  <div style="font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.25em; color: var(--rose); margin-bottom: 8px;">Happy Voyager</div>
+  <div style="font-family: 'Allura', cursive; font-size: 36px; color: rgba(255,255,255,0.9); margin-bottom: 8px;">Freedom Engineer</div>
+  <div style="font-size: 12px; color: rgba(255,255,255,0.3);">Brand Guidelines v1.0 ~ March 2026 ~ happyvoyager.com</div>
+</div>
+
+</body>
+</html>

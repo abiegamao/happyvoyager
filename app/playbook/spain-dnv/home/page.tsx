@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { motion } from "motion/react";
 import AnimateIn from "@/components/ui/AnimateIn";
 
-const phaseIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number }>> = {
+const phaseIcons: Record<string, React.ComponentType<{ className?: string; strokeWidth?: number; style?: React.CSSProperties }>> = {
   qualify: IconTarget,
   prepare: IconClipboardList,
   apply: IconFileText,
@@ -166,7 +166,7 @@ export default function PlaybookHome() {
               <div className="w-16 h-16 rounded-full flex-shrink-0 overflow-hidden" style={{ border: "2px solid var(--pb-border)" }}>
                 <Image
                   src="https://res.cloudinary.com/dg1i3ew9w/image/upload/v1773164922/avatar_v3grgg.png"
-                  alt="Abie Maxey Gamao"
+                  alt="Abie Maxey"
                   width={64}
                   height={64}
                   className="w-full h-full object-cover"
@@ -174,7 +174,7 @@ export default function PlaybookHome() {
               </div>
               <div>
                 <h2 className="text-[22px] font-semibold mb-1" style={{ color: "var(--pb-text)" }}>
-                  Abie Maxey Gamao (Abz)
+                  Abie Maxey (Abz)
                 </h2>
                 <p className="text-[15px] mb-3" style={{ color: "var(--pb-text-secondary)" }}>
                   Systems engineer, content creator, and DNV holder based in Spain.
