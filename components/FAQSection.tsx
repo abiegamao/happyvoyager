@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
+import Link from "next/link";
 import { Plus, Minus, HelpCircle } from "lucide-react";
 import BookCallButton from "@/components/BookCallButton";
 
-const faqs = [
+const faqs: { question: string; answer: ReactNode }[] = [
   {
     question: "Can I really do this without a lawyer?",
     answer:
@@ -37,13 +38,27 @@ const faqs = [
   },
   {
     question: "Do I need to speak Spanish to apply?",
-    answer:
-      "No language requirement for the visa. The UGE portal is in Spanish but the Playbook walks you through every screen with screenshots. Your documents just need certified translations ~ no test, no interview. Need a translator for your appointment? Our Translation Companion service pairs you with a live interpreter who joins you at the NIE, TIE, or empadronamiento office so nothing gets lost. Basic Spanish helps with daily life, and we have a DELE A2 Playbook coming soon for that.",
+    answer: (
+      <>
+        No language requirement for the visa. The UGE portal is in Spanish but the Playbook walks you through every screen with screenshots. Your documents just need certified translations ~ no test, no interview. Need a translator for your appointment? Our{" "}
+        <Link href="/translation-companion" className="text-[#e3a99c] underline underline-offset-2 hover:text-[#d69586] font-semibold">
+          Translation Companion
+        </Link>{" "}
+        service pairs you with a live interpreter who joins you at the NIE, TIE, or empadronamiento office so nothing gets lost. Basic Spanish helps with daily life, and we have a DELE A2 Playbook coming soon for that.
+      </>
+    ),
   },
   {
     question: "What about taxes once I move to Spain?",
-    answer:
-      "Once you're a tax resident, you'll pay Spanish taxes. The Beckham Law offers a flat 24% rate for 6 years for employed workers. Freelancers have different rules depending on where their income comes from. Phase 4 of the Playbook breaks down your tax obligations and renewal strategy. For your specific situation, always confirm with a Spanish tax advisor (gestor).",
+    answer: (
+      <>
+        Once you&apos;re a tax resident, you&apos;ll pay Spanish taxes. The Beckham Law offers a flat 24% rate for 6 years for employed workers. Freelancers have different rules depending on where their income comes from. Try our free{" "}
+        <Link href="/tax-calculator" className="text-[#e3a99c] underline underline-offset-2 hover:text-[#d69586] font-semibold">
+          Tax &amp; Autónomo Calculator
+        </Link>{" "}
+        to estimate your take-home pay. Phase 4 of the Playbook breaks down your tax obligations and renewal strategy. For your specific situation, always confirm with a Spanish tax advisor (gestor).
+      </>
+    ),
   },
 ];
 
@@ -119,9 +134,9 @@ export default function FAQSection() {
                   }`}
               >
                 <div className="px-5 md:px-7 pb-6">
-                  <p className="font-[family-name:var(--font-body)] text-[#6b6b6b] leading-relaxed text-base md:text-lg">
+                  <div className="font-[family-name:var(--font-body)] text-[#6b6b6b] leading-relaxed text-base md:text-lg">
                     {faq.answer}
-                  </p>
+                  </div>
                 </div>
               </div>
             </div>

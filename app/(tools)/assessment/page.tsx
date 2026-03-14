@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Link from "next/link";
@@ -22,6 +22,8 @@ import {
   RefreshCw,
   Loader2,
   Lock,
+  Mail,
+  Download,
 } from "lucide-react";
 import BookCallButton from "@/components/BookCallButton";
 
@@ -367,7 +369,75 @@ export default function AssessmentPage() {
     setStep(0);
   };
 
+  // Save results state (for users who skipped email capture)
+  const [saveEmail, setSaveEmail] = useState("");
+  const [saveFirstName, setSaveFirstName] = useState("");
+  const [saveSending, setSaveSending] = useState(false);
+  const [saveSent, setSaveSent] = useState(false);
+  const [saveError, setSaveError] = useState("");
+
   const result = isResult ? calculateResult(answers) : null;
+
+  const handleSaveAssessmentEmail = useCallback(async () => {
+    const emailToUse = saveEmail.trim() || email.trim();
+    const nameToUse = saveFirstName.trim() || firstName.trim();
+
+    if (!emailToUse || !/^\S+@\S+\.\S+$/.test(emailToUse)) {
+      setSaveError("Please enter a valid email");
+      return;
+    }
+    if (!result) return;
+
+    setSaveSending(true);
+    setSaveError("");
+    try {
+      await fetch("/api/ghl/capture", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailToUse,
+          firstName: nameToUse || undefined,
+          source: "DNV Assessment",
+          tags: ["DNV Assessment", "Happy Voyager", "Free Tool"],
+          customFields: {
+            Verdict: result.verdict,
+            Status: result.status,
+            "Application Path": result.applicationPath,
+            "Work Track": result.workTrack,
+            "Next Steps": result.nextSteps.join("; "),
+          },
+        }),
+      });
+      setSaveSent(true);
+    } catch {
+      setSaveError("Something went wrong. Try again.");
+    }
+    setSaveSending(false);
+  }, [saveEmail, saveFirstName, email, firstName, result]);
+
+  const handleDownloadAssessmentPDF = useCallback(async () => {
+    if (!result) return;
+    const { generateAssessmentPDF } = await import("@/lib/generate-assessment-pdf");
+
+    const blob = generateAssessmentPDF({
+      firstName: firstName || saveFirstName || "Friend",
+      verdict: result.verdict,
+      status: result.status,
+      summary: result.summary,
+      applicationPath: result.applicationPath,
+      workTrack: result.workTrack,
+      timingNote: result.timingNote,
+      nextSteps: result.nextSteps,
+      answers,
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "dnv-assessment-results.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [result, firstName, saveFirstName, answers]);
 
   const StatusIcon = result
     ? result.status === "strong"
@@ -739,6 +809,82 @@ export default function AssessmentPage() {
                   </div>
                 </div>
               )}
+
+              {/* Save Results */}
+              <div className="bg-white rounded-2xl border border-[#e7ddd3] p-5 mb-6">
+                <h3 className="font-[family-name:var(--font-heading)] text-base font-bold text-[#3a3a3a] mb-1">
+                  📩 Save Your Results
+                </h3>
+                <p className="text-xs text-[#6b6b6b] mb-4">
+                  Download a PDF or get your results sent to your email.
+                </p>
+
+                {saveSent || captureSubmitted ? (
+                  <div className="space-y-3">
+                    {captureSubmitted && (
+                      <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#d4e0d3]/40 border border-[#8fa38d]/30">
+                        <CheckCircle2 className="w-4 h-4 text-[#8fa38d] flex-shrink-0" />
+                        <p className="text-xs text-[#3a3a3a]">Results sent to <strong>{email}</strong></p>
+                      </div>
+                    )}
+                    {saveSent && !captureSubmitted && (
+                      <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#d4e0d3]/40 border border-[#8fa38d]/30">
+                        <CheckCircle2 className="w-4 h-4 text-[#8fa38d] flex-shrink-0" />
+                        <p className="text-xs text-[#3a3a3a]">Sent to <strong>{saveEmail}</strong></p>
+                      </div>
+                    )}
+                    <button
+                      onClick={handleDownloadAssessmentPDF}
+                      className="w-full flex items-center justify-center gap-2 px-5 py-3 rounded-full border-2 border-[#e7ddd3] text-[#3a3a3a] font-bold text-sm hover:border-[#3a3a3a] transition-all"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download PDF
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        value={saveFirstName}
+                        onChange={(e) => { setSaveFirstName(e.target.value); setSaveError(""); }}
+                        placeholder="First name"
+                        className="bg-[#f9f5f2] border border-[#e7ddd3] rounded-2xl px-4 py-3 text-sm text-[#3a3a3a] placeholder:text-[#ccc] focus:outline-none focus:border-[#e3a99c] transition-all"
+                      />
+                      <input
+                        type="email"
+                        value={saveEmail}
+                        onChange={(e) => { setSaveEmail(e.target.value); setSaveError(""); }}
+                        placeholder="Email address"
+                        className="bg-[#f9f5f2] border border-[#e7ddd3] rounded-2xl px-4 py-3 text-sm text-[#3a3a3a] placeholder:text-[#ccc] focus:outline-none focus:border-[#e3a99c] transition-all"
+                      />
+                    </div>
+                    {saveError && (
+                      <p className="text-xs text-red-500">{saveError}</p>
+                    )}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        onClick={handleSaveAssessmentEmail}
+                        disabled={saveSending}
+                        className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#3a3a3a] text-white font-bold text-sm hover:bg-[#e3a99c] transition-all disabled:opacity-60"
+                      >
+                        {saveSending ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</>
+                        ) : (
+                          <><Mail className="w-4 h-4" /> Email My Results</>
+                        )}
+                      </button>
+                      <button
+                        onClick={handleDownloadAssessmentPDF}
+                        className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-full border-2 border-[#e7ddd3] text-[#3a3a3a] font-bold text-sm hover:border-[#3a3a3a] transition-all"
+                      >
+                        <Download className="w-4 h-4" />
+                        Download PDF
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* CTAs */}
               <div className="bg-[#3a3a3a] rounded-3xl p-6 md:p-8">

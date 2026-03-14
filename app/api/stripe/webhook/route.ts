@@ -65,7 +65,8 @@ export async function POST(request: NextRequest) {
 
   // --- Subscription created (trial starts or immediate subscription) ---
   if (event.type === "customer.subscription.created") {
-    const subscription = event.data.object as Stripe.Subscription;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const subscription = event.data.object as any;
     const customerId = subscription.customer as string;
     const customer = await stripe.customers.retrieve(customerId);
 
@@ -95,7 +96,8 @@ export async function POST(request: NextRequest) {
 
   // --- Recurring invoice paid (subscription renewal) ---
   if (event.type === "invoice.payment_succeeded") {
-    const invoice = event.data.object as Stripe.Invoice;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const invoice = event.data.object as any;
     const subscriptionId = invoice.subscription as string | null;
 
     if (subscriptionId && invoice.billing_reason !== "subscription_create") {
@@ -112,7 +114,8 @@ export async function POST(request: NextRequest) {
 
   // --- Subscription canceled or expired ---
   if (event.type === "customer.subscription.deleted") {
-    const subscription = event.data.object as Stripe.Subscription;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const subscription = event.data.object as any;
 
     // Set access to expire at the end of the paid period
     const periodEnd = new Date(subscription.current_period_end * 1000).toISOString();
@@ -128,7 +131,8 @@ export async function POST(request: NextRequest) {
 
   // --- Trial ending soon (3 days before) ---
   if (event.type === "customer.subscription.trial_will_end") {
-    const subscription = event.data.object as Stripe.Subscription;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const subscription = event.data.object as any;
     const customerId = subscription.customer as string;
     const customer = await stripe.customers.retrieve(customerId);
 
@@ -171,8 +175,9 @@ export async function POST(request: NextRequest) {
 }
 
 // --- Helper: upsert purchaser + purchase record ---
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function upsertPurchase(
-  supabase: ReturnType<typeof createClient>,
+  supabase: ReturnType<typeof createClient<any>>,
   data: {
     email: string;
     name: string | null;
