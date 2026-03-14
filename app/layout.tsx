@@ -31,7 +31,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`scroll-smooth ${allura.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`scroll-smooth ${allura.variable}`}
+      suppressHydrationWarning
+    >
+      <head>
+        <meta
+          name="google-site-verification"
+          content="fJ8tBLEGgK8B1-pId1qmt2r0vZTxHOhK9vqNobaAeb4"
+        />
+      </head>
       <body className="antialiased">
         {children}
         <Analytics />
