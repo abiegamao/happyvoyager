@@ -145,7 +145,8 @@ export function SearchModal({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/40 backdrop-blur-sm"
+            className="fixed inset-0"
+            style={{ backgroundColor: "var(--pb-overlay)" }}
           />
 
           {/* Modal */}
@@ -154,34 +155,36 @@ export function SearchModal({
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: -20 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="relative w-full max-w-[650px] bg-white rounded-xl shadow-[0_0_0_1px_rgba(0,0,0,0.05),0_10px_30px_rgba(0,0,0,0.1)] overflow-hidden"
+            className="relative w-full max-w-[650px] backdrop-blur-2xl rounded-2xl shadow-2xl overflow-hidden"
+            style={{ backgroundColor: "var(--pb-surface-elevated)", border: "1px solid var(--pb-border)" }}
           >
-            <div className="flex items-center px-4 py-3 border-b border-[#EAE9E9]">
-              <Search className="w-5 h-5 text-[#787774] mr-3" />
+            <div className="flex items-center px-4 py-3" style={{ borderBottom: "1px solid var(--pb-border)" }}>
+              <Search className="w-5 h-5 mr-3" style={{ color: "var(--pb-text-muted)" }} />
               <input
                 ref={inputRef}
                 type="text"
                 placeholder="Search lessons, guides, or keywords..."
-                className="flex-1 bg-transparent border-none outline-none text-[16px] text-[#37352f] placeholder:text-[#9b9a97]"
+                className="flex-1 bg-transparent border-none outline-none text-[16px]"
+                style={{ color: "var(--pb-text)" }}
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 onKeyDown={handleKeyDown}
               />
-              <div className="flex items-center gap-1.5 px-1.5 py-0.5 bg-[#F1F1EF] rounded text-[#787774] text-[11px] font-medium">
+              <div className="flex items-center gap-1.5 px-1.5 py-0.5 rounded text-[11px] font-medium" style={{ backgroundColor: "var(--pb-input-bg)", color: "var(--pb-text-muted)" }}>
                 ESC
               </div>
             </div>
 
-            <div className="max-h-[400px] overflow-y-auto py-2 custom-scrollbar">
+            <div className="max-h-[400px] overflow-y-auto py-2">
               {query === "" ? (
                 <div className="px-6 py-10 text-center">
-                  <div className="w-12 h-12 bg-[#F1F1EF] rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Command className="w-6 h-6 text-[#9b9a97]" />
+                  <div className="w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4" style={{ backgroundColor: "var(--pb-input-bg)" }}>
+                    <Command className="w-6 h-6" style={{ color: "var(--pb-text-muted)" }} />
                   </div>
-                  <h3 className="text-[14px] font-semibold text-[#37352f] mb-1">
+                  <h3 className="text-[14px] font-semibold mb-1" style={{ color: "var(--pb-text)" }}>
                     Search Playbook Pro
                   </h3>
-                  <p className="text-[13px] text-[#787774]">
+                  <p className="text-[13px]" style={{ color: "var(--pb-text-muted)" }}>
                     Type keywords to find documentation, checklists, and roadmap lessons.
                   </p>
                 </div>
@@ -192,34 +195,31 @@ export function SearchModal({
                       key={`${item.type}-${item.id}`}
                       onClick={() => handleSelect(item)}
                       onMouseEnter={() => setSelectedIndex(index)}
-                      className={`flex items-start gap-3 w-full p-3 rounded-lg text-left transition-colors ${
-                        selectedIndex === index
-                          ? "bg-[#F1F1EF]"
-                          : "hover:bg-[#F7F7F5]"
-                      }`}
+                      className="flex items-start gap-3 w-full p-3 rounded-xl text-left transition-colors"
+                      style={{ backgroundColor: selectedIndex === index ? "var(--pb-surface-hover)" : "transparent" }}
                     >
                       <div className="mt-0.5">
                         {item.type === "lesson" ? (
-                          <FileText className="w-4 h-4 text-[#787774]" />
+                          <FileText className="w-4 h-4" style={{ color: "var(--pb-text-muted)" }} />
                         ) : (
-                          <BookOpen className="w-4 h-4 text-[#787774]" />
+                          <BookOpen className="w-4 h-4" style={{ color: "var(--pb-text-muted)" }} />
                         )}
                       </div>
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-0.5">
-                          <span className="text-[14px] font-semibold text-[#37352f] truncate">
+                          <span className="text-[14px] font-semibold truncate" style={{ color: "var(--pb-text)" }}>
                             {item.title}
                           </span>
-                          <span className="text-[11px] font-medium text-[#9b9a97] bg-[#EDEDEB] px-1.5 py-0.5 rounded">
+                          <span className="text-[11px] font-medium px-1.5 py-0.5 rounded" style={{ color: "var(--pb-text-muted)", backgroundColor: "var(--pb-input-bg)" }}>
                             {item.type}
                           </span>
                         </div>
                         {item.description && (
-                          <p className="text-[12px] text-[#787774] line-clamp-1 mb-1">
+                          <p className="text-[12px] line-clamp-1 mb-1" style={{ color: "var(--pb-text-muted)" }}>
                             {item.description}
                           </p>
                         )}
-                        <div className="text-[11px] text-[#9b9a97] flex items-center gap-1">
+                        <div className="text-[11px] flex items-center gap-1" style={{ color: "var(--pb-text-muted)" }}>
                           {item.category}
                         </div>
                       </div>
@@ -228,23 +228,23 @@ export function SearchModal({
                 </div>
               ) : (
                 <div className="px-6 py-10 text-center">
-                  <p className="text-[14px] text-[#787774]">
+                  <p className="text-[14px]" style={{ color: "var(--pb-text-muted)" }}>
                     No results found for "{query}"
                   </p>
                 </div>
               )}
             </div>
 
-            <div className="px-4 py-3 bg-[#FBFBFA] border-t border-[#EAE9E9] flex items-center justify-between text-[11px] text-[#9b9a97]">
+            <div className="px-4 py-3 flex items-center justify-between text-[11px]" style={{ backgroundColor: "var(--pb-surface)", borderTop: "1px solid var(--pb-border)", color: "var(--pb-text-muted)" }}>
               <div className="flex items-center gap-3">
                 <span className="flex items-center gap-1">
-                  <span className="px-1 py-0.5 bg-[#F1F1EF] rounded text-[10px] border border-[#EAE9E9]">
+                  <span className="px-1 py-0.5 rounded text-[10px]" style={{ backgroundColor: "var(--pb-input-bg)", border: "1px solid var(--pb-border)" }}>
                     ↑↓
                   </span>{" "}
                   Navigate
                 </span>
                 <span className="flex items-center gap-1">
-                  <span className="px-1 py-0.5 bg-[#F1F1EF] rounded text-[10px] border border-[#EAE9E9]">
+                  <span className="px-1 py-0.5 rounded text-[10px]" style={{ backgroundColor: "var(--pb-input-bg)", border: "1px solid var(--pb-border)" }}>
                     ENTER
                   </span>{" "}
                   Select

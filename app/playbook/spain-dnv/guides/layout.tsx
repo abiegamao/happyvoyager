@@ -32,7 +32,10 @@ export default function GuidesLayout({
   return (
     <div className="flex w-full items-start">
       {/* ─── Left Sidebar: Guide List ─── */}
-      <aside className="hidden md:flex w-[240px] flex-shrink-0 flex-col border-r border-[#EAE9E9] bg-none sticky top-[32px] max-h-[calc(100vh-140px)] overflow-y-auto w-[240px] z-10 relative">
+      <aside
+        className="hidden md:flex w-[240px] flex-shrink-0 flex-col bg-transparent sticky top-[32px] max-h-[calc(100vh-140px)] overflow-y-auto z-10 relative"
+        style={{ borderRight: "1px solid var(--pb-border-subtle)" }}
+      >
         <div className="pt-2 pb-20">
           <div className="px-4 space-y-6">
             <div className="space-y-0.5">
@@ -43,7 +46,8 @@ export default function GuidesLayout({
               ].map((item) => (
                 <button
                   key={item.label}
-                  className="flex items-center gap-2.5 w-full px-3 py-1.5 rounded-md text-left text-[#787774] hover:bg-[#f7f7f5] hover:text-[#37352f] transition-colors"
+                  className="flex items-center gap-2.5 w-full px-3 py-1.5 rounded-md text-left transition-colors hover:opacity-80"
+                  style={{ color: "var(--pb-text-muted)" }}
                 >
                   <item.icon className="w-4 h-4 opacity-70" strokeWidth={2} />
                   <span className="text-[14px] font-medium">{item.label}</span>
@@ -52,7 +56,7 @@ export default function GuidesLayout({
             </div>
 
             <div>
-              <div className="px-3 py-2 text-[12px] font-semibold text-[#37352f] mb-1">
+              <div className="px-3 py-2 text-[12px] font-semibold mb-1" style={{ color: "var(--pb-text-secondary)" }}>
                 Get started
               </div>
 
@@ -65,9 +69,10 @@ export default function GuidesLayout({
                         onClick={() => handleGuideClick(guide.id)}
                         className={`flex items-center gap-2.5 w-full px-3 py-1.5 rounded-md text-left transition-colors group ${
                           isActive
-                            ? "bg-[#e3a99c] text-[#37352f] font-semibold"
-                            : "text-[#787774] hover:bg-[#f7f7f5] hover:text-[#37352f] font-medium"
+                            ? "bg-[#e3a99c]/15 text-[#e3a99c] font-semibold border-l-2 border-[#e3a99c]"
+                            : "font-medium"
                         }`}
+                        style={!isActive ? { color: "var(--pb-text-muted)" } : undefined}
                       >
                         <span className="text-[14px] truncate leading-tight py-0.5">
                           {guide.title}
@@ -83,7 +88,7 @@ export default function GuidesLayout({
                             transition={{ duration: 0.2, ease: "easeInOut" }}
                             className="overflow-hidden"
                           >
-                            <div className="ml-4 my-1 border-l border-[#EAE9E9] pl-3 space-y-0.5">
+                            <div className="ml-4 my-1 pl-3 space-y-0.5" style={{ borderLeft: "1px solid var(--pb-border)" }}>
                               {guide.sections.map((section) => (
                                 <div key={section.id} className="space-y-0.5">
                                   <a
@@ -101,7 +106,8 @@ export default function GuidesLayout({
                                         `#${section.id}`,
                                       );
                                     }}
-                                    className="block py-1 text-[13px] text-[#787774] hover:text-[#37352f] transition-colors whitespace-nowrap overflow-hidden text-ellipsis"
+                                    className="block py-1 text-[13px] transition-colors whitespace-nowrap overflow-hidden text-ellipsis hover:opacity-80"
+                                    style={{ color: "var(--pb-text-muted)" }}
                                   >
                                     {section.title}
                                   </a>
@@ -131,7 +137,8 @@ export default function GuidesLayout({
                                             `#${block.id}`,
                                           );
                                         }}
-                                        className="block py-1 pl-3 text-[12px] text-[#787774]/80 hover:text-[#37352f] transition-colors border-l border-transparent hover:border-[#EAE9E9]"
+                                        className="block py-1 pl-3 text-[12px] transition-colors border-l border-transparent hover:opacity-70"
+                                        style={{ color: "var(--pb-text-muted)" }}
                                       >
                                         {block.title}
                                       </a>

@@ -38,31 +38,33 @@ export function AIChatbot() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 20, scale: 0.95 }}
               transition={{ duration: 0.2 }}
-              className="mb-4 w-80 md:w-96 h-[500px] max-h-[80vh] bg-white rounded-2xl shadow-2xl border border-[#e8e8e5] flex flex-col overflow-hidden"
+              className="mb-4 w-80 md:w-96 h-[500px] max-h-[80vh] backdrop-blur-2xl rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+              style={{ backgroundColor: "var(--pb-surface-elevated)", border: "1px solid var(--pb-border)" }}
             >
-              <div className="flex items-center justify-between p-4 bg-[#f7f7f5] border-b border-[#e8e8e5]">
+              <div className="flex items-center justify-between p-4" style={{ backgroundColor: "var(--pb-header)", borderBottom: "1px solid var(--pb-border)" }}>
                 <div className="flex items-center gap-2.5">
-                  <div className="w-9 h-9 rounded-full overflow-hidden border border-[#e8e8e5] shrink-0">
+                  <div className="w-9 h-9 rounded-full overflow-hidden shrink-0" style={{ border: "1px solid var(--pb-border)" }}>
                     <Image src={ABIE_AVATAR} alt="Abie" width={36} height={36} className="w-full h-full object-cover" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[15px] text-[#181817]">
+                    <h3 className="font-semibold text-[15px]" style={{ color: "var(--pb-text)" }}>
                       Abie
                     </h3>
-                    <p className="text-[12px] text-[#787774] leading-tight">
+                    <p className="text-[12px] leading-tight" style={{ color: "var(--pb-text-muted)" }}>
                       Your Spain DNV guide
                     </p>
                   </div>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-2 text-[#787774] hover:bg-[#efefed] rounded-full transition-colors"
+                  className="p-2 rounded-full transition-colors"
+                  style={{ color: "var(--pb-text-muted)" }}
                 >
                   <X className="w-4 h-4" />
                 </button>
               </div>
 
-              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-white/50">
+              <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-transparent">
                 {messages.map((m: UIMessage) => (
                   <div
                     key={m.id}
@@ -70,10 +72,10 @@ export function AIChatbot() {
                       m.role === "user" ? "flex-row-reverse" : "flex-row"
                     }`}
                   >
-                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#e8e8e5]">
+                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0" style={{ border: "1px solid var(--pb-border)" }}>
                       {m.role === "user" ? (
-                        <div className="w-full h-full bg-[#efefed] flex items-center justify-center">
-                          <User className="w-4 h-4 text-[#181817]" />
+                        <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: "var(--pb-input-bg)" }}>
+                          <User className="w-4 h-4" style={{ color: "var(--pb-text-secondary)" }} />
                         </div>
                       ) : (
                         <Image src={ABIE_AVATAR} alt="Abie" width={32} height={32} className="w-full h-full object-cover" />
@@ -82,16 +84,17 @@ export function AIChatbot() {
                     <div
                       className={`max-w-[75%] px-4 py-3 rounded-2xl text-[14px] leading-relaxed ${
                         m.role === "user"
-                          ? "bg-[#181817] text-white rounded-tr-sm"
-                          : "bg-[#f7f7f5] text-[#181817] rounded-tl-sm border border-[#e8e8e5]"
+                          ? "bg-[#e3a99c] text-white rounded-tr-sm"
+                          : "rounded-tl-sm"
                       }`}
+                      style={m.role !== "user" ? { backgroundColor: "var(--pb-surface)", color: "var(--pb-text)", border: "1px solid var(--pb-border)" } : undefined}
                     >
                       <ReactMarkdown
                         remarkPlugins={[remarkGfm]}
                         components={{
                           a: ({ node, ...props }) => (
                             <a
-                              className="text-blue-500 hover:underline"
+                              className="text-[#e3a99c] hover:underline"
                               target="_blank"
                               {...props}
                             />
@@ -122,14 +125,14 @@ export function AIChatbot() {
                 ))}
                 {(status === "submitted" || status === "streaming") && (
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-[#e8e8e5]">
+                    <div className="w-8 h-8 rounded-full overflow-hidden shrink-0" style={{ border: "1px solid var(--pb-border)" }}>
                       <Image src={ABIE_AVATAR} alt="Abie" width={32} height={32} className="w-full h-full object-cover" />
                     </div>
-                    <div className="bg-[#f7f7f5] text-[#181817] rounded-2xl rounded-tl-sm border border-[#e8e8e5] px-4 py-3 text-[14px]">
+                    <div className="rounded-2xl rounded-tl-sm px-4 py-3 text-[14px]" style={{ backgroundColor: "var(--pb-surface)", color: "var(--pb-text)", border: "1px solid var(--pb-border)" }}>
                       <div className="flex gap-1">
-                        <span className="w-1.5 h-1.5 bg-[#787774] rounded-full animate-bounce [animation-delay:-0.3s]"></span>
-                        <span className="w-1.5 h-1.5 bg-[#787774] rounded-full animate-bounce [animation-delay:-0.15s]"></span>
-                        <span className="w-1.5 h-1.5 bg-[#787774] rounded-full animate-bounce"></span>
+                        <span className="w-1.5 h-1.5 rounded-full animate-bounce [animation-delay:-0.3s]" style={{ backgroundColor: "var(--pb-text-muted)" }}></span>
+                        <span className="w-1.5 h-1.5 rounded-full animate-bounce [animation-delay:-0.15s]" style={{ backgroundColor: "var(--pb-text-muted)" }}></span>
+                        <span className="w-1.5 h-1.5 rounded-full animate-bounce" style={{ backgroundColor: "var(--pb-text-muted)" }}></span>
                       </div>
                     </div>
                   </div>
@@ -137,7 +140,7 @@ export function AIChatbot() {
                 <div ref={messagesEndRef} />
               </div>
 
-              <div className="p-4 bg-white border-t border-[#e8e8e5]">
+              <div className="p-4" style={{ backgroundColor: "var(--pb-header)", borderTop: "1px solid var(--pb-border)" }}>
                 <form
                   onSubmit={(e) => {
                     e.preventDefault();
@@ -153,12 +156,13 @@ export function AIChatbot() {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Ask about the Spain DNV..."
                     disabled={isLoading}
-                    className="w-full pl-4 pr-12 py-3 bg-[#f7f7f5] border border-[#e8e8e5] rounded-full focus:outline-none focus:ring-2 focus:ring-[#181817] focus:border-transparent text-[14px] transition-all disabled:opacity-50"
+                    className="w-full pl-4 pr-12 py-3 rounded-full focus:outline-none focus:ring-2 focus:ring-[#e3a99c]/50 focus:border-transparent text-[14px] transition-all disabled:opacity-50"
+                    style={{ backgroundColor: "var(--pb-input-bg)", border: "1px solid var(--pb-border)", color: "var(--pb-text)" }}
                   />
                   <button
                     type="submit"
                     disabled={isLoading || !input.trim()}
-                    className="absolute right-2 w-8 h-8 bg-[#181817] text-white rounded-full flex items-center justify-center hover:bg-[#333] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="absolute right-2 w-8 h-8 bg-[#e3a99c] text-white rounded-full flex items-center justify-center hover:bg-[#d69586] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Send className="w-4 h-4 ml-0.5" />
                   </button>
@@ -170,11 +174,12 @@ export function AIChatbot() {
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="w-14 h-14 rounded-full overflow-hidden shadow-lg hover:scale-105 active:scale-95 transition-transform border-2 border-white"
+          className="w-14 h-14 rounded-full overflow-hidden shadow-lg hover:scale-105 active:scale-95 transition-transform border-2 ring-2 ring-[#e3a99c]/20"
+          style={{ borderColor: "var(--pb-border)", boxShadow: "0 4px 20px var(--pb-shadow-accent)" }}
         >
           {isOpen ? (
-            <div className="w-full h-full bg-[#181817] flex items-center justify-center">
-              <X className="w-6 h-6 text-white" />
+            <div className="w-full h-full flex items-center justify-center" style={{ backgroundColor: "var(--pb-surface-elevated)" }}>
+              <X className="w-6 h-6" style={{ color: "var(--pb-text)" }} />
             </div>
           ) : (
             <Image src={ABIE_AVATAR} alt="Chat with Abie" width={56} height={56} className="w-full h-full object-cover" />

@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
 
     const { data: purchaser, error: purchaserError } = await supabase
       .from("playbook_purchasers")
-      .select("id")
+      .select("id, name")
       .eq("email", email.toLowerCase().trim())
       .maybeSingle();
 
@@ -42,7 +42,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ hasAccess: false });
     }
 
-    return NextResponse.json({ hasAccess: !!access });
+    return NextResponse.json({
+      hasAccess: !!access,
+      name: purchaser.name ?? null,
+    });
   } catch (error) {
     console.error("Verify error:", error);
     return NextResponse.json({ hasAccess: false });
