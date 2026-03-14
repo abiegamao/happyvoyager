@@ -305,7 +305,7 @@ function PlaybookLayoutInner({
         {/* Left Sidebar ~ only on lesson pages */}
         {isLessonPage && (
           <aside
-            className={`fixed md:sticky top-0 md:top-[100px] left-0 h-screen md:h-[calc(100vh-112px)] md:self-start w-[272px] md:w-[260px] backdrop-blur-2xl flex flex-col transition-transform duration-300 ease-in-out z-40 md:m-3 md:rounded-2xl md:overflow-hidden md:shadow-2xl flex-shrink-0 ${
+            className={`fixed md:sticky top-0 md:top-[100px] left-0 h-screen md:h-[calc(100vh-112px)] md:self-start w-[272px] md:w-[260px] backdrop-blur-2xl flex flex-col transition-transform duration-300 ease-in-out z-40 md:z-0 md:m-3 md:rounded-2xl md:overflow-hidden md:shadow-2xl flex-shrink-0 ${
               sidebarOpen
                 ? "translate-x-0 shadow-2xl"
                 : "-translate-x-full md:translate-x-0"
