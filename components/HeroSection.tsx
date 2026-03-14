@@ -83,19 +83,19 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 animate-slide-up delay-300">
-            <a
-              href="#pricing"
+            <Link
+              href="/assessment"
               className="btn-primary w-full sm:w-auto inline-flex items-center justify-center gap-2 group px-8 py-4 text-base"
             >
-              See the Packages
+              See If You Qualify
               <ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
-            </a>
-            <Link
-              href="/playbook/spain-dnv"
+            </Link>
+            <a
+              href="#pricing"
               className="px-8 py-4 rounded-full text-[#3a3a3a] font-semibold bg-white transition-colors w-full sm:w-auto text-center border-2 border-transparent hover:border-[#e7ddd3]"
             >
-              Get Free Playbook
-            </Link>
+              See the Packages
+            </a>
           </div>
 
 

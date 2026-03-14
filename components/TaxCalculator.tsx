@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import {
   Calculator,
   Briefcase,
@@ -11,6 +11,10 @@ import {
   ArrowRight,
   ChevronDown,
   ChevronUp,
+  Mail,
+  Download,
+  CheckCircle2,
+  Loader2,
 } from "lucide-react";
 import BookCallButton from "@/components/BookCallButton";
 
@@ -174,6 +178,85 @@ export default function TaxCalculator() {
     const without = calculateTax(annualIncome, "employed", false, false);
     return { withBeckham, without, savings: withBeckham.netTakeHome - without.netTakeHome };
   }, [result, annualIncome, workerType]);
+
+  // Save results state
+  const [saveEmail, setSaveEmail] = useState("");
+  const [saveFirstName, setSaveFirstName] = useState("");
+  const [saveSending, setSaveSending] = useState(false);
+  const [saveSent, setSaveSent] = useState(false);
+  const [saveError, setSaveError] = useState("");
+
+  const handleSaveEmail = useCallback(async () => {
+    if (!saveEmail.trim() || !/^\S+@\S+\.\S+$/.test(saveEmail)) {
+      setSaveError("Please enter a valid email");
+      return;
+    }
+    if (!result) return;
+
+    setSaveSending(true);
+    setSaveError("");
+    try {
+      await fetch("/api/ghl/capture", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: saveEmail.trim(),
+          firstName: saveFirstName.trim() || undefined,
+          source: "Tax Calculator",
+          tags: ["Tax Calculator", "Happy Voyager", "Free Tool"],
+          customFields: {
+            "Gross Income": formatEUR(result.grossIncome) + "/year",
+            "Worker Type": workerType === "autonomo" ? "Freelancer / Autónomo" : "Employed",
+            "IRPF Tax": `${formatEUR(result.irpfAmount)} (${result.irpfEffectiveRate.toFixed(1)}% eff.)`,
+            "Net Take-Home": `${formatEUR(result.netTakeHome)}/year (${formatEUR(result.monthlyNet)}/mo)`,
+            ...(workerType === "autonomo" ? { "Autónomo Fee": `${formatEUR(result.autonomoFee)}/mo` } : {}),
+            ...(useBeckhamLaw ? { "Beckham Law": "Yes" } : {}),
+          },
+        }),
+      });
+      setSaveSent(true);
+    } catch {
+      setSaveError("Something went wrong. Try again.");
+    }
+    setSaveSending(false);
+  }, [saveEmail, saveFirstName, result, workerType, useBeckhamLaw]);
+
+  const handleDownloadPDF = useCallback(async () => {
+    if (!result) return;
+    const { generateTaxPDF } = await import("@/lib/generate-tax-pdf");
+
+    const brackets = IRPF_BRACKETS.map((b) => {
+      const taxable = Math.min(Math.max(annualIncome - b.floor, 0), b.ceiling - b.floor);
+      return {
+        range: b.ceiling === Infinity ? `€${b.floor.toLocaleString()}+` : `€${b.floor.toLocaleString()} ~ €${b.ceiling.toLocaleString()}`,
+        rate: `${(b.rate * 100).toFixed(0)}%`,
+        amount: taxable * b.rate,
+      };
+    });
+
+    const blob = generateTaxPDF({
+      grossIncome: annualIncome,
+      workerType,
+      irpfAmount: result.irpfAmount,
+      irpfEffectiveRate: result.irpfEffectiveRate,
+      autonomoFee: result.autonomoFee,
+      socialSecurity: result.socialSecurity,
+      netTakeHome: result.netTakeHome,
+      monthlyNet: result.monthlyNet,
+      isFirstTwoYears,
+      useBeckhamLaw,
+      beckhamTax: beckhamComparison?.withBeckham.irpfAmount,
+      standardTax: beckhamComparison?.without.irpfAmount,
+      irpfBrackets: brackets,
+    });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "spain-tax-breakdown.pdf";
+    a.click();
+    URL.revokeObjectURL(url);
+  }, [result, annualIncome, workerType, isFirstTwoYears, useBeckhamLaw, beckhamComparison]);
 
   const handleCalculate = () => {
     if (annualIncome > 0) setHasCalculated(true);
@@ -575,6 +658,68 @@ export default function TaxCalculator() {
               <p className="text-xs text-[#aaa] text-center px-4 leading-relaxed">
                 This calculator provides estimates based on 2025~2026 Spanish tax rates. Actual obligations may vary based on your region, deductions, and personal situation. Always consult a Spanish tax advisor (gestor) for personalised guidance.
               </p>
+
+              {/* Save Results */}
+              <div className="bg-white rounded-3xl border border-[#e7ddd3] p-6 md:p-8">
+                <h3 className="font-[family-name:var(--font-heading)] text-lg font-bold text-[#3a3a3a] mb-1">
+                  📩 Save Your Results
+                </h3>
+                <p className="text-sm text-[#6b6b6b] mb-5">
+                  Download a PDF or get your breakdown sent to your email.
+                </p>
+
+                {saveSent ? (
+                  <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#d4e0d3]/40 border border-[#8fa38d]/30">
+                    <CheckCircle2 className="w-5 h-5 text-[#8fa38d] flex-shrink-0" />
+                    <div>
+                      <p className="text-sm font-bold text-[#3a3a3a]">Sent! Check your inbox.</p>
+                      <p className="text-xs text-[#6b6b6b]">We&apos;ve emailed your tax breakdown to {saveEmail}</p>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <input
+                        type="text"
+                        value={saveFirstName}
+                        onChange={(e) => { setSaveFirstName(e.target.value); setSaveError(""); }}
+                        placeholder="First name"
+                        className="bg-[#f9f5f2] border border-[#e7ddd3] rounded-2xl px-4 py-3 text-sm text-[#3a3a3a] placeholder:text-[#ccc] focus:outline-none focus:border-[#e3a99c] transition-all"
+                      />
+                      <input
+                        type="email"
+                        value={saveEmail}
+                        onChange={(e) => { setSaveEmail(e.target.value); setSaveError(""); }}
+                        placeholder="Email address"
+                        className="bg-[#f9f5f2] border border-[#e7ddd3] rounded-2xl px-4 py-3 text-sm text-[#3a3a3a] placeholder:text-[#ccc] focus:outline-none focus:border-[#e3a99c] transition-all"
+                      />
+                    </div>
+                    {saveError && (
+                      <p className="text-xs text-red-500">{saveError}</p>
+                    )}
+                    <div className="flex flex-col sm:flex-row gap-3">
+                      <button
+                        onClick={handleSaveEmail}
+                        disabled={saveSending}
+                        className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#3a3a3a] text-white font-bold text-sm hover:bg-[#e3a99c] transition-all disabled:opacity-60"
+                      >
+                        {saveSending ? (
+                          <><Loader2 className="w-4 h-4 animate-spin" /> Sending...</>
+                        ) : (
+                          <><Mail className="w-4 h-4" /> Email My Breakdown</>
+                        )}
+                      </button>
+                      <button
+                        onClick={handleDownloadPDF}
+                        className="flex-1 flex items-center justify-center gap-2 px-5 py-3 rounded-full border-2 border-[#e7ddd3] text-[#3a3a3a] font-bold text-sm hover:border-[#3a3a3a] transition-all"
+                      >
+                        <Download className="w-4 h-4" />
+                        Download PDF
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* CTA Block */}
               <div className="bg-gradient-to-br from-[#3a3a3a] to-[#2a2a2a] rounded-3xl p-8 md:p-12 text-white text-center relative overflow-hidden">
