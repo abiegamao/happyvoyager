@@ -12,6 +12,7 @@ import {
   Clock,
   Bell,
   Plane,
+  CreditCard,
 } from "lucide-react";
 import { clearSession } from "@/lib/playbook-session";
 import type { PlaybookSession, PlaybookPurchase } from "@/lib/playbook-session";
@@ -35,12 +36,29 @@ export default function Dashboard({ session, onLogout }: DashboardProps) {
   const activePurchases = session.purchases.filter((p) => p.isActive);
   const purchasedSlugs = new Set(activePurchases.map((p) => p.playbookSlug));
 
+  // Check if user has any active subscription
+  const hasSubscription = session.purchases.some(
+    (p) => p.purchaseType === "subscription" && p.subscriptionStatus && p.subscriptionStatus !== "canceled"
+  );
+
   // Playbooks available for purchase that user hasn't bought
   const unpurchased = PLAYBOOKS.filter((p) => !purchasedSlugs.has(p.slug));
 
   const handleLogout = () => {
     clearSession();
     onLogout();
+  };
+
+  const handleManageSubscription = async () => {
+    try {
+      const res = await fetch("/api/stripe/portal", { method: "POST" });
+      const data = await res.json();
+      if (data.url) {
+        window.location.href = data.url;
+      }
+    } catch (err) {
+      console.error("Failed to open billing portal:", err);
+    }
   };
 
   return (
@@ -56,13 +74,24 @@ export default function Dashboard({ session, onLogout }: DashboardProps) {
               className="w-[140px] h-auto group-hover:opacity-80 transition-opacity"
             />
           </Link>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-1.5 text-[13px] text-[#787774] hover:text-[#3a3a3a] transition-colors"
-          >
-            <LogOut className="w-3.5 h-3.5" />
-            Sign out
-          </button>
+          <div className="flex items-center gap-4">
+            {hasSubscription && (
+              <button
+                onClick={handleManageSubscription}
+                className="flex items-center gap-1.5 text-[13px] text-[#787774] hover:text-[#3a3a3a] transition-colors"
+              >
+                <CreditCard className="w-3.5 h-3.5" />
+                Manage Subscription
+              </button>
+            )}
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-1.5 text-[13px] text-[#787774] hover:text-[#3a3a3a] transition-colors"
+            >
+              <LogOut className="w-3.5 h-3.5" />
+              Sign out
+            </button>
+          </div>
         </div>
       </header>
 
@@ -111,7 +140,7 @@ export default function Dashboard({ session, onLogout }: DashboardProps) {
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {/* Unpurchased available playbooks */}
             {unpurchased.map((playbook) => (
-              <AvailableCard key={playbook.slug} playbook={playbook} email={session.email} />
+              <AvailableCard key={playbook.slug} playbook={playbook} />
             ))}
 
             {/* Waitlist */}
@@ -140,10 +169,33 @@ function OwnedPlaybookCard({ purchase }: { purchase: PlaybookPurchase }) {
       ? "Free Trial"
       : purchase.subscriptionStatus === "active"
         ? "Active"
-        : "Purchased";
+        : purchase.subscriptionStatus === "canceled"
+          ? "Canceling"
+          : "Lifetime Access";
 
   const statusColor =
-    purchase.subscriptionStatus === "trialing" ? "#c9a84c" : "#8fa38d";
+    purchase.subscriptionStatus === "trialing"
+      ? "#c9a84c"
+      : purchase.subscriptionStatus === "canceled"
+        ? "#d83a52"
+        : purchase.subscriptionStatus === "active"
+          ? "#8fa38d"
+          : "#6b8cba";
+
+  // Format subscription detail text
+  let detailText: string | null = null;
+  if (purchase.subscriptionStatus === "trialing" && purchase.trialEndsAt) {
+    const trialEnd = new Date(purchase.trialEndsAt);
+    detailText = `Trial ends ${trialEnd.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+  } else if (purchase.subscriptionStatus === "active" && purchase.currentPeriodEnd) {
+    const renewDate = new Date(purchase.currentPeriodEnd);
+    detailText = `Renews ${renewDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+  } else if (purchase.subscriptionStatus === "canceled" && purchase.accessExpiresAt) {
+    const expiresDate = new Date(purchase.accessExpiresAt);
+    detailText = `Access until ${expiresDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`;
+  } else if (!purchase.subscriptionStatus) {
+    detailText = "Lifetime access";
+  }
 
   return (
     <Link
@@ -176,9 +228,15 @@ function OwnedPlaybookCard({ purchase }: { purchase: PlaybookPurchase }) {
         <h3 className="text-[17px] font-bold text-[#3a3a3a] mb-1 group-hover:text-[#e3a99c] transition-colors">
           {config.heroTitle}
         </h3>
-        <p className="text-[13px] text-[#787774] line-clamp-2 mb-4">
+        <p className="text-[13px] text-[#787774] line-clamp-2 mb-1">
           {config.catalog.tagline}
         </p>
+
+        {detailText && (
+          <p className="text-[11px] text-[#b0a89e] mb-3">
+            {detailText}
+          </p>
+        )}
 
         <div className="flex items-center gap-2 text-[13px] font-semibold text-[#e3a99c]">
           <BookOpen className="w-4 h-4" />
@@ -191,7 +249,7 @@ function OwnedPlaybookCard({ purchase }: { purchase: PlaybookPurchase }) {
 }
 
 // ── Available (unpurchased) Card ──
-function AvailableCard({ playbook, email }: { playbook: PlaybookConfig; email: string }) {
+function AvailableCard({ playbook }: { playbook: PlaybookConfig }) {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
 
   const handleGetAccess = async () => {
@@ -200,7 +258,7 @@ function AvailableCard({ playbook, email }: { playbook: PlaybookConfig; email: s
       const res = await fetch("/api/stripe/checkout", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, slug: playbook.slug }),
+        body: JSON.stringify({ slug: playbook.slug }),
       });
       const data = await res.json();
       if (data.url) {

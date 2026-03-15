@@ -30,7 +30,7 @@ const JOURNEY_STEPS = [
 interface PortalLoginProps {
   onLoginSuccess: (session: PlaybookSession) => void;
   initialSessionId?: string | null;
-  purchaseIntent?: { slug: string };
+  purchaseIntent?: { slug: string; interval?: string | null };
 }
 
 export default function PortalLogin({ onLoginSuccess, initialSessionId, purchaseIntent }: PortalLoginProps) {
@@ -52,7 +52,7 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
     (async () => {
       try {
         const res = await fetch(
-          `/api/stripe/verify-session?session_id=${initialSessionId}&slug=spain-dnv`
+          `/api/stripe/verify-session?session_id=${initialSessionId}`
         );
         const data = await res.json();
         if (data.hasAccess && data.email) {
@@ -65,7 +65,7 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
           const session: PlaybookSession = {
             email: data.email,
             name: portalData.name || data.name || "",
-            purchaserId: portalData.purchaserId || "",
+            customerId: portalData.customerId || "",
             purchases: portalData.purchases || [],
           };
           setSession(session);
@@ -80,24 +80,16 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialSessionId]);
 
-  const redirectToCheckout = async (userEmail: string, slug: string) => {
-    const res = await fetch("/api/stripe/checkout", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: userEmail, slug }),
-    });
-    const data = await res.json();
-    if (data.url) {
-      window.location.href = data.url;
-      return true;
-    }
-    return false;
-  };
-
   const fetchPurchasesAndLogin = async (userEmail: string, userName?: string) => {
-    // If there's a purchase intent, redirect to Stripe checkout instead
+    // If there's a purchase intent, redirect via full page navigation so
+    // middleware can propagate auth cookies before the checkout API is called.
     if (purchaseIntent) {
-      await redirectToCheckout(userEmail, purchaseIntent.slug);
+      const params = new URLSearchParams({
+        intent: "purchase",
+        slug: purchaseIntent.slug,
+      });
+      if (purchaseIntent.interval) params.set("interval", purchaseIntent.interval);
+      window.location.href = `/playbook?${params.toString()}`;
       return;
     }
 
@@ -110,7 +102,7 @@ export default function PortalLogin({ onLoginSuccess, initialSessionId, purchase
     const session: PlaybookSession = {
       email: userEmail,
       name: userName || data.name || "",
-      purchaserId: data.purchaserId || "",
+      customerId: data.customerId || "",
       purchases: data.purchases || [],
     };
     setSession(session);

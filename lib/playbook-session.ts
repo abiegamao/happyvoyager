@@ -6,15 +6,18 @@
 
 export interface PlaybookPurchase {
   playbookSlug: string;
+  purchaseType: string | null;
   subscriptionStatus: string | null;
   accessExpiresAt: string | null;
+  trialEndsAt: string | null;
+  currentPeriodEnd: string | null;
   isActive: boolean;
 }
 
 export interface PlaybookSession {
   email: string;
   name: string;
-  purchaserId: string;
+  customerId: string;
   purchases: PlaybookPurchase[];
 }
 
@@ -42,7 +45,7 @@ export function getSession(): PlaybookSession | null {
     return {
       email,
       name: sessionStorage.getItem(LEGACY_NAME_KEY) || "",
-      purchaserId: "",
+      customerId: "",
       purchases: [],
     };
   }

@@ -19,7 +19,6 @@ export async function GET(request: NextRequest) {
 
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    // Handle subscription checkout (trial or paid)
     const isSubscription = session.mode === "subscription";
 
     if (!isSubscription && session.payment_status !== "paid") {
@@ -31,7 +30,6 @@ export async function GET(request: NextRequest) {
       session.customer_details?.email ||
       null;
 
-    // Prefer slug from URL param, fall back to Stripe metadata, then default
     const playbookSlug: string =
       slugParam ??
       session.metadata?.playbook_slug ??
@@ -42,16 +40,21 @@ export async function GET(request: NextRequest) {
     }
 
     // Backup upsert in case webhook hasn't fired yet
-    const { data: purchaser } = await supabase
-      .from("playbook_purchasers")
-      .upsert(
-        { email: email.toLowerCase(), name: session.customer_details?.name ?? null },
-        { onConflict: "email" }
-      )
+    const customerData: Record<string, unknown> = {
+      email: email.toLowerCase(),
+      name: session.customer_details?.name ?? null,
+    };
+    if (session.client_reference_id) {
+      customerData.user_id = session.client_reference_id;
+    }
+
+    const { data: customer } = await supabase
+      .from("customers")
+      .upsert(customerData, { onConflict: "email" })
       .select("id")
       .single();
 
-    if (purchaser) {
+    if (customer) {
       const { data: playbookData } = await supabase
         .from("playbooks")
         .select("id")
@@ -59,32 +62,45 @@ export async function GET(request: NextRequest) {
         .single();
 
       if (playbookData) {
-        // For subscriptions, get the subscription ID and status
+        const purchaseType = isSubscription ? "subscription" : "one_time";
+
+        // For subscriptions, get the subscription details
         let subscriptionStatus: string | null = null;
         let stripeSubscriptionId: string | null = null;
+        let trialEndsAt: string | null = null;
+        let currentPeriodEnd: string | null = null;
+        let stripePriceId: string | null = null;
 
         if (isSubscription && session.subscription) {
           stripeSubscriptionId = session.subscription as string;
-          const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId);
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const subscription = await stripe.subscriptions.retrieve(stripeSubscriptionId) as any;
           subscriptionStatus = subscription.status === "trialing" ? "trialing" : "active";
+          trialEndsAt = subscription.trial_end
+            ? new Date(subscription.trial_end * 1000).toISOString()
+            : null;
+          currentPeriodEnd = subscription.current_period_end
+            ? new Date(subscription.current_period_end * 1000).toISOString()
+            : null;
+          stripePriceId = subscription.items?.data?.[0]?.price?.id ?? null;
         }
 
         await supabase
-          .from("playbook_purchases")
+          .from("purchases")
           .upsert(
             {
-              purchaser_id: purchaser.id,
+              customer_id: customer.id,
               playbook_id: playbookData.id,
+              purchase_type: purchaseType,
               stripe_session_id: session.id,
               stripe_customer_id: (session.customer as string) || null,
-              ...(isSubscription
-                ? {
-                    subscription_status: subscriptionStatus,
-                    stripe_subscription_id: stripeSubscriptionId,
-                  }
-                : {}),
+              subscription_status: subscriptionStatus,
+              stripe_subscription_id: stripeSubscriptionId,
+              stripe_price_id: stripePriceId,
+              trial_ends_at: trialEndsAt,
+              current_period_end: currentPeriodEnd,
             },
-            { onConflict: "purchaser_id,playbook_id" }
+            { onConflict: "customer_id,playbook_id,purchase_type" }
           );
       }
     }

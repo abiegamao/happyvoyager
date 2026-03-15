@@ -5,7 +5,7 @@ async function resolveOwnership(email: string, playbookSlug: string) {
   const normalizedEmail = email.toLowerCase().trim();
 
   const { data: purchaser } = await supabaseAdmin
-    .from("playbook_purchasers")
+    .from("customers")
     .select("id")
     .eq("email", normalizedEmail)
     .single();
@@ -21,15 +21,15 @@ async function resolveOwnership(email: string, playbookSlug: string) {
   if (!playbook) return null;
 
   const { data: purchase } = await supabaseAdmin
-    .from("playbook_purchases")
+    .from("purchases")
     .select("id")
-    .eq("purchaser_id", purchaser.id)
+    .eq("customer_id", purchaser.id)
     .eq("playbook_id", playbook.id)
     .maybeSingle();
 
   if (!purchase) return null;
 
-  return { purchaserId: purchaser.id, playbookId: playbook.id };
+  return { customerId: purchaser.id, playbookId: playbook.id };
 }
 
 // GET /api/playbook/progress?email=<email>&playbook_slug=<slug>
@@ -49,7 +49,7 @@ export async function GET(request: NextRequest) {
   const { data: progress } = await supabaseAdmin
     .from("playbook_lesson_progress")
     .select("lesson_id")
-    .eq("purchaser_id", ownership.purchaserId)
+    .eq("customer_id", ownership.customerId)
     .eq("playbook_id", ownership.playbookId);
 
   const completedLessonIds = (progress ?? []).map((r) => r.lesson_id);
@@ -82,17 +82,17 @@ export async function POST(request: NextRequest) {
       .from("playbook_lesson_progress")
       .upsert(
         {
-          purchaser_id: ownership.purchaserId,
+          customer_id: ownership.customerId,
           playbook_id: ownership.playbookId,
           lesson_id,
         },
-        { onConflict: "purchaser_id,playbook_id,lesson_id" }
+        { onConflict: "customer_id,playbook_id,lesson_id" }
       );
   } else {
     await supabaseAdmin
       .from("playbook_lesson_progress")
       .delete()
-      .eq("purchaser_id", ownership.purchaserId)
+      .eq("customer_id", ownership.customerId)
       .eq("playbook_id", ownership.playbookId)
       .eq("lesson_id", lesson_id);
   }

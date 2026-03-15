@@ -2,10 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { createSupabaseServer } from "@/lib/supabase-server";
 
-// Price ID map ~ add a new entry per playbook/package
+// Price ID map
+// Subscriptions keyed as "slug:interval", one-time keyed as "slug"
 const PRICE_IDS: Record<string, string | undefined> = {
-  "spain-dnv": process.env.STRIPE_PRICE_SPAIN_DNV ?? process.env.STRIPE_PLAYBOOK_PRICE_ID,
-  "spain-nlv": process.env.STRIPE_PRICE_SPAIN_NLV,
+  "spain-dnv:monthly": process.env.STRIPE_PRICE_SPAIN_DNV_MONTHLY,
+  "spain-dnv:yearly": process.env.STRIPE_PRICE_SPAIN_DNV_YEARLY,
   "guided-navigator": process.env.STRIPE_PRICE_GUIDED_NAVIGATOR,
   "vip-concierge": process.env.STRIPE_PRICE_VIP_CONCIERGE,
 };
@@ -24,14 +25,16 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Use the authenticated email (ignore any email in body)
     const authEmail = user.email;
-
-    const { slug } = await request.json();
+    const { slug, interval } = await request.json();
     const playbookSlug: string = slug ?? "spain-dnv";
-    const priceId =
-      PRICE_IDS[playbookSlug] ??
-      process.env.STRIPE_PLAYBOOK_PRICE_ID;
+
+    // Determine if this is a subscription (has interval) or one-time
+    const isSubscription = !!interval && (interval === "monthly" || interval === "yearly");
+
+    // Look up the correct price ID
+    const priceKey = isSubscription ? `${playbookSlug}:${interval}` : playbookSlug;
+    const priceId = PRICE_IDS[priceKey];
 
     if (!priceId) {
       return NextResponse.json(
@@ -45,18 +48,45 @@ export async function POST(request: NextRequest) {
       process.env.NEXT_PUBLIC_SITE_URL ||
       "https://happyvoyager.com";
 
-    const session = await stripe.checkout.sessions.create({
-      mode: "payment",
-      customer_email: authEmail,
-      line_items: [{ price: priceId, quantity: 1 }],
-      success_url: `${origin}/playbook?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${origin}/playbook`,
-      metadata: {
-        playbook_slug: playbookSlug,
-      },
-    });
+    const metadata: Record<string, string> = {
+      playbook_slug: playbookSlug,
+      purchase_type: isSubscription ? "subscription" : "one_time",
+    };
+    if (isSubscription) {
+      metadata.plan_interval = interval;
+    }
 
-    return NextResponse.json({ url: session.url });
+    // Build session config based on mode
+    if (isSubscription) {
+      const session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        customer_email: authEmail,
+        client_reference_id: user.id,
+        line_items: [{ price: priceId, quantity: 1 }],
+        subscription_data: {
+          trial_period_days: 14,
+          metadata,
+        },
+        payment_method_collection: "always",
+        success_url: `${origin}/playbook?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/playbook`,
+        metadata,
+      });
+
+      return NextResponse.json({ url: session.url });
+    } else {
+      const session = await stripe.checkout.sessions.create({
+        mode: "payment",
+        customer_email: authEmail,
+        client_reference_id: user.id,
+        line_items: [{ price: priceId, quantity: 1 }],
+        success_url: `${origin}/playbook?session_id={CHECKOUT_SESSION_ID}`,
+        cancel_url: `${origin}/playbook`,
+        metadata,
+      });
+
+      return NextResponse.json({ url: session.url });
+    }
   } catch (error) {
     console.error("Stripe checkout error:", error);
     return NextResponse.json(

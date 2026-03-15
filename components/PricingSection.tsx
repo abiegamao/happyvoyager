@@ -269,7 +269,7 @@ export default function PricingSection() {
 
                 {/* CTA Button */}
                 <Link
-                  href={`/playbook?intent=purchase&slug=${plan.slug}`}
+                  href={`/playbook?intent=purchase&slug=${plan.slug}${isSubscription ? `&interval=${billingPeriod}` : ''}`}
                   className={`block w-full py-4 rounded-xl text-center font-[family-name:var(--font-body)] font-bold transition-all duration-300 ${plan.popular
                     ? "bg-[#3a3a3a] text-white hover:bg-[#e3a99c] shadow-lg hover:shadow-[#e3a99c]/30"
                     : "bg-white border-2 border-[#e7ddd3] text-[#3a3a3a] hover:border-[#3a3a3a] hover:bg-[#3a3a3a] hover:text-white"

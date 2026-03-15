@@ -1,18 +1,18 @@
 "use client";
 
 import { Suspense, useState, useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { createSupabaseBrowser } from "@/lib/supabase-browser";
 import { getSession, setSession } from "@/lib/playbook-session";
 import type { PlaybookSession } from "@/lib/playbook-session";
 import PortalLogin from "@/components/playbook/PortalLogin";
 import Dashboard from "@/components/playbook/Dashboard";
 
-async function redirectToCheckout(email: string, slug: string) {
+async function redirectToCheckout(slug: string, interval?: string | null) {
   const res = await fetch("/api/stripe/checkout", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, slug }),
+    body: JSON.stringify({ slug, interval: interval || undefined }),
   });
   const data = await res.json();
   if (data.url) {
@@ -24,7 +24,6 @@ async function redirectToCheckout(email: string, slug: string) {
 
 function PortalContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const [session, setSessionState] = useState<PlaybookSession | null>(null);
   const [checking, setChecking] = useState(true);
   const [redirectingToCheckout, setRedirectingToCheckout] = useState(false);
@@ -33,18 +32,50 @@ function PortalContent() {
   const purchaseIntent = searchParams.get("intent") === "purchase"
     ? searchParams.get("slug")
     : null;
+  const interval = searchParams.get("interval");
 
   useEffect(() => {
     (async () => {
-      // Check for existing playbook session first (fast path)
+      // ── If returning from Stripe with session_id, verify + save purchase first ──
+      if (sessionId) {
+        try {
+          const verifyRes = await fetch(
+            `/api/stripe/verify-session?session_id=${sessionId}`
+          );
+          const verifyData = await verifyRes.json();
+
+          if (verifyData.hasAccess && verifyData.email) {
+            // Purchase saved — now load the full session
+            const res = await fetch("/api/stripe/verify", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ email: verifyData.email }),
+            });
+            const data = await res.json();
+            const pbSession: PlaybookSession = {
+              email: verifyData.email,
+              name: data.name || verifyData.name || "",
+              customerId: data.customerId || "",
+              purchases: data.purchases || [],
+            };
+            setSession(pbSession);
+            setSessionState(pbSession);
+            setChecking(false);
+            return;
+          }
+        } catch {
+          // Fall through to normal flow
+        }
+      }
+
+      // ── Check for existing playbook session (fast path) ──
       const existing = getSession();
       if (existing && existing.purchases.length > 0) {
         setSessionState(existing);
 
-        // If logged in with a purchase intent, go straight to checkout
         if (purchaseIntent) {
           setRedirectingToCheckout(true);
-          const redirected = await redirectToCheckout(existing.email, purchaseIntent);
+          const redirected = await redirectToCheckout(purchaseIntent, interval);
           if (!redirected) setRedirectingToCheckout(false);
           return;
         }
@@ -53,20 +84,21 @@ function PortalContent() {
         return;
       }
 
-      // Check Supabase Auth
+      // ── Check Supabase Auth ──
       const supabase = createSupabaseBrowser();
       const { data: { user } } = await supabase.auth.getUser();
 
       if (user?.email) {
-        // If auth user exists with a purchase intent, go straight to checkout
         if (purchaseIntent) {
           setRedirectingToCheckout(true);
-          const redirected = await redirectToCheckout(user.email, purchaseIntent);
-          if (!redirected) setRedirectingToCheckout(false);
+          const redirected = await redirectToCheckout(purchaseIntent, interval);
+          if (!redirected) {
+            setRedirectingToCheckout(false);
+            setChecking(false);
+          }
           return;
         }
 
-        // Fetch purchases for this user
         try {
           const res = await fetch("/api/stripe/verify", {
             method: "POST",
@@ -77,17 +109,16 @@ function PortalContent() {
           const pbSession: PlaybookSession = {
             email: user.email,
             name: user.user_metadata?.name || data.name || "",
-            purchaserId: data.purchaserId || "",
+            customerId: data.customerId || "",
             purchases: data.purchases || [],
           };
           setSession(pbSession);
           setSessionState(pbSession);
         } catch {
-          // Auth exists but no purchases ~ still show dashboard
           const pbSession: PlaybookSession = {
             email: user.email,
             name: user.user_metadata?.name || "",
-            purchaserId: "",
+            customerId: "",
             purchases: [],
           };
           setSession(pbSession);
@@ -120,7 +151,7 @@ function PortalContent() {
         onLogout={async () => {
           const supabase = createSupabaseBrowser();
           await supabase.auth.signOut();
-          setSessionState(null);
+          window.location.href = "/";
         }}
       />
     );
@@ -130,7 +161,7 @@ function PortalContent() {
     <PortalLogin
       onLoginSuccess={(s) => setSessionState(s)}
       initialSessionId={sessionId}
-      purchaseIntent={purchaseIntent ? { slug: purchaseIntent } : undefined}
+      purchaseIntent={purchaseIntent ? { slug: purchaseIntent, interval } : undefined}
     />
   );
 }
