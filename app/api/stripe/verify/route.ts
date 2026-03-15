@@ -10,9 +10,14 @@ function isAccessActive(
   // One-time purchase (no subscription) ~ permanent access
   if (!subscriptionStatus) return true;
 
-  // Active or trialing subscription
-  if (subscriptionStatus === "active" || subscriptionStatus === "trialing")
+  // Active subscription
+  if (subscriptionStatus === "active") return true;
+
+  // Trialing — check expiry for DB-only trials (bundled access)
+  if (subscriptionStatus === "trialing") {
+    if (accessExpiresAt && new Date(accessExpiresAt) < new Date()) return false;
     return true;
+  }
 
   // Canceled but still within grace period
   if (

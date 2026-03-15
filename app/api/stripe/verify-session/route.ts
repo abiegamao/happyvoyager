@@ -102,6 +102,37 @@ export async function GET(request: NextRequest) {
             },
             { onConflict: "customer_id,playbook_id,purchase_type" }
           );
+
+        // Bundled Playbook Pro access for higher-tier purchases
+        if (playbookSlug === "guided-navigator" || playbookSlug === "vip-concierge") {
+          const { data: spainDnv } = await supabase
+            .from("playbooks")
+            .select("id")
+            .eq("slug", "spain-dnv")
+            .single();
+
+          if (spainDnv) {
+            const isVip = playbookSlug === "vip-concierge";
+            await supabase
+              .from("purchases")
+              .upsert(
+                {
+                  customer_id: customer.id,
+                  playbook_id: spainDnv.id,
+                  purchase_type: "one_time",
+                  stripe_customer_id: (session.customer as string) || null,
+                  subscription_status: isVip ? null : "trialing",
+                  access_expires_at: isVip
+                    ? null
+                    : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+                  trial_ends_at: isVip
+                    ? null
+                    : new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString(),
+                },
+                { onConflict: "customer_id,playbook_id,purchase_type" }
+              );
+          }
+        }
       }
     }
 

@@ -68,6 +68,43 @@ export async function POST(request: NextRequest) {
         currentPeriodEnd: null,
       });
 
+      // Bundled Playbook Pro access for higher-tier purchases
+      if (playbookSlug === "guided-navigator") {
+        const trialExpiry = new Date(Date.now() + 14 * 24 * 60 * 60 * 1000).toISOString();
+        await upsertPurchase(supabase, {
+          email: email.toLowerCase(),
+          name: session.customer_details?.name ?? null,
+          userId: session.client_reference_id ?? null,
+          playbookSlug: "spain-dnv",
+          purchaseType: "one_time",
+          stripeSessionId: null,
+          stripeCustomerId: (session.customer as string) || null,
+          subscriptionStatus: "trialing",
+          stripeSubscriptionId: null,
+          stripePriceId: null,
+          trialEndsAt: trialExpiry,
+          currentPeriodEnd: null,
+          accessExpiresAt: trialExpiry,
+        });
+      }
+
+      if (playbookSlug === "vip-concierge") {
+        await upsertPurchase(supabase, {
+          email: email.toLowerCase(),
+          name: session.customer_details?.name ?? null,
+          userId: session.client_reference_id ?? null,
+          playbookSlug: "spain-dnv",
+          purchaseType: "one_time",
+          stripeSessionId: null,
+          stripeCustomerId: (session.customer as string) || null,
+          subscriptionStatus: null,
+          stripeSubscriptionId: null,
+          stripePriceId: null,
+          trialEndsAt: null,
+          currentPeriodEnd: null,
+        });
+      }
+
       await sendWelcomeEmail(email, playbookSlug);
     }
   }
@@ -238,6 +275,7 @@ async function upsertPurchase(
     stripePriceId: string | null;
     trialEndsAt: string | null;
     currentPeriodEnd: string | null;
+    accessExpiresAt?: string | null;
   }
 ) {
   const customerData: Record<string, unknown> = { email: data.email, name: data.name };
@@ -279,6 +317,10 @@ async function upsertPurchase(
       trial_ends_at: data.trialEndsAt,
       current_period_end: data.currentPeriodEnd,
     };
+
+    if (data.accessExpiresAt !== undefined) {
+      purchaseData.access_expires_at = data.accessExpiresAt;
+    }
 
     // Only set stripe_session_id for one-time purchases (subscriptions may not have it)
     if (data.stripeSessionId) {
